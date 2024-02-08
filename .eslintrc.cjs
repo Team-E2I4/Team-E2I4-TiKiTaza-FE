@@ -24,22 +24,21 @@ module.exports = {
 
     'react/react-in-jsx-scope': 'off', //react 17버전이후로 import react안해도되는데 오류발생하는것 제거
 
-    /* naming convention */
+    /* simple-sort */
+    'simple-import-sort/imports': [
+      'error',
+      {
+        groups: [['^\\u0000', '^@?\\w', '^[^.]', '^\\.']],
+      },
+    ],
+    'simple-import-sort/exports': 'error',
 
+    /* naming convention */
     '@typescript-eslint/naming-convention': [
       'error',
       {
-        selector: 'interface',
-        format: ['PascalCase'],
-        custom: {
-          regex: '^I_.*$|^.*Props$',
-          match: true,
-        },
-      },
-      {
         selector: 'variable',
         format: ['camelCase', 'PascalCase'],
-        types: ['function'],
       },
       {
         selector: 'variable',
@@ -53,6 +52,10 @@ module.exports = {
         format: null,
       },
       {
+        selector: 'function',
+        format: ['camelCase', 'PascalCase'],
+      },
+      {
         selector: 'typeAlias',
         format: ['PascalCase'],
         suffix: ['Type'],
@@ -60,7 +63,15 @@ module.exports = {
     ],
     'react/jsx-key': 'error',
     'no-unreachable': 'warn',
+
+    /* ts enum error */
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
+
+    /* unused-imports */
+    'unused-imports/no-unused-imports': 'error',
   },
+
   // typescript-eslint/naming-convention 사용할때 파서 옵션
   parserOptions: {
     ecmaVersion: 'latest',
