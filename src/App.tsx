@@ -1,7 +1,12 @@
 import './index.css';
+import { Outlet } from 'react-router-dom';
 
 export const App = () => {
-  return <div className='text-3xl font-bold underline'>하이</div>;
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 
 export default App;
