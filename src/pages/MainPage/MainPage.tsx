@@ -11,15 +11,24 @@ const MainPage = () => {
         <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full'>
           전체 랭킹 보기
         </div>
-        <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[18rem] w-full'>
-          유저 프로필
-          <Avatar.Root>
-            <Avatar.Image
-              className='size-[5rem] rounded-full'
-              src='https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80'
-              alt='프로필 이미지'
-            />
-          </Avatar.Root>
+        <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[18rem] w-full p-[1.2rem]'>
+          <div className='flex justify-between'>
+            <span>닉네임</span>
+            <i>♣</i>
+          </div>
+          <div className='py-[2.2rem] flex'>
+            <Avatar.Root className='w-1/2'>
+              <Avatar.Image
+                className='size-[9rem] rounded-full'
+                src='https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80'
+                alt='프로필 이미지'
+              />
+              <Avatar.Fallback delayMs={1000}>테스트</Avatar.Fallback>
+            </Avatar.Root>
+            <div className='flex flex-col-reverse w-1/2'>
+              <span>무언가</span>
+            </div>
+          </div>
         </div>
       </section>
       <section className='flex-1 grid grid-cols-2 grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
