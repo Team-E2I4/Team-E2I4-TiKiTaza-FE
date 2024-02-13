@@ -1,5 +1,5 @@
 const StartPage = () => {
-  return <div className='text-green-100'>start page</div>;
+  return <div></div>;
 };
 
 export default StartPage;
