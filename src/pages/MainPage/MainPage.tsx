@@ -31,7 +31,7 @@ const MainPage = () => {
           </div>
         </div>
       </section>
-      <section className='flex-1 grid grid-cols-2 grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
+      <section className='flex-1 grid grid-cols-[3fr_1fr] grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
         <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100'>
           검색 or 서버이름
         </div>
