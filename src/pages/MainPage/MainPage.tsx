@@ -1,4 +1,5 @@
 const MainPage = () => {
+  /* bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 클래스가 반복되어서 재사용 필요? */
   return (
     <main className='flex pb-[4rem] gap-[3rem]'>
       <section className='flex flex-col gap-[3rem] w-[25rem]'>
