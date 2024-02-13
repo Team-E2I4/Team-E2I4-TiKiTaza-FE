@@ -1,8 +1,11 @@
 import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
+import Header from './common/Header/Header.tsx';
+import BodyLayout from './common/Layout/BodyLayout.tsx';
+import Layout from './common/Layout/Layout.tsx';
 import GameCodePage from './pages/GameCodePage/GameCodePage.tsx';
 import GameFinishPage from './pages/GameFinishPage/GameFinishPage.tsx';
 import GameRoomPage from './pages/GameRoomPage/GameRoomPage.tsx';
@@ -21,47 +24,62 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <StartPage />,
-      },
-      {
-        path: '/login',
-        element: <LoginPage />,
-      },
-      {
-        path: '/settings',
-        element: <SettingPage />,
-      },
-      {
-        path: '/main',
-        element: <MainPage />,
-      },
-      {
-        path: '/gameroom/:roomId',
-        element: <GameRoomPage />,
-      },
-      {
-        path: '/gameroom/:roomId',
-        element: <GameCodePage />,
-      },
-      {
-        path: '/gameroom/:roomId',
-        element: <GameSentencePage />,
-      },
-      {
-        path: '/gameroom/:roomId',
-        element: <GameWordPage />,
-      },
-      {
-        path: '/gameroom/:roomId',
-        element: <GameFinishPage />,
-      },
-      {
-        path: '/rank',
-        element: <RankPage />,
-      },
-      {
-        path: '/*',
-        element: <NotFoundPage />,
+        element: (
+          <>
+            <Layout>
+              <Header />
+              <BodyLayout>
+                <Outlet />
+              </BodyLayout>
+            </Layout>
+          </>
+        ),
+        children: [
+          {
+            index: true,
+            element: <StartPage />,
+          },
+          {
+            path: '/login',
+            element: <LoginPage />,
+          },
+          {
+            path: '/settings',
+            element: <SettingPage />,
+          },
+          {
+            path: '/main',
+            element: <MainPage />,
+          },
+          {
+            path: '/gameroom/:roomId',
+            element: <GameRoomPage />,
+          },
+          {
+            path: '/gameroom/:roomId',
+            element: <GameCodePage />,
+          },
+          {
+            path: '/gameroom/:roomId',
+            element: <GameSentencePage />,
+          },
+          {
+            path: '/gameroom/:roomId',
+            element: <GameWordPage />,
+          },
+          {
+            path: '/gameroom/:roomId',
+            element: <GameFinishPage />,
+          },
+          {
+            path: '/rank',
+            element: <RankPage />,
+          },
+          {
+            path: '/*',
+            element: <NotFoundPage />,
+          },
+        ],
       },
     ],
   },

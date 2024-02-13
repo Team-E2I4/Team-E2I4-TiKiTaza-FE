@@ -17,6 +17,9 @@ export default {
         black: '#1f1f1f',
         white: '#fefeff',
       },
+      width: {
+        'layout-w': '136.6rem',
+      },
     },
   },
   plugins: [],
