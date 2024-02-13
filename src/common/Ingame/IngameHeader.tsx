@@ -18,8 +18,8 @@ export const IngameHeader = ({
         src={backward}
         className='w-[4.8rem]'
       />
-      <div className='w-96 text-ellipsis overflow-hidden whitespace-nowrap'>
-        {roomName}이름이 길어진다면길게123456789
+      <div className='w-[40rem] text-ellipsis overflow-hidden whitespace-nowrap text-4xl'>
+        {roomName}
       </div>
       <div className='grow'>참여 {participants}명</div>
       <div>
