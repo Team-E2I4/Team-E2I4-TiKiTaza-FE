@@ -2664,6 +2664,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-highlight@npm:^0":
+  version: 0.12.8
+  resolution: "@types/react-highlight@npm:0.12.8"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10c0/c0a275d4d1ddf99cd08f7bfb66cd10db85b10c49a60650c1aa19b93f8a07c85dbae5f2236015d2592d04b8fba2c029904eecd09acf5aab12466ea0cd0d423f10
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^18.2.43":
   version: 18.2.55
   resolution: "@types/react@npm:18.2.55"
@@ -5562,6 +5571,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight.js@npm:^10.5.0":
+  version: 10.7.3
+  resolution: "highlight.js@npm:10.7.3"
+  checksum: 10c0/073837eaf816922427a9005c56c42ad8786473dc042332dfe7901aa065e92bc3d94ebf704975257526482066abb2c8677cc0326559bb8621e046c21c5991c434
+  languageName: node
+  linkType: hard
+
 "hosted-git-info@npm:^2.1.4":
   version: 2.8.9
   resolution: "hosted-git-info@npm:2.8.9"
@@ -7783,6 +7799,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-highlight@npm:^0.15.0":
+  version: 0.15.0
+  resolution: "react-highlight@npm:0.15.0"
+  dependencies:
+    highlight.js: "npm:^10.5.0"
+  checksum: 10c0/edb618c04fb44af03cea128ec26b4aaecd690982f8bafb3e47040c1706b0721184ea029b8365c4a937ea60ae1d75b3c214863ca8fa5a46477093209ad63f89ab
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -8840,6 +8865,41 @@ __metadata:
   resolution: "team-e2i4-tikitaza-fe@workspace:."
   dependencies:
     memoizerific "^1.11.3"
+    "@radix-ui/react-primitive": "npm:^1.0.3"
+    "@tanstack/eslint-plugin-query": "npm:^5.18.1"
+    "@tanstack/react-query": "npm:^5.18.1"
+    "@types/node": "npm:^20.11.16"
+    "@types/react": "npm:^18.2.43"
+    "@types/react-dom": "npm:^18.2.17"
+    "@types/react-highlight": "npm:^0"
+    "@typescript-eslint/eslint-plugin": "npm:^6.14.0"
+    "@typescript-eslint/parser": "npm:^6.14.0"
+    "@vitejs/plugin-react": "npm:^4.2.1"
+    autoprefixer: "npm:^10.4.17"
+    axios: "npm:^1.6.7"
+    eslint: "npm:^8.56.0"
+    eslint-config-prettier: "npm:^9.1.0"
+    eslint-plugin-prettier: "npm:^5.1.3"
+    eslint-plugin-react: "npm:^7.33.2"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    eslint-plugin-react-refresh: "npm:^0.4.5"
+    eslint-plugin-simple-import-sort: "npm:^10.0.0"
+    eslint-plugin-unused-imports: "npm:^3.0.0"
+    husky: "npm:^9.0.10"
+    lint-staged: "npm:^15.2.2"
+    postcss: "npm:^8.4.34"
+    prettier: "npm:^3.2.5"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    react-highlight: "npm:^0.15.0"
+    react-router-dom: "npm:^6.22.0"
+    storybook: "npm:^7.6.13"
+    tailwindcss: "npm:^3.4.1"
+    typescript: "npm:^5.2.2"
+    vite: "npm:^5.0.8"
+    zustand: "npm:^4.5.0"
+  languageName: unknown
+  linkType: soft
 
 temp-dir@^2.0.0:
   version "2.0.0"
