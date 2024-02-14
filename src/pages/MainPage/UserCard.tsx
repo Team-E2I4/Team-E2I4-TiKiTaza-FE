@@ -24,8 +24,8 @@ const UserCard = ({
           />
           <Avatar.Fallback delayMs={fallbackDelay}>테스트</Avatar.Fallback>
         </Avatar.Root>
-        <div className='flex flex-col-reverse w-1/2'>
-          <span>무언가</span>
+        <div className='flex flex-col-reverse  mx-[1.2rem]'>
+          <span className='bg-coral-50 w-[6.8rem] text-center'>순위</span>
         </div>
       </div>
     </article>
