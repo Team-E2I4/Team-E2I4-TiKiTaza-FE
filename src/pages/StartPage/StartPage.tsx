@@ -1,4 +1,4 @@
-import logo_big_shadow from '@/asssets/logo_big_shadow.png';
+import logo_big_shadow from '@/assets/logo_big_shadow.png';
 
 const StartPage = () => {
   return (
