@@ -3,7 +3,7 @@ interface UserListItemProps {
 }
 
 const UserListItem = ({ username }: UserListItemProps) => {
-  return <li>{username}</li>;
+  return <li className='truncate'>{username}</li>;
 };
 
 export default UserListItem;
