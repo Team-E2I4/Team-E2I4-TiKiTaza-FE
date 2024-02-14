@@ -2,7 +2,8 @@ import UserListItem from './UserListItem';
 
 const DUMMY_DATA = [
   { username: '킴킴킴' },
-  { username: '아이린' },
+  { username: '아이린dddddddddddddddddddddddddddd' },
+  { username: '아이린dddddddddddddddddddddddddddd' },
   { username: '킴킴킴' },
   { username: '아이린' },
   { username: '킴킴킴' },
