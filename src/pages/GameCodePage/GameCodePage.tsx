@@ -1,7 +1,7 @@
 import Highlight from 'react-highlight';
-import { IngameHeader } from '@/common/Ingame/IngameHeader';
-import IngameRankContainer from '@/common/Ingame/IngameRank';
-import { Input } from '@/common/Input/Input';
+import IngameHeader from '@/common/Ingame/IngameHeader';
+import IngameRank from '@/common/Ingame/IngameRank';
+import Input from '@/common/Input/Input';
 
 const GameContainer = () => {
   const dummyCode = `function dfs(graph, start, visited) {
@@ -34,7 +34,7 @@ const GameCodePage = () => {
       <IngameHeader />
       <div>
         <div className='absolute'>
-          <IngameRankContainer />
+          <IngameRank />
         </div>
         <div className='flex flex-col items-center justify-center ml-80 h-[50rem] border-2 border-black'>
           <div className='flex'>
