@@ -19,12 +19,8 @@ const GameSentencePage = () => {
   }, 30000);
   return (
     <>
-      <IngameHeader
-        roomName='테스트방 이름이 길어진다면 1234567898765'
-        participants={8}
-        round={2}
-        roundTotal={5}
-      />
+      <IngameHeader />
+
       <div>
         <div className='absolute'>
           <IngameRank
