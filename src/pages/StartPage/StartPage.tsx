@@ -8,7 +8,7 @@ const StartPage = () => {
         src={logo_big_shadow}
         className='object-cover h-[55rem]'
       />
-      <button className='w-[33.9rem] h-[8.8rem] font-[Giants-Inline] text-[3.2rem] shadow-xl bg-green-100 hover:bg-green-200 transition-all rounded-full'>
+      <button className='w-[33.9rem] h-[8.8rem] font-[Giants-Inline] text-[3.2rem] shadow-md shadow-black/50 bg-green-100 hover:bg-green-200 transition-all rounded-full'>
         시작하기
       </button>
       <span className='font-bold font-[Giants-Inline] text-[3.2rem]'>
