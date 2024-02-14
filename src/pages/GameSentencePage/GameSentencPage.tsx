@@ -40,3 +40,6 @@ export default GameSentencePage;
 {
   /* <div className='w-40 h-60 bg-slate-400 overflow-y-auto scrollbar-hide'> */
 }
+{
+  /* <div className='w-40 h-60 bg-slate-400 overflow-y-auto scrollbar-hide'> */
+}
