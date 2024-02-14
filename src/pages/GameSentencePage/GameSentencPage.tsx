@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IngameHeader } from '@/common/Ingame/IngameHeader';
 import IngameRankContainer from '@/common/Ingame/IngameRank';
 import { SentenceNext, SentenceNow } from '@/common/Ingame/SentenceBlocks';
-import { SentenceInput } from '@/common/Ingame/SentenceInput';
+import { Input } from '@/common/Input/Input';
 const sentenceDummy = [
   '저녁 때 돌아갈 집이 있다는 것',
   '힘들 때 마음 속으로 생각 할 사람이 있다는 것',
@@ -27,7 +27,7 @@ const GameSentencePage = () => {
         </div>
         <div className='flex flex-col items-center justify-center ml-80 h-[50rem] border-2 border-black'>
           <SentenceNow text={sentenceDummy[idx]} />
-          <SentenceInput />
+          <Input />
           <SentenceNext text={sentenceDummy[idx + 1]} />
           <SentenceNext text={sentenceDummy[idx + 2]} />
         </div>

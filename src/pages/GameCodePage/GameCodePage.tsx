@@ -1,7 +1,7 @@
 import Highlight from 'react-highlight';
 import { IngameHeader } from '@/common/Ingame/IngameHeader';
 import IngameRankContainer from '@/common/Ingame/IngameRank';
-import { SentenceInput } from '@/common/Ingame/SentenceInput';
+import { Input } from '@/common/Input/Input';
 
 const GameContainer = () => {
   const dummyCode = `function dfs(graph, start, visited) {
@@ -42,7 +42,7 @@ const GameCodePage = () => {
             <GameContainer />
             <div></div>
           </div>
-          <SentenceInput />
+          <Input />
         </div>
       </div>
     </>
