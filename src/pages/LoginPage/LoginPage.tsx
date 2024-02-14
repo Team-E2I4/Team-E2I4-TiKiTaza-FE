@@ -22,7 +22,7 @@ const LoginPage = () => {
             alt='Google logo'
             className='w-[2rem] h-[2rem] ml-5'
           />
-          <div className='text-[1.4rem]'>구글 로그인</div>
+          <span className='text-[1.4rem]'>구글 로그인</span>
         </div>
       </div>
     </div>
