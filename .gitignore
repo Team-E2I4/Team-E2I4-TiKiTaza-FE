@@ -26,7 +26,7 @@ dist-ssr
 # eslint
 .eslintcache
 
-# yarn
+#yarn
 .pnp.*
 .yarn/*
 !.yarn/patches
