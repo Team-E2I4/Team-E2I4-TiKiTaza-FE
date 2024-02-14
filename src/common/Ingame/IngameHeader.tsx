@@ -6,7 +6,7 @@ interface IngameHeaderProps {
   round?: number;
   roundTotal?: number;
 }
-export const IngameHeader = ({
+const IngameHeader = ({
   roomName = '테스트방 이름이 길어진다면 1234567898765',
   participants = 8,
   round = 2,
@@ -26,3 +26,4 @@ export const IngameHeader = ({
     </div>
   );
 };
+export default IngameHeader;

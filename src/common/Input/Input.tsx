@@ -1,4 +1,4 @@
-export const Input = () => {
+const Input = () => {
   return (
     <>
       <input
@@ -9,3 +9,4 @@ export const Input = () => {
     </>
   );
 };
+export default Input;
