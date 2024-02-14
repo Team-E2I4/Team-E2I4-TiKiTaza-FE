@@ -32,6 +32,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:20.11.16"],\
           ["@types/react", "npm:18.2.55"],\
           ["@types/react-dom", "npm:18.2.18"],\
+          ["@types/react-highlight", "npm:0.12.8"],\
           ["@typescript-eslint/eslint-plugin", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:6.21.0"],\
           ["@typescript-eslint/parser", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:6.21.0"],\
           ["@vitejs/plugin-react", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:4.2.1"],\
@@ -51,6 +52,7 @@ const RAW_RUNTIME_STATE =
           ["prettier", "npm:3.2.5"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:18.2.0"],\
+          ["react-highlight", "npm:0.15.0"],\
           ["react-router-dom", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:6.22.0"],\
           ["storybook", "npm:7.6.13"],\
           ["tailwindcss", "npm:3.4.1"],\
@@ -4130,6 +4132,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/react-highlight", [\
+      ["npm:0.12.8", {\
+        "packageLocation": "../../.yarn/berry/cache/@types-react-highlight-npm-0.12.8-bb0c21aa5d-10c0.zip/node_modules/@types/react-highlight/",\
+        "packageDependencies": [\
+          ["@types/react-highlight", "npm:0.12.8"],\
+          ["@types/react", "npm:18.2.55"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/scheduler", [\
       ["npm:0.16.8", {\
         "packageLocation": "../../.yarn/berry/cache/@types-scheduler-npm-0.16.8-303819b439-10c0.zip/node_modules/@types/scheduler/",\
@@ -7511,6 +7523,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["highlight.js", [\
+      ["npm:10.7.3", {\
+        "packageLocation": "../../.yarn/berry/cache/highlight.js-npm-10.7.3-247e67d5c0-10c0.zip/node_modules/highlight.js/",\
+        "packageDependencies": [\
+          ["highlight.js", "npm:10.7.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["hosted-git-info", [\
       ["npm:2.8.9", {\
         "packageLocation": "../../.yarn/berry/cache/hosted-git-info-npm-2.8.9-62c44fa93f-10c0.zip/node_modules/hosted-git-info/",\
@@ -10054,6 +10075,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-highlight", [\
+      ["npm:0.15.0", {\
+        "packageLocation": "../../.yarn/berry/cache/react-highlight-npm-0.15.0-7b614fce42-10c0.zip/node_modules/react-highlight/",\
+        "packageDependencies": [\
+          ["react-highlight", "npm:0.15.0"],\
+          ["highlight.js", "npm:10.7.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["react-is", [\
       ["npm:16.13.1", {\
         "packageLocation": "../../.yarn/berry/cache/react-is-npm-16.13.1-a9b9382b4f-10c0.zip/node_modules/react-is/",\
@@ -11146,6 +11177,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:20.11.16"],\
           ["@types/react", "npm:18.2.55"],\
           ["@types/react-dom", "npm:18.2.18"],\
+          ["@types/react-highlight", "npm:0.12.8"],\
           ["@typescript-eslint/eslint-plugin", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:6.21.0"],\
           ["@typescript-eslint/parser", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:6.21.0"],\
           ["@vitejs/plugin-react", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:4.2.1"],\
@@ -11165,6 +11197,7 @@ const RAW_RUNTIME_STATE =
           ["prettier", "npm:3.2.5"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:18.2.0"],\
+          ["react-highlight", "npm:0.15.0"],\
           ["react-router-dom", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:6.22.0"],\
           ["storybook", "npm:7.6.13"],\
           ["tailwindcss", "npm:3.4.1"],\
