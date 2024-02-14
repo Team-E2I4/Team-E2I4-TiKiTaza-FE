@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
             element: <GameRoomPage />,
           },
           {
-            path: '/gameroom/:roomId',
+            path: '/gameroom/:roomId/code',
             element: <GameCodePage />,
           },
           {
