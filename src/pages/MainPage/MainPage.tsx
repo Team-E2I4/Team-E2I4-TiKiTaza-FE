@@ -1,3 +1,4 @@
+import GameRoomList from './GameRoomList';
 import UserCard from './UserCard';
 import UserList from './UserList';
 
@@ -19,9 +20,7 @@ const MainPage = () => {
         <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1'>
           방 만들기
         </article>
-        <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
-          방 목록
-        </article>
+        <GameRoomList />
       </section>
     </main>
   );
