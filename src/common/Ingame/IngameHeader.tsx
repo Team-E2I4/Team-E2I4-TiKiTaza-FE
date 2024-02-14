@@ -16,6 +16,7 @@ const IngameHeader = ({
     <div className='flex flex-row items-center gap-20 pb-12'>
       <img
         src={backward}
+        alt='게임 나가기'
         className='w-[4.8rem]'
       />
       <div className='w-[40rem] truncate text-4xl'>{roomName}</div>
