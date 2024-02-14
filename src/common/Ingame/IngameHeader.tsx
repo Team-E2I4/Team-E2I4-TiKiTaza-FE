@@ -1,4 +1,4 @@
-import backward from '@/asssets/backward.png';
+import backward from '@/assets/backward.png';
 
 interface IngameHeaderProps {
   roomName?: string;
