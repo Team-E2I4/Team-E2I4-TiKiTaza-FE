@@ -13,7 +13,7 @@ const UserCard = ({
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[18rem] w-full p-[1.2rem]'>
       <div className='flex justify-between'>
         <span>닉네임</span>
-        <i>♣</i>
+        <button>(수정)</button>
       </div>
       <div className='py-[2.2rem] flex'>
         <Avatar.Root className='w-1/2'>
