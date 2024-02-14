@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IngameHeader } from '@/common/Ingame/IngameHeader';
-import IngameRank from '@/common/Ingame/IngameRank';
+import IngameRankContainer from '@/common/Ingame/IngameRank';
 import { SentenceNext, SentenceNow } from '@/common/Ingame/SentenceBlocks';
 import { SentenceInput } from '@/common/Ingame/SentenceInput';
 const sentenceDummy = [
@@ -23,46 +23,7 @@ const GameSentencePage = () => {
 
       <div>
         <div className='absolute'>
-          <IngameRank
-            isMe={false}
-            rank={2}
-            name='다른유저'
-          />
-          <IngameRank
-            isMe={true}
-            rank={3}
-            name='나야나'
-          />
-          <IngameRank
-            isMe={false}
-            rank={3}
-            name='asdf'
-          />
-          <IngameRank
-            isMe={false}
-            rank={3}
-            name='31231312'
-          />
-          <IngameRank
-            isMe={false}
-            rank={3}
-            name='12313'
-          />
-          <IngameRank
-            isMe={false}
-            rank={3}
-            name='나323232야나'
-          />
-          <IngameRank
-            isMe={false}
-            rank={3}
-            name='asfsd'
-          />
-          <IngameRank
-            isMe={false}
-            rank={3}
-            name='sdf'
-          />
+          <IngameRankContainer />
         </div>
         <div className='flex flex-col items-center justify-center ml-80 h-[50rem] border-2 border-black'>
           <SentenceNow text={sentenceDummy[idx]} />
