@@ -48,7 +48,7 @@ const GameRoomPage = ({
             alt='뒤로가기'
           />
         </button>
-        <div className='w-[105rem] text-[3.2rem] flex bg-beige-100 rounded-[2.5rem] shadow-md shadow-black/50  items-center '>
+        <div className='w-[105rem] text-[3.2rem] flex bg-beige-100 rounded-[2.5rem] shadow-md shadow-black/50 items-center '>
           <div className='flex justify-center items-center w-[25%] h-full border-r border-solid border-black'>
             {gameRoomId}
           </div>
