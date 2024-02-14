@@ -8,7 +8,7 @@ const MainPage = () => {
       <section className='flex flex-col gap-[3rem] w-[25rem]'>
         <UserList />
         <article className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full'>
-          <p>전체 랭킹 보기</p>
+          <button>전체 랭킹 보기</button>
         </article>
         <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[18rem] w-full p-[1.2rem]'>
           <div className='flex justify-between'>
