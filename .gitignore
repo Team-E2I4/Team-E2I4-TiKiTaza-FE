@@ -26,12 +26,11 @@ dist-ssr
 # eslint
 .eslintcache
 
-#yarn
-.pnp.*
+# yarn
 .yarn/*
+!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-
