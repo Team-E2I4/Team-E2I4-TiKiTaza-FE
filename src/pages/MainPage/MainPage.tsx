@@ -7,10 +7,10 @@ const MainPage = () => {
     <main className='flex pb-[4rem] gap-[3rem]'>
       <section className='flex flex-col gap-[3rem] w-[25rem]'>
         <UserList />
-        <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full'>
-          전체 랭킹 보기
-        </div>
-        <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[18rem] w-full p-[1.2rem]'>
+        <article className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full'>
+          <p>전체 랭킹 보기</p>
+        </article>
+        <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[18rem] w-full p-[1.2rem]'>
           <div className='flex justify-between'>
             <span>닉네임</span>
             <i>♣</i>
@@ -28,18 +28,18 @@ const MainPage = () => {
               <span>무언가</span>
             </div>
           </div>
-        </div>
+        </article>
       </section>
       <section className='flex-1 grid grid-cols-[3fr_1fr] grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
-        <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100'>
+        <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100'>
           검색 or 서버이름
-        </div>
-        <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1'>
+        </article>
+        <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1'>
           방 만들기
-        </div>
-        <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
+        </article>
+        <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
           방 목록
-        </div>
+        </article>
       </section>
     </main>
   );
