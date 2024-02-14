@@ -2024,7 +2024,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-)
 "@radix-ui/react-compose-refs@npm:1.0.1":
   version: 1.0.1
   resolution: "@radix-ui/react-compose-refs@npm:1.0.1"
@@ -2056,7 +2055,6 @@ __metadata:
   linkType: hard
 
 "@radix-ui/react-primitive@npm:1.0.3":
-
   version: 1.0.3
   resolution: "@radix-ui/react-primitive@npm:1.0.3"
   dependencies:
@@ -2121,7 +2119,6 @@ __metadata:
   checksum: 10c0/13cd0c38395c5838bc9a18238020d3bcf67fb340039e6d1cbf438be1b91d64cf6900b78121f3dc9219faeb40dcc7b523ce0f17e4a41631655690e5a30a40886a
   languageName: node
   linkType: hard
-
 
 "@remix-run/router@npm:1.15.0":
   version: 1.15.0
@@ -8974,7 +8971,6 @@ __metadata:
   resolution: "team-e2i4-tikitaza-fe@workspace:."
   dependencies:
     "@radix-ui/react-avatar": "npm:^1.0.4"
-    "@radix-ui/react-primitive": "npm:^1.0.3"
     "@tanstack/eslint-plugin-query": "npm:^5.18.1"
     "@tanstack/react-query": "npm:^5.18.1"
     "@types/node": "npm:^20.11.16"

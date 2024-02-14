@@ -27,8 +27,8 @@ dist-ssr
 .eslintcache
 
 #yarn
+.pnp.*
 .yarn/*
-!.yarn/cache // Zero-Install
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
