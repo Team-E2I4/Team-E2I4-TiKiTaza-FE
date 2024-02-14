@@ -23,12 +23,12 @@ dist-ssr
 *.sln
 *.sw?
 
-#eslint
+# eslint
 .eslintcache
 
-#yarn
+# yarn
 .yarn/*
-!.yarn/cache // Zero-Install
+!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
