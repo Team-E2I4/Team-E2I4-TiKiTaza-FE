@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 
 interface DividerProps {
   orientation?: 'horizontal' | 'vertical';
-  className?: ComponentProps<'hr'>['className'];
+  className?: ComponentProps<'div'>['className'];
 }
 
 const Divider = ({
