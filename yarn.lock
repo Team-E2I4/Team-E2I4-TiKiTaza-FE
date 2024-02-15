@@ -2795,6 +2795,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-highlight@npm:^0":
+  version: 0.12.8
+  resolution: "@types/react-highlight@npm:0.12.8"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10c0/c0a275d4d1ddf99cd08f7bfb66cd10db85b10c49a60650c1aa19b93f8a07c85dbae5f2236015d2592d04b8fba2c029904eecd09acf5aab12466ea0cd0d423f10
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^18.2.43":
   version: 18.2.55
   resolution: "@types/react@npm:18.2.55"
@@ -5693,6 +5702,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight.js@npm:^10.5.0":
+  version: 10.7.3
+  resolution: "highlight.js@npm:10.7.3"
+  checksum: 10c0/073837eaf816922427a9005c56c42ad8786473dc042332dfe7901aa065e92bc3d94ebf704975257526482066abb2c8677cc0326559bb8621e046c21c5991c434
+  languageName: node
+  linkType: hard
+
 "hosted-git-info@npm:^2.1.4":
   version: 2.8.9
   resolution: "hosted-git-info@npm:2.8.9"
@@ -7911,6 +7927,15 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/66dfc5f93e13d0674e78ef41f92ed21dfb80f9c4ac4ac25a4b51046d41d4d2186abc915b897f69d3d0ebbffe6184e7c5876f2af26bfa956f179225d921be713a
+  languageName: node
+  linkType: hard
+
+"react-highlight@npm:^0.15.0":
+  version: 0.15.0
+  resolution: "react-highlight@npm:0.15.0"
+  dependencies:
+    highlight.js: "npm:^10.5.0"
+  checksum: 10c0/edb618c04fb44af03cea128ec26b4aaecd690982f8bafb3e47040c1706b0721184ea029b8365c4a937ea60ae1d75b3c214863ca8fa5a46477093209ad63f89ab
   languageName: node
   linkType: hard
 
