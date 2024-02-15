@@ -6,6 +6,7 @@ export default {
     extend: {
       colors: {
         'green-50': '#ebffeb',
+        'green-70': '#D4EBE2',
         'green-100': '#96d8bf',
         'coral-50': '#FEDCDA',
         'coral-100': '#fd8d83',
