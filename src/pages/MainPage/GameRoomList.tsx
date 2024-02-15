@@ -105,8 +105,8 @@ const DUMMY_DATA: GameRoomListItemProps[] = [
 const GameRoomList = () => {
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
-      <ul className='flex flex-col items-center p-[1.5rem] gap-[1rem]'>
-        <li className='flex w-full'>
+      <ul className='flex flex-col items-center px-[1.5rem]'>
+        <li className='flex w-full h-[5rem]  py-[1rem]'>
           {GAME_ROOM_LIST_CATEGORY.map((category, i) => (
             <>
               <span
@@ -114,13 +114,18 @@ const GameRoomList = () => {
                 className={`text-center ${category === '방 제목' ? 'flex-[4_0_0]' : 'flex-1'}`}>
                 {category}
               </span>
-              {i !== category.length && <span>ㅣ</span>}
+              {i !== category.length && (
+                <Divider
+                  orientation='vertical'
+                  className='border-gray-200'
+                />
+              )}
             </>
           ))}
         </li>
-        <Divider />
+        <Divider className='border-gray-200' />
         <li className='w-full'>
-          <ul className='w-full flex flex-col gap-[1rem] max-h-[60rem] overflow-y-auto scrollbar-hide'>
+          <ul className='w-full flex flex-col gap-[1rem] max-h-[60rem] overflow-y-auto scrollbar-hide first:pt-[1rem]'>
             {DUMMY_DATA.map(
               ({ roomNumber, title, isLocked, mode, headCount }) => (
                 <GameRoomListItem
