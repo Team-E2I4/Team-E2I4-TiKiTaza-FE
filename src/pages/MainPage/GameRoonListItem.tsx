@@ -19,10 +19,14 @@ const GameRoomListItem = ({
   );
 
   return (
-    <li>
+    <li className='flex w-full'>
       {arrayedProps.map((category, i) => (
         <>
-          <span key={category}>{category}</span>
+          <span
+            key={category}
+            className={`text-center truncate ${i === 1 ? 'flex-[4_0_0]' : 'flex-1'}`}>
+            {category}
+          </span>
           {i !== arrayedProps.length - 1 && <span>ㅣ</span>}
         </>
       ))}
