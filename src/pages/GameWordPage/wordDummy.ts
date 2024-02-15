@@ -100,3 +100,45 @@ export const wordDummy = [
   '안녕',
   '세글자',
 ];
+export const wordRankDummy = [
+  {
+    userId: 1,
+    userName: '유저1호',
+    score: 0,
+  },
+  {
+    userId: 2,
+    userName: '유저2호',
+    score: 0,
+  },
+  {
+    userId: 3,
+    userName: '유저3호',
+    score: 0,
+  },
+  {
+    userId: 4,
+    userName: '유저4호',
+    score: 0,
+  },
+  {
+    userId: 5,
+    userName: '유저5호',
+    score: 0,
+  },
+  {
+    userId: 6,
+    userName: '유저6호',
+    score: 0,
+  },
+  {
+    userId: 7,
+    userName: '유저7호',
+    score: 0,
+  },
+  {
+    userId: 8,
+    userName: '유저8호',
+    score: 0,
+  },
+];
