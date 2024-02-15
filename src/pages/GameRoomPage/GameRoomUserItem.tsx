@@ -1,18 +1,12 @@
 import * as Avatar from '@radix-ui/react-avatar';
+import { I_gameRoomUserCard } from './GameRoomPage';
 
-interface GameRoomUserCardProps {
-  userName: string;
-  rank: number;
-  userImage: string;
-  userImageFallbackDelay: number;
-}
-
-const GameRoomUserCard = ({
+const GameRoomUserItem = ({
   userName,
   rank,
   userImage,
   userImageFallbackDelay,
-}: GameRoomUserCardProps) => {
+}: I_gameRoomUserCard) => {
   return (
     <div className='w-[25.8rem] h-[21.2rem] flex flex-col bg-white shadow-md shadow-black/50 rounded-[2.5rem]'>
       <button className='self-end pt-[1.6rem] pr-[2.7rem] text-[1.6rem]'>
@@ -42,4 +36,4 @@ const GameRoomUserCard = ({
   );
 };
 
-export default GameRoomUserCard;
+export default GameRoomUserItem;
