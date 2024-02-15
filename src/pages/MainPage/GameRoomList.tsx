@@ -80,6 +80,13 @@ const DUMMY_DATA = [
     mode: 'short',
     headCount: 7,
   },
+  {
+    roomNumber: 77,
+    title:
+      'ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ',
+    mode: 'short',
+    headCount: 7,
+  },
 ];
 
 const GameRoomList = () => {
@@ -91,11 +98,7 @@ const GameRoomList = () => {
             <>
               <span
                 key={category}
-                className={
-                  category === '방 제목'
-                    ? 'flex-[4_0_0] text-center'
-                    : 'flex-1 text-center'
-                }>
+                className={`text-center ${category === '방 제목' ? 'flex-[4_0_0]' : 'flex-1'}`}>
                 {category}
               </span>
               {i !== category.length && <span>ㅣ</span>}
@@ -103,15 +106,17 @@ const GameRoomList = () => {
           ))}
         </li>
         <Divider />
-        {DUMMY_DATA.map(({ roomNumber, title, mode, headCount }) => (
-          <GameRoomListItem
-            key={roomNumber}
-            roomNumber={roomNumber}
-            title={title}
-            mode={mode}
-            headCount={headCount}
-          />
-        ))}
+        <div className='w-full flex flex-col gap-[1rem] max-h-[60rem] overflow-y-auto'>
+          {DUMMY_DATA.map(({ roomNumber, title, mode, headCount }) => (
+            <GameRoomListItem
+              key={roomNumber}
+              roomNumber={roomNumber}
+              title={title}
+              mode={mode}
+              headCount={headCount}
+            />
+          ))}
+        </div>
       </ul>
     </article>
   );
