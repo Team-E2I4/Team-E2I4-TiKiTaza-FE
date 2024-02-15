@@ -85,8 +85,8 @@ const DUMMY_DATA = [
 const GameRoomList = () => {
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
-      <ul className='flex flex-col items-center p-[1.5rem]'>
-        <li className='flex w-full py-[0.5rem]'>
+      <ul className='flex flex-col items-center p-[1.5rem] gap-[1rem]'>
+        <li className='flex w-full'>
           {GAME_ROOM_LIST_CATRGORY.map((category, i) => (
             <>
               <span
@@ -104,16 +104,13 @@ const GameRoomList = () => {
         </li>
         <Divider />
         {DUMMY_DATA.map(({ roomNumber, title, mode, headCount }) => (
-          <>
-            <GameRoomListItem
-              key={roomNumber}
-              roomNumber={roomNumber}
-              title={title}
-              mode={mode}
-              headCount={headCount}
-            />
-            <Divider />
-          </>
+          <GameRoomListItem
+            key={roomNumber}
+            roomNumber={roomNumber}
+            title={title}
+            mode={mode}
+            headCount={headCount}
+          />
         ))}
       </ul>
     </article>
