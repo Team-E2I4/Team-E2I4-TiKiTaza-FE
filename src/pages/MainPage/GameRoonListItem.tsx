@@ -26,7 +26,10 @@ const GameRoomListItem = ({
   return (
     <li className='h-[5rem] flex items-center shrink-0 w-full py-[1rem] bg-gray-10 hover:bg-coral-50 cursor-pointer'>
       <span className='text-center truncate flex-1'>{`No.${roomNumber}`}</span>
-      <span>ㅣ</span>
+      <Divider
+        orientation='vertical'
+        className='border-gray-200'
+      />
       <div className='flex-[4_0_0] truncate flex justify-center'>
         {isLocked && (
           <img
@@ -37,9 +40,15 @@ const GameRoomListItem = ({
         )}
         <span className='text-center truncate max-w-[60%]'>{title}</span>
       </div>
-      <Divider orientation='vertical' />
+      <Divider
+        orientation='vertical'
+        className='border-gray-200'
+      />
       <span className='text-center truncate flex-1'>{MODE_TYPE[mode]}</span>
-      <span>ㅣ</span>
+      <Divider
+        orientation='vertical'
+        className='border-gray-200'
+      />
       <span className='text-center truncate flex-1'>{`${headCount}/${MAX_ROOM_HEAD_COUNT}`}</span>
     </li>
   );
