@@ -24,6 +24,8 @@ interface WordRankProps {
   userName: string;
   score: number;
 }
+
+const MYUSERID = 3;
 const WordRank = (data: WordRankProps) => {
   return (
     <>
@@ -33,20 +35,20 @@ const WordRank = (data: WordRankProps) => {
           <span className='absolute bottom-12 left-8'>🚗</span>
         </div>
         <div
-          className={`flex justify-center pt-[0.5rem] ${data.userId === MYUSERID ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
-          {data.userName}
+          className={`flex truncate justify-center pt-[0.5rem] ${data.userId === MYUSERID ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
+          {data.userName} 긴 이름
         </div>
       </div>
     </>
   );
 };
-const MYUSERID = 3;
+
 const GameWordPage = () => {
   return (
     <>
       <IngameHeader />
       <div className='grow'>
-        <div className='flex flex-col items-center justify-around h-[60rem] border-2 border-black'>
+        <div className='flex flex-col items-center justify-around h-[60rem]'>
           <div className='h-[25rem] grid grid-rows-[repeat(8,minmax(0,1fr))] grid-cols-[repeat(15,7rem)] text-[1.4rem]'>
             {words.map((w, i) => {
               return <WordCell key={i + w}>{w}</WordCell>;
