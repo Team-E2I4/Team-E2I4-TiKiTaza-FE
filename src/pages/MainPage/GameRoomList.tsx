@@ -118,7 +118,7 @@ const GameRoomList = () => {
             </>
           ))}
         </li>
-        <Divider orientation='vertical' />
+        <Divider />
         <li className='w-full'>
           <ul className='w-full flex flex-col gap-[1rem] max-h-[60rem] overflow-y-auto scrollbar-hide'>
             {DUMMY_DATA.map(
