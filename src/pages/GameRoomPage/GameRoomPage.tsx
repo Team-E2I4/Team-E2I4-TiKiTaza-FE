@@ -18,6 +18,7 @@ interface GameRoomPageProps {
 }
 
 const GameRoomPage = (props: GameRoomPageProps) => {
+  // DummyData for Test
   const {
     gameRoomUserList = [
       {
