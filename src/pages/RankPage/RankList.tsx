@@ -49,8 +49,8 @@ const RankList = () => {
     },
   ];
   return (
-    <div className='flex flex-col bg-[#FFF4DC] gap-4 rounded-2xl overflow-hidden'>
-      <div className='flex gap-2 justify-center font-bold font-[Giants-Inline] text-5xl py-2 px-4 border-b border-gray-200'>
+    <div className='flex flex-col bg-[#FFF4DC] rounded-2xl overflow-hidden'>
+      <div className='flex gap-2 justify-center font-bold font-[Giants-Inline] text-5xl py-4 px-4 border-b border-gray-200'>
         <span className='w-[30%] text-center'>순위</span>
         <span className='w-[40%] text-center'>닉네임</span>
         <span className='w-[30%] text-center'>점수</span>
