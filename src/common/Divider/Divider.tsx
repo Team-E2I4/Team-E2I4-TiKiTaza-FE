@@ -10,8 +10,8 @@ const Divider = ({
   className = '',
 }: DividerProps) => {
   const orientationStyle = new Map([
-    ['horizontal', `w-full h-[0.1rem] border-t-[0.2rem]`],
-    ['vertical', `h-full w-[0.1rem] border-r-[0.2rem]`],
+    ['horizontal', `w-full h-[0.1rem] border-t-[0.1rem]`],
+    ['vertical', `h-full w-[0.1rem] border-r-[0.1rem]`],
   ]);
   return (
     <div
