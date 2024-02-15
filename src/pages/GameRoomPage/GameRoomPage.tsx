@@ -1,7 +1,7 @@
 import GameRoomHeader from './GameRoomHeader';
-import GameRoomUserCard from './GameRoomUserCard';
+import GameRoomUserList from './GameRoomUserList';
 
-interface I_gameRoomUserList {
+export interface I_gameRoomUserCard {
   userName: string;
   rank: number;
   userImage: string;
@@ -13,7 +13,7 @@ interface GameRoomPageProps {
   gameRoomName: string;
   gameMode: string;
   gameRoomMaximumHeadCount: number;
-  gameRoomUserList: Array<I_gameRoomUserList>;
+  gameRoomUserList: Array<I_gameRoomUserCard>;
 }
 
 const GameRoomPage = (props: GameRoomPageProps) => {
@@ -80,14 +80,7 @@ const GameRoomPage = (props: GameRoomPageProps) => {
   return (
     <div className='w-full flex flex-col justify-center items-center gap-[6rem]'>
       <GameRoomHeader {...props} />
-      <main className='flex-1 grid grid-rows-2 grid-cols-4 gap-x-[5rem] gap-y-[6rem]'>
-        {gameRoomUserList.map((gameRoomUser) => (
-          <GameRoomUserCard
-            key={gameRoomUser.userName}
-            {...gameRoomUser}
-          />
-        ))}
-      </main>
+      <GameRoomUserList gameRoomUserList={gameRoomUserList} />
       <footer className='w-[114.8rem] flex gap-[5rem]'>
         <div className='w-[45.3rem] h-[20.9rem] flex bg-beige-100 shadow-md shadow-black/50 rounded-[2.5rem]'>
           <p className='w-[60%] p-[3rem] overflow-y-scroll text-center text-[2rem]'>
