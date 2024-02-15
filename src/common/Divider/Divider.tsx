@@ -3,27 +3,15 @@ import { ComponentProps } from 'react';
 interface DividerProps {
   orientation?: 'horizontal' | 'vertical';
   className?: ComponentProps<'hr'>['className'];
-  variant?: 'solid' | 'dashed';
-  thickness?: string;
-  size?: string;
 }
 
 const Divider = ({
   orientation = 'horizontal',
   className = '',
-  variant = 'solid',
-  thickness = '1rem',
-  size = '100%',
 }: DividerProps) => {
   const orientationStyle = new Map([
-    [
-      'horizontal',
-      `w-[${size}] h-[${thickness}] border-t-[${thickness}] border-${variant}`,
-    ],
-    [
-      'vertical',
-      `h-[${size}] w-[${thickness}] border-r-[${thickness}] border-${variant}`,
-    ],
+    ['horizontal', `w-full h-[0.1rem] border-t-[0.2rem]`],
+    ['vertical', `h-full w-[0.1rem] border-r-[0.2rem]`],
   ]);
   return (
     <div
