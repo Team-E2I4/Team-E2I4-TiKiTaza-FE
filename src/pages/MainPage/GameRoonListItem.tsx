@@ -32,7 +32,7 @@ const GameRoomListItem = ({
             <img
               src={locked}
               alt='비공개'
-              className='mr-[1rem]'
+              className='mx-[1rem]'
             />
             <span className='truncate'>{title}</span>
           </>
