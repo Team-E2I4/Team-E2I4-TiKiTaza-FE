@@ -3,6 +3,7 @@ import IngameHeader from '@/common/Ingame/IngameHeader';
 import Input from '@/common/Input/Input';
 import { wordDummy, wordRankDummy } from './wordDummy';
 
+const EMPTY_WORD = 20;
 const positions = ['center', 'left', 'right'];
 const WordCell = ({ children }: { children: ReactNode }) => {
   const random = positions[Math.floor(Math.random() * positions.length)];
@@ -13,11 +14,11 @@ const WordCell = ({ children }: { children: ReactNode }) => {
     </span>
   );
 };
-// 총 120개의 cell. 서버로부터 받을 단어 100개 + 랜덤20개로 구성해야함
+// 총 120개의 cell. 서버로부터 받을 단어 100개 + 랜덤20개(EMPTY_WORD)로 구성해야함
 function shuffle(array: string[]) {
   return array.sort(() => Math.random() - 0.5);
 }
-const words = shuffle(wordDummy.concat(Array(20).fill('')));
+const words = shuffle(wordDummy.concat(Array(EMPTY_WORD).fill('')));
 interface WordRankProps {
   userId: number;
   track: number;
@@ -25,7 +26,7 @@ interface WordRankProps {
   score: number;
 }
 
-const MYUSERID = 3;
+const MY_USER_ID = 3;
 const WordRank = (data: WordRankProps) => {
   return (
     <>
@@ -35,7 +36,7 @@ const WordRank = (data: WordRankProps) => {
           <span className='absolute bottom-12 left-8'>🚗</span>
         </div>
         <div
-          className={`flex truncate justify-center pt-[0.5rem] ${data.userId === MYUSERID ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
+          className={`flex truncate justify-center pt-[0.5rem] ${data.userId === MY_USER_ID ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
           {data.userName} 긴 이름
         </div>
       </div>
