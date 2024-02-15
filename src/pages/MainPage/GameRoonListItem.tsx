@@ -7,6 +7,8 @@ interface GameRoomListItemProps {
   headCount: number;
 }
 
+const MAX_ROOM_HEAD_COUNT = 8;
+
 const GameRoomListItem = ({
   roomNumber,
   title,
@@ -25,7 +27,7 @@ const GameRoomListItem = ({
           <span
             key={category}
             className={`text-center truncate ${i === 1 ? 'flex-[4_0_0]' : 'flex-1'}`}>
-            {category}
+            {i === 3 ? `${category}/${MAX_ROOM_HEAD_COUNT}` : `${category}`}
           </span>
           {i !== arrayedProps.length - 1 && <span>ㅣ</span>}
         </>
