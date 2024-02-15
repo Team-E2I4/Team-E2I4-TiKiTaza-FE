@@ -19,7 +19,7 @@ const GameRoomListItem = ({
   );
 
   return (
-    <li className='flex w-full'>
+    <li className='flex w-full py-[1rem] bg-gray-10 hover:bg-coral-50 cursor-pointer'>
       {arrayedProps.map((category, i) => (
         <>
           <span
