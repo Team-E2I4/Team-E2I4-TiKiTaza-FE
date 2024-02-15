@@ -2,17 +2,20 @@ import { ComponentProps } from 'react';
 
 interface DividerProps {
   orientation?: 'horizontal' | 'vertical';
-  className?: ComponentProps<'div'>['className'];
+  className?: ComponentProps<'hr'>['className'];
 }
 
-const Divider = ({ orientation = 'horizontal', className }: DividerProps) => {
+const Divider = ({
+  orientation = 'horizontal',
+  className = '',
+}: DividerProps) => {
   const orientationStyle = new Map([
-    ['horizontal', 'h-[0.1rem]'],
-    ['vertical', 'w-[0.1rem]'],
+    ['horizontal', 'h-[0.1rem] w-full'],
+    ['vertical', 'w-[0.1rem] h-full'],
   ]);
   return (
-    <div
-      className={`bg-blue-100 ${className} ${orientationStyle.get(orientation)}`}></div>
+    <hr
+      className={`border-[1rem]  ${orientationStyle.get(orientation)} ${className}`}></hr>
   );
 };
 
