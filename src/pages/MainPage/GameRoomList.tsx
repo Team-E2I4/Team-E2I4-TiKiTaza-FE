@@ -106,17 +106,19 @@ const GameRoomList = () => {
           ))}
         </li>
         <Divider />
-        <div className='w-full flex flex-col gap-[1rem] max-h-[60rem] overflow-y-auto scrollbar-hide'>
-          {DUMMY_DATA.map(({ roomNumber, title, mode, headCount }) => (
-            <GameRoomListItem
-              key={roomNumber}
-              roomNumber={roomNumber}
-              title={title}
-              mode={mode}
-              headCount={headCount}
-            />
-          ))}
-        </div>
+        <li className='w-full'>
+          <ul className='w-full flex flex-col gap-[1rem] max-h-[60rem] overflow-y-auto scrollbar-hide'>
+            {DUMMY_DATA.map(({ roomNumber, title, mode, headCount }) => (
+              <GameRoomListItem
+                key={roomNumber}
+                roomNumber={roomNumber}
+                title={title}
+                mode={mode}
+                headCount={headCount}
+              />
+            ))}
+          </ul>
+        </li>
       </ul>
     </article>
   );
