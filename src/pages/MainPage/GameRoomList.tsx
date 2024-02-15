@@ -30,7 +30,7 @@ const DUMMY_DATA: GameRoomListItemProps[] = [
     roomNumber: 23,
     title: '티기타자 한판 고다고',
     mode: 'word',
-    isLocked: false,
+    isLocked: true,
     headCount: 7,
   },
   {
