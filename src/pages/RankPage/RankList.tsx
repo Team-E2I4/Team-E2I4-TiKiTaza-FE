@@ -24,47 +24,44 @@ const RankList = () => {
     },
     {
       id: 5,
-      nickname: 'user3',
+      nickname: 'user5',
       score: 60,
     },
     {
       id: 6,
-      nickname: 'user3',
+      nickname: 'user6',
       score: 50,
     },
     {
       id: 7,
-      nickname: 'user3',
+      nickname: 'user7',
       score: 40,
     },
     {
       id: 8,
-      nickname: 'user3',
+      nickname: 'user8',
       score: 30,
     },
     {
       id: 9,
-      nickname: 'user3',
+      nickname: 'user9',
       score: 20,
     },
   ];
   return (
-    <div>
-      <div></div>
-      <div>
-        <div className='flex gap-2 items-center font-bold text-5xl bg-[#FFF4DC] py-2 px-4 border-b'>
-          <span className='w-[20%] text-center'>순위</span>
-          <span className='w-[20%] text-center'>닉네임</span>
-          <span className='w-[20%] text-center'>점수</span>
-        </div>
-        {DUMMY_DATA.map((rank, index) => (
-          <RankItem
-            key={rank.id}
-            rank={rank}
-            index={index}
-          />
-        ))}
+    <div className='flex flex-col bg-[#FFF4DC] gap-4 rounded-2xl overflow-hidden'>
+      <div className='flex gap-2 justify-center font-bold font-[Giants-Inline] text-5xl py-2 px-4 border-b border-gray-200'>
+        <span className='w-[30%] text-center'>순위</span>
+        <span className='w-[40%] text-center'>닉네임</span>
+        <span className='w-[30%] text-center'>점수</span>
       </div>
+      {DUMMY_DATA.map((rank, index) => (
+        <RankItem
+          key={rank.id}
+          rank={rank}
+          index={index}
+        />
+      ))}
     </div>
   );
 };

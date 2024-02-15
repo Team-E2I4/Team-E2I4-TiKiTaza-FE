@@ -8,8 +8,8 @@ interface RankItemProps {
 
 const RankItem = ({ rank, index }: RankItemProps) => {
   return (
-    <div className='flex gap-2 items-center font-bold text-4xl bg-[#FFF4DC] py-2 px-4 border-b'>
-      <span className='w-[20%] text-center'>
+    <div className='flex gap-2 justify-center font-bold text-4xl py-2 px-4 border-b border-gray-100'>
+      <span className='w-[30%] text-center'>
         {index === 0
           ? '🥇'
           : index === 1
@@ -18,8 +18,8 @@ const RankItem = ({ rank, index }: RankItemProps) => {
               ? '🥉'
               : index + 1}
       </span>
-      <span className='w-[20%] text-center'>{rank.nickname}</span>
-      <span className='w-[20%] text-center'>{rank.score}</span>
+      <span className='w-[40%] text-center'>{rank.nickname}</span>
+      <span className='w-[30%] text-center'>{rank.score}</span>
     </div>
   );
 };
