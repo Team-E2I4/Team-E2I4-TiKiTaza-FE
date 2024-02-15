@@ -8894,6 +8894,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tailwind-scrollbar-hide@npm:^1.1.7":
+  version: 1.1.7
+  resolution: "tailwind-scrollbar-hide@npm:1.1.7"
+  checksum: 10c0/1027ca724c51a43da9a9a9f730f707652bcaded6f94d82fd445e349ee19bd34d8c1312e3e075193ec89c0524d824e716a06d646ca757913f4df0f4f5faec8fe4
+  languageName: node
+  linkType: hard
+
 "tailwindcss@npm:^3.4.1":
   version: 3.4.1
   resolution: "tailwindcss@npm:3.4.1"
@@ -8999,6 +9006,7 @@ __metadata:
     react-highlight: "npm:^0.15.0"
     react-router-dom: "npm:^6.22.0"
     storybook: "npm:^7.6.13"
+    tailwind-scrollbar-hide: "npm:^1.1.7"
     tailwindcss: "npm:^3.4.1"
     typescript: "npm:^5.2.2"
     vite: "npm:^5.0.8"
