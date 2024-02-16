@@ -1,3 +1,6 @@
+import { DUMMY_DATA } from '../RankPage/RankData';
+import RankList from '../RankPage/RankList';
+
 const GameFinishPage = () => {
   return (
     <div className='flex flex-col gap-[8rem] items-center'>
@@ -18,7 +21,9 @@ const GameFinishPage = () => {
             3
           </div>
         </div>
-        <div className='flex-1'>RankList 들어갈 자리</div>
+        <div className='flex-1'>
+          <RankList data={DUMMY_DATA} />
+        </div>
       </section>
       <section className='flex gap-10 font-[Giants-Inline]'>
         <div className='bg-coral-100 px-6 py-6 rounded-[12px] text-3xl font-bold'>
