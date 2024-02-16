@@ -14,7 +14,7 @@ const PrivateRoomModal = ({ children, className }: PrivateRoomModalProps) => {
       <Dialog.Portal>
         <Dialog.Overlay
           className={
-            'fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[100vw] h-[100vh] bg-black/30'
+            'fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[100vw] h-[100vh] bg-black/30 animate-[overlayShow_150ms_cubic-bezier(0.16,1,0.3,1)]'
           }
         />
         <Dialog.Content
