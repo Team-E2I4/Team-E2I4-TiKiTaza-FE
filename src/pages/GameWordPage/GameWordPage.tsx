@@ -30,16 +30,16 @@ const MY_USER_ID = 3;
 const WordRank = (data: WordRankProps) => {
   return (
     <>
-      <div className='w-28 box-content relative'>
+      <div className='w-24 box-content relative'>
         <div
           className={`border-black border-dashed border-r-2 h-[21rem] ${data.track === 0 && 'border-l-2 border-solid'}`}>
           <div className='w-full absolute bottom-12 text-center'>
-            <span className=''>🚗</span>
+            <span>🚗</span>
           </div>
         </div>
         <div
-          className={`w-full text-center truncate pt-[0.5rem] ${data.userId === MY_USER_ID ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
-          {data.userName}
+          className={`flex truncate justify-center pt-[0.5rem] ${data.userId === MY_USER_ID ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
+          {data.userName} 긴 이름
         </div>
       </div>
     </>
