@@ -50,31 +50,25 @@ const DUMMY_DATA = [
 ];
 
 const RankPage = () => {
+  const tabData = [
+    { value: 'tab1', text: '전체' },
+    { value: 'tab2', text: '단어' },
+    { value: 'tab3', text: '문장' },
+    { value: 'tab4', text: '코드' },
+  ];
   return (
     <Tabs.Root
       className='flex flex-col gap-[4rem] w-[60%] mx-auto'
       defaultValue='tab1'>
       <Tabs.List className='flex gap-[11rem] justify-center font-bold font-[Giants-Inline] text-4xl text-white'>
-        <Tabs.Trigger
-          className='bg-coral-100 rounded-[1rem] px-8 py-4'
-          value='tab1'>
-          전체
-        </Tabs.Trigger>
-        <Tabs.Trigger
-          className='bg-coral-100 rounded-[1rem] px-8 py-4'
-          value='tab2'>
-          단어
-        </Tabs.Trigger>
-        <Tabs.Trigger
-          className='bg-coral-100 rounded-[1rem] px-8 py-4'
-          value='tab3'>
-          문장
-        </Tabs.Trigger>
-        <Tabs.Trigger
-          className='bg-coral-100 rounded-[1rem] px-8 py-4'
-          value='tab4'>
-          코드
-        </Tabs.Trigger>
+        {tabData.map(({ value, text }) => (
+          <Tabs.Trigger
+            key={value}
+            value={value}
+            className='bg-coral-100 rounded-[1rem] px-8 py-4'>
+            {text}
+          </Tabs.Trigger>
+        ))}
       </Tabs.List>
       <Tabs.Content value='tab1'>
         <RankList data={DUMMY_DATA} />
