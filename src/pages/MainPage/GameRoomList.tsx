@@ -129,7 +129,7 @@ const GameRoomList = () => {
             {DUMMY_DATA.map(
               ({ roomNumber, title, isLocked, mode, headCount }) => (
                 <GameRoomListItem
-                  key={roomNumber}
+                  key={roomNumber + title}
                   isLocked={isLocked}
                   roomNumber={roomNumber}
                   title={title}

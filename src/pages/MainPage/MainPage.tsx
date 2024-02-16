@@ -1,4 +1,5 @@
 import GameRoomList from './GameRoomList';
+import PrivateRoomModal from './PrivateRoomModal';
 import UserCard from './UserCard';
 import UserList from './UserList';
 
@@ -10,6 +11,7 @@ const MainPage = () => {
         <UserList />
         <article className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full'>
           <button>전체 랭킹 보기</button>
+          <PrivateRoomModal />
         </article>
         <UserCard />
       </section>
