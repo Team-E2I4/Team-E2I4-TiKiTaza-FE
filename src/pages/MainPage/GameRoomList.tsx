@@ -125,7 +125,7 @@ const GameRoomList = () => {
         </li>
         <Divider className='border-gray-200' />
         <li className='w-full'>
-          <ul className='w-full flex flex-col gap-[1rem] max-h-[60rem] overflow-y-auto scrollbar-hide first:pt-[1rem]'>
+          <ul className='w-full flex flex-col gap-[1rem] max-h-[60rem] overflow-y-auto scrollbar-hide pt-[1rem]'>
             {DUMMY_DATA.map(
               ({ roomNumber, title, isLocked, mode, headCount }) => (
                 <GameRoomListItem
