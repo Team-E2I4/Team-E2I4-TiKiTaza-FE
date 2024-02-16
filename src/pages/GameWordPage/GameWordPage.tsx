@@ -97,7 +97,7 @@ const GameWordPage = () => {
                   );
                 })}
               </div>
-              <Input style={`w-[20rem] h-[4rem]`} />
+              <Input whSize={`w-[20rem] h-[4rem]`} />
             </div>
             <div className='w-[20rem]'></div>
           </div>
