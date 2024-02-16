@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import Divider from '@/common/Divider/Divider';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import Input from '@/common/Input/Input';
 import { wordDummy, wordRankDummy } from './wordDummy';
@@ -27,16 +28,36 @@ interface WordRankProps {
 }
 
 const MY_USER_ID = 3;
+const HEAD_COUNT = 8; // TODO: 참여자수는 게임룸에서부터 받아와햘것 같습니다. 전역 관리 등
+
 const WordRank = (data: WordRankProps) => {
   return (
     <>
       <div className='w-28 box-content relative'>
-        <div
-          className={`border-black border-dashed border-r-2 h-[21rem] ${data.track === 0 && 'border-l-2 border-solid'}`}>
+        <div className={'h-[21rem] flex justify-between'}>
+          {data.track === 0 ? (
+            <Divider
+              orientation='vertical'
+              className='border-r-[.2rem]'
+            />
+          ) : (
+            <Divider
+              orientation='vertical'
+              className='border-dashed border-r-[.2rem]'
+            />
+          )}
+
           <div className='w-full absolute bottom-12 text-center'>
             <span>🚗</span>
           </div>
+          {data.track === HEAD_COUNT - 1 && (
+            <Divider
+              orientation='vertical'
+              className='border-r-[.2rem]'
+            />
+          )}
         </div>
+
         <div
           className={`w-full text-center truncate pt-[0.5rem] ${data.userId === MY_USER_ID ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
           {data.userName}
@@ -64,13 +85,15 @@ const GameWordPage = () => {
                 {wordRankDummy.map((rank, i) => {
                   const { userId, userName, score } = rank;
                   return (
-                    <WordRank
-                      key={i}
-                      track={i}
-                      userId={userId}
-                      userName={userName}
-                      score={score}
-                    />
+                    <>
+                      <WordRank
+                        key={i}
+                        track={i}
+                        userId={userId}
+                        userName={userName}
+                        score={score}
+                      />
+                    </>
                   );
                 })}
               </div>
