@@ -7,7 +7,7 @@ import logo_taza from '@/asssets/logo_taza.png';
 const Header = () => {
   return (
     <header className='bg-green-100 h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
-      <section className='h-full flex items-center'>
+      <section className='h-full flex items-center cursor-pointer'>
         <img
           src={logo_car}
           className='h-[70%]'
