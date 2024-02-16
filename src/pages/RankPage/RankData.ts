@@ -39,9 +39,4 @@ export const DUMMY_DATA = [
     nickname: 'user8',
     score: 30,
   },
-  {
-    id: 9,
-    nickname: 'user9',
-    score: 20,
-  },
 ];
