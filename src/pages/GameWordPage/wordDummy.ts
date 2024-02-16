@@ -103,42 +103,42 @@ export const wordDummy = [
 export const wordRankDummy = [
   {
     userId: 1,
-    userName: '유저1호',
+    userName: '1',
     score: 0,
   },
   {
     userId: 2,
-    userName: '유저2호',
+    userName: '2',
     score: 0,
   },
   {
     userId: 3,
-    userName: '유저3호',
+    userName: '3',
     score: 0,
   },
   {
     userId: 4,
-    userName: '유저4호',
+    userName: '4',
     score: 0,
   },
   {
     userId: 5,
-    userName: '유저5호',
+    userName: '5',
     score: 0,
   },
   {
     userId: 6,
-    userName: '유저6호',
+    userName: '6',
     score: 0,
   },
   {
     userId: 7,
-    userName: '유저7호',
+    userName: '7',
     score: 0,
   },
   {
     userId: 8,
-    userName: '유저8호',
+    userName: '8',
     score: 0,
   },
 ];
