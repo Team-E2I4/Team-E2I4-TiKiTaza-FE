@@ -16,9 +16,9 @@ const WordCell = ({ children }: { children: ReactNode }) => {
   );
 };
 // 총 120개의 cell. 서버로부터 받을 단어 100개 + 랜덤20개(EMPTY_WORD)로 구성해야함
-function shuffle(array: string[]) {
+const shuffle = (array: string[]) => {
   return array.sort(() => Math.random() - 0.5);
-}
+};
 const words = shuffle(wordDummy.concat(Array(EMPTY_WORD).fill('')));
 interface WordRankProps {
   userId: number;
