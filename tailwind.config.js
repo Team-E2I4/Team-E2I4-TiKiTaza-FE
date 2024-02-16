@@ -22,6 +22,16 @@ export default {
       width: {
         'layout-w': '136.6rem',
       },
+      keyframes: {
+        overlayShow: {
+          from: {
+            opacity: 0,
+          },
+          to: {
+            opacity: 1,
+          },
+        },
+      },
     },
   },
   plugins: [scrollbarHide],
