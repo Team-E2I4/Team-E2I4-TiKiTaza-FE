@@ -11,25 +11,18 @@ interface RankItemProps {
 }
 
 const RankItem = ({ rank, index }: RankItemProps) => {
+  const mappedRank: Record<number, string> = {
+    0: first,
+    1: second,
+    2: third,
+  };
   return (
     <div className='flex gap-2 justify-center items-center font-bold text-4xl py-6 px-4 border-b border-gray-100'>
       <span className='w-[30%] flex justify-center items-center'>
-        {index === 0 ? (
+        {index < 3 ? (
           <img
-            src={first}
-            alt='first'
-            className='h-10'
-          />
-        ) : index === 1 ? (
-          <img
-            src={second}
-            alt='second'
-            className='h-10'
-          />
-        ) : index === 2 ? (
-          <img
-            src={third}
-            alt='third'
+            src={mappedRank[index]}
+            alt={mappedRank[index]}
             className='h-10'
           />
         ) : (
