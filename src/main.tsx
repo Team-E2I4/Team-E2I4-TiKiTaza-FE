@@ -68,7 +68,7 @@ export const router = createBrowserRouter([
             element: <GameWordPage />,
           },
           {
-            path: '/gamefinish',
+            path: '/gameroom/:roomId',
             element: <GameFinishPage />,
           },
           {
