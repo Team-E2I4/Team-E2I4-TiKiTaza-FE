@@ -1,4 +1,5 @@
 import * as Avatar from '@radix-ui/react-avatar';
+import close from '@/assets/close.png';
 import { I_gameRoomUserCard } from './GameRoomPage';
 
 const GameRoomUserItem = ({
@@ -9,7 +10,13 @@ const GameRoomUserItem = ({
 }: I_gameRoomUserCard) => {
   return (
     <div className='w-[25.8rem] h-[21.2rem] flex flex-col bg-white shadow-md shadow-black/50 rounded-[2.5rem]'>
-      <button className='self-end pt-[1.6rem] pr-[2.7rem] '>❌</button>
+      <button className='self-end pt-[1.6rem] pr-[1.6rem] '>
+        <img
+          src={close}
+          alt='강퇴'
+          className='w-[3rem]'
+        />
+      </button>
       <div className='px-[2rem] py-[1rem] flex gap-[2rem]'>
         <Avatar.Root className='w-1/2 self-center'>
           <Avatar.Image
