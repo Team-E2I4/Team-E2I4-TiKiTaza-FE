@@ -1,6 +1,9 @@
 import backward from '@/assets/backward.png';
-import GameRoomFooter from './GameRoomFooter';
+import GameModeInfo from './GameModeInfo';
+import GameReadyAndStart from './GameReadyAndStart';
 import GameRoomInfo from './GameRoomInfo';
+import GameRoomLinkInvitation from './GameRoomLinkInvitation';
+import GameRoomSetting from './GameRoomSetting';
 import GameRoomUserList from './GameRoomUserList';
 
 export interface I_gameRoomUserCard {
@@ -94,7 +97,13 @@ const GameRoomPage = (props: GameRoomPageProps) => {
         <GameRoomInfo {...props} />
       </header>
       <GameRoomUserList gameRoomUserList={gameRoomUserList} />
-      <GameRoomFooter />
+      <footer className='w-[114.8rem] flex gap-[5rem]'>
+        <GameModeInfo>
+          <GameRoomSetting />
+        </GameModeInfo>
+        <GameRoomLinkInvitation />
+        <GameReadyAndStart />
+      </footer>
     </div>
   );
 };
