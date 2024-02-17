@@ -84,7 +84,7 @@ const GameRoomPage = (props: GameRoomPageProps) => {
     ],
   } = props;
   return (
-    <div className='w-full flex flex-col justify-center items-center gap-[3rem]'>
+    <div className='w-full flex flex-col justify-center items-center gap-[3rem] select-none'>
       <header className='flex gap-[5rem]'>
         {/* TODO: backward 공용 component로 변환 */}
         <button type='button'>
