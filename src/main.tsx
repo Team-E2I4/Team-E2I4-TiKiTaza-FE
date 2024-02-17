@@ -9,7 +9,7 @@ import Layout from './common/Layout/Layout.tsx';
 import GameCodePage from './pages/GameCodePage/GameCodePage.tsx';
 import GameFinishPage from './pages/GameFinishPage/GameFinishPage.tsx';
 import GameRoomPage from './pages/GameRoomPage/GameRoomPage.tsx';
-import GameSentencePage from './pages/GameSentencePage/GameSentencPage.tsx';
+import GameSentencePage from './pages/GameSentencePage/GameSentencePage.tsx';
 import GameWordPage from './pages/GameWordPage/GameWordPage.tsx';
 import LoginPage from './pages/LoginPage/LoginPage.tsx';
 import MainPage from './pages/MainPage/MainPage.tsx';
