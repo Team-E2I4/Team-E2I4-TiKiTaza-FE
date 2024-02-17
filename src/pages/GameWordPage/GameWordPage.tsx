@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import Divider from '@/common/Divider/Divider';
+import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import Input from '@/common/Input/Input';
 import { wordDummy, wordRankDummy } from './wordDummy';
@@ -78,8 +79,11 @@ const GameWordPage = () => {
               return <WordCell key={i + w}>{w}</WordCell>;
             })}
           </div>
-          <div className='flex flex-row w-10/12 h-[30rem] mt-4'>
-            <div className='w-[20rem]'></div>
+          <div className='flex flex-row items-end w-10/12 h-[30rem] mt-4'>
+            <Dashboard
+              type='wpm'
+              value={300}
+            />
             <div className='flex flex-col grow items-center'>
               <div className='grow flex relative w-full justify-center'>
                 {wordRankDummy.map((rank, i) => {
@@ -99,7 +103,10 @@ const GameWordPage = () => {
               </div>
               <Input whSize={`w-[20rem] h-[4rem]`} />
             </div>
-            <div className='w-[20rem]'></div>
+            <Dashboard
+              type='accuracy'
+              value={300}
+            />
           </div>
         </div>
       </div>

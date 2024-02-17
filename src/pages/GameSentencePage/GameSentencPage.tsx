@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import { SentenceNext, SentenceNow } from '@/common/Ingame/SentenceBlocks';
@@ -14,10 +15,18 @@ const sentenceDummy = [
   '가장 예쁜 생각을 너에게 주고 싶다.',
 ];
 const GameSentencePage = () => {
+  //이하 임의값 테스트 코드입니다
   const [idx, setIdx] = useState(1);
-  setTimeout(() => {
+  setInterval(() => {
     setIdx((idx) => (idx + 1) % sentenceDummy.length);
   }, 30000);
+  const [wpmTest, setWpmTest] = useState(0);
+  const [accTest, setAccTest] = useState(0);
+  setInterval(() => {
+    setWpmTest(Math.floor(Math.random() * 1001));
+    setAccTest(Math.floor(Math.random() * 101));
+  }, 2000);
+
   return (
     <>
       <IngameHeader />
@@ -26,10 +35,22 @@ const GameSentencePage = () => {
           <IngameRank />
         </div>
         <div className='flex flex-col items-center justify-center ml-80 h-[50rem] border-2 border-black'>
-          <SentenceNow text={sentenceDummy[idx]} />
-          <Input />
-          <SentenceNext text={sentenceDummy[idx + 1]} />
-          <SentenceNext text={sentenceDummy[idx + 2]} />
+          <div className='flex flex-col items-center justify-center'>
+            <SentenceNow text={sentenceDummy[idx]} />
+            <Input />
+            <SentenceNext text={sentenceDummy[idx + 1]} />
+            <SentenceNext text={sentenceDummy[idx + 2]} />
+          </div>
+          <div className='w-full flex justify-evenly mt-20'>
+            <Dashboard
+              type='wpm'
+              value={wpmTest}
+            />
+            <Dashboard
+              type='accuracy'
+              value={accTest}
+            />
+          </div>
         </div>
       </div>
     </>
