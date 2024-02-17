@@ -1,5 +1,6 @@
+import backward from '@/assets/backward.png';
 import GameRoomFooter from './GameRoomFooter';
-import GameRoomHeader from './GameRoomHeader';
+import GameRoomInfo from './GameRoomInfo';
 import GameRoomUserList from './GameRoomUserList';
 
 export interface I_gameRoomUserCard {
@@ -81,7 +82,17 @@ const GameRoomPage = (props: GameRoomPageProps) => {
   } = props;
   return (
     <div className='w-full flex flex-col justify-center items-center gap-[3rem]'>
-      <GameRoomHeader {...props} />
+      <header className='flex gap-[5rem]'>
+        {/* TODO: backward 공용 component로 변환 */}
+        <button type='button'>
+          <img
+            src={backward}
+            className='w-[4.8rem]'
+            alt='뒤로가기'
+          />
+        </button>
+        <GameRoomInfo {...props} />
+      </header>
       <GameRoomUserList gameRoomUserList={gameRoomUserList} />
       <GameRoomFooter />
     </div>

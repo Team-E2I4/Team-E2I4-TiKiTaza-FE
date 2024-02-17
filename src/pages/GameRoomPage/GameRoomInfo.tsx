@@ -1,7 +1,6 @@
-import backward from '@/assets/backward.png';
 import { I_gameRoomUserCard } from './GameRoomPage';
 
-interface GameRoomHeaderProps {
+interface GameRoomInfoProps {
   gameRoomId: string;
   gameRoomName: string;
   gameMode: string;
@@ -9,7 +8,7 @@ interface GameRoomHeaderProps {
   gameRoomUserList: Array<I_gameRoomUserCard>;
 }
 
-const GameRoomHeader = ({
+const GameRoomInfo = ({
   // DummyData for Test
   gameRoomId = 'no.23',
   gameRoomName = '티키타자 한판 고다고',
@@ -73,32 +72,21 @@ const GameRoomHeader = ({
       userImageFallbackDelay: 6000,
     },
   ],
-}: GameRoomHeaderProps) => {
+}: GameRoomInfoProps) => {
   return (
-    <>
-      <header className='flex gap-[5rem]'>
-        <button type='button'>
-          <img
-            src={backward}
-            className='w-[4.8rem]'
-            alt='뒤로가기'
-          />
-        </button>
-        <div className='w-[105rem] h-[7.1rem] text-[2rem] flex bg-beige-100 rounded-[2.5rem] shadow-md shadow-black/50 items-center '>
-          <div className='flex justify-center items-center w-[25%] h-[70%] border-r border-solid border-black'>
-            {gameRoomId}
-          </div>
-          <div className='flex justify-center items-center w-[35%] h-[70%] border-r border-solid border-black'>
-            {gameRoomName}
-          </div>
-          <div className='flex justify-center items-center w-[20%] h-[70%] border-r border-solid border-black'>
-            {gameMode}
-          </div>
-          <div className='flex justify-center items-center w-[20%] h-[70%]'>{`${gameRoomUserList.length} / ${gameRoomMaximumHeadCount}`}</div>
-        </div>
-      </header>
-    </>
+    <div className='w-[105rem] h-[7.1rem] text-[2rem] flex bg-beige-100 rounded-[2.5rem] shadow-md shadow-black/50 items-center '>
+      <div className='flex justify-center items-center w-[25%] h-[70%] border-r border-solid border-black'>
+        {gameRoomId}
+      </div>
+      <div className='flex justify-center items-center w-[35%] h-[70%] border-r border-solid border-black'>
+        {gameRoomName}
+      </div>
+      <div className='flex justify-center items-center w-[20%] h-[70%] border-r border-solid border-black'>
+        {gameMode}
+      </div>
+      <div className='flex justify-center items-center w-[20%] h-[70%]'>{`${gameRoomUserList.length} / ${gameRoomMaximumHeadCount}`}</div>
+    </div>
   );
 };
 
-export default GameRoomHeader;
+export default GameRoomInfo;
