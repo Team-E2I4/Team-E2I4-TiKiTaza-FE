@@ -1,4 +1,5 @@
 import Highlight from 'react-highlight';
+import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import Input from '@/common/Input/Input';
@@ -37,10 +38,16 @@ const GameCodePage = () => {
           <IngameRank />
         </div>
         <div className='flex flex-col items-center justify-center ml-80 h-[50rem] border-2 border-black'>
-          <div className='flex'>
-            <div></div>
+          <div className='flex items-end gap-4'>
+            <Dashboard
+              type='wpm'
+              value={90}
+            />
             <GameContainer />
-            <div></div>
+            <Dashboard
+              type='accuracy'
+              value={100}
+            />
           </div>
           <Input />
         </div>
