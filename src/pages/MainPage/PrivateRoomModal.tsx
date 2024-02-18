@@ -23,7 +23,7 @@ const PrivateRoomModal = ({ children, className }: PrivateRoomModalProps) => {
           }
         />
         <Dialog.Content
-          className={`rounded-[1rem] border-green-100 border-[0.3rem] w-[30rem] h-[15rem] flex flex-col items-center justify-center bg-white z-10 fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] ${className}`}>
+          className={` rounded-[1rem] border-green-100 border-[0.3rem] w-[30rem] h-[15rem] flex flex-col items-center justify-center bg-white z-10 fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] ${className}`}>
           <Dialog.Title>비밀번호를 입력해주세요!</Dialog.Title>
           <Dialog.Description>
             <form
@@ -43,8 +43,8 @@ const PrivateRoomModal = ({ children, className }: PrivateRoomModalProps) => {
           <Dialog.Close asChild>
             <button
               aria-label='Close'
-              className='hover:bg-gray-100'>
-              [x]
+              className='hover:bg-gray-100 absolute w-[2rem] top-[1rem] right-[1rem]'>
+              X
             </button>
           </Dialog.Close>
         </Dialog.Content>
