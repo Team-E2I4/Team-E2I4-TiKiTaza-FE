@@ -1,8 +1,8 @@
 import * as Avatar from '@radix-ui/react-avatar';
-import bgm_volume from '@/asssets/bgm_volume.svg';
-import effect_volume from '@/asssets/effect_volume.svg';
-import logo_car from '@/asssets/logo_car.png';
-import logo_taza from '@/asssets/logo_taza.png';
+import bgm_volume from '@/assets/bgm_volume.svg';
+import effect_volume from '@/assets/effect_volume.svg';
+import logo_car from '@/assets/logo_car.png';
+import logo_taza from '@/assets/logo_taza.png';
 
 const Header = () => {
   return (

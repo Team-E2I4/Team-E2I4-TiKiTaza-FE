@@ -1,6 +1,6 @@
-import google from '@/asssets/login/g-logo.png';
-import kakao from '@/asssets/login/k-logo.png';
-import logo from '@/asssets/logo_big.png';
+import google from '@/assets/login/g-logo.png';
+import kakao from '@/assets/login/k-logo.png';
+import logo from '@/assets/logo_big.png';
 
 const LoginPage = () => {
   return (
