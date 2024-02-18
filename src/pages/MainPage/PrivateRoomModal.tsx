@@ -21,7 +21,12 @@ const PrivateRoomModal = ({ children, className }: PrivateRoomModalProps) => {
           className={`rounded-[1rem] border-green-100 border-[0.3rem] w-[30rem] h-[15rem] flex flex-col items-center justify-center bg-white z-10 fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] ${className}`}>
           <Dialog.Title>비밀번호를 입력해주세요!</Dialog.Title>
           <Dialog.Description>
-            <Input whSize='w-[24rem] h-[3rem]' />
+            <form className='flex gap-[1rem]'>
+              <Input whSize='w-[20rem] h-[3rem]' />
+              <Dialog.Close asChild>
+                <button>입장!</button>
+              </Dialog.Close>
+            </form>
           </Dialog.Description>
           <Dialog.Close asChild>
             <button
