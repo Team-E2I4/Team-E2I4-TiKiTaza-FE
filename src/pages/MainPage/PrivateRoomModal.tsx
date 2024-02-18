@@ -27,13 +27,17 @@ const PrivateRoomModal = ({ children, className }: PrivateRoomModalProps) => {
           <Dialog.Title>비밀번호를 입력해주세요!</Dialog.Title>
           <Dialog.Description>
             <form
-              className='flex gap-[1rem]'
+              className='flex gap-[1rem] items-center'
               onSubmit={(e) => {
                 e.preventDefault();
                 wait().then(() => setIsOpen(false));
               }}>
               <Input whSize='w-[20rem] h-[3rem]' />
-              <button type='submit'>입장!</button>
+              <button
+                type='submit'
+                className='hover:bg-gray-100 h-1/2'>
+                입장!
+              </button>
             </form>
           </Dialog.Description>
           <Dialog.Close asChild>
