@@ -4,6 +4,7 @@ import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import { SentenceNext, SentenceNow } from '@/common/Ingame/SentenceBlocks';
 import Input from '@/common/Input/Input';
+import useCanvas from '@/hooks/useCanvas';
 
 const sentenceDummy = [
   '저녁 때 돌아갈 집이 있다는 것',
@@ -27,6 +28,13 @@ const GameSentencePage = () => {
     setAccTest(Math.floor(Math.random() * 101));
   }, 2000);
 
+  const canvasRef = useCanvas({
+    setCanvas: (canvas: HTMLCanvasElement) => {
+      canvas.width = 1160;
+      canvas.height = 500;
+    },
+  });
+
   return (
     <>
       <IngameHeader />
@@ -34,12 +42,16 @@ const GameSentencePage = () => {
         <div className='absolute'>
           <IngameRank />
         </div>
-        <div className='flex flex-col items-center justify-center ml-80 h-[50rem] border-2 border-black'>
+        <div className='flex flex-col items-center justify-center ml-80 h-[50rem] relative z-[2]'>
           <div className='flex flex-col items-center justify-center'>
             <SentenceNow text={sentenceDummy[idx]} />
             <Input />
             <SentenceNext text={sentenceDummy[idx + 1]} />
             <SentenceNext text={sentenceDummy[idx + 2]} />
+            <canvas
+              ref={canvasRef}
+              className='absolute w-full h-full z-[-1] bg-[pink] border-2 border-black '
+            />
           </div>
           <div className='w-full flex justify-evenly mt-20'>
             <Dashboard
