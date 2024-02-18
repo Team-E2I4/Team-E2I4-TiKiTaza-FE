@@ -112,7 +112,6 @@ const GameRoomList = () => {
           {GAME_ROOM_LIST_CATEGORY.map((category, i) => (
             <Fragment key={i}>
               <span
-                key={i}
                 className={`text-center ${category === '방 제목' ? 'flex-[4_0_0]' : 'flex-1'}`}>
                 {category}
               </span>
