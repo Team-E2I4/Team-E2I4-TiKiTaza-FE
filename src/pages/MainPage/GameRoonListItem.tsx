@@ -1,4 +1,4 @@
-import locked from '@/asssets/locked.svg';
+import locked from '@/assets/locked.svg';
 import Divider from '@/common/Divider/Divider';
 export interface GameRoomListItemProps {
   roomNumber: number;

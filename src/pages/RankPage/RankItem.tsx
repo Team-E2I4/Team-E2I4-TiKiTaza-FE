@@ -1,6 +1,6 @@
-import first from '@/asssets/rank/first_rank.png';
-import second from '@/asssets/rank/second_rank.png';
-import third from '@/asssets/rank/third_rank.png';
+import first from '@/assets/rank/first_rank.png';
+import second from '@/assets/rank/second_rank.png';
+import third from '@/assets/rank/third_rank.png';
 
 interface RankItemProps {
   rank: {
