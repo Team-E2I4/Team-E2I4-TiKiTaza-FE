@@ -20,30 +20,28 @@ const PrivateRoomModal = ({ children, className }: PrivateRoomModalProps) => {
       <Dialog.Portal>
         <Dialog.Overlay
           className={
-            'fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[100vw] h-[100vh] bg-black/30 animate-[overlayShow_150ms_cubic-bezier(0.16,1,0.3,1)]'
+            'fixed inset-0   w-[100vw] h-[100vh] bg-black/30 animate-[overlayShow_150ms_cubic-bezier(0.16,1,0.3,1)]'
           }
         />
         <Dialog.Content
-          className={` rounded-[1rem] border-green-100 border-[0.3rem] w-[30rem] h-[15rem] flex flex-col items-center justify-center bg-white z-10 fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] ${className}`}>
+          className={` rounded-[1rem] border-green-100 border-[0.3rem] w-[30rem] h-[15rem] flex flex-col items-center justify-center bg-white z-10 fixed inset-1/2 translate-x-[-50%] translate-y-[-50%] ${className}`}>
           <Dialog.Title>비밀번호를 입력해주세요!</Dialog.Title>
-          <Dialog.Description>
-            <form
-              className='flex gap-[1rem] items-center'
-              onSubmit={(e) => {
-                e.preventDefault();
-                wait().then(() => setIsOpen(false));
-              }}>
-              <Input whSize='w-[20rem] h-[3rem]' />
-              <button
-                type='submit'
-                className='hover:bg-gray-100 rounded-[0.3rem]'>
-                <PaperPlaneIcon
-                  color='green'
-                  className='size-[2rem]'
-                />
-              </button>
-            </form>
-          </Dialog.Description>
+          <form
+            className='flex gap-[1rem] items-center'
+            onSubmit={(e) => {
+              e.preventDefault();
+              wait().then(() => setIsOpen(false));
+            }}>
+            <Input whSize='w-[20rem] h-[3rem]' />
+            <button
+              type='submit'
+              className='hover:bg-gray-100 rounded-[0.3rem]'>
+              <PaperPlaneIcon
+                className='size-[2rem]'
+                color='green'
+              />
+            </button>
+          </form>
           <Dialog.Close asChild>
             <button
               aria-label='Close'
