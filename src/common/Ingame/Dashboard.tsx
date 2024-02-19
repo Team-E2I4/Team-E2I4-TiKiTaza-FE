@@ -1,3 +1,4 @@
+import './dashborad.css';
 import needle from '@/asssets/ingame/needle.png';
 
 interface DashboardProps {
@@ -16,7 +17,8 @@ const Dashboard = ({ type, value }: DashboardProps) => {
   return (
     <>
       <div>
-        <div className='w-[24rem] h-[12rem] rounded-[12rem_12rem_0_0] border-x-[2rem] border-t-[2rem] border-green-100 box-border'>
+        <div className='w-[24rem] h-[12rem] p-8 box-border rounded-[12rem_12rem_0_0] dashboardStyle'>
+          {/* <div className='w-[24rem] h-[12rem] p-8 bg-gradient-radial bg-origin-content'> */}
           <img
             src={needle}
             className={`w-[6rem] relative top-[8rem] left-[5rem] origin-[80%_15%]`}
