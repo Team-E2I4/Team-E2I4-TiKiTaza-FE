@@ -26,12 +26,12 @@ const GameFinishPage = () => {
         </div>
       </section>
       <section className='flex gap-10 font-[Giants-Inline]'>
-        <div className='bg-coral-100 px-6 py-6 rounded-[1rem] text-3xl font-bold'>
+        <button className='bg-coral-100 px-6 py-6 rounded-[1rem] text-3xl font-bold'>
           로비로 나가기
-        </div>
-        <div className='bg-coral-100 px-6 py-6 rounded-[1rem] text-3xl font-bold'>
+        </button>
+        <button className='bg-coral-100 px-6 py-6 rounded-[1rem] text-3xl font-bold'>
           다시하기
-        </div>
+        </button>
       </section>
     </div>
   );
