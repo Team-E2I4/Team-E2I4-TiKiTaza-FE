@@ -1,4 +1,4 @@
-import locked from '@/assets/locked.svg';
+import { LockClosedIcon } from '@radix-ui/react-icons';
 import Divider from '@/common/Divider/Divider';
 export interface GameRoomListItemProps {
   roomNumber: number;
@@ -31,14 +31,10 @@ const GameRoomListItem = ({
         className='border-gray-200'
       />
       <div className='flex-[4_0_0] truncate flex justify-center'>
-        {isLocked && (
-          <img
-            src={locked}
-            alt='비공개'
-            className='px-[1rem]'
-          />
-        )}
-        <span className='text-center truncate max-w-[60%]'>{title}</span>
+        {isLocked && <LockClosedIcon className='size-[2rem]' />}
+        <span className='text-center truncate max-w-[60%] px-[1rem]'>
+          {title}
+        </span>
       </div>
       <Divider
         orientation='vertical'
