@@ -1,4 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog';
+import { Cross2Icon, PaperPlaneIcon } from '@radix-ui/react-icons';
 import { ComponentProps, ReactNode, useState } from 'react';
 import Input from '@/common/Input/Input';
 
@@ -35,16 +36,19 @@ const PrivateRoomModal = ({ children, className }: PrivateRoomModalProps) => {
               <Input whSize='w-[20rem] h-[3rem]' />
               <button
                 type='submit'
-                className='hover:bg-gray-100 h-1/2'>
-                입장!
+                className='hover:bg-gray-100 rounded-[0.3rem]'>
+                <PaperPlaneIcon
+                  color='green'
+                  className='size-[2rem]'
+                />
               </button>
             </form>
           </Dialog.Description>
           <Dialog.Close asChild>
             <button
               aria-label='Close'
-              className='hover:bg-gray-100 absolute w-[2rem] top-[1rem] right-[1rem]'>
-              X
+              className='hover:bg-gray-100 absolute top-[1rem] right-[1rem] rounded-[0.3rem]'>
+              <Cross2Icon />
             </button>
           </Dialog.Close>
         </Dialog.Content>
