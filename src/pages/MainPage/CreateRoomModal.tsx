@@ -26,11 +26,28 @@ const CreateRoomModal = ({ children, className }: CreateRoomModalProps) => {
       value: '',
       type: 'password',
       labelText: '비밀번호 설정',
-      placeholder: '',
+      placeholder: '없음',
       validatePattern: '[0-9]{4}',
       errorMessage: '비밀번호의 길이는 4자리입니다',
     },
   ];
+  const selectList = [
+    {
+      name: '인원수',
+      optionValues: Array.from({ length: 8 }).map((_, index) => ({
+        value: index + 1,
+        text: `${index + 1}명`,
+      })),
+    },
+    {
+      name: '라운드',
+      optionValues: Array.from({ length: 8 }).map((_, index) => ({
+        value: index + 1,
+        text: `${index + 1}라운드`,
+      })),
+    },
+  ];
+  const modeList = ['문장 모드', '코딩 모드', '단어 모드'];
 
   return (
     <Dialog.Root
@@ -44,54 +61,85 @@ const CreateRoomModal = ({ children, className }: CreateRoomModalProps) => {
           }
         />
         <Dialog.Content
-          className={`rounded-[1rem] border-green-100 border-[0.3rem] w-[30rem] h-[15rem] flex flex-col items-center justify-center bg-white z-10 fixed inset-1/2 translate-x-[-50%] translate-y-[-50%] ${className}`}>
-          <Dialog.Title>방 만들기</Dialog.Title>
-          <Form.Root>
-            {inputList.map(
-              ({
-                name,
-                type,
-                labelText,
-                placeholder,
-                validatePattern,
-                errorMessage,
-              }) => (
+          className={`rounded-[1rem] border-green-100 border-[0.3rem] w-[90rem] h-[60rem] flex flex-col items-start justify-start p-[2rem] bg-white z-10 fixed inset-1/2 translate-x-[-50%] translate-y-[-50%] ${className}`}>
+          <Dialog.Title className='text-[2.4rem] font-semibold'>
+            방 만들기
+          </Dialog.Title>
+          <div className='flex flex-1 w-full'>
+            <Form.Root className='w-1/2 '>
+              {inputList.map(
+                ({
+                  name,
+                  type,
+                  labelText,
+                  placeholder,
+                  validatePattern,
+                  errorMessage,
+                }) => (
+                  <Form.Field
+                    className='flex justify-between'
+                    key={name}
+                    name={name}>
+                    <Form.Label>{labelText}</Form.Label>
+                    <div className='flex flex-col gap-[1rem]'>
+                      <Form.Control asChild>
+                        <input
+                          type={type}
+                          placeholder={placeholder}
+                          pattern={validatePattern}
+                          required
+                        />
+                      </Form.Control>
+                      <Form.Message
+                        className='FormMessage'
+                        match='patternMismatch'>
+                        {errorMessage}
+                      </Form.Message>
+                    </div>
+                  </Form.Field>
+                )
+              )}
+              {selectList.map(({ name, optionValues }) => (
                 <Form.Field
                   key={name}
                   name={name}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'baseline',
-                      justifyContent: 'space-between',
-                    }}>
-                    <Form.Label>{labelText}</Form.Label>
-                    <Form.Message
-                      className='FormMessage'
-                      match='patternMismatch'>
-                      {errorMessage}
-                    </Form.Message>
-                  </div>
+                  <Form.Label>{name}</Form.Label>
                   <Form.Control asChild>
-                    <input
-                      type={type}
-                      placeholder={placeholder}
-                      pattern={validatePattern}
-                      required
-                    />
+                    <select>
+                      {optionValues.map(({ value, text }) => (
+                        <option
+                          key={text}
+                          value={value}>
+                          {text}
+                        </option>
+                      ))}
+                    </select>
                   </Form.Control>
                 </Form.Field>
-              )
-            )}
+              ))}
+              <article className='flex flex-col'>
+                {modeList.map((mode) => (
+                  <button
+                    type='button'
+                    key={mode}
+                    className='text-left'>
+                    {mode}
+                  </button>
+                ))}
+              </article>
 
-            <Form.Submit asChild>
-              <button style={{ marginTop: 10 }}>방 생성</button>
-            </Form.Submit>
-          </Form.Root>
+              <Form.Submit asChild>
+                <button className='absolute bottom-[2rem] right-[2rem]'>
+                  방 생성
+                </button>
+              </Form.Submit>
+            </Form.Root>
+            <section className='w-1/2'></section>
+          </div>
           <Dialog.Close asChild>
             <button
               aria-label='Close'
-              className='hover:bg-gray-100 absolute top-[1rem] right-[1rem] rounded-[0.3rem]'>
+              className='hover:bg-gray-100 absolute top-[2rem] right-[2rem] rounded-[0.3rem]'>
               <Cross2Icon />
             </button>
           </Dialog.Close>
