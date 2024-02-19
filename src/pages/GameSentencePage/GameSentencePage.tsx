@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import car1 from '@/asssets/cars/car11.png';
 import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
@@ -28,6 +29,7 @@ const GameSentencePage = () => {
     setAccTest(Math.floor(Math.random() * 101));
   }, 2000);
 
+  // 전체영역 캔버스 생성
   const canvasRef = useCanvas({
     setCanvas: (canvas: HTMLCanvasElement) => {
       canvas.width = 1160;
@@ -35,6 +37,38 @@ const GameSentencePage = () => {
     },
   });
 
+  interface ICarCoord {
+    x: number;
+    y: number;
+  }
+  const carImageRef = useRef<HTMLImageElement | null>(null);
+  const car1Ref = useRef<ICarCoord>({ x: 0, y: 0 });
+  // 추후: const carsRef = useRef<ICarCoord[]>([]);
+
+  useEffect(() => {
+    if (car1) {
+      const img = new Image();
+      img.src = car1;
+      carImageRef.current = img;
+      car1Ref.current = { x: 20, y: 20 };
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let rafTimer: number | undefined;
+
+    const cvs = canvasRef.current;
+    const ctx = cvs?.getContext('2d');
+    if (!ctx) {
+      return;
+    }
+    const animate = () => {
+      const car = carImageRef.current;
+      if (car) {
+        ctx.drawImage(car, 100, 10); // 위치!px단위
+      }
+      rafTimer = requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  });
   return (
     <>
       <IngameHeader />
