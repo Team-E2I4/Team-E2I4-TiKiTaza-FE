@@ -5,6 +5,17 @@ interface DashboardProps {
   type: 'wpm' | 'accuracy';
   value: number;
 }
+const dashboardUnit = {
+  wpm: {
+    label: '타수',
+    unit: '타',
+  },
+  accuracy: {
+    label: '정확도',
+    unit: '%',
+  },
+};
+
 const Dashboard = ({ type, value }: DashboardProps) => {
   const ratioStyle = new Map([
     [
@@ -28,10 +39,10 @@ const Dashboard = ({ type, value }: DashboardProps) => {
           />
         </div>
         <div className='flex justify-evenly mt-4'>
-          <div>{type === 'wpm' ? '타수' : '정확도'}</div>
+          <div>{dashboardUnit[type].label}</div>
           <div>
             {value}
-            {type === 'wpm' ? '타' : '%'}
+            {dashboardUnit[type].unit}
           </div>
         </div>
       </div>
