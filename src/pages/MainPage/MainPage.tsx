@@ -17,7 +17,7 @@ const MainPage = () => {
           검색 or 서버이름
         </article>
         <CreateRoomModal>
-          <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1'>
+          <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1 h-full'>
             방 만들기
           </article>
         </CreateRoomModal>
