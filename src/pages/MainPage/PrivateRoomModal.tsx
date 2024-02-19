@@ -20,11 +20,11 @@ const PrivateRoomModal = ({ children, className }: PrivateRoomModalProps) => {
       <Dialog.Portal>
         <Dialog.Overlay
           className={
-            'fixed inset-0   w-[100vw] h-[100vh] bg-black/30 animate-[overlayShow_150ms_cubic-bezier(0.16,1,0.3,1)]'
+            'fixed inset-0 w-[100vw] h-[100vh] bg-black/30 animate-[overlayShow_150ms_cubic-bezier(0.16,1,0.3,1)]'
           }
         />
         <Dialog.Content
-          className={` rounded-[1rem] border-green-100 border-[0.3rem] w-[30rem] h-[15rem] flex flex-col items-center justify-center bg-white z-10 fixed inset-1/2 translate-x-[-50%] translate-y-[-50%] ${className}`}>
+          className={`rounded-[1rem] border-green-100 border-[0.3rem] w-[30rem] h-[15rem] flex flex-col items-center justify-center bg-white z-10 fixed inset-1/2 translate-x-[-50%] translate-y-[-50%] ${className}`}>
           <Dialog.Title>비밀번호를 입력해주세요!</Dialog.Title>
           <form
             className='flex gap-[1rem] items-center'
