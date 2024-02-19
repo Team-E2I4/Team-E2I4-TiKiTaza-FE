@@ -1,3 +1,4 @@
+import CreateRoomModal from './CreateRoomModal';
 import GameRoomList from './GameRoomList';
 import UserCard from './UserCard';
 import UserList from './UserList';
@@ -15,9 +16,11 @@ const MainPage = () => {
         <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100'>
           검색 or 서버이름
         </article>
-        <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1'>
-          방 만들기
-        </article>
+        <CreateRoomModal>
+          <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1'>
+            방 만들기
+          </article>
+        </CreateRoomModal>
         <GameRoomList />
       </section>
     </main>
