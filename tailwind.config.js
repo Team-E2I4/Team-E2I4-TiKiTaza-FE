@@ -32,7 +32,12 @@ export default {
           },
         },
       },
+      backgroundImage: {
+        'gradient-radial':
+          'radial-gradient(rgba(200,0,0,0.40) 0%,rgba(255,0,255,0.00) 100%)',
+      },
     },
   },
   plugins: [scrollbarHide],
 };
+// foo: 'radial-gradient(rgba(200,0,0,0.40) 0%, rgba(255,0,255,0.00) 100%), conic-gradient(from -90deg, #96D8BF 30deg, #6aab93 0 60deg, #40806A 0 90deg, #135743 0 120deg, #003120 0 150deg, #000000 0 180deg, #0000 0)',
