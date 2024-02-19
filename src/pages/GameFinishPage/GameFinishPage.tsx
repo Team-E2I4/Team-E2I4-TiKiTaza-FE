@@ -11,13 +11,13 @@ const GameFinishPage = () => {
       </section>
       <section className='flex gap-[10rem] w-full'>
         <div className='flex flex-1 justify-center items-end'>
-          <div className='bg-[#FFF4DC] h-[28rem] w-[14rem] flex items-center justify-center shadow text-5xl font-bold'>
+          <div className='bg-beige-100 h-[28rem] w-[14rem] flex items-center justify-center shadow text-5xl font-bold'>
             2
           </div>
-          <div className='bg-[#FFF4DC] h-[40rem] w-[14rem] flex items-center justify-center shadow text-5xl font-bold'>
+          <div className='bg-beige-100 h-[40rem] w-[14rem] flex items-center justify-center shadow text-5xl font-bold'>
             1
           </div>
-          <div className='bg-[#FFF4DC] h-[20rem] w-[14rem] flex items-center justify-center shadow text-5xl font-bold'>
+          <div className='bg-beige-100 h-[20rem] w-[14rem] flex items-center justify-center shadow text-5xl font-bold'>
             3
           </div>
         </div>
