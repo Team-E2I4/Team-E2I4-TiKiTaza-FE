@@ -9,7 +9,7 @@ const Dashboard = ({ type, value }: DashboardProps) => {
   const ratioStyle = new Map([
     [
       'wpm',
-      `${value > 800 ? '225deg' : `${Math.floor((value * 180) / 800) + 45}deg`}`,
+      `${value > 1000 ? '225deg' : `${Math.floor((value * 180) / 1000) + 45}deg`}`,
     ],
     ['accuracy', `${value > 100 ? '225deg' : `${value * 1.8 + 45}deg`}`],
   ]);

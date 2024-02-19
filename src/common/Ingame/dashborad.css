@@ -3,7 +3,7 @@
   height: 12rem;
   border: 0.5rem solid transparent;
   border-radius: 12rem 12rem 0 0;
-  background-image: linear-gradient(#ffff, #f7f5f0), conic-gradient(from -90deg at 50% 100%, #96D8BF 30deg, #6aab93 0 60deg, #40806A 0 90deg, #135743 0 120deg, #003120 0 150deg, #000000 0 180deg, #000000 0 );
+  background-image: linear-gradient(#f7f5f0, #f7f5f0), conic-gradient(from -90deg at 50% 100%, #96D8BF 30deg, #6aab93 0 60deg, #40806A 0 90deg, #135743 0 120deg, #003120 0 150deg, #000000 0 180deg, #000000 0 );
   background-origin: border-box;
   background-clip: content-box, border-box;
   padding-bottom: 0;
