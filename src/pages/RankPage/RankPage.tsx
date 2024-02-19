@@ -4,10 +4,10 @@ import RankList from './RankList';
 
 const RankPage = () => {
   const tabData = [
-    { value: 'tab1', text: '전체' },
-    { value: 'tab2', text: '단어' },
-    { value: 'tab3', text: '문장' },
-    { value: 'tab4', text: '코드' },
+    { value: 'tab1', text: '전체', data: DUMMY_DATA },
+    { value: 'tab2', text: '단어', data: DUMMY_DATA },
+    { value: 'tab3', text: '문장', data: DUMMY_DATA },
+    { value: 'tab4', text: '코드', data: DUMMY_DATA },
   ];
   return (
     <Tabs.Root
@@ -23,18 +23,13 @@ const RankPage = () => {
           </Tabs.Trigger>
         ))}
       </Tabs.List>
-      <Tabs.Content value='tab1'>
-        <RankList data={DUMMY_DATA} />
-      </Tabs.Content>
-      <Tabs.Content value='tab2'>
-        <RankList data={DUMMY_DATA} />
-      </Tabs.Content>
-      <Tabs.Content value='tab3'>
-        <RankList data={DUMMY_DATA} />
-      </Tabs.Content>
-      <Tabs.Content value='tab4'>
-        <RankList data={DUMMY_DATA} />
-      </Tabs.Content>
+      {tabData.map(({ value, data }) => (
+        <Tabs.Content
+          key={value}
+          value={value}>
+          <RankList data={data} />
+        </Tabs.Content>
+      ))}
     </Tabs.Root>
   );
 };
