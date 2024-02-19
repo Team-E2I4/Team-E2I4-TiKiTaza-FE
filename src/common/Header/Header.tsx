@@ -13,16 +13,16 @@ import logo_taza from '@/assets/logo_taza.png';
 const PLAY = 'play';
 const PAUSE = 'pause';
 
-type MusicStateType = 'play' | 'pause';
+type VolumeStateType = 'play' | 'pause';
 
-const exchangeMusicState = (currentState: MusicStateType) => {
+const exchangeVolumeState = (currentState: VolumeStateType) => {
   return currentState === PLAY ? PAUSE : PLAY;
 };
 
 const Header = () => {
   const [volume, setVolume] = useState<{
-    bgm: MusicStateType;
-    effect: MusicStateType;
+    bgm: VolumeStateType;
+    effect: VolumeStateType;
   }>({
     bgm: PAUSE,
     effect: PLAY,
@@ -64,14 +64,14 @@ const Header = () => {
       <section className='h-full flex items-center justify-around w-[15rem]'>
         <button
           onClick={() =>
-            setVolume({ ...volume, bgm: exchangeMusicState(volume.bgm) })
+            setVolume({ ...volume, bgm: exchangeVolumeState(volume.bgm) })
           }
           className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
           <MyIcon IconComponent={mappedIcons.bgm[volume.bgm]} />
         </button>
         <button
           onClick={() =>
-            setVolume({ ...volume, effect: exchangeMusicState(volume.effect) })
+            setVolume({ ...volume, effect: exchangeVolumeState(volume.effect) })
           }
           className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
           <MyIcon IconComponent={mappedIcons.effect[volume.effect]} />
