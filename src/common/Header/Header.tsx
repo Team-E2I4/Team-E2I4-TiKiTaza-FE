@@ -13,39 +13,41 @@ import logo_taza from '@/assets/logo_taza.png';
 const PLAY = 'play';
 const PAUSE = 'pause';
 
-type VolumeStateType = 'play' | 'pause';
+type VolumeType = 'play' | 'pause';
 
-const exchangeVolumeState = (currentState: VolumeStateType) => {
+const exchangeVolumeState = (currentState: VolumeType) => {
   return currentState === PLAY ? PAUSE : PLAY;
 };
 
+const mappedIcons = {
+  bgm: {
+    [PLAY]: PlayIcon,
+    [PAUSE]: PauseIcon,
+  },
+  effect: {
+    [PLAY]: SpeakerLoudIcon,
+    [PAUSE]: SpeakerOffIcon,
+  },
+};
+
+interface MyIconProps extends IconProps {
+  IconComponent: FC<IconProps>;
+}
+
+const MyIcon = ({ IconComponent, className }: MyIconProps) => (
+  <IconComponent className={className} />
+);
+
+interface VolumeStateType {
+  bgm: VolumeType;
+  effect: VolumeType;
+}
+
 const Header = () => {
-  const [volume, setVolume] = useState<{
-    bgm: VolumeStateType;
-    effect: VolumeStateType;
-  }>({
+  const [volume, setVolume] = useState<VolumeStateType>({
     bgm: PAUSE,
-    effect: PLAY,
+    effect: PAUSE,
   });
-
-  const mappedIcons = {
-    bgm: {
-      [PLAY]: PlayIcon,
-      [PAUSE]: PauseIcon,
-    },
-    effect: {
-      [PLAY]: SpeakerLoudIcon,
-      [PAUSE]: SpeakerOffIcon,
-    },
-  };
-
-  interface MyIconProps extends IconProps {
-    IconComponent: FC<IconProps>;
-  }
-
-  const MyIcon = ({ IconComponent, className }: MyIconProps) => (
-    <IconComponent className={className} />
-  );
 
   return (
     <header className='bg-green-100 h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
