@@ -24,13 +24,13 @@ const mappedIcons = {
     [PAUSE]: SpeakerOffIcon,
   },
 };
-interface VolumeStateType {
+interface I_VolumeState {
   bgm: VolumeType;
   effect: VolumeType;
 }
 
 const Header = () => {
-  const [volume, setVolume] = useState<VolumeStateType>({
+  const [volume, setVolume] = useState<I_VolumeState>({
     bgm: PAUSE,
     effect: PAUSE,
   });
