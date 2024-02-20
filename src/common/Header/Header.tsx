@@ -5,12 +5,12 @@ import {
   SpeakerLoudIcon,
   SpeakerOffIcon,
 } from '@radix-ui/react-icons';
-import { IconProps } from '@radix-ui/react-icons/dist/types';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import logo_car from '@/assets/logo_car.png';
 import logo_taza from '@/assets/logo_taza.png';
-import { PAUSE, PLAY } from '@/constants/volume';
+import { PAUSE, PLAY } from '@/common/Header/constants/volume';
 import { exchangeVolumeState } from '@/utils/exchangeVolumeState';
+import WrappedIcon from '../WrappedIcon/WrappedIcon';
 
 export type VolumeType = 'play' | 'pause';
 
@@ -24,15 +24,6 @@ const mappedIcons = {
     [PAUSE]: SpeakerOffIcon,
   },
 };
-
-interface MyIconProps extends IconProps {
-  IconComponent: FC<IconProps>;
-}
-
-const MyIcon = ({ IconComponent, className }: MyIconProps) => (
-  <IconComponent className={className} />
-);
-
 interface VolumeStateType {
   bgm: VolumeType;
   effect: VolumeType;
@@ -64,14 +55,14 @@ const Header = () => {
             setVolume({ ...volume, bgm: exchangeVolumeState(volume.bgm) })
           }
           className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
-          <MyIcon IconComponent={mappedIcons.bgm[volume.bgm]} />
+          <WrappedIcon IconComponent={mappedIcons.bgm[volume.bgm]} />
         </button>
         <button
           onClick={() =>
             setVolume({ ...volume, effect: exchangeVolumeState(volume.effect) })
           }
           className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
-          <MyIcon IconComponent={mappedIcons.effect[volume.effect]} />
+          <WrappedIcon IconComponent={mappedIcons.effect[volume.effect]} />
         </button>
         <Avatar.Root className='cursor-pointer'>
           <Avatar.Image
