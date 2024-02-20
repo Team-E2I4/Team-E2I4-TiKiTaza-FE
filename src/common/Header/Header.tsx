@@ -9,15 +9,10 @@ import { IconProps } from '@radix-ui/react-icons/dist/types';
 import { FC, useState } from 'react';
 import logo_car from '@/assets/logo_car.png';
 import logo_taza from '@/assets/logo_taza.png';
+import { PAUSE, PLAY } from '@/constants/volume';
+import { exchangeVolumeState } from '@/utils/exchangeVolumeState';
 
-const PLAY = 'play';
-const PAUSE = 'pause';
-
-type VolumeType = 'play' | 'pause';
-
-const exchangeVolumeState = (currentState: VolumeType) => {
-  return currentState === PLAY ? PAUSE : PLAY;
-};
+export type VolumeType = 'play' | 'pause';
 
 const mappedIcons = {
   bgm: {
