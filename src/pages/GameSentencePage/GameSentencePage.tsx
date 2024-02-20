@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import car1 from '@/asssets/cars/car11.png';
+import car1 from '@/assets/cars/car11.png';
 import Dashboard from '@/common/Ingame/Dashboard';
 import {
   CANVAS_HEIGHT,
