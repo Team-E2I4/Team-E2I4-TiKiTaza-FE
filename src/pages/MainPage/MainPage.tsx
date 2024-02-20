@@ -1,4 +1,4 @@
-import CreateRoomModal from './CreateRoomModal';
+import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import GameRoomList from './GameRoomList';
 import UserCard from './UserCard';
 import UserList from './UserList';
