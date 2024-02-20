@@ -1,5 +1,6 @@
 export const CAR_SIZE = 32;
 export const START_X = 200;
+export const START_Y = 0;
 export const MOVE_STEP = 100;
 export const CANVAS_WIDTH = 1126;
 export const CANVAS_HEIGHT = 600;
