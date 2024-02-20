@@ -48,16 +48,16 @@ const GameCodePage = () => {
     },
   });
 
-  interface ICarCoord {
+  interface I_CarCoord {
     x: number;
     y: number;
   }
   const carImageRef = useRef<HTMLImageElement | null>(null);
-  const car1Ref = useRef<ICarCoord>({ x: START_X, y: 0 });
-  // 추후: const carsRef = useRef<ICarCoord[]>([]);
+  const car1Ref = useRef<I_CarCoord>({ x: START_X, y: 0 });
+  // 추후: const carsRef = useRef<I_CarCoord[]>([]);
   const carDirRef = useRef(CAR_DIRECTION.RIGHT);
 
-  const blockOverflowPos = useCallback((pos: ICarCoord) => {
+  const blockOverflowPos = useCallback((pos: I_CarCoord) => {
     if (pos.x === START_X && pos.y === 0) {
       // eslint-disable-next-line no-console
       console.log('끝!');
@@ -76,11 +76,12 @@ const GameCodePage = () => {
     if (pos.y <= 0 && carDirRef.current === 'up') {
       carDirRef.current = CAR_DIRECTION.RIGHT;
     }
-    pos.x = pos.x >= MAX_X ? MAX_X : pos.x < 0 ? 0 : pos.x;
-    pos.y = pos.y >= MAX_Y ? MAX_Y : pos.y < 0 ? 0 : pos.y;
+    pos.x = Math.max(0, Math.min(pos.x, MAX_X));
+    pos.y = Math.max(0, Math.min(pos.y, MAX_Y));
   }, []);
+
   const updateCarCoord = useCallback(
-    (carCoord: ICarCoord) => {
+    (carCoord: I_CarCoord) => {
       const dir = carDirRef.current;
       if (dir === 'right') {
         carCoord.x += MOVE_STEP;
@@ -95,6 +96,7 @@ const GameCodePage = () => {
     },
     [blockOverflowPos]
   );
+
   useEffect(() => {
     if (car1) {
       const img = new Image(20, 20); //FIX:사이즈 적용안됨.. car1.png를 불러와서 줄이고싶으면?
@@ -104,7 +106,7 @@ const GameCodePage = () => {
       car1Ref.current = { x: START_X, y: 0 };
     }
 
-    let rafTimer: number | undefined;
+    let rafTimer: ReturnType<typeof requestAnimationFrame>;
     const coord = car1Ref.current;
     const cvs = canvasRef.current;
     const ctx = cvs?.getContext('2d');
@@ -121,12 +123,13 @@ const GameCodePage = () => {
     rafTimer = requestAnimationFrame(animate);
     return () => {
       rafTimer && cancelAnimationFrame(rafTimer);
-      rafTimer = undefined;
     };
   });
+
   const timerForTest = setInterval(() => {
     updateCarCoord(car1Ref.current);
   }, 1500);
+
   return (
     <>
       <IngameHeader />
