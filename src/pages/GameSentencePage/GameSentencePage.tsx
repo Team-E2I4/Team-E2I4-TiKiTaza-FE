@@ -9,6 +9,7 @@ import {
   MAX_Y,
   MOVE_STEP,
   START_X,
+  START_Y,
 } from '@/common/Ingame/ingameConstants';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
@@ -50,12 +51,12 @@ const GameSentencePage = () => {
     y: number;
   }
   const carImageRef = useRef<HTMLImageElement | null>(null);
-  const car1Ref = useRef<I_CarCoord>({ x: 0, y: 0 });
+  const car1Ref = useRef<I_CarCoord>({ x: START_X, y: START_Y });
   // 추후: const carsRef = useRef<I_CarCoord[]>([]);
   const carDirRef = useRef(CAR_DIRECTION.RIGHT);
 
   const blockOverflowPos = useCallback((pos: I_CarCoord) => {
-    if (pos.x === START_X && pos.y === 0) {
+    if (pos.x === START_X && pos.y === START_Y) {
       // eslint-disable-next-line no-console
       console.log('끝!');
       clearInterval(timerForTest);
@@ -100,7 +101,7 @@ const GameSentencePage = () => {
       img.src = car1;
       img.alt = '자동차';
       carImageRef.current = img;
-      car1Ref.current = { x: START_X, y: 0 };
+      car1Ref.current = { x: START_X, y: START_Y };
     }
 
     let rafTimer: ReturnType<typeof requestAnimationFrame>;
