@@ -5,3 +5,10 @@ export const CANVAS_WIDTH = 1126;
 export const CANVAS_HEIGHT = 600;
 export const MAX_X = CANVAS_WIDTH - CAR_SIZE;
 export const MAX_Y = CANVAS_HEIGHT - CAR_SIZE;
+
+export const enum CAR_DIRECTION {
+  RIGHT = 'right',
+  DOWN = 'down',
+  LEFT = 'left',
+  UP = 'up',
+}

@@ -5,6 +5,7 @@ import Dashboard from '@/common/Ingame/Dashboard';
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
+  CAR_DIRECTION,
   MAX_X,
   MAX_Y,
   MOVE_STEP,
@@ -54,7 +55,7 @@ const GameCodePage = () => {
   const carImageRef = useRef<HTMLImageElement | null>(null);
   const car1Ref = useRef<ICarCoord>({ x: START_X, y: 0 });
   // 추후: const carsRef = useRef<ICarCoord[]>([]);
-  const carDirRef = useRef('right');
+  const carDirRef = useRef(CAR_DIRECTION.RIGHT);
 
   const blockOverflowPos = useCallback((pos: ICarCoord) => {
     if (pos.x === START_X && pos.y === 0) {
@@ -64,16 +65,16 @@ const GameCodePage = () => {
       return;
     }
     if (pos.x >= MAX_X && carDirRef.current === 'right') {
-      carDirRef.current = 'down';
+      carDirRef.current = CAR_DIRECTION.DOWN;
     }
     if (pos.y >= MAX_Y && carDirRef.current === 'down') {
-      carDirRef.current = 'left';
+      carDirRef.current = CAR_DIRECTION.LEFT;
     }
     if (pos.x <= 0 && carDirRef.current === 'left') {
-      carDirRef.current = 'up';
+      carDirRef.current = CAR_DIRECTION.UP;
     }
     if (pos.y <= 0 && carDirRef.current === 'up') {
-      carDirRef.current = 'right';
+      carDirRef.current = CAR_DIRECTION.RIGHT;
     }
     pos.x = pos.x >= MAX_X ? MAX_X : pos.x < 0 ? 0 : pos.x;
     pos.y = pos.y >= MAX_Y ? MAX_Y : pos.y < 0 ? 0 : pos.y;
