@@ -8,6 +8,8 @@ interface CreateRoomModalProps {
   className?: ComponentProps<'div'>['className'];
 }
 
+const wait = () => new Promise((resolve) => setTimeout(resolve, 2000));
+
 const CreateRoomModal = ({ children, className }: CreateRoomModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedMode, setSelectedMode] = useState('sentence');
@@ -137,10 +139,10 @@ const CreateRoomModal = ({ children, className }: CreateRoomModalProps) => {
                       // TODO : 버튼 클릭시 오른쪽 섹션에 모드의 인게임 사진 보여줘야함
                     }}
                     key={value}
-                    className={`relative inline-block h-[6rem] text-left transition-all rounded-tl-[0.8rem] 
+                    className={`relative p-[1.5rem] inline-block h-[6rem] text-left transition-all rounded-tl-[0.8rem] 
                       ${
                         selectedMode !== mode
-                          ? `w-[23rem] bg-gray-100`
+                          ? `w-[23rem] bg-gray-100 rounded-br-[0.8rem]`
                           : `w-[30rem] bg-coral-100`
                       }`}>
                     {value}
@@ -156,7 +158,13 @@ const CreateRoomModal = ({ children, className }: CreateRoomModalProps) => {
               </article>
 
               <Form.Submit asChild>
-                <button className='absolute bottom-[2rem] right-[2rem]'>
+                <button
+                  type='submit'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    wait().then(() => setIsOpen(false));
+                  }}
+                  className='w-[8rem] p-[0.5rem] rounded-[0.8rem] absolute bottom-[2rem] right-[2rem] bg-coral-100'>
                   방 생성
                 </button>
               </Form.Submit>
