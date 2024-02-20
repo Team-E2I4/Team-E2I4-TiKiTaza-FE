@@ -33,7 +33,7 @@ const Dashboard = ({ type, value }: DashboardProps) => {
           <img
             src={needle}
             alt='계기판'
-            className={`w-[6rem] relative top-[8rem] left-[5rem] origin-[80%_15%]`}
+            className={`w-[5rem] relative top-[7rem] left-[4rem] origin-[80%_15%]`}
             style={{
               rotate: ratioStyle.get(type),
             }}

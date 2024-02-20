@@ -10,7 +10,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky",
-    "test":"vitest"
+    "test": "vitest"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.0.4",
