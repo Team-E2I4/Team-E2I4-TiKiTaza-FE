@@ -1,0 +1,575 @@
+{
+  'openapi': '3.0.1',
+  'info':
+    {
+      'title': '티키타자 백엔드 API 명세서',
+      'description': '티키타자 백엔드 API 명세서 입니다',
+      'version': '0.1',
+    },
+  'servers': [{ 'url': '/', 'description': '티키타자 서버 URL' }],
+  'security': [{ 'bearerAuth': [] }],
+  'tags':
+    [{ 'name': '회원 인증', 'description': '회원 인증 관련 API 입니다.' }],
+  'paths':
+    {
+      '/api/v1/rooms':
+        {
+          'post':
+            {
+              'tags': ['game-room-controller'],
+              'operationId': 'createGameRoom',
+              'requestBody':
+                {
+                  'content':
+                    {
+                      'application/json':
+                        {
+                          'schema':
+                            {
+                              '$ref': '#/components/schemas/GameRoomCreateRequest',
+                            },
+                        },
+                    },
+                  'required': true,
+                },
+              'responses':
+                {
+                  '200':
+                    {
+                      'description': 'OK',
+                      'content':
+                        {
+                          '*/*':
+                            {
+                              'schema':
+                                {
+                                  '$ref': '#/components/schemas/ApiResponseLong',
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+      '/api/v1/rooms/{roomId}/enter':
+        {
+          'post':
+            {
+              'tags': ['game-room-controller'],
+              'operationId': 'enterGameRoom',
+              'parameters':
+                [
+                  {
+                    'name': 'roomId',
+                    'in': 'path',
+                    'required': true,
+                    'schema': { 'type': 'integer', 'format': 'int64' },
+                  },
+                ],
+              'responses':
+                {
+                  '200':
+                    {
+                      'description': 'OK',
+                      'content':
+                        {
+                          '*/*':
+                            {
+                              'schema':
+                                {
+                                  '$ref': '#/components/schemas/ApiResponseLong',
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+      '/api/v1/members/sign-up':
+        {
+          'post':
+            {
+              'tags': ['member-controller'],
+              'operationId': 'signUp',
+              'requestBody':
+                {
+                  'content':
+                    {
+                      'application/json':
+                        {
+                          'schema':
+                            {
+                              '$ref': '#/components/schemas/MemberSignUpRequest',
+                            },
+                        },
+                    },
+                  'required': true,
+                },
+              'responses':
+                {
+                  '200':
+                    {
+                      'description': 'OK',
+                      'content':
+                        {
+                          '*/*':
+                            {
+                              'schema':
+                                {
+                                  '$ref': '#/components/schemas/ApiResponseLong',
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+      '/api/v1/auth/reissue':
+        {
+          'post':
+            {
+              'tags': ['회원 인증'],
+              'summary': '토큰 재발급',
+              'operationId': 'reIssueAccessToken',
+              'parameters':
+                [
+                  {
+                    'name': 'refreshToken',
+                    'in': 'cookie',
+                    'required': true,
+                    'schema': { 'type': 'string' },
+                  },
+                ],
+              'responses':
+                {
+                  '200':
+                    {
+                      'description': '성공',
+                      'content':
+                        {
+                          '*/*':
+                            {
+                              'schema':
+                                {
+                                  '$ref': '#/components/schemas/ApiResponseAuthResponse',
+                                },
+                            },
+                        },
+                    },
+                  'sec-401/04':
+                    {
+                      'description': '현재 토큰은 로그아웃 상태로 재로그인이 필요합니다.',
+                    },
+                  'sec-401/02':
+                    {
+                      'description': '액세스 토큰이 만료되었으니 다시 로그인 해주세요.',
+                    },
+                  'sec-401/01': { 'description': '로그인이 필요합니다.' },
+                  'sec-403/01':
+                    { 'description': '해당 토큰에 접근 권한이 없습니다.' },
+                  'sec-401/03':
+                    {
+                      'description': '리프레시 토큰이 만료되었으니 다시 로그인 해주세요.',
+                    },
+                },
+            },
+        },
+      '/api/v1/auth/logout':
+        {
+          'post':
+            {
+              'tags': ['회원 인증'],
+              'summary': '로그아웃',
+              'operationId': 'logout',
+              'parameters':
+                [
+                  {
+                    'name': 'Authorization',
+                    'in': 'header',
+                    'required': true,
+                    'schema': { 'type': 'string' },
+                  },
+                  {
+                    'name': 'refreshToken',
+                    'in': 'cookie',
+                    'required': true,
+                    'schema': { 'type': 'string' },
+                  },
+                ],
+              'responses':
+                {
+                  '200':
+                    {
+                      'description': '성공',
+                      'content':
+                        {
+                          '*/*':
+                            {
+                              'schema':
+                                {
+                                  '$ref': '#/components/schemas/ApiResponseVoid',
+                                },
+                            },
+                        },
+                    },
+                  'sec-401/04':
+                    {
+                      'description': '현재 토큰은 로그아웃 상태로 재로그인이 필요합니다.',
+                    },
+                  'sec-401/02':
+                    {
+                      'description': '액세스 토큰이 만료되었으니 다시 로그인 해주세요.',
+                    },
+                  'sec-401/01': { 'description': '로그인이 필요합니다.' },
+                  'sec-403/01':
+                    { 'description': '해당 토큰에 접근 권한이 없습니다.' },
+                  'sec-401/03':
+                    {
+                      'description': '리프레시 토큰이 만료되었으니 다시 로그인 해주세요.',
+                    },
+                },
+            },
+        },
+      '/api/v1/auth/login':
+        {
+          'post':
+            {
+              'tags': ['회원 인증'],
+              'summary': '로그인',
+              'operationId': 'login',
+              'requestBody':
+                {
+                  'content':
+                    {
+                      'application/json':
+                        {
+                          'schema':
+                            { '$ref': '#/components/schemas/LoginRequest' },
+                        },
+                    },
+                  'required': true,
+                },
+              'responses':
+                {
+                  '200':
+                    {
+                      'description': '성공',
+                      'content':
+                        {
+                          '*/*':
+                            {
+                              'schema':
+                                {
+                                  '$ref': '#/components/schemas/ApiResponseAuthResponse',
+                                },
+                            },
+                        },
+                    },
+                  'sec-401/04':
+                    {
+                      'description': '현재 토큰은 로그아웃 상태로 재로그인이 필요합니다.',
+                    },
+                  'sec-401/02':
+                    {
+                      'description': '액세스 토큰이 만료되었으니 다시 로그인 해주세요.',
+                    },
+                  'sec-401/01': { 'description': '로그인이 필요합니다.' },
+                  'sec-403/01':
+                    { 'description': '해당 토큰에 접근 권한이 없습니다.' },
+                  'sec-401/03':
+                    {
+                      'description': '리프레시 토큰이 만료되었으니 다시 로그인 해주세요.',
+                    },
+                },
+            },
+        },
+      '/api/v1/auth/guest':
+        {
+          'post':
+            {
+              'tags': ['회원 인증'],
+              'summary': '게스트 로그인',
+              'operationId': 'guestLogin',
+              'responses':
+                {
+                  '200':
+                    {
+                      'description': '성공',
+                      'content':
+                        {
+                          '*/*':
+                            {
+                              'schema':
+                                {
+                                  '$ref': '#/components/schemas/ApiResponseAuthResponse',
+                                },
+                            },
+                        },
+                    },
+                  'sec-401/04':
+                    {
+                      'description': '현재 토큰은 로그아웃 상태로 재로그인이 필요합니다.',
+                    },
+                  'sec-401/02':
+                    {
+                      'description': '액세스 토큰이 만료되었으니 다시 로그인 해주세요.',
+                    },
+                  'sec-401/01': { 'description': '로그인이 필요합니다.' },
+                  'sec-403/01':
+                    { 'description': '해당 토큰에 접근 권한이 없습니다.' },
+                  'sec-401/03':
+                    {
+                      'description': '리프레시 토큰이 만료되었으니 다시 로그인 해주세요.',
+                    },
+                },
+            },
+        },
+      '/api/v1/members':
+        {
+          'delete':
+            {
+              'tags': ['member-controller'],
+              'operationId': 'deleteMemberAccount',
+              'responses':
+                {
+                  '200':
+                    {
+                      'description': 'OK',
+                      'content':
+                        {
+                          '*/*':
+                            {
+                              'schema':
+                                {
+                                  '$ref': '#/components/schemas/ApiResponseVoid',
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+          'patch':
+            {
+              'tags': ['member-controller'],
+              'operationId': 'updateMemberNickname',
+              'requestBody':
+                {
+                  'content':
+                    {
+                      'application/json':
+                        {
+                          'schema':
+                            {
+                              '$ref': '#/components/schemas/NicknameUpdateRequest',
+                            },
+                        },
+                    },
+                  'required': true,
+                },
+              'responses':
+                {
+                  '200':
+                    {
+                      'description': 'OK',
+                      'content':
+                        {
+                          '*/*':
+                            {
+                              'schema':
+                                {
+                                  '$ref': '#/components/schemas/ApiResponseVoid',
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+      '/api/v1/sse':
+        {
+          'get':
+            {
+              'tags': ['sse-controller'],
+              'operationId': 'connect',
+              'responses':
+                {
+                  '200':
+                    {
+                      'description': 'OK',
+                      'content':
+                        {
+                          'text/event-stream':
+                            {
+                              'schema':
+                                { '$ref': '#/components/schemas/SseEmitter' },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+      '/api/v1/members/my-profile':
+        {
+          'get':
+            {
+              'tags': ['member-controller'],
+              'operationId': 'getMyProfileInfo',
+              'responses':
+                {
+                  '200':
+                    {
+                      'description': 'OK',
+                      'content':
+                        {
+                          '*/*':
+                            {
+                              'schema':
+                                {
+                                  '$ref': '#/components/schemas/ApiResponseMemberGetResponse',
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+  'components':
+    {
+      'schemas':
+        {
+          'GameRoomCreateRequest':
+            {
+              'required': ['gameType', 'maxPlayer', 'round', 'title'],
+              'type': 'object',
+              'properties':
+                {
+                  'title':
+                    { 'maxLength': 20, 'minLength': 1, 'type': 'string' },
+                  'password':
+                    { 'maxLength': 20, 'minLength': 1, 'type': 'string' },
+                  'maxPlayer':
+                    {
+                      'maximum': 8,
+                      'minimum': 2,
+                      'type': 'integer',
+                      'format': 'int32',
+                    },
+                  'round':
+                    {
+                      'maximum': 10,
+                      'minimum': 1,
+                      'type': 'integer',
+                      'format': 'int32',
+                    },
+                  'gameType': { 'type': 'string' },
+                },
+            },
+          'ApiResponseLong':
+            {
+              'type': 'object',
+              'properties':
+                {
+                  'code': { 'type': 'integer', 'format': 'int32' },
+                  'message': { 'type': 'string' },
+                  'data': { 'type': 'integer', 'format': 'int64' },
+                },
+            },
+          'MemberSignUpRequest':
+            {
+              'required': ['email', 'password', 'passwordConfirm'],
+              'type': 'object',
+              'properties':
+                {
+                  'email': { 'type': 'string' },
+                  'password':
+                    { 'maxLength': 15, 'minLength': 6, 'type': 'string' },
+                  'passwordConfirm': { 'type': 'string' },
+                  'nickname': { 'type': 'string' },
+                },
+            },
+          'ApiResponseAuthResponse':
+            {
+              'type': 'object',
+              'properties':
+                {
+                  'code': { 'type': 'integer', 'format': 'int32' },
+                  'message': { 'type': 'string' },
+                  'data': { '$ref': '#/components/schemas/AuthResponse' },
+                },
+            },
+          'AuthResponse':
+            {
+              'type': 'object',
+              'properties':
+                {
+                  'accessToken': { 'type': 'string' },
+                  'refreshToken': { 'type': 'string' },
+                },
+            },
+          'ApiResponseVoid':
+            {
+              'type': 'object',
+              'properties':
+                {
+                  'code': { 'type': 'integer', 'format': 'int32' },
+                  'message': { 'type': 'string' },
+                  'data': { 'type': 'object' },
+                },
+            },
+          'LoginRequest':
+            {
+              'required': ['email', 'password'],
+              'type': 'object',
+              'properties':
+                {
+                  'email': { 'type': 'string' },
+                  'password': { 'type': 'string' },
+                },
+            },
+          'NicknameUpdateRequest':
+            {
+              'required': ['nickname'],
+              'type': 'object',
+              'properties':
+                {
+                  'nickname':
+                    { 'maxLength': 8, 'minLength': 2, 'type': 'string' },
+                },
+            },
+          'SseEmitter':
+            {
+              'type': 'object',
+              'properties':
+                { 'timeout': { 'type': 'integer', 'format': 'int64' } },
+            },
+          'ApiResponseMemberGetResponse':
+            {
+              'type': 'object',
+              'properties':
+                {
+                  'code': { 'type': 'integer', 'format': 'int32' },
+                  'message': { 'type': 'string' },
+                  'data': { '$ref': '#/components/schemas/MemberGetResponse' },
+                },
+            },
+          'MemberGetResponse':
+            {
+              'type': 'object',
+              'properties':
+                {
+                  'memberId': { 'type': 'integer', 'format': 'int64' },
+                  'email': { 'type': 'string' },
+                  'nickname': { 'type': 'string' },
+                  'status': { 'type': 'string' },
+                  'provider': { 'type': 'string' },
+                },
+            },
+        },
+      'securitySchemes':
+        {
+          'bearerAuth':
+            { 'type': 'http', 'scheme': 'bearer', 'bearerFormat': 'JWT' },
+        },
+    },
+}
