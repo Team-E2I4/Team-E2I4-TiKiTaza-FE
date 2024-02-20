@@ -14,7 +14,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<I_CreateRoomInputName>({
     mode: 'onChange',
   });
@@ -29,7 +29,8 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
     <div className='flex flex-1 w-full text-[1.8rem] pt-[3rem]'>
       <Form.Root
         onSubmit={handleSubmit(onCreateRoom)}
-        className='flex flex-col w-1/2 gap-[2.5rem]'>
+        className='flex flex-col w-1/2 gap-[1rem]'>
+        {/* 방이름, 비밀번호 설정 */}
         {inputList.map(
           ({ name, type, label, placeholder, required, validate }) => (
             <Form.Field
@@ -58,6 +59,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
             </Form.Field>
           )
         )}
+        {/* 인원수, 라운드 설정 */}
         <div className='flex justify-between'>
           {selectList.map(({ name, optionValues }) => (
             <Form.Field
@@ -65,7 +67,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
               name={name}>
               <Form.Label>{name}</Form.Label>
               <Form.Control asChild>
-                <select className='border-[0.2rem] border-gray-200 rounded-[0.8rem]'>
+                <select className='border-[0.2rem] border-gray-200 rounded-[0.8rem] px-[0.5rem] ml-[3rem]'>
                   {optionValues.map(({ value, text }) => (
                     <option
                       key={text}
@@ -78,7 +80,8 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
             </Form.Field>
           ))}
         </div>
-        <article className='flex flex-col gap-[2rem]'>
+        {/* 모드 설정 버튼 */}
+        <article className='flex flex-col gap-[2rem] pt-[4rem]'>
           {modeList.map(({ value, mode }) => (
             <button
               type='button'
@@ -106,12 +109,13 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
         <Form.Submit asChild>
           <button
             type='submit'
-            className='w-[8rem] p-[0.5rem] rounded-[0.8rem] absolute bottom-[2rem] right-[2rem] bg-coral-100'>
+            className='w-[8rem] p-[0.5rem] rounded-[0.8rem] absolute bottom-[2rem] right-[2rem] bg-coral-100 disabled:cursor-not-allowed disabled:opacity-50 transition-all'
+            disabled={!isValid}>
             방 생성
           </button>
         </Form.Submit>
       </Form.Root>
-      <section className='w-1/2'></section>
+      <section className='w-1/2 border-black border-[0.1rem]'></section>
     </div>
   );
 };
