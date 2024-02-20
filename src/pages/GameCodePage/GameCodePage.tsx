@@ -124,7 +124,7 @@ const GameCodePage = () => {
     return () => {
       rafTimer && cancelAnimationFrame(rafTimer);
     };
-  });
+  }, []);
 
   const timerForTest = setInterval(() => {
     updateCarCoord(car1Ref.current);
