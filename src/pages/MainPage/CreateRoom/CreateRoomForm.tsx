@@ -1,13 +1,18 @@
 import * as Form from '@radix-ui/react-form';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { inputList, modeList, selectList } from './constants/createRoom';
+import {
+  CREATE_ROOM_INPUT_LIST,
+  CREATE_ROOM_SELECT_LIST,
+  GAME_MODE_LIST,
+} from './constants/createRoom';
 import { I_CreateRoomInputName } from './types';
 
 interface CreateRoomFormProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
+//비동기 호출 후 모달 잘 닫히는지 test용
 const wait = () => new Promise((resolve) => setTimeout(resolve, 2000));
 
 const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
@@ -31,7 +36,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
         onSubmit={handleSubmit(onCreateRoom)}
         className='flex flex-col w-1/2 gap-[1rem]'>
         {/* 방이름, 비밀번호 설정 */}
-        {inputList.map(
+        {CREATE_ROOM_INPUT_LIST.map(
           ({ name, type, label, placeholder, required, validate }) => (
             <Form.Field
               className='flex justify-between'
@@ -61,7 +66,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
         )}
         {/* 인원수, 라운드 설정 */}
         <div className='flex justify-between'>
-          {selectList.map(({ name, optionValues }) => (
+          {CREATE_ROOM_SELECT_LIST.map(({ name, optionValues }) => (
             <Form.Field
               key={name}
               name={name}>
@@ -82,7 +87,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
         </div>
         {/* 모드 설정 버튼 */}
         <article className='flex flex-col gap-[2rem] pt-[4rem]'>
-          {modeList.map(({ value, mode }) => (
+          {GAME_MODE_LIST.map(({ value, mode }) => (
             <button
               type='button'
               onClick={() => {

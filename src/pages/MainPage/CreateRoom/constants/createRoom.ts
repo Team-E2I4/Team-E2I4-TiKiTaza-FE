@@ -1,6 +1,6 @@
 import { I_CreateRoomInput } from '../types';
 
-export const inputList: I_CreateRoomInput[] = [
+export const CREATE_ROOM_INPUT_LIST: I_CreateRoomInput[] = [
   {
     name: 'roomName',
     value: '',
@@ -35,7 +35,7 @@ export const inputList: I_CreateRoomInput[] = [
   },
 ];
 
-export const selectList = [
+export const CREATE_ROOM_SELECT_LIST = [
   {
     name: '인원수',
     optionValues: Array.from({ length: 8 })
@@ -56,7 +56,7 @@ export const selectList = [
   },
 ];
 
-export const modeList = [
+export const GAME_MODE_LIST = [
   { value: '문장 모드', mode: 'sentence' },
   { value: '코딩 모드', mode: 'coding' },
   { value: '단어 모드', mode: 'word' },
