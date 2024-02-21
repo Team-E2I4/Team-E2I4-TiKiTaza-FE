@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "$schema": ".yarn/unplugged/@openapitools-openapi-generator-cli-npm-2.9.0-020c9fb1e5/node_modules/@openapitools/openapi-generator-cli/config.schema.json",
   "spaces": 2,
   "generator-cli": {
     "version": "7.3.0"
