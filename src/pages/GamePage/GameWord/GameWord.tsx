@@ -68,7 +68,7 @@ const WordRank = (data: WordRankProps) => {
   );
 };
 
-const GameWordPage = () => {
+const GameWord = () => {
   return (
     <>
       <IngameHeader />
@@ -114,4 +114,4 @@ const GameWordPage = () => {
   );
 };
 
-export default GameWordPage;
+export default GameWord;

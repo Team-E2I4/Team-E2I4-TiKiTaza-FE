@@ -13,7 +13,7 @@ export interface I_gameRoomUserCard {
   userImageFallbackDelay: number;
 }
 
-interface GameRoomPageProps {
+interface GameWaitingRoomProps {
   gameRoomId: string;
   gameRoomName: string;
   gameMode: string;
@@ -21,7 +21,7 @@ interface GameRoomPageProps {
   gameRoomUserList: Array<I_gameRoomUserCard>;
 }
 
-const GameRoomPage = (props: GameRoomPageProps) => {
+const GameWaitingRoom = (props: GameWaitingRoomProps) => {
   // DummyData for Test
   const {
     gameRoomUserList = [
@@ -101,4 +101,4 @@ const GameRoomPage = (props: GameRoomPageProps) => {
   );
 };
 
-export default GameRoomPage;
+export default GameWaitingRoom;

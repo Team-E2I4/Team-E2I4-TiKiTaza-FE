@@ -1,7 +1,7 @@
-import { DUMMY_DATA } from '../RankPage/RankData';
-import RankList from '../RankPage/RankList';
+import { DUMMY_DATA } from '../../RankPage/RankData';
+import RankList from '../../RankPage/RankList';
 
-const GameFinishPage = () => {
+const GameFinish = () => {
   return (
     <div className='flex flex-col gap-[8rem] items-center'>
       <section>
@@ -56,4 +56,4 @@ const GameFinishPage = () => {
   );
 };
 
-export default GameFinishPage;
+export default GameFinish;

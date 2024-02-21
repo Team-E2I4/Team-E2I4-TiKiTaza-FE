@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import Highlight from 'react-highlight';
 import car1 from '@/assets/cars/car11.png';
 import Dashboard from '@/common/Ingame/Dashboard';
 import {
@@ -13,32 +14,34 @@ import {
 } from '@/common/Ingame/ingameConstants';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
-import { SentenceNext, SentenceNow } from '@/common/Ingame/SentenceBlocks';
-import Input from '@/common/Input/Input';
 import useCanvas from '@/hooks/useCanvas';
-const sentenceDummy = [
-  '저녁 때 돌아갈 집이 있다는 것',
-  '힘들 때 마음 속으로 생각 할 사람이 있다는 것',
-  '외로울 때 혼자서 부를 노래 있다는 것',
-  '세상에 와서 내가 하는 말 가운데서',
-  '가장 고운 말을 너에게 들려주고 싶다.',
-  '세상에 와서 내가 가진 생각 가운데서',
-  '가장 예쁜 생각을 너에게 주고 싶다.',
-];
-const GameSentencePage = () => {
-  //이하 임의값 테스트 코드입니다
-  const [idx, setIdx] = useState(1);
-  setInterval(() => {
-    setIdx((idx) => (idx + 1) % sentenceDummy.length);
-  }, 30000);
-  const [wpmTest, setWpmTest] = useState(0);
-  const [accTest, setAccTest] = useState(0);
-  setInterval(() => {
-    setWpmTest(Math.floor(Math.random() * 1001));
-    setAccTest(Math.floor(Math.random() * 101));
-  }, 200000);
 
-  // 전체영역 캔버스 생성
+const GameContainer = () => {
+  const dummyCode = `function dfs(graph, start, visited) {
+    const stack = [];
+    stack.push(start);
+    while (stack.length) {
+      let v = stack.pop();
+      if (!visited[v]) {
+        console.log(v);
+        visited[v] = true;
+        for (let node of graph[v]) {
+          if (!visited[node]) {
+            stack.push(node);
+          }
+        }
+      }
+    }
+  }`;
+  return (
+    <>
+      <div className='w-[60rem] select-none'>
+        <Highlight className='javascript'>{dummyCode}</Highlight>
+      </div>
+    </>
+  );
+};
+const GameCode = () => {
   const canvasRef = useCanvas({
     setCanvas: (canvas: HTMLCanvasElement) => {
       canvas.width = CANVAS_WIDTH;
@@ -126,7 +129,7 @@ const GameSentencePage = () => {
 
   const timerForTest = setInterval(() => {
     updateCarCoord(car1Ref.current);
-  }, 150000);
+  }, 1500);
 
   return (
     <>
@@ -142,20 +145,15 @@ const GameSentencePage = () => {
             ref={canvasRef}
             className='absolute w-full h-full z-[-1]'
           />
-          <div className='flex flex-col items-center justify-center'>
-            <SentenceNow text={sentenceDummy[idx]} />
-            <Input />
-            <SentenceNext text={sentenceDummy[idx + 1]} />
-            <SentenceNext text={sentenceDummy[idx + 2]} />
-          </div>
-          <div className='w-full flex justify-evenly mt-20'>
+          <div className='flex items-end gap-4'>
             <Dashboard
               type='wpm'
-              value={wpmTest}
+              value={90}
             />
+            <GameContainer />
             <Dashboard
               type='accuracy'
-              value={accTest}
+              value={100}
             />
           </div>
         </div>
@@ -164,4 +162,4 @@ const GameSentencePage = () => {
   );
 };
 
-export default GameSentencePage;
+export default GameCode;
