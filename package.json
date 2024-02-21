@@ -11,8 +11,7 @@
     "preview": "vite preview",
     "prepare": "husky",
     "test": "vitest",
-    "openapi": "openapi-generator-cli generate -g typescript-axios -t ./mustaches",
-    "template": "openapi-generator-cli author template -g typescript-axios -o ./mustaches"
+    "openapi": "openapi-generator-cli generate -g typescript-axios -i http://ec2-3-38-182-155.ap-northeast-2.compute.amazonaws.com/v3/api-docs -o ./src/generated"
   },
   "dependencies": {
     "@openapitools/openapi-generator-cli": "^2.9.0",
