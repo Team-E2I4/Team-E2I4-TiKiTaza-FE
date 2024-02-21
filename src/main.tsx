@@ -51,22 +51,6 @@ export const router = createBrowserRouter([
             path: '/game/:roomId',
             element: <GamePage />,
           },
-          // {
-          //   path: '/gameroom/:roomId/code',
-          //   element: <GameCodePage />,
-          // },
-          // {
-          //   path: '/gameroom/:roomId/sentence',
-          //   element: <GameSentencePage />,
-          // },
-          // {
-          //   path: '/gameroom/:roomId/word',
-          //   element: <GameWordPage />,
-          // },
-          // {
-          //   path: '/gameroom/:roomId',
-          //   element: <GameFinishPage />,
-          // },
           {
             path: '/rank',
             element: <RankPage />,
