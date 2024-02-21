@@ -19,7 +19,9 @@ import type { Configuration } from './configuration';
 import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 
-export const BASE_PATH = "http://ec2-3-38-182-155.ap-northeast-2.compute.amazonaws.com".replace(/\/+$/, "");
+export const BASE_PATH = import.meta.env.VITE_BASE_URL.replace(/\/+$/, "");
+
+console.log(BASE_PATH);
 
 /**
  *
