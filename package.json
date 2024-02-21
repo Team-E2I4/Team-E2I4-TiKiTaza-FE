@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "prepare": "husky",
     "test": "vitest",
-    "openapi": "openapi-generator-cli generate -g typescript-axios -i ./src/json/apiSpec.json -o ./src/generate --skip-validate-spec"
+    "openapi": "openapi-generator-cli generate"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.0.4",
