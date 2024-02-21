@@ -1,13 +1,13 @@
 import * as Avatar from '@radix-ui/react-avatar';
 import close from '@/assets/close.png';
-import { I_gameRoomUserCard } from './GameWaitingRoom';
+import { I_GameRoomUserCard } from '../types/gameInfoType';
 
 const GameRoomUserItem = ({
   userName,
   rank,
   userImage,
   userImageFallbackDelay,
-}: I_gameRoomUserCard) => {
+}: I_GameRoomUserCard) => {
   return (
     <div className='w-[25.8rem] h-[21.2rem] flex flex-col bg-white shadow-md shadow-black/50 rounded-[2.5rem]'>
       <button className='self-end pt-[1.6rem] pr-[1.6rem] '>
