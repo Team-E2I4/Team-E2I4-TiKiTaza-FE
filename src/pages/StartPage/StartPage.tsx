@@ -1,8 +1,22 @@
-import { useNavigate } from 'react-router-dom';
 import logo_big_shadow from '@/assets/logo_big_shadow.png';
+import { useSignIn } from './DummyData';
+
+const dummyUser = {
+  username: 'guest',
+  password: 'password',
+};
 
 const StartPage = () => {
-  const navigate = useNavigate();
+  const { mutate } = useSignIn({
+    onSuccess: () => {
+      alert('로그인 성공!');
+    },
+  });
+
+  const handleClick = () => {
+    mutate(dummyUser);
+  };
+
   return (
     <main className='w-full h-full flex flex-col justify-center items-center gap-[2rem]'>
       <img
@@ -11,9 +25,7 @@ const StartPage = () => {
         className='object-cover h-[55rem]'
       />
       <button
-        onClick={() => {
-          navigate('/main');
-        }}
+        onClick={handleClick}
         className='w-[33.9rem] h-[8.8rem] font-[Giants-Inline] text-[3.2rem] shadow-md shadow-black/50 bg-green-100 hover:bg-green-200 transition-all rounded-full'>
         시작하기
       </button>
