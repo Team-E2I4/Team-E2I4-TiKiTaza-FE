@@ -6,6 +6,7 @@ import {
   SpeakerOffIcon,
 } from '@radix-ui/react-icons';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo_car from '@/assets/logo_car.png';
 import logo_taza from '@/assets/logo_taza.png';
 import { PAUSE, PLAY } from '@/common/Header/constants/volume';
@@ -34,10 +35,13 @@ const Header = () => {
     bgm: PAUSE,
     effect: PAUSE,
   });
+  const navigate = useNavigate();
 
   return (
     <header className='bg-green-100 h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
-      <section className='h-full flex items-center cursor-pointer'>
+      <section
+        onClick={() => navigate('./main')}
+        className='h-full flex items-center cursor-pointer'>
         <img
           src={logo_car}
           className='h-[70%]'
