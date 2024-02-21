@@ -1,3 +1,5 @@
+import { useMutation } from '@tanstack/react-query';
+
 interface User {
   username: string;
   password: string;
@@ -6,6 +8,10 @@ interface User {
 interface ResponseData {
   status: number;
   token: string;
+}
+
+interface AuthProps {
+  onSuccess?: () => void;
 }
 
 export const mockLoginApi = (user: User): Promise<ResponseData> =>
@@ -18,3 +24,18 @@ export const mockLoginApi = (user: User): Promise<ResponseData> =>
       }
     }, 2000);
   });
+
+export const useSignIn = ({ onSuccess }: AuthProps = {}) => {
+  return useMutation({
+    mutationFn: mockLoginApi,
+    onSuccess: (data) => {
+      if (data?.token) {
+        localStorage.setItem('token', data.token);
+
+        if (onSuccess) {
+          onSuccess();
+        }
+      }
+    },
+  });
+};
