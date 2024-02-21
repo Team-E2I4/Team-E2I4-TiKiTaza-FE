@@ -11,10 +11,11 @@
     "preview": "vite preview",
     "prepare": "husky",
     "test": "vitest",
-    "openapi": "openapi-generator-cli generate -g typescript-axios -i http://ec2-3-38-182-155.ap-northeast-2.compute.amazonaws.com/v3/api-docs -o ./src/generate -t ./mustaches",
+    "openapi": "openapi-generator-cli generate -g typescript-axios -t ./mustaches",
     "template": "openapi-generator-cli author template -g typescript-axios -o ./mustaches"
   },
   "dependencies": {
+    "@openapitools/openapi-generator-cli": "^2.9.0",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-form": "^0.0.3",
@@ -22,7 +23,6 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@tanstack/react-query": "^5.18.1",
     "axios": "^1.6.7",
-    "cross-env": "^7.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-highlight": "^0.15.0",
