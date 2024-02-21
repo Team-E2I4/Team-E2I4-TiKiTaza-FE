@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 interface GameModeInfoProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const GameModeInfo = ({ children }: GameModeInfoProps) => {

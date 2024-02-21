@@ -1,28 +1,17 @@
-import backward from '@/assets/backward.png';
+import { gameInfoDummy } from '@/pages/GamePage/GameDummys';
+import Backward from '../Backward/Backward';
 
-interface IngameHeaderProps {
-  roomName?: string;
-  participants?: number;
-  round?: number;
-  roundTotal?: number;
-}
-const IngameHeader = ({
-  roomName = '테스트방 이름이 길어진다면 1234567898765',
-  participants = 8,
-  round = 2,
-  roundTotal = 5,
-}: IngameHeaderProps) => {
+const IngameHeader = () => {
+  const { gameRoomName, gameRoomUserList, gameRoundTotal } = gameInfoDummy; // TODO : 캐싱쿼리값
+  const gameRoundCurrent = 2; //TODO: 현재 라운드로 수정. zustand?
+
   return (
     <div className='flex flex-row items-center gap-20 pb-12'>
-      <img
-        src={backward}
-        alt='게임 나가기'
-        className='w-[4.8rem]'
-      />
-      <div className='w-[40rem] truncate text-4xl'>{roomName}</div>
-      <div className='grow'>참여 {participants}명</div>
+      <Backward />
+      <div className='w-[40rem] truncate text-4xl'>{gameRoomName}</div>
+      <div className='grow'>참여 {gameRoomUserList.length}명</div>
       <div>
-        🏁 {round} / {roundTotal}
+        🏁 {gameRoundCurrent} / {gameRoundTotal}
       </div>
     </div>
   );
