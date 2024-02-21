@@ -1,6 +1,6 @@
 import { create } from 'zustand';
+import { GameModeType } from '@/types/GameModeType';
 
-type GameModeType = 'waiting' | 'sentence' | 'code' | 'word' | 'finish';
 interface I_UseGameModeStore {
   mode: GameModeType;
   changeGameMode: (value: GameModeType) => void;
