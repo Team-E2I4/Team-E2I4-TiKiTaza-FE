@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Backward from '@/common/Backward/Backward';
 import { gameInfoDummy } from '../GameDummys';
 import GameModeInfo from './GameModeInfo';
@@ -9,10 +10,12 @@ import GameRoomUserList from './GameRoomUserList';
 
 const GameWaitingRoom = () => {
   const { gameRoomUserList } = gameInfoDummy;
+  const navigate = useNavigate();
+
   return (
     <div className='w-full flex flex-col justify-center items-center gap-[3rem] select-none'>
       <header className='flex gap-[5rem]'>
-        <Backward />
+        <Backward handleClickBackward={() => navigate(-1)} />
         <GameRoomInfo {...gameInfoDummy} />
       </header>
       <GameRoomUserList gameRoomUserList={gameRoomUserList} />

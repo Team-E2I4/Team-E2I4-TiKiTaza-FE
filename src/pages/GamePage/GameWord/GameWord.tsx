@@ -89,15 +89,13 @@ const GameWord = () => {
                 {wordRankDummy.map((rank, i) => {
                   const { userId, userName, score } = rank;
                   return (
-                    <>
-                      <WordRank
-                        key={i}
-                        track={i}
-                        userId={userId}
-                        userName={userName}
-                        score={score}
-                      />
-                    </>
+                    <WordRank
+                      key={i}
+                      track={i}
+                      userId={userId}
+                      userName={userName}
+                      score={score}
+                    />
                   );
                 })}
               </div>
