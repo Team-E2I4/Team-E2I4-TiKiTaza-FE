@@ -145,6 +145,31 @@ export interface AuthResponse {
 /**
  * 
  * @export
+ * @interface ErrorResponse
+ */
+export interface ErrorResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ErrorResponse
+     */
+    'errorCode'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ErrorResponse
+     */
+    'errorMessage'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ErrorResponse
+     */
+    'validation'?: { [key: string]: string; };
+}
+/**
+ * 
+ * @export
  * @interface GameRoomCreateRequest
  */
 export interface GameRoomCreateRequest {
@@ -264,7 +289,7 @@ export interface MemberSignUpRequest {
      * @type {string}
      * @memberof MemberSignUpRequest
      */
-    'nickname'?: string;
+    'nickname': string;
 }
 /**
  * 
@@ -301,6 +326,47 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary 게임 방 생성: 방장은 생성 후 자동입장됩니다.
+         * @param {GameRoomCreateRequest} gameRoomCreateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createGameRoom: async (gameRoomCreateRequest: GameRoomCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'gameRoomCreateRequest' is not null or undefined
+            assertParamExists('createGameRoom', 'gameRoomCreateRequest', gameRoomCreateRequest)
+            const localVarPath = `/api/v1/rooms`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gameRoomCreateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 회원 삭제
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -334,6 +400,45 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary 게임 방 입장: 일반 유저 입장
+         * @param {number} roomId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        enterGameRoom: async (roomId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'roomId' is not null or undefined
+            assertParamExists('enterGameRoom', 'roomId', roomId)
+            const localVarPath = `/api/v1/rooms/{roomId}/enter`
+                .replace(`{${"roomId"}}`, encodeURIComponent(String(roomId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 내 프로필 조회
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -522,6 +627,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary 회원가입
          * @param {MemberSignUpRequest} memberSignUpRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -561,6 +667,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary 회원 닉네임 업데이트. 소셜 로그인 시 사용
          * @param {NicknameUpdateRequest} nicknameUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -610,6 +717,20 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary 게임 방 생성: 방장은 생성 후 자동입장됩니다.
+         * @param {GameRoomCreateRequest} gameRoomCreateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createGameRoom(gameRoomCreateRequest: GameRoomCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseLong>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createGameRoom(gameRoomCreateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.createGameRoom']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary 회원 삭제
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -621,6 +742,20 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary 게임 방 입장: 일반 유저 입장
+         * @param {number} roomId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async enterGameRoom(roomId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseLong>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.enterGameRoom(roomId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.enterGameRoom']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary 내 프로필 조회
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -684,6 +819,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary 회원가입
          * @param {MemberSignUpRequest} memberSignUpRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -696,6 +832,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary 회원 닉네임 업데이트. 소셜 로그인 시 사용
          * @param {NicknameUpdateRequest} nicknameUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -718,6 +855,17 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @summary 게임 방 생성: 방장은 생성 후 자동입장됩니다.
+         * @param {GameRoomCreateRequest} gameRoomCreateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createGameRoom(gameRoomCreateRequest: GameRoomCreateRequest, options?: any): AxiosPromise<ApiResponseLong> {
+            return localVarFp.createGameRoom(gameRoomCreateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 회원 삭제
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -726,6 +874,17 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary 게임 방 입장: 일반 유저 입장
+         * @param {number} roomId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        enterGameRoom(roomId: number, options?: any): AxiosPromise<ApiResponseLong> {
+            return localVarFp.enterGameRoom(roomId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 내 프로필 조회
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -774,6 +933,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary 회원가입
          * @param {MemberSignUpRequest} memberSignUpRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -783,6 +943,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary 회원 닉네임 업데이트. 소셜 로그인 시 사용
          * @param {NicknameUpdateRequest} nicknameUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -802,6 +963,19 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
 export class DefaultApi extends BaseAPI {
     /**
      * 
+     * @summary 게임 방 생성: 방장은 생성 후 자동입장됩니다.
+     * @param {GameRoomCreateRequest} gameRoomCreateRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public createGameRoom(gameRoomCreateRequest: GameRoomCreateRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).createGameRoom(gameRoomCreateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 회원 삭제
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
@@ -812,6 +986,19 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
+     * @summary 게임 방 입장: 일반 유저 입장
+     * @param {number} roomId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public enterGameRoom(roomId: number, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).enterGameRoom(roomId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 내 프로필 조회
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
@@ -870,6 +1057,7 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
+     * @summary 회원가입
      * @param {MemberSignUpRequest} memberSignUpRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -881,6 +1069,7 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
+     * @summary 회원 닉네임 업데이트. 소셜 로그인 시 사용
      * @param {NicknameUpdateRequest} nicknameUpdateRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -894,189 +1083,10 @@ export class DefaultApi extends BaseAPI {
 
 
 /**
- * GameRoomControllerApi - axios parameter creator
+ * SSEApi - axios parameter creator
  * @export
  */
-export const GameRoomControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {GameRoomCreateRequest} gameRoomCreateRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createGameRoom: async (gameRoomCreateRequest: GameRoomCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'gameRoomCreateRequest' is not null or undefined
-            assertParamExists('createGameRoom', 'gameRoomCreateRequest', gameRoomCreateRequest)
-            const localVarPath = `/api/v1/rooms`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(gameRoomCreateRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} roomId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        enterGameRoom: async (roomId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'roomId' is not null or undefined
-            assertParamExists('enterGameRoom', 'roomId', roomId)
-            const localVarPath = `/api/v1/rooms/{roomId}/enter`
-                .replace(`{${"roomId"}}`, encodeURIComponent(String(roomId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * GameRoomControllerApi - functional programming interface
- * @export
- */
-export const GameRoomControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = GameRoomControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {GameRoomCreateRequest} gameRoomCreateRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createGameRoom(gameRoomCreateRequest: GameRoomCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseLong>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createGameRoom(gameRoomCreateRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GameRoomControllerApi.createGameRoom']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} roomId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async enterGameRoom(roomId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseLong>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.enterGameRoom(roomId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GameRoomControllerApi.enterGameRoom']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * GameRoomControllerApi - factory interface
- * @export
- */
-export const GameRoomControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = GameRoomControllerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {GameRoomCreateRequest} gameRoomCreateRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createGameRoom(gameRoomCreateRequest: GameRoomCreateRequest, options?: any): AxiosPromise<ApiResponseLong> {
-            return localVarFp.createGameRoom(gameRoomCreateRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} roomId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        enterGameRoom(roomId: number, options?: any): AxiosPromise<ApiResponseLong> {
-            return localVarFp.enterGameRoom(roomId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * GameRoomControllerApi - object-oriented interface
- * @export
- * @class GameRoomControllerApi
- * @extends {BaseAPI}
- */
-export class GameRoomControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {GameRoomCreateRequest} gameRoomCreateRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GameRoomControllerApi
-     */
-    public createGameRoom(gameRoomCreateRequest: GameRoomCreateRequest, options?: RawAxiosRequestConfig) {
-        return GameRoomControllerApiFp(this.configuration).createGameRoom(gameRoomCreateRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} roomId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GameRoomControllerApi
-     */
-    public enterGameRoom(roomId: number, options?: RawAxiosRequestConfig) {
-        return GameRoomControllerApiFp(this.configuration).enterGameRoom(roomId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SseControllerApi - axios parameter creator
- * @export
- */
-export const SseControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const SSEApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -1116,11 +1126,11 @@ export const SseControllerApiAxiosParamCreator = function (configuration?: Confi
 };
 
 /**
- * SseControllerApi - functional programming interface
+ * SSEApi - functional programming interface
  * @export
  */
-export const SseControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SseControllerApiAxiosParamCreator(configuration)
+export const SSEApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SSEApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -1131,18 +1141,18 @@ export const SseControllerApiFp = function(configuration?: Configuration) {
         async connect(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SseEmitter>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.connect(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SseControllerApi.connect']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SSEApi.connect']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * SseControllerApi - factory interface
+ * SSEApi - factory interface
  * @export
  */
-export const SseControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SseControllerApiFp(configuration)
+export const SSEApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SSEApiFp(configuration)
     return {
         /**
          * 
@@ -1157,21 +1167,21 @@ export const SseControllerApiFactory = function (configuration?: Configuration, 
 };
 
 /**
- * SseControllerApi - object-oriented interface
+ * SSEApi - object-oriented interface
  * @export
- * @class SseControllerApi
+ * @class SSEApi
  * @extends {BaseAPI}
  */
-export class SseControllerApi extends BaseAPI {
+export class SSEApi extends BaseAPI {
     /**
      * 
      * @summary SSE: 게임방 목록 받아오기
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SseControllerApi
+     * @memberof SSEApi
      */
     public connect(options?: RawAxiosRequestConfig) {
-        return SseControllerApiFp(this.configuration).connect(options).then((request) => request(this.axios, this.basePath));
+        return SSEApiFp(this.configuration).connect(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
