@@ -1,5 +1,5 @@
-import { I_gameRoomUserCard } from './GameRoomPage';
 import GameRoomUserItem from './GameRoomUserItem';
+import { I_gameRoomUserCard } from './GameWaitingRoom';
 
 interface GameRoomUserListProps {
   gameRoomUserList: Array<I_gameRoomUserCard>;

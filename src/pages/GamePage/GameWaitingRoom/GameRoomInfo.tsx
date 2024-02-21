@@ -1,4 +1,4 @@
-import { I_gameRoomUserCard } from './GameRoomPage';
+import { I_gameRoomUserCard } from './GameWaitingRoom';
 
 interface GameRoomInfoProps {
   gameRoomId: string;

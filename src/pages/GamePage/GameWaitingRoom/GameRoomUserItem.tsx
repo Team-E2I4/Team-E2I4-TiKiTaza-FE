@@ -1,6 +1,6 @@
 import * as Avatar from '@radix-ui/react-avatar';
 import close from '@/assets/close.png';
-import { I_gameRoomUserCard } from './GameRoomPage';
+import { I_gameRoomUserCard } from './GameWaitingRoom';
 
 const GameRoomUserItem = ({
   userName,

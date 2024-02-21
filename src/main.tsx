@@ -6,11 +6,7 @@ import App from './App.tsx';
 import Header from './common/Header/Header.tsx';
 import BodyLayout from './common/Layout/BodyLayout.tsx';
 import Layout from './common/Layout/Layout.tsx';
-import GameCodePage from './pages/GameCodePage/GameCodePage.tsx';
-import GameFinishPage from './pages/GameFinishPage/GameFinishPage.tsx';
-import GameRoomPage from './pages/GameRoomPage/GameRoomPage.tsx';
-import GameSentencePage from './pages/GameSentencePage/GameSentencePage.tsx';
-import GameWordPage from './pages/GameWordPage/GameWordPage.tsx';
+import GamePage from './pages/GamePage/GamePage.tsx';
 import LoginPage from './pages/LoginPage/LoginPage.tsx';
 import MainPage from './pages/MainPage/MainPage.tsx';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
@@ -52,25 +48,25 @@ export const router = createBrowserRouter([
             element: <MainPage />,
           },
           {
-            path: '/gameroom/:roomId',
-            element: <GameRoomPage />,
+            path: '/game/:roomId',
+            element: <GamePage />,
           },
-          {
-            path: '/gameroom/:roomId/code',
-            element: <GameCodePage />,
-          },
-          {
-            path: '/gameroom/:roomId/sentence',
-            element: <GameSentencePage />,
-          },
-          {
-            path: '/gameroom/:roomId/word',
-            element: <GameWordPage />,
-          },
-          {
-            path: '/gameroom/:roomId',
-            element: <GameFinishPage />,
-          },
+          // {
+          //   path: '/gameroom/:roomId/code',
+          //   element: <GameCodePage />,
+          // },
+          // {
+          //   path: '/gameroom/:roomId/sentence',
+          //   element: <GameSentencePage />,
+          // },
+          // {
+          //   path: '/gameroom/:roomId/word',
+          //   element: <GameWordPage />,
+          // },
+          // {
+          //   path: '/gameroom/:roomId',
+          //   element: <GameFinishPage />,
+          // },
           {
             path: '/rank',
             element: <RankPage />,
