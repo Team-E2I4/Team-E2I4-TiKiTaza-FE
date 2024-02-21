@@ -21,8 +21,6 @@ import globalAxios from 'axios';
 
 export const BASE_PATH = import.meta.env.VITE_BASE_URL.replace(/\/+$/, "");
 
-console.log(BASE_PATH);
-
 /**
  *
  * @export
