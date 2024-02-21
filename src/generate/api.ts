@@ -301,6 +301,72 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMemberAccount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/members`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMyProfileInfo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/members/my-profile`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary 게스트 로그인
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -358,7 +424,9 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-  
+
+
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -452,6 +520,84 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {MemberSignUpRequest} memberSignUpRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signUp: async (memberSignUpRequest: MemberSignUpRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'memberSignUpRequest' is not null or undefined
+            assertParamExists('signUp', 'memberSignUpRequest', memberSignUpRequest)
+            const localVarPath = `/api/v1/members/sign-up`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(memberSignUpRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {NicknameUpdateRequest} nicknameUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMemberNickname: async (nicknameUpdateRequest: NicknameUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'nicknameUpdateRequest' is not null or undefined
+            assertParamExists('updateMemberNickname', 'nicknameUpdateRequest', nicknameUpdateRequest)
+            const localVarPath = `/api/v1/members`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(nicknameUpdateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -462,6 +608,28 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 export const DefaultApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
     return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteMemberAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseVoid>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMemberAccount(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteMemberAccount']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMyProfileInfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseMemberGetResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMyProfileInfo(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getMyProfileInfo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * 
          * @summary 게스트 로그인
@@ -514,6 +682,30 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.reIssueAccessToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {MemberSignUpRequest} memberSignUpRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async signUp(memberSignUpRequest: MemberSignUpRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseLong>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.signUp(memberSignUpRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.signUp']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {NicknameUpdateRequest} nicknameUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateMemberNickname(nicknameUpdateRequest: NicknameUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseVoid>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMemberNickname(nicknameUpdateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.updateMemberNickname']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -524,6 +716,22 @@ export const DefaultApiFp = function(configuration?: Configuration) {
 export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = DefaultApiFp(configuration)
     return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMemberAccount(options?: any): AxiosPromise<ApiResponseVoid> {
+            return localVarFp.deleteMemberAccount(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMyProfileInfo(options?: any): AxiosPromise<ApiResponseMemberGetResponse> {
+            return localVarFp.getMyProfileInfo(options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary 게스트 로그인
@@ -564,6 +772,24 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         reIssueAccessToken(refreshToken: string, options?: any): AxiosPromise<ApiResponseAuthResponse> {
             return localVarFp.reIssueAccessToken(refreshToken, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {MemberSignUpRequest} memberSignUpRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signUp(memberSignUpRequest: MemberSignUpRequest, options?: any): AxiosPromise<ApiResponseLong> {
+            return localVarFp.signUp(memberSignUpRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {NicknameUpdateRequest} nicknameUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMemberNickname(nicknameUpdateRequest: NicknameUpdateRequest, options?: any): AxiosPromise<ApiResponseVoid> {
+            return localVarFp.updateMemberNickname(nicknameUpdateRequest, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -574,6 +800,26 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public deleteMemberAccount(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteMemberAccount(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getMyProfileInfo(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getMyProfileInfo(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary 게스트 로그인
@@ -620,6 +866,28 @@ export class DefaultApi extends BaseAPI {
      */
     public reIssueAccessToken(refreshToken: string, options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).reIssueAccessToken(refreshToken, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {MemberSignUpRequest} memberSignUpRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public signUp(memberSignUpRequest: MemberSignUpRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).signUp(memberSignUpRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {NicknameUpdateRequest} nicknameUpdateRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public updateMemberNickname(nicknameUpdateRequest: NicknameUpdateRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).updateMemberNickname(nicknameUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -805,311 +1073,6 @@ export class GameRoomControllerApi extends BaseAPI {
 
 
 /**
- * MemberControllerApi - axios parameter creator
- * @export
- */
-export const MemberControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteMemberAccount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/members`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMyProfileInfo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/members/my-profile`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {MemberSignUpRequest} memberSignUpRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        signUp: async (memberSignUpRequest: MemberSignUpRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'memberSignUpRequest' is not null or undefined
-            assertParamExists('signUp', 'memberSignUpRequest', memberSignUpRequest)
-            const localVarPath = `/api/v1/members/sign-up`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(memberSignUpRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {NicknameUpdateRequest} nicknameUpdateRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateMemberNickname: async (nicknameUpdateRequest: NicknameUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'nicknameUpdateRequest' is not null or undefined
-            assertParamExists('updateMemberNickname', 'nicknameUpdateRequest', nicknameUpdateRequest)
-            const localVarPath = `/api/v1/members`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(nicknameUpdateRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * MemberControllerApi - functional programming interface
- * @export
- */
-export const MemberControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = MemberControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteMemberAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseVoid>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMemberAccount(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MemberControllerApi.deleteMemberAccount']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getMyProfileInfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseMemberGetResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMyProfileInfo(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MemberControllerApi.getMyProfileInfo']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {MemberSignUpRequest} memberSignUpRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async signUp(memberSignUpRequest: MemberSignUpRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseLong>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.signUp(memberSignUpRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MemberControllerApi.signUp']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {NicknameUpdateRequest} nicknameUpdateRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateMemberNickname(nicknameUpdateRequest: NicknameUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseVoid>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMemberNickname(nicknameUpdateRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MemberControllerApi.updateMemberNickname']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * MemberControllerApi - factory interface
- * @export
- */
-export const MemberControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = MemberControllerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteMemberAccount(options?: any): AxiosPromise<ApiResponseVoid> {
-            return localVarFp.deleteMemberAccount(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMyProfileInfo(options?: any): AxiosPromise<ApiResponseMemberGetResponse> {
-            return localVarFp.getMyProfileInfo(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {MemberSignUpRequest} memberSignUpRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        signUp(memberSignUpRequest: MemberSignUpRequest, options?: any): AxiosPromise<ApiResponseLong> {
-            return localVarFp.signUp(memberSignUpRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {NicknameUpdateRequest} nicknameUpdateRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateMemberNickname(nicknameUpdateRequest: NicknameUpdateRequest, options?: any): AxiosPromise<ApiResponseVoid> {
-            return localVarFp.updateMemberNickname(nicknameUpdateRequest, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * MemberControllerApi - object-oriented interface
- * @export
- * @class MemberControllerApi
- * @extends {BaseAPI}
- */
-export class MemberControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MemberControllerApi
-     */
-    public deleteMemberAccount(options?: RawAxiosRequestConfig) {
-        return MemberControllerApiFp(this.configuration).deleteMemberAccount(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MemberControllerApi
-     */
-    public getMyProfileInfo(options?: RawAxiosRequestConfig) {
-        return MemberControllerApiFp(this.configuration).getMyProfileInfo(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {MemberSignUpRequest} memberSignUpRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MemberControllerApi
-     */
-    public signUp(memberSignUpRequest: MemberSignUpRequest, options?: RawAxiosRequestConfig) {
-        return MemberControllerApiFp(this.configuration).signUp(memberSignUpRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {NicknameUpdateRequest} nicknameUpdateRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MemberControllerApi
-     */
-    public updateMemberNickname(nicknameUpdateRequest: NicknameUpdateRequest, options?: RawAxiosRequestConfig) {
-        return MemberControllerApiFp(this.configuration).updateMemberNickname(nicknameUpdateRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
  * SseControllerApi - axios parameter creator
  * @export
  */
@@ -1117,6 +1080,7 @@ export const SseControllerApiAxiosParamCreator = function (configuration?: Confi
     return {
         /**
          * 
+         * @summary SSE: 게임방 목록 받아오기
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1160,6 +1124,7 @@ export const SseControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary SSE: 게임방 목록 받아오기
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1181,6 +1146,7 @@ export const SseControllerApiFactory = function (configuration?: Configuration, 
     return {
         /**
          * 
+         * @summary SSE: 게임방 목록 받아오기
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1199,6 +1165,7 @@ export const SseControllerApiFactory = function (configuration?: Configuration, 
 export class SseControllerApi extends BaseAPI {
     /**
      * 
+     * @summary SSE: 게임방 목록 받아오기
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SseControllerApi
