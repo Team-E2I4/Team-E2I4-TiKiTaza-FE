@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import storageFactory from './storageFactory';
 
-const { setItem, getItem, removeItem } = storageFactory(Storage.prototype);
+const { setItem, getItem, removeItem } = storageFactory(localStorage);
 
 describe('localStorage', () => {
   const mockSetItem = vitest.spyOn(localStorage, 'setItem');
