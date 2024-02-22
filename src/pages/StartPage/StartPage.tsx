@@ -1,16 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import logo_big_shadow from '@/assets/logo_big_shadow.png';
-import { useSignIn } from './DummyData';
-
-const dummyUser = {
-  username: 'guest',
-  password: 'password',
-};
+import { useGuestLogin } from '@/hooks/useAuth';
 
 const StartPage = () => {
   const navigate = useNavigate();
 
-  const { mutate } = useSignIn({
+  const { mutate } = useGuestLogin({
     onSuccess: () => {
       alert('로그인 성공!');
       navigate('/main');
@@ -18,7 +13,7 @@ const StartPage = () => {
   });
 
   const handleClick = () => {
-    mutate(dummyUser);
+    mutate();
   };
 
   return (
