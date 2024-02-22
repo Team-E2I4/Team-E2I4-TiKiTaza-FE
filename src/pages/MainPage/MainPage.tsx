@@ -1,6 +1,5 @@
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import { useEffect } from 'react';
-import { guestLogin } from '@/apis/api';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import GameRoomList from './GameRoomList';
 import UserCard from './UserCard';
@@ -8,18 +7,6 @@ import UserList from './UserList';
 
 const MainPage = () => {
   useEffect(() => {
-    const stored = localStorage.getItem('MyToken');
-
-    const guestLoginFn = async () => {
-      const response = await guestLogin();
-      if (response) {
-        localStorage.setItem('MyToken', response.data.data.accessToken);
-      }
-    };
-
-    if (!stored) {
-      guestLoginFn();
-    }
     const sse = new EventSourcePolyfill(
       'http://ec2-3-38-182-155.ap-northeast-2.compute.amazonaws.com/api/v1/sse',
       {
