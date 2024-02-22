@@ -1,9 +1,11 @@
+import { checkIsJson } from './checkIsJson';
+
 const storageFactory = (storage: Storage) => {
   const getItem = <D>(key: string, defaultValue: D | unknown) => {
     try {
       const storedValue = storage.getItem(key);
       if (storedValue) {
-        return JSON.parse(storedValue);
+        return checkIsJson(storedValue) ? JSON.parse(storedValue) : storedValue;
       }
       return defaultValue;
     } catch (e) {
