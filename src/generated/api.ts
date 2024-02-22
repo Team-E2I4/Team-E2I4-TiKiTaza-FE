@@ -34,13 +34,13 @@ export interface ApiResponseAuthResponse {
      * @type {string}
      * @memberof ApiResponseAuthResponse
      */
-    'code'?: string;
+    'code': string;
     /**
      * 
      * @type {string}
      * @memberof ApiResponseAuthResponse
      */
-    'message'?: string;
+    'message': string;
     /**
      * 
      * @type {AuthResponse}
@@ -51,27 +51,52 @@ export interface ApiResponseAuthResponse {
 /**
  * 
  * @export
- * @interface ApiResponseLong
+ * @interface ApiResponseGameRoomCreateResponse
  */
-export interface ApiResponseLong {
+export interface ApiResponseGameRoomCreateResponse {
     /**
      * 
      * @type {string}
-     * @memberof ApiResponseLong
+     * @memberof ApiResponseGameRoomCreateResponse
      */
-    'code'?: string;
+    'code': string;
     /**
      * 
      * @type {string}
-     * @memberof ApiResponseLong
+     * @memberof ApiResponseGameRoomCreateResponse
      */
-    'message'?: string;
+    'message': string;
     /**
      * 
-     * @type {number}
-     * @memberof ApiResponseLong
+     * @type {GameRoomCreateResponse}
+     * @memberof ApiResponseGameRoomCreateResponse
      */
-    'data'?: number;
+    'data'?: GameRoomCreateResponse;
+}
+/**
+ * 
+ * @export
+ * @interface ApiResponseGameRoomEnterResponse
+ */
+export interface ApiResponseGameRoomEnterResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseGameRoomEnterResponse
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseGameRoomEnterResponse
+     */
+    'message': string;
+    /**
+     * 
+     * @type {GameRoomEnterResponse}
+     * @memberof ApiResponseGameRoomEnterResponse
+     */
+    'data'?: GameRoomEnterResponse;
 }
 /**
  * 
@@ -84,19 +109,44 @@ export interface ApiResponseMemberGetResponse {
      * @type {string}
      * @memberof ApiResponseMemberGetResponse
      */
-    'code'?: string;
+    'code': string;
     /**
      * 
      * @type {string}
      * @memberof ApiResponseMemberGetResponse
      */
-    'message'?: string;
+    'message': string;
     /**
      * 
      * @type {MemberGetResponse}
      * @memberof ApiResponseMemberGetResponse
      */
     'data'?: MemberGetResponse;
+}
+/**
+ * 
+ * @export
+ * @interface ApiResponseMemberSignUpResponse
+ */
+export interface ApiResponseMemberSignUpResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseMemberSignUpResponse
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseMemberSignUpResponse
+     */
+    'message': string;
+    /**
+     * 
+     * @type {MemberSignUpResponse}
+     * @memberof ApiResponseMemberSignUpResponse
+     */
+    'data'?: MemberSignUpResponse;
 }
 /**
  * 
@@ -109,13 +159,13 @@ export interface ApiResponseVoid {
      * @type {string}
      * @memberof ApiResponseVoid
      */
-    'code'?: string;
+    'code': string;
     /**
      * 
      * @type {string}
      * @memberof ApiResponseVoid
      */
-    'message'?: string;
+    'message': string;
     /**
      * 
      * @type {object}
@@ -135,12 +185,6 @@ export interface AuthResponse {
      * @memberof AuthResponse
      */
     'accessToken': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AuthResponse
-     */
-    'refreshToken': string;
 }
 /**
  * 
@@ -153,13 +197,13 @@ export interface ErrorResponse {
      * @type {string}
      * @memberof ErrorResponse
      */
-    'errorCode'?: string;
+    'errorCode': string;
     /**
      * 
      * @type {string}
      * @memberof ErrorResponse
      */
-    'errorMessage'?: string;
+    'errorMessage': string;
     /**
      * 
      * @type {{ [key: string]: string; }}
@@ -207,6 +251,88 @@ export interface GameRoomCreateRequest {
 /**
  * 
  * @export
+ * @interface GameRoomCreateResponse
+ */
+export interface GameRoomCreateResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof GameRoomCreateResponse
+     */
+    'roomId': number;
+}
+/**
+ * 
+ * @export
+ * @interface GameRoomEnterRequest
+ */
+export interface GameRoomEnterRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof GameRoomEnterRequest
+     */
+    'password'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface GameRoomEnterResponse
+ */
+export interface GameRoomEnterResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof GameRoomEnterResponse
+     */
+    'roomId': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GameRoomEnterResponse
+     */
+    'memberId': number;
+}
+/**
+ * 
+ * @export
+ * @interface GameRoomUpdateRequest
+ */
+export interface GameRoomUpdateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof GameRoomUpdateRequest
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GameRoomUpdateRequest
+     */
+    'password'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GameRoomUpdateRequest
+     */
+    'maxPlayer': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GameRoomUpdateRequest
+     */
+    'round': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GameRoomUpdateRequest
+     */
+    'gameType': string;
+}
+/**
+ * 
+ * @export
  * @interface LoginRequest
  */
 export interface LoginRequest {
@@ -234,31 +360,25 @@ export interface MemberGetResponse {
      * @type {number}
      * @memberof MemberGetResponse
      */
-    'memberId'?: number;
+    'memberId': number;
     /**
      * 
      * @type {string}
      * @memberof MemberGetResponse
      */
-    'email'?: string;
+    'email': string;
     /**
      * 
      * @type {string}
      * @memberof MemberGetResponse
      */
-    'nickname'?: string;
+    'nickname': string;
     /**
      * 
      * @type {string}
      * @memberof MemberGetResponse
      */
-    'status'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MemberGetResponse
-     */
-    'provider'?: string;
+    'status': string;
 }
 /**
  * 
@@ -290,6 +410,19 @@ export interface MemberSignUpRequest {
      * @memberof MemberSignUpRequest
      */
     'nickname': string;
+}
+/**
+ * 
+ * @export
+ * @interface MemberSignUpResponse
+ */
+export interface MemberSignUpResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof MemberSignUpResponse
+     */
+    'memberId': number;
 }
 /**
  * 
@@ -367,10 +500,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 회원 삭제
+         * @param {string} authorization 
+         * @param {string} refreshToken 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMemberAccount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMemberAccount: async (authorization: string, refreshToken: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authorization' is not null or undefined
+            assertParamExists('deleteMemberAccount', 'authorization', authorization)
+            // verify required parameter 'refreshToken' is not null or undefined
+            assertParamExists('deleteMemberAccount', 'refreshToken', refreshToken)
             const localVarPath = `/api/v1/members`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -387,6 +526,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -402,10 +545,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary 게임 방 입장: 일반 유저 입장
          * @param {number} roomId 
+         * @param {GameRoomEnterRequest} [gameRoomEnterRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        enterGameRoom: async (roomId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        enterGameRoom: async (roomId: number, gameRoomEnterRequest?: GameRoomEnterRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'roomId' is not null or undefined
             assertParamExists('enterGameRoom', 'roomId', roomId)
             const localVarPath = `/api/v1/rooms/{roomId}/enter`
@@ -427,9 +571,12 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gameRoomEnterRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -667,6 +814,50 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary 게임 방 설정 변경
+         * @param {number} roomId 
+         * @param {GameRoomUpdateRequest} gameRoomUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateGameRoom: async (roomId: number, gameRoomUpdateRequest: GameRoomUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'roomId' is not null or undefined
+            assertParamExists('updateGameRoom', 'roomId', roomId)
+            // verify required parameter 'gameRoomUpdateRequest' is not null or undefined
+            assertParamExists('updateGameRoom', 'gameRoomUpdateRequest', gameRoomUpdateRequest)
+            const localVarPath = `/api/v1/rooms/{roomId}`
+                .replace(`{${"roomId"}}`, encodeURIComponent(String(roomId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gameRoomUpdateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary 회원 닉네임 업데이트. 소셜 로그인 시 사용
          * @param {NicknameUpdateRequest} nicknameUpdateRequest 
          * @param {*} [options] Override http request option.
@@ -722,7 +913,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createGameRoom(gameRoomCreateRequest: GameRoomCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseLong>> {
+        async createGameRoom(gameRoomCreateRequest: GameRoomCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseGameRoomCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createGameRoom(gameRoomCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.createGameRoom']?.[localVarOperationServerIndex]?.url;
@@ -731,11 +922,13 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 회원 삭제
+         * @param {string} authorization 
+         * @param {string} refreshToken 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteMemberAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseVoid>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMemberAccount(options);
+        async deleteMemberAccount(authorization: string, refreshToken: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseVoid>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMemberAccount(authorization, refreshToken, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteMemberAccount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -744,11 +937,12 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * 
          * @summary 게임 방 입장: 일반 유저 입장
          * @param {number} roomId 
+         * @param {GameRoomEnterRequest} [gameRoomEnterRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async enterGameRoom(roomId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseLong>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.enterGameRoom(roomId, options);
+        async enterGameRoom(roomId: number, gameRoomEnterRequest?: GameRoomEnterRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseGameRoomEnterResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.enterGameRoom(roomId, gameRoomEnterRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.enterGameRoom']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -824,10 +1018,24 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async signUp(memberSignUpRequest: MemberSignUpRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseLong>> {
+        async signUp(memberSignUpRequest: MemberSignUpRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseMemberSignUpResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.signUp(memberSignUpRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.signUp']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary 게임 방 설정 변경
+         * @param {number} roomId 
+         * @param {GameRoomUpdateRequest} gameRoomUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateGameRoom(roomId: number, gameRoomUpdateRequest: GameRoomUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseVoid>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateGameRoom(roomId, gameRoomUpdateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.updateGameRoom']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -860,27 +1068,30 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createGameRoom(gameRoomCreateRequest: GameRoomCreateRequest, options?: any): AxiosPromise<ApiResponseLong> {
+        createGameRoom(gameRoomCreateRequest: GameRoomCreateRequest, options?: any): AxiosPromise<ApiResponseGameRoomCreateResponse> {
             return localVarFp.createGameRoom(gameRoomCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary 회원 삭제
+         * @param {string} authorization 
+         * @param {string} refreshToken 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMemberAccount(options?: any): AxiosPromise<ApiResponseVoid> {
-            return localVarFp.deleteMemberAccount(options).then((request) => request(axios, basePath));
+        deleteMemberAccount(authorization: string, refreshToken: string, options?: any): AxiosPromise<ApiResponseVoid> {
+            return localVarFp.deleteMemberAccount(authorization, refreshToken, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary 게임 방 입장: 일반 유저 입장
          * @param {number} roomId 
+         * @param {GameRoomEnterRequest} [gameRoomEnterRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        enterGameRoom(roomId: number, options?: any): AxiosPromise<ApiResponseLong> {
-            return localVarFp.enterGameRoom(roomId, options).then((request) => request(axios, basePath));
+        enterGameRoom(roomId: number, gameRoomEnterRequest?: GameRoomEnterRequest, options?: any): AxiosPromise<ApiResponseGameRoomEnterResponse> {
+            return localVarFp.enterGameRoom(roomId, gameRoomEnterRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -938,8 +1149,19 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signUp(memberSignUpRequest: MemberSignUpRequest, options?: any): AxiosPromise<ApiResponseLong> {
+        signUp(memberSignUpRequest: MemberSignUpRequest, options?: any): AxiosPromise<ApiResponseMemberSignUpResponse> {
             return localVarFp.signUp(memberSignUpRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 게임 방 설정 변경
+         * @param {number} roomId 
+         * @param {GameRoomUpdateRequest} gameRoomUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateGameRoom(roomId: number, gameRoomUpdateRequest: GameRoomUpdateRequest, options?: any): AxiosPromise<ApiResponseVoid> {
+            return localVarFp.updateGameRoom(roomId, gameRoomUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -976,24 +1198,27 @@ export class DefaultApi extends BaseAPI {
     /**
      * 
      * @summary 회원 삭제
+     * @param {string} authorization 
+     * @param {string} refreshToken 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public deleteMemberAccount(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).deleteMemberAccount(options).then((request) => request(this.axios, this.basePath));
+    public deleteMemberAccount(authorization: string, refreshToken: string, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteMemberAccount(authorization, refreshToken, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary 게임 방 입장: 일반 유저 입장
      * @param {number} roomId 
+     * @param {GameRoomEnterRequest} [gameRoomEnterRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public enterGameRoom(roomId: number, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).enterGameRoom(roomId, options).then((request) => request(this.axios, this.basePath));
+    public enterGameRoom(roomId: number, gameRoomEnterRequest?: GameRoomEnterRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).enterGameRoom(roomId, gameRoomEnterRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1065,6 +1290,19 @@ export class DefaultApi extends BaseAPI {
      */
     public signUp(memberSignUpRequest: MemberSignUpRequest, options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).signUp(memberSignUpRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 게임 방 설정 변경
+     * @param {number} roomId 
+     * @param {GameRoomUpdateRequest} gameRoomUpdateRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public updateGameRoom(roomId: number, gameRoomUpdateRequest: GameRoomUpdateRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).updateGameRoom(roomId, gameRoomUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

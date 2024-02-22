@@ -9,6 +9,7 @@ import UserList from './UserList';
 const MainPage = () => {
   useEffect(() => {
     const stored = localStorage.getItem('MyToken');
+
     const guestLoginFn = async () => {
       const response = await guestLogin();
       if (response) {
