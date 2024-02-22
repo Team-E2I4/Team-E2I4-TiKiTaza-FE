@@ -46,7 +46,7 @@ export interface ApiResponseAuthResponse {
      * @type {AuthResponse}
      * @memberof ApiResponseAuthResponse
      */
-    'data'?: AuthResponse;
+    'data': AuthResponse;
 }
 /**
  * 
@@ -134,13 +134,13 @@ export interface AuthResponse {
      * @type {string}
      * @memberof AuthResponse
      */
-    'accessToken'?: string;
+    'accessToken': string;
     /**
      * 
      * @type {string}
      * @memberof AuthResponse
      */
-    'refreshToken'?: string;
+    'refreshToken': string;
 }
 /**
  * 

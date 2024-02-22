@@ -1,10 +1,36 @@
+import { EventSourcePolyfill } from 'event-source-polyfill';
+import { useEffect } from 'react';
+import { guestLogin } from '@/apis/api';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import GameRoomList from './GameRoomList';
 import UserCard from './UserCard';
 import UserList from './UserList';
 
 const MainPage = () => {
-  /* bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 클래스가 반복되어서 재사용 필요? */
+  useEffect(() => {
+    const stored = localStorage.getItem('MyToken');
+    const guestLoginFn = async () => {
+      const response = await guestLogin();
+      if (response) {
+        localStorage.setItem('MyToken', response.data.data.accessToken);
+      }
+    };
+
+    if (!stored) {
+      guestLoginFn();
+    }
+    const sse = new EventSourcePolyfill(
+      'http://ec2-3-38-182-155.ap-northeast-2.compute.amazonaws.com/api/v1/sse',
+      {
+        headers: {
+          Authorization: `Bearer ${stored}`,
+        },
+        withCredentials: true,
+      }
+    );
+    //서버측 emitter네임과 클라이언트측 이벤트 이름이 같아야 함
+    sse.addEventListener('changeGameRoom', () => {});
+  }, []);
   return (
     <main className='flex pb-[4rem] gap-[3rem]'>
       <section className='flex flex-col gap-[3rem] w-[25rem]'>
