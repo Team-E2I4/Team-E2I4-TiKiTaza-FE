@@ -1,5 +1,4 @@
 import { DefaultApiFp } from '@/generated';
-import { SSEApiFp } from '@/generated';
 export const {
   createGameRoom,
   deleteMemberAccount,
@@ -12,4 +11,3 @@ export const {
   signUp,
   updateMemberNickname,
 } = DefaultApiFp();
-export const { connect } = SSEApiFp();
