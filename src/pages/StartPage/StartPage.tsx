@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import logo_big_shadow from '@/assets/logo_big_shadow.png';
 import { useSignIn } from './DummyData';
 
@@ -7,9 +8,12 @@ const dummyUser = {
 };
 
 const StartPage = () => {
+  const navigate = useNavigate();
+
   const { mutate } = useSignIn({
     onSuccess: () => {
       alert('로그인 성공!');
+      navigate('/main');
     },
   });
 
