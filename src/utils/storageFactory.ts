@@ -1,8 +1,8 @@
-interface UseStorageProps {
+interface storageFactoryProps {
   storage: Storage;
 }
 
-const useStorage = ({ storage }: UseStorageProps) => {
+const storageFactory = ({ storage }: storageFactoryProps) => {
   const getItem = <D>(key: string, defaultValue: D | unknown) => {
     try {
       const storedValue = storage.getItem(key);
@@ -40,4 +40,4 @@ const useStorage = ({ storage }: UseStorageProps) => {
   return { getItem, setItem, removeItem };
 };
 
-export default useStorage;
+export default storageFactory;
