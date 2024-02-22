@@ -1,8 +1,4 @@
-interface storageFactoryProps {
-  storage: Storage;
-}
-
-const storageFactory = ({ storage }: storageFactoryProps) => {
+const storageFactory = (storage: Storage) => {
   const getItem = <D>(key: string, defaultValue: D | unknown) => {
     try {
       const storedValue = storage.getItem(key);
