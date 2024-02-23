@@ -248,6 +248,31 @@ export interface ApiResponseMemberSignUpResponse {
 /**
  *
  * @export
+ * @interface ApiResponseMemberSignUpResponse
+ */
+export interface ApiResponseMemberSignUpResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof ApiResponseMemberSignUpResponse
+   */
+  code: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ApiResponseMemberSignUpResponse
+   */
+  message: string;
+  /**
+   *
+   * @type {MemberSignUpResponse}
+   * @memberof ApiResponseMemberSignUpResponse
+   */
+  data?: MemberSignUpResponse;
+}
+/**
+ *
+ * @export
  * @interface ApiResponseVoid
  */
 export interface ApiResponseVoid {
@@ -443,6 +468,101 @@ export interface GameRoomUpdateRequest {
 /**
  *
  * @export
+ * @interface GameRoomCreateResponse
+ */
+export interface GameRoomCreateResponse {
+  /**
+   *
+   * @type {number}
+   * @memberof GameRoomCreateResponse
+   */
+  roomId: number;
+}
+/**
+ *
+ * @export
+ * @interface GameRoomEnterRequest
+ */
+export interface GameRoomEnterRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof GameRoomEnterRequest
+   */
+  password?: string;
+}
+/**
+ *
+ * @export
+ * @interface GameRoomEnterResponse
+ */
+export interface GameRoomEnterResponse {
+  /**
+   *
+   * @type {number}
+   * @memberof GameRoomEnterResponse
+   */
+  roomId: number;
+  /**
+   *
+   * @type {number}
+   * @memberof GameRoomEnterResponse
+   */
+  memberId: number;
+}
+/**
+ *
+ * @export
+ * @interface GameRoomInviteCodeResponse
+ */
+export interface GameRoomInviteCodeResponse {
+  /**
+   *
+   * @type {number}
+   * @memberof GameRoomInviteCodeResponse
+   */
+  roomId: number;
+}
+/**
+ *
+ * @export
+ * @interface GameRoomUpdateRequest
+ */
+export interface GameRoomUpdateRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof GameRoomUpdateRequest
+   */
+  title: string;
+  /**
+   *
+   * @type {string}
+   * @memberof GameRoomUpdateRequest
+   */
+  password?: string;
+  /**
+   *
+   * @type {number}
+   * @memberof GameRoomUpdateRequest
+   */
+  maxPlayer: number;
+  /**
+   *
+   * @type {number}
+   * @memberof GameRoomUpdateRequest
+   */
+  round: number;
+  /**
+   *
+   * @type {string}
+   * @memberof GameRoomUpdateRequest
+   */
+  gameType: string;
+}
+/**
+ *
+ * @export
  * @interface LoginRequest
  */
 export interface LoginRequest {
@@ -526,6 +646,19 @@ export interface MemberSignUpRequest {
    * @memberof MemberSignUpRequest
    */
   nickname: string;
+}
+/**
+ *
+ * @export
+ * @interface MemberSignUpResponse
+ */
+export interface MemberSignUpResponse {
+  /**
+   *
+   * @type {number}
+   * @memberof MemberSignUpResponse
+   */
+  memberId: number;
 }
 /**
  *
