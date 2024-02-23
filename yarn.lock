@@ -3320,10 +3320,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sockjs-client@npm:^1":
+"@types/sockjs-client@npm:^1.5.4":
   version: 1.5.4
   resolution: "@types/sockjs-client@npm:1.5.4"
   checksum: 10c0/fd016cb9c47fd0348be1ccb9c37123850e5c7ea4af0b8427eb35d82b4dfdaeb50407c013bb25ed65cdb8a67622f53aaceb070274463edd5b2581e912d6ac7148
+  languageName: node
+  linkType: hard
+
+"@types/stompjs@npm:^2.3.9":
+  version: 2.3.9
+  resolution: "@types/stompjs@npm:2.3.9"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/54c208c421d3ba24004c4ec00be0252373e44395fe8d2a9a77dbb666e4dd60e37c167b4969233ce98393b88022dfed6352523cf87435085f36b9db362338572b
   languageName: node
   linkType: hard
 
@@ -10256,7 +10265,8 @@ __metadata:
     "@types/react": "npm:^18.2.43"
     "@types/react-dom": "npm:^18.2.17"
     "@types/react-highlight": "npm:^0"
-    "@types/sockjs-client": "npm:^1"
+    "@types/sockjs-client": "npm:^1.5.4"
+    "@types/stompjs": "npm:^2.3.9"
     "@typescript-eslint/eslint-plugin": "npm:^6.14.0"
     "@typescript-eslint/parser": "npm:^6.14.0"
     "@vitejs/plugin-react": "npm:^4.2.1"
