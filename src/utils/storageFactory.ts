@@ -25,15 +25,7 @@ const storageFactory = (storage: Storage) => {
     }
   };
 
-  const removeItem = (key: string) => {
-    try {
-      storage.removeItem(key);
-    } catch (e) {
-      if (e instanceof Error) {
-        alert(`${storage}에서 아이템 삭제하는중 오류 발생 ${e.message}`);
-      }
-    }
-  };
+  const removeItem = (key: string) => storage.removeItem(key);
 
   return { getItem, setItem, removeItem };
 };
