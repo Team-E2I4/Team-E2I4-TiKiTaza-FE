@@ -4,16 +4,16 @@ import {
   EventSourcePolyfillInit,
   MessageEvent,
 } from 'event-source-polyfill';
-import { useEffect, useState } from 'react';
-import { SSE_CHANGE_GAME_ROOM } from './constants';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { SSE_CHANGE_GAME_ROOM, SSE_CONNECT } from './constants';
 
 export interface I_ChangeGameRoomData {
   id: number;
-  hostId: number;
+  hostId?: number;
   title: string;
-  gameMode: string;
+  gameMode: 'WORD' | 'SENTENCE' | 'CODE';
   maxRound: number;
-  inviteCode: null | string;
+  inviteCode?: string;
   maxPlayer: number;
   currentPlayer: number;
   isPlaying: boolean;
@@ -26,35 +26,41 @@ interface UseSSEProps {
 
 //options가 중첩객체일 수 있으므로 memo해두어야함?
 const useSSE = ({ url, options = {} }: UseSSEProps) => {
-  const [error, setError] = useState<{ isError: boolean; data: Event | null }>({
-    isError: false,
-    data: null,
-  });
-  const [data, setData] = useState('');
+  const [error, setError] = useState<Event | null>(null);
+  const [data, setData] = useState<I_ChangeGameRoomData[] | []>([]);
+
+  const isError = useMemo(() => !!error, [error]);
+  const memorizedOptions = useRef(options);
 
   useEffect(() => {
-    const sse = new EventSourcePolyfill(url, { ...options });
+    const sse = new EventSourcePolyfill(url, { ...memorizedOptions.current });
 
     const handleChangeGameRoom = (e: MessageEvent) => {
       const data = JSON.parse(e.data);
       setData(data);
     };
 
+    const handleInitConnect = (e: MessageEvent) => {
+      const data = JSON.parse(e.data);
+      setData(data);
+    };
+
     sse.onopen = () => {
-      setError((prev) => ({ ...prev, isError: false }));
+      setError(null);
       sse.addEventListener(SSE_CHANGE_GAME_ROOM, handleChangeGameRoom);
+      sse.addEventListener(SSE_CONNECT, handleInitConnect);
     };
 
     sse.onerror = (e: Event) => {
-      setError((prev) => ({ ...prev, isError: true, data: e }));
+      setError(e);
     };
 
     return () => {
       sse.close();
     };
-  }, [url, options, error]);
+  }, [url, memorizedOptions]);
 
-  return { data, isError: error.isError, error: error.data };
+  return { data, isError, error };
 };
 
 export default useSSE;
