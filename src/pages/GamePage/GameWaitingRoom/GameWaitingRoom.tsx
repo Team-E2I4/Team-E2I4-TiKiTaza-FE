@@ -1,4 +1,5 @@
 import Backward from '@/common/Backward/Backward';
+import Ws from '@/ws/Ws';
 import { gameInfoDummy } from '../GameDummys';
 import GameModeInfo from './GameModeInfo';
 import GameReadyAndStart from './GameReadyAndStart';
@@ -23,6 +24,7 @@ const GameWaitingRoom = () => {
         <GameRoomLinkInvitation />
         <GameReadyAndStart />
       </footer>
+      <Ws />
     </div>
   );
 };
