@@ -1,6 +1,5 @@
 import Backward from '@/common/Backward/Backward';
-import Ws from '@/ws/Ws';
-import { gameInfoDummy } from '../GameDummys';
+import { I_GameRoomResponse } from '@/ws/types/wsResType';
 import GameModeInfo from './GameModeInfo';
 import GameReadyAndStart from './GameReadyAndStart';
 import GameRoomInfo from './GameRoomInfo';
@@ -8,15 +7,23 @@ import GameRoomLinkInvitation from './GameRoomLinkInvitation';
 import GameRoomSetting from './GameRoomSetting';
 import GameRoomUserList from './GameRoomUserList';
 
-const GameWaitingRoom = () => {
-  const { gameRoomUserList } = gameInfoDummy;
+const GameWaitingRoom = ({
+  gameRoomInfo,
+}: {
+  gameRoomInfo: I_GameRoomResponse;
+}) => {
+  const { roomInfo, allMembers } = gameRoomInfo;
+
   return (
     <div className='w-full flex flex-col justify-center items-center gap-[3rem] select-none'>
       <header className='flex gap-[5rem]'>
         <Backward />
-        <GameRoomInfo {...gameInfoDummy} />
+        <GameRoomInfo
+          roomInfo={roomInfo}
+          allMembers={allMembers}
+        />
       </header>
-      <GameRoomUserList gameRoomUserList={gameRoomUserList} />
+      <GameRoomUserList gameRoomUserList={allMembers} />
       <footer className='w-[114.8rem] flex gap-[5rem]'>
         <GameModeInfo>
           <GameRoomSetting />
@@ -24,7 +31,6 @@ const GameWaitingRoom = () => {
         <GameRoomLinkInvitation />
         <GameReadyAndStart />
       </footer>
-      <Ws />
     </div>
   );
 };
