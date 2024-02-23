@@ -1,110 +1,28 @@
 import { Fragment } from 'react';
 import Divider from '@/common/Divider/Divider';
-import GameRoomListItem, { GameRoomListItemProps } from './GameRoonListItem';
+import { BASE_PATH } from '@/generated/base';
+import useSSE from '@/hooks/useSSE';
+import storageFactory from '@/utils/storageFactory';
+import GameRoomListItem from './GameRoonListItem';
 import PrivateRoomModal from './PrivateRoomModal';
 
 const GAME_ROOM_LIST_CATEGORY = ['방 번호', '방 제목', '게임 모드', '인원수'];
 
-const DUMMY_DATA: GameRoomListItemProps[] = [
-  {
-    roomNumber: 23,
-    title: '티기타자 한판 고다고',
-    mode: 'word',
-    isLocked: false,
-    headCount: 7,
-  },
-  {
-    roomNumber: 56,
-    title: '제목이 이렇게 길어지면 어쩌려고 그러시는지 솰라솰라',
-    mode: 'code',
-    isLocked: false,
-    headCount: 3,
-  },
-  {
-    roomNumber: 77,
-    title:
-      'ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ',
-    mode: 'sentence',
-    isLocked: true,
-    headCount: 7,
-  },
-  {
-    roomNumber: 23,
-    title: '티기타자 한판 고다고',
-    mode: 'word',
-    isLocked: true,
-    headCount: 7,
-  },
-  {
-    roomNumber: 56,
-    title: '제목이 이렇게 길어지면 어쩌려고 그러시는지 솰라솰라',
-    mode: 'word',
-    isLocked: false,
-    headCount: 3,
-  },
-  {
-    roomNumber: 77,
-    title:
-      'ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ',
-    mode: 'word',
-    isLocked: false,
-    headCount: 7,
-  },
-  {
-    roomNumber: 23,
-    title: '티기타자 한판 고다고',
-    mode: 'word',
-    isLocked: false,
-    headCount: 7,
-  },
-  {
-    roomNumber: 56,
-    title: '제목이 이렇게 길어지면 어쩌려고 그러시는지 솰라솰라',
-    mode: 'word',
-    isLocked: false,
-    headCount: 3,
-  },
-  {
-    roomNumber: 77,
-    title:
-      'ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ',
-    mode: 'word',
-    isLocked: false,
-    headCount: 7,
-  },
-  {
-    roomNumber: 23,
-    title: '티기타자 한판 고다고',
-    mode: 'word',
-    isLocked: false,
-    headCount: 7,
-  },
-  {
-    roomNumber: 56,
-    title: '제목이 이렇게 길어지면 어쩌려고 그러시는지 솰라솰라',
-    mode: 'word',
-    isLocked: false,
-    headCount: 3,
-  },
-  {
-    roomNumber: 77,
-    title:
-      'ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ',
-    mode: 'word',
-    isLocked: false,
-    headCount: 7,
-  },
-  {
-    roomNumber: 77,
-    title:
-      'ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ',
-    mode: 'word',
-    isLocked: false,
-    headCount: 7,
-  },
-];
-
 const GameRoomList = () => {
+  const { getItem } = storageFactory(localStorage);
+  const { data, isError } = useSSE({
+    url: `${BASE_PATH}/api/v1/sse`,
+    options: {
+      headers: {
+        Authorization: `Bearer ${getItem('access', null)}`,
+      },
+      heartbeatTimeout: 1000 * 60 * 60,
+      withCredentials: true,
+    },
+  });
+  if (isError) {
+    return <div>채널 리스트 업서용ㅆㅆ</div>;
+  }
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
       <ul className='flex flex-col items-center px-[1.5rem]'>
@@ -127,28 +45,17 @@ const GameRoomList = () => {
         <Divider className='border-gray-200' />
         <li className='w-full'>
           <ul className='w-full flex flex-col gap-[1rem] max-h-[60rem] overflow-y-auto scrollbar-hide pt-[1rem]'>
-            {DUMMY_DATA.map(
-              ({ roomNumber, title, isLocked, mode, headCount }, i) =>
-                isLocked ? (
-                  <PrivateRoomModal key={i}>
-                    <GameRoomListItem
-                      isLocked={isLocked}
-                      roomNumber={roomNumber}
-                      title={title}
-                      mode={mode}
-                      headCount={headCount}
-                    />
-                  </PrivateRoomModal>
-                ) : (
-                  <GameRoomListItem
-                    key={i}
-                    isLocked={isLocked}
-                    roomNumber={roomNumber}
-                    title={title}
-                    mode={mode}
-                    headCount={headCount}
-                  />
-                )
+            {data.map((roomData) =>
+              roomData.isPrivate ? (
+                <PrivateRoomModal key={roomData.id}>
+                  <GameRoomListItem {...roomData} />
+                </PrivateRoomModal>
+              ) : (
+                <GameRoomListItem
+                  key={roomData.id}
+                  {...roomData}
+                />
+              )
             )}
           </ul>
         </li>
