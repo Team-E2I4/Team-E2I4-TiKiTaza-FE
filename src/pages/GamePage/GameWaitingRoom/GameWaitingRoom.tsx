@@ -12,18 +12,15 @@ const GameWaitingRoom = ({
 }: {
   gameRoomInfo: I_GameRoomResponse;
 }) => {
-  const { roomInfo, allMembers } = gameRoomInfo;
+  const { allMembers } = gameRoomInfo;
 
   return (
     <div className='w-full flex flex-col justify-center items-center gap-[3rem] select-none'>
       <header className='flex gap-[5rem]'>
         <Backward />
-        <GameRoomInfo
-          roomInfo={roomInfo}
-          allMembers={allMembers}
-        />
+        <GameRoomInfo gameRoomInfo={gameRoomInfo} />
       </header>
-      <GameRoomUserList gameRoomUserList={allMembers} />
+      {allMembers && <GameRoomUserList gameRoomUserList={allMembers} />}
       <footer className='w-[114.8rem] flex gap-[5rem]'>
         <GameModeInfo>
           <GameRoomSetting />
