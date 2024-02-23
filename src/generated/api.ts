@@ -46,7 +46,7 @@ export interface ApiResponseAuthResponse {
      * @type {AuthResponse}
      * @memberof ApiResponseAuthResponse
      */
-    'data': AuthResponse;
+    'data'?: AuthResponse;
 }
 /**
  * 
