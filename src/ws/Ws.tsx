@@ -1,27 +1,29 @@
 import { Stomp } from '@stomp/stompjs';
 import { useEffect } from 'react';
-import SockJS from 'sockjs-client';
+// import SockJS from 'sockjs-client';
 import { guestLogin } from '@/apis/api';
 const { VITE_API_WS_END_POINT } = import.meta.env;
+import storageFactory from '@/utils/storageFactory';
 
 const Ws = () => {
   const stompClient = Stomp.over(() => new SockJS(`${VITE_API_WS_END_POINT}`));
+
+  // 테스트용 로그인 로직
+  const { getItem, setItem } = storageFactory(localStorage);
   const guestLoginFn = async () => {
     const { data } = await guestLogin();
-    localStorage.setItem('token', data.data?.accessToken);
+    setItem('token', data.data.accessToken);
     token = data.data.accessToken;
   };
-  const ROOMID_TEST = 3; // 테스트용 RoomId
-  let token = '';
-  const fromls = localStorage.getItem('token');
-  if (!fromls) {
+  let token = getItem('token', '');
+  if (!token) {
     guestLoginFn();
-  } else {
-    token = fromls;
   }
   const connectHeaders = {
     Authorization: 'Bearer ' + token,
   };
+
+  const ROOMID_TEST = 3; // 테스트용 RoomId
   useEffect(() => {
     stompClient.connect({ Authorization: `Bearer ${token}` }, () =>
       onConnected()
