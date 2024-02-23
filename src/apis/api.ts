@@ -1,4 +1,4 @@
-import { DefaultApiFp } from '@/generated';
+import { DefaultApiFactory } from '@/generated';
 export const {
   createGameRoom,
   deleteMemberAccount,
@@ -10,4 +10,4 @@ export const {
   reIssueAccessToken,
   signUp,
   updateMemberNickname,
-} = DefaultApiFp();
+} = DefaultApiFactory();
