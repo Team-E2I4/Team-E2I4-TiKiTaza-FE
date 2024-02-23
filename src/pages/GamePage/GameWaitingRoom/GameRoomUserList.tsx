@@ -9,12 +9,13 @@ const GameRoomUserList = ({
   return (
     <>
       <main className='flex-1 grid grid-rows-2 grid-cols-4 gap-x-[4rem] gap-y-[3rem]'>
-        {gameRoomUserList.map((gameRoomUser) => (
-          <GameRoomUserItem
-            key={gameRoomUser.memberId}
-            {...gameRoomUser}
-          />
-        ))}
+        {gameRoomUserList &&
+          gameRoomUserList.map((gameRoomUser) => (
+            <GameRoomUserItem
+              key={gameRoomUser.memberId}
+              {...gameRoomUser}
+            />
+          ))}
       </main>
     </>
   );
