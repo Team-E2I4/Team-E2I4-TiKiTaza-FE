@@ -20,8 +20,12 @@ const GameRoomList = () => {
       withCredentials: true,
     },
   });
-  if (isError) {
-    return <div>채널 리스트 업서용ㅆㅆ</div>;
+  if (!isError) {
+    return (
+      <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
+        <span>현재 게임 방목록이 없습니다</span>
+      </div>
+    );
   }
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
