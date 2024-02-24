@@ -11,8 +11,8 @@ export interface I_GameRoomResponse {
     | 'UPDATE'
     | 'WORD_DENIED';
   roomId: number;
-  roomInfo: I_RoomInfo;
-  allMembers: I_AllMember[];
+  roomInfo?: I_RoomInfo;
+  allMembers?: I_AllMember[];
 }
 
 export interface I_RoomInfo {
