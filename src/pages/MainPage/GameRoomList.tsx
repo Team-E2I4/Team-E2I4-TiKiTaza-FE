@@ -1,25 +1,12 @@
 import { Fragment } from 'react';
 import Divider from '@/common/Divider/Divider';
-import { BASE_PATH } from '@/generated/base';
-import useSSE from '@/hooks/useSSE';
-import storageFactory from '@/utils/storageFactory';
+import { I_ChangeGameRoomData } from '@/hooks/useSSE';
 import GameRoomListItem from './GameRoonListItem';
 import PrivateRoomModal from './PrivateRoomModal';
 
 const GAME_ROOM_LIST_CATEGORY = ['방 번호', '방 제목', '게임 모드', '인원수'];
 
-const GameRoomList = () => {
-  const { getItem } = storageFactory(localStorage);
-  const { data } = useSSE({
-    url: `${BASE_PATH}/api/v1/sse`,
-    options: {
-      headers: {
-        Authorization: `Bearer ${getItem('access', null)}`,
-      },
-      heartbeatTimeout: 1000 * 60 * 60,
-      withCredentials: true,
-    },
-  });
+const GameRoomList = ({ data }: { data: I_ChangeGameRoomData[] }) => {
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
       <ul className='flex flex-col items-center px-[1.5rem]'>
