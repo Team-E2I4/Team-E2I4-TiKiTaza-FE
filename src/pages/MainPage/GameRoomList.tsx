@@ -10,7 +10,7 @@ const GAME_ROOM_LIST_CATEGORY = ['방 번호', '방 제목', '게임 모드', '�
 
 const GameRoomList = () => {
   const { getItem } = storageFactory(localStorage);
-  const { data, isError } = useSSE({
+  const { data } = useSSE({
     url: `${BASE_PATH}/api/v1/sse`,
     options: {
       headers: {
@@ -20,13 +20,6 @@ const GameRoomList = () => {
       withCredentials: true,
     },
   });
-  if (!isError) {
-    return (
-      <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
-        <span>현재 게임 방목록이 없습니다</span>
-      </div>
-    );
-  }
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
       <ul className='flex flex-col items-center px-[1.5rem]'>
