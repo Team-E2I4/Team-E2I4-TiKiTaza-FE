@@ -1,6 +1,7 @@
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { guestLogin } from '@/apis/api';
+import { checkEmptyObj } from '@/utils/checkEmptyObj';
 import storageFactory from '@/utils/storageFactory';
 import { WS_END_POINT } from '@/ws/endpoint';
 import { I_GameRoomResponse } from '@/ws/types/wsResType';
@@ -31,7 +32,7 @@ const GamePage = () => {
       Authorization: `Bearer ${token}`,
     };
 
-    const ROOMID_TEST = 12; // 테스트용 RoomId ////////////////////////////////////
+    const ROOMID_TEST = 13; // 테스트용 RoomId ////////////////////////////////////
 
     const onConnected = () => {
       //TODO: roomId는 방입장 GET요청 응답값으로 사용
@@ -67,10 +68,7 @@ const GamePage = () => {
     ws.current = stompClient;
   }, []);
 
-  const isSuccess = useMemo(
-    () => Object.keys(gameRoomInfo).length !== 0,
-    [gameRoomInfo]
-  );
+  const isSuccess = useMemo(() => !checkEmptyObj(gameRoomInfo), [gameRoomInfo]);
   const selectedMode = useMemo(
     () => gameRoomInfo.roomInfo?.gameMode,
     [gameRoomInfo.roomInfo?.gameMode]
