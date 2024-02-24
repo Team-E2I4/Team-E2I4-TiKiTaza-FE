@@ -1,6 +1,6 @@
-import { ErrorBoundary } from 'react-error-boundary';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import GameRoomList from './GameRoomList';
+import SSE from './SSE';
 import UserCard from './UserCard';
 import UserList from './UserList';
 
@@ -21,14 +21,15 @@ const MainPage = () => {
             방 만들기
           </article>
         </CreateRoomModal>
-        <ErrorBoundary
+
+        <SSE
           fallback={
             <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
-              <span>현재 게임 방목록이 없습니다</span>
+              방 목록이 없거나 에러 발생!
             </div>
           }>
-          <GameRoomList />
-        </ErrorBoundary>
+          {(data) => <GameRoomList data={data} />}
+        </SSE>
       </section>
     </main>
   );
