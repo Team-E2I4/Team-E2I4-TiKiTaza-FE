@@ -1,3 +1,4 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import GameRoomList from './GameRoomList';
 import UserCard from './UserCard';
@@ -20,7 +21,14 @@ const MainPage = () => {
             방 만들기
           </article>
         </CreateRoomModal>
-        <GameRoomList />
+        <ErrorBoundary
+          fallback={
+            <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
+              <span>현재 게임 방목록이 없습니다</span>
+            </div>
+          }>
+          <GameRoomList />
+        </ErrorBoundary>
       </section>
     </main>
   );
