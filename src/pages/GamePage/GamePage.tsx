@@ -1,22 +1,20 @@
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { guestLogin } from '@/apis/api';
+import storageFactory from '@/utils/storageFactory';
+import { WS_END_POINT } from '@/ws/endpoint';
 import { I_GameRoomResponse } from '@/ws/types/wsResType';
 import GameCode from './GameCode/GameCode';
 import GameSentence from './GameSentence/GameSentence';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
 import GameWord from './GameWord/GameWord';
-const { VITE_API_WS_END_POINT } = import.meta.env;
-import { guestLogin } from '@/apis/api';
-import storageFactory from '@/utils/storageFactory';
 
 const GamePage = () => {
   const [gameRoomInfo, setGameRoomInfo] = useState({} as I_GameRoomResponse);
   const ws = useRef<CompatClient | null>(null);
 
   useEffect(() => {
-    const stompClient = Stomp.over(
-      () => new SockJS(`${VITE_API_WS_END_POINT}`)
-    );
+    const stompClient = Stomp.over(() => new SockJS(`${WS_END_POINT}`));
 
     // 테스트용 로그인 로직
     const { getItem, setItem } = storageFactory(localStorage);
