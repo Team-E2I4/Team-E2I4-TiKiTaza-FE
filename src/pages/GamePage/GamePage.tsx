@@ -1,8 +1,7 @@
-import { Stomp } from '@stomp/stompjs';
-import { useEffect, useState } from 'react';
+import { CompatClient, Stomp } from '@stomp/stompjs';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { I_GameRoomResponse } from '@/ws/types/wsResType';
 import GameCode from './GameCode/GameCode';
-import GameFinish from './GameFinish/GameFinish';
 import GameSentence from './GameSentence/GameSentence';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
 import GameWord from './GameWord/GameWord';
@@ -10,9 +9,9 @@ const { VITE_API_WS_END_POINT } = import.meta.env;
 import { guestLogin } from '@/apis/api';
 import storageFactory from '@/utils/storageFactory';
 
-type GameModeType = 'waiting' | 'sentence' | 'code' | 'word' | 'finish';
 const GamePage = () => {
   const [gameRoomInfo, setGameRoomInfo] = useState({} as I_GameRoomResponse);
+  const ws = useRef<CompatClient | null>(null);
 
   useEffect(() => {
     const stompClient = Stomp.over(
@@ -31,10 +30,10 @@ const GamePage = () => {
       guestLoginFn();
     }
     const connectHeaders = {
-      Authorization: 'Bearer ' + token,
+      Authorization: `Bearer ${token}`,
     };
 
-    const ROOMID_TEST = 8; // 테스트용 RoomId ////////////////////////////////////
+    const ROOMID_TEST = 12; // 테스트용 RoomId ////////////////////////////////////
 
     const onConnected = () => {
       //TODO: roomId는 방입장 GET요청 응답값으로 사용
@@ -63,33 +62,44 @@ const GamePage = () => {
       setGameRoomInfo(responsePublish);
     };
 
-    stompClient.connect({ Authorization: `Bearer ${token}` }, () => {
+    stompClient.connect(connectHeaders, () => {
       onConnected();
     });
+
+    ws.current = stompClient;
   }, []);
 
-  // TODO:
-  // 여기서 zustand 전역상태값(초대로 들어온 사람이라면 url의 해시값->정제->유효검사 후 상태값) 으로 방번호 추출
-  // 방번호를 가지고 게임 상태에 대해 api 요청
+  const isSuccess = useMemo(
+    () => Object.keys(gameRoomInfo).length !== 0,
+    [gameRoomInfo]
+  );
+  const selectedMode = useMemo(
+    () => gameRoomInfo.roomInfo?.gameMode,
+    [gameRoomInfo.roomInfo?.gameMode]
+  );
+  const didBossStart = useMemo(
+    () => gameRoomInfo.type === 'START',
+    [gameRoomInfo]
+  ); //모두 준비인상태에서 방장이 시작했다면 'START' type 이 옴
 
-  const gameMode: GameModeType = 'waiting';
-
+  if (!isSuccess) {
+    return <div>소켓 연결 실패시 // TODO</div>;
+  }
   return (
     <>
-      {'roomId' in gameRoomInfo ? (
-        gameMode === 'waiting' ? (
-          <GameWaitingRoom gameRoomInfo={gameRoomInfo} />
-        ) : gameMode === 'sentence' ? (
+      {didBossStart ? (
+        selectedMode === 'SENTENCE' ? (
           <GameSentence />
-        ) : gameMode === 'code' ? (
+        ) : selectedMode === 'CODE' ? (
           <GameCode />
-        ) : gameMode === 'word' ? (
-          <GameWord />
         ) : (
-          <GameFinish />
+          <GameWord />
         )
       ) : (
-        <div>소켓오류</div>
+        <GameWaitingRoom
+          gameRoomInfo={gameRoomInfo}
+          ws={ws.current}
+        />
       )}
     </>
   );
