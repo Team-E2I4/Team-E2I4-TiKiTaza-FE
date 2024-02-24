@@ -24,10 +24,9 @@ interface UseSSEProps {
   options?: EventSourcePolyfillInit;
 }
 
-//options가 중첩객체일 수 있으므로 memo해두어야함?
 const useSSE = ({ url, options = {} }: UseSSEProps) => {
   const [error, setError] = useState<Event | null>(null);
-  const [data, setData] = useState<I_ChangeGameRoomData[] | []>([]);
+  const [data, setData] = useState<I_ChangeGameRoomData[]>([]);
 
   const isError = useMemo(() => !!error, [error]);
   const memorizedOptions = useRef(options);
@@ -60,7 +59,11 @@ const useSSE = ({ url, options = {} }: UseSSEProps) => {
     };
   }, [url, memorizedOptions]);
 
-  return { data, isError, error };
+  return {
+    data,
+    isError,
+    error,
+  };
 };
 
 export default useSSE;
