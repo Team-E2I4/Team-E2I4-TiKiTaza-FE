@@ -13,7 +13,7 @@ const GameWaitingRoom = ({
   ws,
 }: {
   gameRoomInfo: I_GameRoomResponse;
-  ws: CompatClient;
+  ws: CompatClient | null;
 }) => {
   const { allMembers } = gameRoomInfo;
   return (
