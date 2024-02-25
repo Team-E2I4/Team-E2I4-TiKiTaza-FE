@@ -1,7 +1,6 @@
 import { LockClosedIcon } from '@radix-ui/react-icons';
 import Divider from '@/common/Divider/Divider';
 import { I_ChangeGameRoomData } from '@/hooks/useSSE';
-export interface GameRoomListItemProps extends I_ChangeGameRoomData {}
 
 const MODE_TYPE = {
   WORD: '짧은 단어',
@@ -17,7 +16,7 @@ const GameRoomListItem = ({
   currentPlayer,
   isPlaying,
   isPrivate,
-}: GameRoomListItemProps) => {
+}: I_ChangeGameRoomData) => {
   if (isPlaying) {
     return;
   }
