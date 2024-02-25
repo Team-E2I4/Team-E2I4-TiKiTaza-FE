@@ -5,7 +5,8 @@ const Backward = () => {
   // TODO: 예외처리 사항 필요하면 추후에 추가
   const navigate = useNavigate();
   const goPreviousPage = () => {
-    navigate(-1);
+    navigate('/main');
+    window.location.reload();
   };
 
   return (
