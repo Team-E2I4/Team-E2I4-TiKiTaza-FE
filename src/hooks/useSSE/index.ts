@@ -26,6 +26,7 @@ interface UseSSEProps {
 
 export interface SSEErrorEvent extends Event {
   status?: number;
+  error?: Error;
 }
 
 export type SSEErrorType = SSEErrorEvent | null;
