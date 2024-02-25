@@ -1,6 +1,7 @@
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import GameRoomList from './GameRoomList';
 import SSEErrorBoundary from './SSEErrorBoundary';
+import SSEFallBack from './SSEFallBack';
 import UserCard from './UserCard';
 import UserList from './UserList';
 
@@ -22,12 +23,7 @@ const MainPage = () => {
           </article>
         </CreateRoomModal>
 
-        <SSEErrorBoundary
-          fallback={
-            <div className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
-              방 목록이 없거나 에러 발생!
-            </div>
-          }>
+        <SSEErrorBoundary fallback={<SSEFallBack />}>
           {(data) => <GameRoomList data={data} />}
         </SSEErrorBoundary>
       </section>
