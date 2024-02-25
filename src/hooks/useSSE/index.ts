@@ -24,8 +24,14 @@ interface UseSSEProps {
   options?: EventSourcePolyfillInit;
 }
 
+export interface SSEErrorEvent extends Event {
+  status?: number;
+}
+
+export type SSEErrorType = SSEErrorEvent | null;
+
 const useSSE = ({ url, options = {} }: UseSSEProps) => {
-  const [error, setError] = useState<Event | null>(null);
+  const [error, setError] = useState<SSEErrorType>(null);
   const [data, setData] = useState<I_ChangeGameRoomData[]>([]);
 
   const isError = useMemo(() => !!error, [error]);
@@ -46,6 +52,7 @@ const useSSE = ({ url, options = {} }: UseSSEProps) => {
 
     sse.onopen = () => {
       setError(null);
+
       sse.addEventListener(SSE_CHANGE_GAME_ROOM, handleChangeGameRoom);
       sse.addEventListener(SSE_CONNECT, handleInitConnect);
     };

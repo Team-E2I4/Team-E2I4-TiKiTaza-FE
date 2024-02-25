@@ -22,7 +22,6 @@ const MainPage = () => {
             방 만들기
           </article>
         </CreateRoomModal>
-
         <SSEErrorBoundary fallback={<SSEFallBack />}>
           {(data) => <GameRoomList data={data} />}
         </SSEErrorBoundary>
