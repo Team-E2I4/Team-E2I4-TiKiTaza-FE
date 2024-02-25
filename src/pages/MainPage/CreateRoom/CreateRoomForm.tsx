@@ -1,6 +1,7 @@
 import * as Form from '@radix-ui/react-form';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import useCreateGameRoom from '@/hooks/useCreateGameRoom';
 import {
   CREATE_ROOM_INPUT_LIST,
   CREATE_ROOM_SELECT_LIST,
@@ -13,7 +14,6 @@ interface CreateRoomFormProps {
 }
 
 //비동기 호출 후 모달 잘 닫히는지 test용
-const wait = () => new Promise((resolve) => setTimeout(resolve, 2000));
 
 const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
   const {
@@ -24,10 +24,18 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
     mode: 'onChange',
   });
 
+  const { mutate } = useCreateGameRoom();
+
   const [selectedMode, setSelectedMode] = useState('sentence');
 
   const onCreateRoom = () => {
-    wait().then(() => setIsOpen(false));
+    mutate({
+      title: '제목2',
+      maxPlayer: 8,
+      round: 5,
+      gameType: 'CODE',
+    });
+    setIsOpen(false);
   };
 
   return (
