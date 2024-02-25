@@ -10,6 +10,9 @@ interface SSEErrorBoundary {
   > | null;
   children: (data: I_ChangeGameRoomData[]) => ReactNode;
 }
+
+const SSE_TIME_OUT_LIMIT = 1000 * 60 * 60; //1hour
+
 const SSEErrorBoundary = ({ fallback, children }: SSEErrorBoundary) => {
   const { getItem } = storageFactory(localStorage);
   const { data, isError } = useSSE({
@@ -18,7 +21,7 @@ const SSEErrorBoundary = ({ fallback, children }: SSEErrorBoundary) => {
       headers: {
         Authorization: `Bearer ${getItem('MyToke', null)}`,
       },
-      heartbeatTimeout: 1000 * 60 * 60,
+      heartbeatTimeout: SSE_TIME_OUT_LIMIT,
       withCredentials: true,
     },
   });
