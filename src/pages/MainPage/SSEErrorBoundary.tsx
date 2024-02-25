@@ -21,7 +21,7 @@ const SSEErrorBoundary = ({ fallback, children }: SSEErrorBoundaryProps) => {
     url: `${BASE_PATH}/api/v1/sse`,
     options: {
       headers: {
-        Authorization: `Bearer ${getItem('MyToken', null)}`,
+        Authorization: `Bearer ${getItem('MyToken', '')}`,
       },
       heartbeatTimeout: SSE_TIME_OUT_LIMIT,
       withCredentials: true,
