@@ -8,6 +8,7 @@ import { I_GameRoomResponse } from '@/ws/types/wsResType';
 import GameCode from './GameCode/GameCode';
 import GameSentence from './GameSentence/GameSentence';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
+import WsError from './GameWaitingRoom/WsError';
 import GameWord from './GameWord/GameWord';
 
 const GamePage = () => {
@@ -32,7 +33,7 @@ const GamePage = () => {
       Authorization: `Bearer ${token}`,
     };
 
-    const ROOMID_TEST = 13; // 테스트용 RoomId ////////////////////////////////////
+    const ROOMID_TEST = 35; // 테스트용 RoomId ////////////////////////////////////
 
     const onConnected = () => {
       //TODO: roomId는 방입장 GET요청 응답값으로 사용
@@ -79,7 +80,7 @@ const GamePage = () => {
   ); //모두 준비인상태에서 방장이 시작했다면 'START' type 이 옴
 
   if (!isSuccess) {
-    return <div>소켓 연결 실패시 // TODO</div>;
+    return <WsError />;
   }
   return (
     <>
