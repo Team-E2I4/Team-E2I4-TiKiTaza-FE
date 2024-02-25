@@ -1,3 +1,4 @@
+import { CompatClient } from '@stomp/stompjs';
 import Backward from '@/common/Backward/Backward';
 import { I_GameRoomResponse } from '@/ws/types/wsResType';
 import GameModeInfo from './GameModeInfo';
@@ -9,11 +10,12 @@ import GameRoomUserList from './GameRoomUserList';
 
 const GameWaitingRoom = ({
   gameRoomInfo,
+  ws,
 }: {
   gameRoomInfo: I_GameRoomResponse;
+  ws: CompatClient;
 }) => {
   const { allMembers } = gameRoomInfo;
-
   return (
     <div className='w-full flex flex-col justify-center items-center gap-[3rem] select-none'>
       <header className='flex gap-[5rem]'>
@@ -26,7 +28,7 @@ const GameWaitingRoom = ({
           <GameRoomSetting />
         </GameModeInfo>
         <GameRoomLinkInvitation />
-        <GameReadyAndStart />
+        <GameReadyAndStart ws={ws} />
       </footer>
     </div>
   );
