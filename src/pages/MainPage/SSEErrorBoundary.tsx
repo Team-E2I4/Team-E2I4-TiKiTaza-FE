@@ -3,20 +3,20 @@ import { BASE_PATH } from '@/generated/base';
 import useSSE, { I_ChangeGameRoomData } from '@/hooks/useSSE';
 import storageFactory from '@/utils/storageFactory';
 
-interface SSEProps {
+interface SSEErrorBoundary {
   fallback: ReactElement<
     unknown,
     string | FunctionComponent | typeof Component
   > | null;
   children: (data: I_ChangeGameRoomData[]) => ReactNode;
 }
-const SSE = ({ fallback, children }: SSEProps) => {
+const SSEErrorBoundary = ({ fallback, children }: SSEErrorBoundary) => {
   const { getItem } = storageFactory(localStorage);
   const { data, isError } = useSSE({
     url: `${BASE_PATH}/api/v1/sse`,
     options: {
       headers: {
-        Authorization: `Bearer ${getItem('MyToken', null)}`,
+        Authorization: `Bearer ${getItem('MyToke', null)}`,
       },
       heartbeatTimeout: 1000 * 60 * 60,
       withCredentials: true,
@@ -27,4 +27,4 @@ const SSE = ({ fallback, children }: SSEProps) => {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export default SSE;
+export default SSEErrorBoundary;
