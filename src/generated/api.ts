@@ -101,6 +101,31 @@ export interface ApiResponseGameRoomEnterResponse {
 /**
  * 
  * @export
+ * @interface ApiResponseGameRoomInviteCodeResponse
+ */
+export interface ApiResponseGameRoomInviteCodeResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseGameRoomInviteCodeResponse
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseGameRoomInviteCodeResponse
+     */
+    'message': string;
+    /**
+     * 
+     * @type {GameRoomInviteCodeResponse}
+     * @memberof ApiResponseGameRoomInviteCodeResponse
+     */
+    'data'?: GameRoomInviteCodeResponse;
+}
+/**
+ * 
+ * @export
  * @interface ApiResponseMemberGetResponse
  */
 export interface ApiResponseMemberGetResponse {
@@ -292,6 +317,19 @@ export interface GameRoomEnterResponse {
      * @memberof GameRoomEnterResponse
      */
     'memberId': number;
+}
+/**
+ * 
+ * @export
+ * @interface GameRoomInviteCodeResponse
+ */
+export interface GameRoomInviteCodeResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof GameRoomInviteCodeResponse
+     */
+    'roomId': number;
 }
 /**
  * 
@@ -591,6 +629,44 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          */
         getMyProfileInfo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/members/my-profile`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 게임방 초대코드로 방 번호 반환
+         * @param {string} inviteCode 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRoomIdByInviteCode: async (inviteCode: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'inviteCode' is not null or undefined
+            assertParamExists('getRoomIdByInviteCode', 'inviteCode', inviteCode)
+            const localVarPath = `/api/v1/rooms/{inviteCode}`
+                .replace(`{${"inviteCode"}}`, encodeURIComponent(String(inviteCode)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -961,6 +1037,19 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary 게임방 초대코드로 방 번호 반환
+         * @param {string} inviteCode 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRoomIdByInviteCode(inviteCode: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseGameRoomInviteCodeResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRoomIdByInviteCode(inviteCode, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getRoomIdByInviteCode']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary 게스트 로그인
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1104,6 +1193,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary 게임방 초대코드로 방 번호 반환
+         * @param {string} inviteCode 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRoomIdByInviteCode(inviteCode: string, options?: any): AxiosPromise<ApiResponseGameRoomInviteCodeResponse> {
+            return localVarFp.getRoomIdByInviteCode(inviteCode, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary 게스트 로그인
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1230,6 +1329,18 @@ export class DefaultApi extends BaseAPI {
      */
     public getMyProfileInfo(options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getMyProfileInfo(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 게임방 초대코드로 방 번호 반환
+     * @param {string} inviteCode 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getRoomIdByInviteCode(inviteCode: string, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getRoomIdByInviteCode(inviteCode, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
