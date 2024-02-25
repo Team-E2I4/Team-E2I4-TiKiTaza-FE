@@ -1,17 +1,12 @@
-import {
-  cloneElement,
-  Component,
-  FunctionComponent,
-  isValidElement,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import { Component, FunctionComponent, ReactElement, ReactNode } from 'react';
 import { BASE_PATH } from '@/generated/base';
 import useSSE, { I_ChangeGameRoomData, SSEErrorType } from '@/hooks/useSSE';
 import storageFactory from '@/utils/storageFactory';
 
 interface SSEErrorBoundary {
-  fallback: ReactElement<
+  fallback: (
+    error: SSEErrorType
+  ) => ReactElement<
     unknown,
     string | FunctionComponent | typeof Component
   > | null;
@@ -33,16 +28,7 @@ const SSEErrorBoundary = ({ fallback, children }: SSEErrorBoundary) => {
     },
   });
 
-  let newFallback = null;
-  if (isValidElement<{ error: SSEErrorType }>(fallback)) {
-    newFallback = cloneElement(fallback, {
-      error,
-    });
-  } else {
-    newFallback = fallback;
-  }
-
-  return isError ? newFallback : children(data);
+  return isError ? fallback(error) : children(data);
 };
 
 export default SSEErrorBoundary;
