@@ -15,7 +15,7 @@ import GameWord from './GameWord/GameWord';
 const GamePage = () => {
   const navigate = useNavigate();
 
-  const [gameRoomInfo, setGameRoomInfo] = useState({} as I_GameRoomResponse);
+  const [gameRoomRes, setGameRoomRes] = useState({} as I_GameRoomResponse);
   const ws = useRef<CompatClient | null>(null);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const GamePage = () => {
       Authorization: `Bearer ${token}`,
     };
 
-    const ROOMID_TEST = 36; // 테스트용 RoomId ////////////////////////////////////
+    const ROOMID_TEST = 37; // 테스트용 RoomId ////////////////////////////////////
 
     const onConnected = () => {
       //TODO: roomId는 방입장 GET요청 응답값으로 사용
@@ -62,7 +62,7 @@ const GamePage = () => {
       // called when the client receives a STOMP message from the server
       // eslint-disable-next-line no-console
       console.log('onMessageReceived---', responsePublish);
-      setGameRoomInfo(responsePublish);
+      setGameRoomRes(responsePublish);
     };
 
     stompClient.connect(connectHeaders, () => {
@@ -72,14 +72,14 @@ const GamePage = () => {
     ws.current = stompClient;
   }, []);
 
-  const isSuccess = useMemo(() => !checkEmptyObj(gameRoomInfo), [gameRoomInfo]);
+  const isSuccess = useMemo(() => !checkEmptyObj(gameRoomRes), [gameRoomRes]);
   const [selectedMode, isPlaying] = useMemo(
-    () => [gameRoomInfo.roomInfo?.gameMode, gameRoomInfo.roomInfo?.isPlaying],
-    [gameRoomInfo.roomInfo]
+    () => [gameRoomRes.roomInfo?.gameMode, gameRoomRes.roomInfo?.isPlaying],
+    [gameRoomRes.roomInfo]
   );
   const didBossStart = useMemo(
-    () => gameRoomInfo.type === 'START',
-    [gameRoomInfo]
+    () => gameRoomRes.type === 'START',
+    [gameRoomRes]
   ); //모두 준비인상태에서 방장이 시작했다면 'START' type 이 옴 -> 참여자들 컴포넌트 전환 필요
 
   if (!isSuccess) {
@@ -100,7 +100,7 @@ const GamePage = () => {
         )
       ) : (
         <GameWaitingRoom
-          gameRoomInfo={gameRoomInfo}
+          gameRoomRes={gameRoomRes}
           ws={ws.current}
         />
       )}
