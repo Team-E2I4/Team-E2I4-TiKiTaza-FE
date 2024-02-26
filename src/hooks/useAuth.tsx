@@ -16,9 +16,7 @@ export const useGuestLogin = ({ onSuccess }: AuthProps = {}) => {
         setItem('MyToken', response.data.accessToken);
       }
 
-      if (onSuccess) {
-        onSuccess();
-      }
+      onSuccess?.();
     },
   });
 };
