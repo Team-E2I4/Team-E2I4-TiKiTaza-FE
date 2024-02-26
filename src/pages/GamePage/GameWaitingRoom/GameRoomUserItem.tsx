@@ -11,15 +11,15 @@ const GameRoomUserItem = ({
   gameRoomUser: I_AllMember;
 }) => {
   const rank = 3; // TODO : 회원조회 쿼리 값으로 변경
-  const userId = 107; // TODO : 회원조회 쿼리 값으로 변경
+  const userId = 9; // TODO : 회원조회 쿼리 값으로 변경
 
   const { memberId, nickname, readyStatus: isReady } = gameRoomUser;
   const isAdminMe = useMemo(() => hostId === userId, [hostId]); //본인이 방장인지
 
   return (
     <div className='w-[25.8rem] h-[21.2rem] p-[1.6rem] pb-[4rem] relative flex flex-col bg-white shadow-md shadow-black/50 rounded-[2.5rem]'>
-      <div className='h-[3rem]'>
-        <button className='self-end'>
+      <div className='h-[3rem] self-end'>
+        <button>
           {isAdminMe && memberId !== userId && (
             <img
               src={close}
