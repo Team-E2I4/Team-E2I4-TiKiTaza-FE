@@ -1,18 +1,14 @@
-import { useNavigate } from 'react-router-dom';
 import backward from '@/assets/backward.png';
 
-const Backward = () => {
-  // TODO: 예외처리 사항 필요하면 추후에 추가
-  const navigate = useNavigate();
-  const goPreviousPage = () => {
-    navigate('/main');
-    window.location.reload();
-  };
-
+const Backward = ({
+  handleClickBackward,
+}: {
+  handleClickBackward: () => void;
+}) => {
   return (
     <button
       type='button'
-      onClick={goPreviousPage}>
+      onClick={handleClickBackward}>
       <img
         src={backward}
         className='w-[4.8rem]'
