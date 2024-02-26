@@ -1,19 +1,20 @@
 export interface I_GameRoomResponse {
-  type:
-    | 'ENTER'
-    | 'EXIT'
-    | 'READY'
-    | 'START'
-    | 'START_DENIED'
-    | 'FINISH'
-    | 'ROUND_START'
-    | 'KICKED'
-    | 'UPDATE'
-    | 'WORD_DENIED';
+  type: MessageType;
   roomId: number;
   roomInfo?: I_RoomInfo;
   allMembers?: I_AllMember[];
 }
+export type MessageType =
+  | 'ENTER'
+  | 'EXIT'
+  | 'READY'
+  | 'START'
+  | 'START_DENIED'
+  | 'FINISH'
+  | 'ROUND_START'
+  | 'KICKED'
+  | 'UPDATE'
+  | 'WORD_DENIED';
 
 export interface I_RoomInfo {
   id: number;
@@ -25,7 +26,6 @@ export interface I_RoomInfo {
   currentPlayer: number;
   isPlaying: boolean;
   isPrivate: boolean;
-  mode: string;
 }
 
 export interface I_AllMember {
@@ -33,3 +33,6 @@ export interface I_AllMember {
   nickname: string;
   readyStatus: boolean;
 }
+
+export type HandleReadyGameType = (roomId: number) => void;
+export type HandleStartGameType = (roomId: number) => void;

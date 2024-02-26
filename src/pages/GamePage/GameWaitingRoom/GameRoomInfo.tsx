@@ -1,5 +1,5 @@
-import { I_GameRoomResponse } from '@/ws/types/wsResType';
 import { GAME_TYPE } from '../constants';
+import { I_GameRoomResponse } from '../types/websocketType';
 
 const GameRoomInfo = ({ gameRoomRes }: { gameRoomRes: I_GameRoomResponse }) => {
   return (
