@@ -5,7 +5,7 @@ import { useGuestLogin } from '@/hooks/useAuth';
 const StartPage = () => {
   const navigate = useNavigate();
 
-  const { mutate } = useGuestLogin({
+  const { mutate: guestLoginMutate } = useGuestLogin({
     onSuccess: () => {
       alert('로그인 성공!');
       navigate('/main');
@@ -13,7 +13,7 @@ const StartPage = () => {
   });
 
   const handleClick = () => {
-    mutate();
+    guestLoginMutate();
   };
 
   return (
