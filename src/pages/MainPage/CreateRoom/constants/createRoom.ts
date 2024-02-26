@@ -57,7 +57,7 @@ export const CREATE_ROOM_SELECT_LIST: I_CreateRoomSelect[] = [
 ];
 
 export const GAME_MODE_LIST = [
-  { value: '문장 모드', mode: 'sentence' },
-  { value: '코딩 모드', mode: 'coding' },
-  { value: '단어 모드', mode: 'word' },
+  { value: '문장 모드', mode: 'SENTENCE' },
+  { value: '코딩 모드', mode: 'CODE' },
+  { value: '단어 모드', mode: 'WORD' },
 ];
