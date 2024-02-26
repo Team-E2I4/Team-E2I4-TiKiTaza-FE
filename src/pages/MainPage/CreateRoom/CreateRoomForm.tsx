@@ -7,20 +7,21 @@ import {
   CREATE_ROOM_SELECT_LIST,
   GAME_MODE_LIST,
 } from './constants/createRoom';
-import { I_CreateRoomInputName } from './types';
+import { I_CreateRoomInputName, I_CreateRoomSelectName } from './types';
 
 interface CreateRoomFormProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-//비동기 호출 후 모달 잘 닫히는지 test용
+type CreateRoomFormType = I_CreateRoomInputName & I_CreateRoomSelectName;
 
+//비동기 호출 후 모달 잘 닫히는지 test용
 const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<I_CreateRoomInputName>({
+  } = useForm<CreateRoomFormType>({
     mode: 'onChange',
   });
 
@@ -80,7 +81,9 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
               name={name}>
               <Form.Label>{name}</Form.Label>
               <Form.Control asChild>
-                <select className='border-[0.2rem] border-gray-200 rounded-[0.8rem] px-[0.5rem] ml-[3rem]'>
+                <select
+                  className='border-[0.2rem] border-gray-200 rounded-[0.8rem] px-[0.5rem] ml-[3rem]'
+                  {...register(name)}>
                   {optionValues.map(({ value, text }) => (
                     <option
                       key={text}
@@ -118,7 +121,6 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
             </button>
           ))}
         </article>
-
         <Form.Submit asChild>
           <button
             type='submit'

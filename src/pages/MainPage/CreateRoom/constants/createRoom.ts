@@ -1,4 +1,4 @@
-import { I_CreateRoomInput } from '../types';
+import { I_CreateRoomInput, I_CreateRoomSelect } from '../types';
 
 export const CREATE_ROOM_INPUT_LIST: I_CreateRoomInput[] = [
   {
@@ -35,9 +35,9 @@ export const CREATE_ROOM_INPUT_LIST: I_CreateRoomInput[] = [
   },
 ];
 
-export const CREATE_ROOM_SELECT_LIST = [
+export const CREATE_ROOM_SELECT_LIST: I_CreateRoomSelect[] = [
   {
-    name: '인원수',
+    name: 'roomMaxPlayer',
     optionValues: Array.from({ length: 8 })
       .map((_, index) => ({
         value: index + 1,
@@ -46,7 +46,7 @@ export const CREATE_ROOM_SELECT_LIST = [
       .slice(1),
   },
   {
-    name: '라운드',
+    name: 'roomRound',
     optionValues: Array.from({ length: 8 })
       .map((_, index) => ({
         value: index + 1,
