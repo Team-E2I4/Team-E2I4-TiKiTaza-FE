@@ -30,10 +30,7 @@ const CreateRoomModal = ({ children, className }: CreateRoomModalProps) => {
           <Dialog.Title className='text-[2.4rem] font-semibold'>
             방 만들기
           </Dialog.Title>
-          <ErrorBoundary
-            fallbackRender={(error) => (
-              <CreateRoomErrorFallback error={error} />
-            )}>
+          <ErrorBoundary fallbackRender={CreateRoomErrorFallback}>
             <CreateRoomForm setIsOpen={setIsOpen} />
           </ErrorBoundary>
           <Dialog.Close asChild>
