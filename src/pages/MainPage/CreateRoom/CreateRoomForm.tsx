@@ -29,12 +29,11 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
 
   const { mutate } = useCreateGameRoom({
     onSuccess: () => setIsOpen(false),
-    onError: (e) => alert(e),
   });
 
   const [selectedMode, setSelectedMode] = useState('SENTENCE');
 
-  const onCreateRoom = () => {
+  const getRoomSettings = () => {
     const roomSetting: GameRoomCreateRequest = {
       title: getValues('roomName'),
       maxPlayer: getValues('roomMaxPlayer'),
@@ -47,6 +46,11 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
       roomSetting.password = password;
     }
 
+    return roomSetting;
+  };
+
+  const onCreateRoom = () => {
+    const roomSetting = getRoomSettings();
     mutate({ ...roomSetting });
   };
 

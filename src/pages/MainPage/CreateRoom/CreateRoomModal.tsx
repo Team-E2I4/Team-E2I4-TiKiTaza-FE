@@ -1,6 +1,8 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { ComponentProps, ReactNode, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import CreateRoomErrorFallback from './CreateRoomErrorFallback';
 import CreateRoomForm from './CreateRoomForm';
 
 interface CreateRoomModalProps {
@@ -28,7 +30,12 @@ const CreateRoomModal = ({ children, className }: CreateRoomModalProps) => {
           <Dialog.Title className='text-[2.4rem] font-semibold'>
             방 만들기
           </Dialog.Title>
-          <CreateRoomForm setIsOpen={setIsOpen} />
+          <ErrorBoundary
+            fallbackRender={(error) => (
+              <CreateRoomErrorFallback error={error} />
+            )}>
+            <CreateRoomForm setIsOpen={setIsOpen} />
+          </ErrorBoundary>
           <Dialog.Close asChild>
             <button
               aria-label='Close'
