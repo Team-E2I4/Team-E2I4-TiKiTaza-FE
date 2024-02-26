@@ -1,6 +1,7 @@
 import * as Form from '@radix-ui/react-form';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { GameRoomCreateRequest } from '@/generated';
 import useCreateGameRoom from '@/hooks/useCreateGameRoom';
 import {
   CREATE_ROOM_INPUT_LIST,
@@ -21,22 +22,33 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    getValues,
   } = useForm<CreateRoomFormType>({
     mode: 'onChange',
   });
 
-  const { mutate } = useCreateGameRoom();
+  const { mutate, isSuccess } = useCreateGameRoom();
 
-  const [selectedMode, setSelectedMode] = useState('sentence');
+  const [selectedMode, setSelectedMode] = useState('SENTENCE');
 
   const onCreateRoom = () => {
-    mutate({
-      title: '제목2',
-      maxPlayer: 8,
-      round: 5,
-      gameType: 'CODE',
-    });
-    setIsOpen(false);
+    const roomSetting: GameRoomCreateRequest = {
+      title: getValues('roomName'),
+      maxPlayer: getValues('roomMaxPlayer'),
+      round: getValues('roomRound'),
+      gameType: selectedMode,
+    };
+    const password = getValues('roomPassword');
+
+    if (password.length) {
+      roomSetting.password = password;
+    }
+
+    mutate({ ...roomSetting });
+    if (isSuccess) {
+      setIsOpen(false);
+      return;
+    }
   };
 
   return (
