@@ -63,6 +63,8 @@ const useSSE = ({ url, options = {} }: UseSSEProps) => {
     };
 
     return () => {
+      sse.removeEventListener(SSE_CHANGE_GAME_ROOM, handleChangeGameRoom);
+      sse.removeEventListener(SSE_CONNECT, handleInitConnect);
       sse.close();
     };
   }, [url, memorizedOptions]);
