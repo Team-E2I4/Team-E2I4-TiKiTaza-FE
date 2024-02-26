@@ -8,13 +8,9 @@ import {
 
 interface I_UseCreateGameRoomProps {
   onSuccess?: () => void;
-  onError?: (e: Error | AxiosError) => void;
 }
 
-const useCreateGameRoom = ({
-  onSuccess,
-  onError,
-}: I_UseCreateGameRoomProps) => {
+const useCreateGameRoom = ({ onSuccess }: I_UseCreateGameRoomProps) => {
   return useMutation<
     AxiosResponse<ApiResponseGameRoomCreateResponse>,
     Error | AxiosError,
@@ -24,7 +20,7 @@ const useCreateGameRoom = ({
     mutationFn: createGameRoom,
     mutationKey: ['createGameRoom'],
     onSuccess,
-    onError: (e) => onError?.(e),
+    throwOnError: true,
   });
 };
 
