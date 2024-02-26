@@ -9,20 +9,26 @@ import GameRoomSetting from './GameRoomSetting';
 import GameRoomUserList from './GameRoomUserList';
 
 const GameWaitingRoom = ({
-  gameRoomInfo,
+  gameRoomRes,
   ws,
 }: {
-  gameRoomInfo: I_GameRoomResponse;
+  gameRoomRes: I_GameRoomResponse;
   ws: CompatClient | null;
 }) => {
-  const { allMembers } = gameRoomInfo;
+  const { allMembers, roomInfo } = gameRoomRes;
+  // 각각 optional 이라 undefined 일수 있다고 추론됨 ..
   return (
     <div className='w-full flex flex-col justify-center items-center gap-[3rem] select-none'>
       <header className='flex gap-[5rem]'>
         <Backward />
-        <GameRoomInfo gameRoomInfo={gameRoomInfo} />
+        <GameRoomInfo gameRoomRes={gameRoomRes} />
       </header>
-      {allMembers && <GameRoomUserList gameRoomUserList={allMembers} />}
+      {allMembers && (
+        <GameRoomUserList
+          gameRoomUserList={allMembers}
+          hostId={roomInfo?.hostId}
+        />
+      )}
       <footer className='w-[114.8rem] flex gap-[5rem]'>
         <GameModeInfo>
           <GameRoomSetting />
