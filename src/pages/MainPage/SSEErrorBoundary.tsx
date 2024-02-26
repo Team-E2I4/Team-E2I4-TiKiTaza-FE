@@ -3,7 +3,7 @@ import { BASE_PATH } from '@/generated/base';
 import useSSE, { I_ChangeGameRoomData, SSEErrorType } from '@/hooks/useSSE';
 import storageFactory from '@/utils/storageFactory';
 
-interface SSEErrorBoundary {
+interface SSEErrorBoundaryProps {
   fallback: (
     error: SSEErrorType
   ) => ReactElement<
@@ -15,7 +15,7 @@ interface SSEErrorBoundary {
 
 const SSE_TIME_OUT_LIMIT = 1000 * 60 * 60; //1hour
 
-const SSEErrorBoundary = ({ fallback, children }: SSEErrorBoundary) => {
+const SSEErrorBoundary = ({ fallback, children }: SSEErrorBoundaryProps) => {
   const { getItem } = storageFactory(localStorage);
   const { data, isError, error } = useSSE({
     url: `${BASE_PATH}/api/v1/sse`,
