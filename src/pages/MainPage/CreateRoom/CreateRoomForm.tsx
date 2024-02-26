@@ -27,7 +27,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
     mode: 'onChange',
   });
 
-  const { mutate, isSuccess } = useCreateGameRoom();
+  const { mutate } = useCreateGameRoom({ onSuccess: () => setIsOpen(false) });
 
   const [selectedMode, setSelectedMode] = useState('SENTENCE');
 
@@ -45,10 +45,6 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
     }
 
     mutate({ ...roomSetting });
-    if (isSuccess) {
-      setIsOpen(false);
-      return;
-    }
   };
 
   return (

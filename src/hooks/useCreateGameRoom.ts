@@ -1,10 +1,20 @@
 import { useMutation } from '@tanstack/react-query';
 import { createGameRoom } from '@/apis/api';
 
-const useCreateGameRoom = () => {
+interface I_UseCreateGameRoomProps {
+  onSuccess?: () => void;
+  onError?: () => void;
+}
+
+const useCreateGameRoom = ({
+  onSuccess,
+  onError,
+}: I_UseCreateGameRoomProps) => {
   return useMutation({
     mutationFn: createGameRoom,
     mutationKey: ['createGameRoom'],
+    onSuccess,
+    onError,
   });
 };
 
