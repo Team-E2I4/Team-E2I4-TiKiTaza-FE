@@ -1,18 +1,34 @@
 import * as Avatar from '@radix-ui/react-avatar';
+import { useMemo } from 'react';
 import close from '@/assets/close.png';
 import { I_AllMember } from '@/ws/types/wsResType';
 
-const GameRoomUserItem = ({ nickname, readyStatus }: I_AllMember) => {
-  const rank = 3; // memberId로 회원조회!!
+const GameRoomUserItem = ({
+  hostId,
+  gameRoomUser,
+}: {
+  hostId: number | undefined;
+  gameRoomUser: I_AllMember;
+}) => {
+  const rank = 3; // TODO : 회원조회 쿼리 값으로 변경
+  const userId = 107; // TODO : 회원조회 쿼리 값으로 변경
+
+  const { memberId, nickname, readyStatus: isReady } = gameRoomUser;
+  const isAdminMe = useMemo(() => hostId === userId, [hostId]); //본인이 방장인지
+
   return (
     <div className='w-[25.8rem] h-[21.2rem] p-[1.6rem] pb-[4rem] relative flex flex-col bg-white shadow-md shadow-black/50 rounded-[2.5rem]'>
-      <button className='self-end'>
-        <img
-          src={close}
-          alt='강퇴'
-          className='w-[3rem]'
-        />
-      </button>
+      <div className='h-[3rem]'>
+        <button className='self-end'>
+          {isAdminMe && memberId !== userId && (
+            <img
+              src={close}
+              alt='강퇴'
+              className='w-[3rem]'
+            />
+          )}
+        </button>
+      </div>
       <div className='flex grow gap-[2rem]'>
         <Avatar.Root className='w-1/2 self-center'>
           <Avatar.Image
@@ -34,10 +50,11 @@ const GameRoomUserItem = ({ nickname, readyStatus }: I_AllMember) => {
           </div>
         </div>
       </div>
-      <div
-        className={`absolute w-[13rem] h-[4rem] rounded-[2rem_0_2.5rem] right-0 bottom-0 text-center leading-[4rem] font-[Giants-Inline] ${readyStatus && 'bg-green-100'}`}>
-        {readyStatus && '준비'}
-      </div>
+      {((isAdminMe && userId === memberId) || isReady) && (
+        <div className='absolute w-[13rem] h-[4rem] rounded-[2rem_0_2.5rem] right-0 bottom-0 text-center leading-[4rem] font-[Giants-Inline] bg-green-100'>
+          {isAdminMe && userId === memberId ? '방장' : isReady && '준비'}
+        </div>
+      )}
     </div>
   );
 };
