@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { GameRoomCreateRequest } from '@/generated';
 import useCreateGameRoom from '@/hooks/useCreateGameRoom';
+import useRoomIdStore from '@/store/useRoomIdStore';
 import {
   CREATE_ROOM_INPUT_LIST,
   CREATE_ROOM_SELECT_LIST,
@@ -26,9 +27,16 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
   } = useForm<CreateRoomFormType>({
     mode: 'onChange',
   });
+  const { setRoomId } = useRoomIdStore();
 
   const { mutate } = useCreateGameRoom({
-    onSuccess: () => setIsOpen(false),
+    onSuccess: (e) => {
+      if (e.data.data?.roomId === undefined) {
+        return;
+      }
+      setRoomId(e.data.data.roomId);
+      setIsOpen(false);
+    },
   });
 
   const [selectedMode, setSelectedMode] = useState('SENTENCE');
@@ -52,6 +60,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
   const onCreateRoom = () => {
     const roomSetting = getRoomSettings();
     mutate({ ...roomSetting });
+    setRoomId(Math.random() * 10);
   };
 
   return (

@@ -7,7 +7,7 @@ import {
 } from '@/generated';
 
 interface I_UseCreateGameRoomProps {
-  onSuccess?: () => void;
+  onSuccess?: (e: AxiosResponse<ApiResponseGameRoomCreateResponse>) => void;
 }
 
 const useCreateGameRoom = ({ onSuccess }: I_UseCreateGameRoomProps) => {
@@ -19,7 +19,9 @@ const useCreateGameRoom = ({ onSuccess }: I_UseCreateGameRoomProps) => {
   >({
     mutationFn: createGameRoom,
     mutationKey: ['createGameRoom'],
-    onSuccess,
+    onSuccess: (e) => {
+      onSuccess?.(e);
+    },
     throwOnError: true,
   });
 };
