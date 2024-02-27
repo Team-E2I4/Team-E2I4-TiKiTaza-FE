@@ -1,6 +1,8 @@
 import { Fragment, useState } from 'react';
 import Divider from '@/common/Divider/Divider';
-import useEnterGameRoom from '@/hooks/useEnterGameRoom';
+import useEnterGameRoom, {
+  I_UseEnterGameRoomMutation,
+} from '@/hooks/useEnterGameRoom';
 import { I_ChangeGameRoomData } from '@/hooks/useSSE';
 import GameRoomListItem from './GameRoonListItem';
 import PrivateRoomModal from './PrivateRoomModal';
@@ -10,8 +12,11 @@ const GAME_ROOM_LIST_CATEGORY = ['방 번호', '방 제목', '게임 모드', '�
 const GameRoomList = ({ data }: { data: I_ChangeGameRoomData[] }) => {
   const { mutate: mutateEnterGameRoom } = useEnterGameRoom({});
   const [isOpen, setIsOpen] = useState(false);
-  const handleEnterGameRoom = (roomId: number) => {
-    mutateEnterGameRoom(roomId);
+  const handleEnterGameRoom = ({
+    roomId,
+    password,
+  }: I_UseEnterGameRoomMutation) => {
+    mutateEnterGameRoom({ roomId, password });
   };
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
