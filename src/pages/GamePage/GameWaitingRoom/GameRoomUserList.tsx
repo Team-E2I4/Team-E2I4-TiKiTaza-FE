@@ -1,4 +1,4 @@
-import { I_AllMember } from '@/ws/types/wsResType';
+import { I_AllMember } from '../types/websocketType';
 import GameRoomUserItem from './GameRoomUserItem';
 
 const GameRoomUserList = ({
