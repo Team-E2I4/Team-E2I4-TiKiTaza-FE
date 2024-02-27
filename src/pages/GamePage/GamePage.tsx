@@ -14,7 +14,10 @@ const GamePage = () => {
   const { gameRoomRes, handleReadyGame } = useWebsocket();
   const navigate = useNavigate();
 
-  const isSuccess = useMemo(() => !checkEmptyObj(gameRoomRes), [gameRoomRes]);
+  const isConnectSuccess = useMemo(
+    () => !checkEmptyObj(gameRoomRes),
+    [gameRoomRes]
+  );
   const [selectedMode, isPlaying] = useMemo(
     () => [gameRoomRes.roomInfo?.gameMode, gameRoomRes.roomInfo?.isPlaying],
     [gameRoomRes.roomInfo]
@@ -24,7 +27,7 @@ const GamePage = () => {
     [gameRoomRes]
   ); //모두 준비인상태에서 방장이 시작했다면 'START' type 이 옴 -> 참여자들 컴포넌트 전환 필요
 
-  if (!isSuccess) {
+  if (!isConnectSuccess) {
     return <WsError />;
   }
 
