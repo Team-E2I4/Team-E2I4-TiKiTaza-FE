@@ -18,6 +18,7 @@ const GameRoomList = ({ data }: { data: I_ChangeGameRoomData[] }) => {
   }: I_UseEnterGameRoomMutation) => {
     mutateEnterGameRoom({ roomId, password });
   };
+
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
       <ul className='flex flex-col items-center px-[1.5rem]'>
