@@ -1,15 +1,15 @@
 import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
 import { guestLogin } from '@/apis/api';
+import { BASE_PATH } from '@/generated/base';
 import storageFactory from '@/utils/storageFactory';
 import { I_GameRoomResponse } from '../../types/websocketType';
-const { VITE_API_WS_END_POINT } = import.meta.env;
 
 const useWebsocket = () => {
   const stompClient = useRef<Client>();
   const [gameRoomRes, setGameRoomRes] = useState({} as I_GameRoomResponse);
 
-  const ROOM_ID_TEST = 14;
+  const ROOM_ID_TEST = 44;
 
   useEffect(() => {
     const { getItem, setItem } = storageFactory(localStorage);
@@ -28,7 +28,7 @@ const useWebsocket = () => {
     };
 
     const client = new Client({
-      webSocketFactory: () => new SockJS(VITE_API_WS_END_POINT),
+      webSocketFactory: () => new SockJS(`${BASE_PATH}/ws`),
       connectHeaders: connectHeaders,
 
       onConnect: () => {
