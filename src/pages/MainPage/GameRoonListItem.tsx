@@ -1,4 +1,5 @@
 import { LockClosedIcon } from '@radix-ui/react-icons';
+import { useNavigate } from 'react-router-dom';
 import Divider from '@/common/Divider/Divider';
 import useEnterGameRoom from '@/hooks/useEnterGameRoom';
 import { I_ChangeGameRoomData } from '@/hooks/useSSE';
@@ -20,10 +21,12 @@ const GameRoomListItem = ({
   isPrivate,
 }: I_ChangeGameRoomData) => {
   const { setRoomId } = useRoomIdStore();
+  const navigate = useNavigate();
 
   const { mutate: mutateEnterGameRoom } = useEnterGameRoom({
     onSuccess: () => {
       setRoomId(id);
+      navigate('/game');
     },
   });
 

@@ -4,6 +4,7 @@ import { Cross2Icon, PaperPlaneIcon } from '@radix-ui/react-icons';
 import { AxiosError } from 'axios';
 import { ComponentProps, Dispatch, ReactNode, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { ErrorResponse } from '@/generated';
 import useEnterGameRoom from '@/hooks/useEnterGameRoom';
 import useRoomIdStore from '@/store/useRoomIdStore';
@@ -33,10 +34,13 @@ const PrivateRoomModal = ({
 
   const { setRoomId } = useRoomIdStore();
 
+  const navigate = useNavigate();
+
   const { mutate: mutateEnterGameRoom } = useEnterGameRoom({
     onSuccess: () => {
       setRoomId(roomId);
       setIsOpen(false);
+      navigate('/game');
     },
     onError: (e: AxiosError<ErrorResponse>) => {
       setError('password', { message: e.response?.data.errorMessage });
