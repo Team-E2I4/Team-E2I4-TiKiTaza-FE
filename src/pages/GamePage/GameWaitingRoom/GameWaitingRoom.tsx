@@ -14,9 +14,11 @@ import GameRoomSetting from './GameRoomSetting';
 import GameRoomUserList from './GameRoomUserList';
 
 const GameWaitingRoom = ({
+  roomId,
   gameRoomRes,
   handleReadyGame,
 }: {
+  roomId: number;
   gameRoomRes: I_GameRoomResponse;
   handleReadyGame: HandleReadyGameType;
 }) => {
@@ -31,13 +33,11 @@ const GameWaitingRoom = ({
 
   // 임시 TEST
   const myUserId = 2;
-  const myRoomId = 14;
   const isAdmin = myUserId === roomInfo?.hostId;
 
   const handleClickBackward = () => {
     setIsAlert(true);
   };
-
   return (
     <>
       <DisconnectModal
@@ -68,7 +68,7 @@ const GameWaitingRoom = ({
             isAdmin={isAdmin}
             allMembers={allMembers}
             handleReadyGame={handleReadyGame}
-            myRoomId={myRoomId}
+            myRoomId={roomId}
           />
         </footer>
       </div>
