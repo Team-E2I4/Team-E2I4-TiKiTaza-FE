@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
+import { ErrorResponse } from 'react-router-dom';
 import { enterGameRoom } from '@/apis/api';
 import { ApiResponseGameRoomEnterResponse } from '@/generated';
 
@@ -15,7 +16,7 @@ export interface I_UseEnterGameRoomMutation {
 const useEnterGameRoom = ({ onSuccess }: UseEnterGameRoomProps) => {
   return useMutation<
     AxiosResponse<ApiResponseGameRoomEnterResponse>,
-    Error,
+    Error | AxiosError<ErrorResponse>,
     I_UseEnterGameRoomMutation
   >({
     mutationFn: ({ roomId, password }: I_UseEnterGameRoomMutation) =>
@@ -23,6 +24,20 @@ const useEnterGameRoom = ({ onSuccess }: UseEnterGameRoomProps) => {
     mutationKey: ['enterGameRoom'],
     onSuccess: () => {
       onSuccess?.();
+    },
+    onError: (e) => alert(e),
+    throwOnError: (e) => {
+      if (!(e instanceof AxiosError)) {
+        return true;
+      }
+      if (
+        e.response?.status === 400 ||
+        e.response?.status === 404 ||
+        e.response?.status === 409
+      ) {
+        return false;
+      }
+      return true;
     },
   });
 };
