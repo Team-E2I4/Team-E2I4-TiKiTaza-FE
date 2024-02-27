@@ -25,8 +25,8 @@ const GamePage = () => {
     const { getItem, setItem } = storageFactory(localStorage);
     const guestLoginFn = async () => {
       const { data } = await guestLogin();
-      setItem('token', data.data.accessToken);
-      token = data.data.accessToken;
+      setItem('token', data.data?.accessToken);
+      token = data.data?.accessToken;
     };
     let token = getItem('token', '');
     if (!token) {
@@ -36,7 +36,7 @@ const GamePage = () => {
       Authorization: `Bearer ${token}`,
     };
 
-    const ROOMID_TEST = 12; // 테스트용 RoomId ////////////////////////////////////
+    const ROOMID_TEST = 19; // 테스트용 RoomId ////////////////////////////////////
 
     const onConnected = () => {
       //TODO: roomId는 방입장 GET요청 응답값으로 사용

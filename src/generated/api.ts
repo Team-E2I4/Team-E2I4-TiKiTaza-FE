@@ -98,6 +98,62 @@ export interface ApiResponseAccountGetResponse {
 /**
  *
  * @export
+ * @interface AccountGetResponse
+ */
+export interface AccountGetResponse {
+  /**
+   *
+   * @type {number}
+   * @memberof AccountGetResponse
+   */
+  memberId: number;
+  /**
+   *
+   * @type {string}
+   * @memberof AccountGetResponse
+   */
+  email?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof AccountGetResponse
+   */
+  nickname: string;
+  /**
+   *
+   * @type {boolean}
+   * @memberof AccountGetResponse
+   */
+  isGuest: boolean;
+}
+/**
+ *
+ * @export
+ * @interface ApiResponseAccountGetResponse
+ */
+export interface ApiResponseAccountGetResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof ApiResponseAccountGetResponse
+   */
+  code: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ApiResponseAccountGetResponse
+   */
+  message: string;
+  /**
+   *
+   * @type {AccountGetResponse}
+   * @memberof ApiResponseAccountGetResponse
+   */
+  data?: AccountGetResponse;
+}
+/**
+ *
+ * @export
  * @interface ApiResponseAuthResponse
  */
 export interface ApiResponseAuthResponse {
