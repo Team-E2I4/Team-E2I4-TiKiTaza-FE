@@ -1,16 +1,15 @@
 import * as Dialog from '@radix-ui/react-dialog';
+import * as Form from '@radix-ui/react-form';
 import { Cross2Icon, PaperPlaneIcon } from '@radix-ui/react-icons';
+import { AxiosError } from 'axios';
 import { ComponentProps, Dispatch, ReactNode, SetStateAction } from 'react';
-import Input from '@/common/Input/Input';
-import { I_UseEnterGameRoomMutation } from '@/hooks/useEnterGameRoom';
+import { useForm } from 'react-hook-form';
+import { ErrorResponse } from '@/generated';
+import useEnterGameRoom from '@/hooks/useEnterGameRoom';
 
 interface PrivateRoomModalProps {
   children: ReactNode;
   className?: ComponentProps<'div'>['className'];
-  handlePasswordSubmit?: ({
-    roomId,
-    password,
-  }: I_UseEnterGameRoomMutation) => void;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isOpen: boolean;
   roomId: number;
@@ -19,11 +18,23 @@ interface PrivateRoomModalProps {
 const PrivateRoomModal = ({
   children,
   className,
-  handlePasswordSubmit,
   isOpen,
   setIsOpen,
   roomId,
 }: PrivateRoomModalProps) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    getValues,
+  } = useForm<{ password: string }>();
+
+  const { mutate: mutateEnterGameRoom, isSuccess } = useEnterGameRoom({
+    onError: (e: AxiosError<ErrorResponse>) => {
+      setError('password', { message: e.response?.data.errorMessage });
+    },
+  });
   return (
     <Dialog.Root
       open={isOpen}
@@ -38,13 +49,30 @@ const PrivateRoomModal = ({
         <Dialog.Content
           className={`rounded-[1rem] border-green-100 border-[0.3rem] w-[30rem] h-[15rem] flex flex-col items-center justify-center bg-white z-10 fixed inset-1/2 translate-x-[-50%] translate-y-[-50%] ${className}`}>
           <Dialog.Title>비밀번호를 입력해주세요!</Dialog.Title>
-          <form
+          <Form.Root
             className='flex gap-[1rem] items-center'
-            onSubmit={(e) => {
-              e.preventDefault();
-              handlePasswordSubmit?.({ roomId });
-            }}>
-            <Input whSize='w-[20rem] h-[3rem]' />
+            onSubmit={handleSubmit(() => {
+              mutateEnterGameRoom({ roomId, password: getValues('password') });
+              isSuccess && setIsOpen(false);
+            })}>
+            <Form.Field name='password'>
+              <Form.Control
+                className={`${errors.password?.message ? 'border-red-500' : 'border-green-500'}`}
+                asChild>
+                <input
+                  className='flex items-center pl-[1.75rem] rounded-2xl
+              bg-white border-2 border-green-100 my-4
+              outline-0 text-gray-300 tracking-wider w-[20rem] h-[3rem]'
+                  maxLength={10}
+                  type='password'
+                  required
+                  {...register('password')}
+                />
+              </Form.Control>
+              <span className='block text-[1.3rem] h-[2rem] text-red-500 pt-[0.3rem] text-center'>
+                {errors.password?.message}
+              </span>
+            </Form.Field>
             <button
               type='submit'
               className='hover:bg-gray-100 rounded-[0.3rem]'>
@@ -53,7 +81,7 @@ const PrivateRoomModal = ({
                 color='green'
               />
             </button>
-          </form>
+          </Form.Root>
           <Dialog.Close asChild>
             <button
               aria-label='Close'
