@@ -4,13 +4,13 @@ import { useForm } from 'react-hook-form';
 import { GameRoomCreateRequest } from '@/generated';
 import useCreateGameRoom from '@/hooks/useCreateGameRoom';
 import useRoomIdStore from '@/store/useRoomIdStore';
+import getRandomItem from '@/utils/getRandomItem';
 import {
   CREATE_ROOM_INPUT_LIST,
   CREATE_ROOM_SELECT_LIST,
   GAME_MODE_LIST,
 } from './constants/createRoom';
 import { DEFAULT_TITLES } from './constants/defaultTitles';
-import getRandomTitle from './getRandomTitle';
 import { I_CreateRoomInputName, I_CreateRoomSelectName } from './types';
 
 interface CreateRoomFormProps {
@@ -44,7 +44,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
 
   const [selectedMode, setSelectedMode] = useState('SENTENCE');
 
-  const randomTitle = useRef(getRandomTitle({ titles: DEFAULT_TITLES }));
+  const randomTitle = useRef(getRandomItem({ items: DEFAULT_TITLES }));
 
   /* ToDo: getValues로 form 값들 하나씩 말고 한번에 가져와보기 */
   const getRoomSettings = () => {
