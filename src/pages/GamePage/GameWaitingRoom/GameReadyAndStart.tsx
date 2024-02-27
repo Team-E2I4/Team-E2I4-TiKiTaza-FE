@@ -6,7 +6,7 @@ const GameReadyAndStart = ({ ws }: { ws: CompatClient }) => {
 
   const token = getItem('token', '');
   const connectHeaders = {
-    Authorization: 'Bearer ' + token,
+    Authorization: `Bearer ${token}`,
   };
   //TODO: 현재 방번호 zustand store에서
   return (
