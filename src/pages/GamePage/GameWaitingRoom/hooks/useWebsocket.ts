@@ -5,9 +5,7 @@ import { BASE_PATH } from '@/generated/base';
 import storageFactory from '@/utils/storageFactory';
 import { I_GameRoomResponse } from '../../types/websocketType';
 
-type RoomIdType = number | null;
-
-const useWebsocket = (roomId: RoomIdType) => {
+const useWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
   const [gameRoomRes, setGameRoomRes] = useState({} as I_GameRoomResponse);
   const [isWsError, setIsWsError] = useState(false);
@@ -54,7 +52,6 @@ const useWebsocket = (roomId: RoomIdType) => {
     });
 
     const onConnected = () => {
-      //TODO: roomId는 방입장 GET요청 응답값으로 사용
       client.subscribe(
         `/from/game-room/${roomId}`,
         (e) => onMessageReceived(e),
@@ -77,7 +74,6 @@ const useWebsocket = (roomId: RoomIdType) => {
 
     const onMessageReceived = ({ body }: { body: string }) => {
       const responsePublish = JSON.parse(body);
-      // called when the client receives a STOMP message from the server
       setGameRoomRes(responsePublish);
     };
 
