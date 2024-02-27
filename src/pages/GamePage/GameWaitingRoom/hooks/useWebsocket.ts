@@ -9,17 +9,17 @@ const useWebsocket = () => {
   const stompClient = useRef<Client>();
   const [gameRoomRes, setGameRoomRes] = useState({} as I_GameRoomResponse);
 
-  const ROOM_ID_TEST = 44;
+  const ROOM_ID_TEST = 58;
 
   useEffect(() => {
     const { getItem, setItem } = storageFactory(localStorage);
 
     const guestLoginFn = async () => {
       const { data } = await guestLogin();
-      setItem('token', data.data?.accessToken);
+      setItem('MyToken', data.data?.accessToken);
       token = data.data?.accessToken;
     };
-    let token = getItem('token', '');
+    let token = getItem('MyToken', '');
     if (!token) {
       guestLoginFn();
     }
@@ -87,10 +87,10 @@ const useWebsocket = () => {
 
   const guestLoginFn = async () => {
     const { data } = await guestLogin();
-    setItem('token', data.data?.accessToken);
+    setItem('MyToken', data.data?.accessToken);
     token = data.data?.accessToken;
   };
-  let token = getItem('token', '');
+  let token = getItem('MyToken', '');
   if (!token) {
     guestLoginFn();
   }
