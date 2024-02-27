@@ -7,9 +7,7 @@ interface I_RoomIdState {
 
 const useRoomIdStore = create<I_RoomIdState>((set) => ({
   roomId: null,
-  setRoomId: (roomId: number) => {
-    set(() => ({ roomId }));
-  },
+  setRoomId: (roomId: number) => set({ roomId }),
 }));
 
 export default useRoomIdStore;
