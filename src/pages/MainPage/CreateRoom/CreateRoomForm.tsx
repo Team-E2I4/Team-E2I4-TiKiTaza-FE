@@ -37,7 +37,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
       if (!e.data.data) {
         return;
       }
-
+      alert('방 생성 성공');
       setRoomId(e.data.data.roomId);
       setIsOpen(false);
     },
@@ -68,7 +68,6 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
   const onCreateRoom = () => {
     const roomSetting = getRoomSettings();
     mutateCreateGameRoom({ ...roomSetting });
-    setRoomId(Math.random() * 10);
   };
 
   return (
