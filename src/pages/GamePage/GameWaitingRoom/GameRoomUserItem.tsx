@@ -15,12 +15,13 @@ const GameRoomUserItem = ({
 
   const { memberId, nickname, readyStatus: isReady } = gameRoomUser;
   const isAdminMe = useMemo(() => hostId === userId, [hostId]); //본인이 방장인지
+  const isMe = useMemo(() => memberId === userId, [memberId]); // 각 유저가 본인인지
 
   return (
     <div className='w-[25.8rem] h-[21.2rem] p-[1.6rem] pb-[4rem] relative flex flex-col bg-white shadow-md shadow-black/50 rounded-[2.5rem]'>
       <div className='h-[3rem] self-end'>
         <button>
-          {isAdminMe && memberId !== userId && (
+          {isAdminMe && !isMe && (
             <img
               src={close}
               alt='강퇴'
@@ -50,9 +51,9 @@ const GameRoomUserItem = ({
           </div>
         </div>
       </div>
-      {((isAdminMe && userId === memberId) || isReady) && (
+      {((isAdminMe && isMe) || isReady) && (
         <div className='absolute w-[13rem] h-[4rem] rounded-[2rem_0_2.5rem] right-0 bottom-0 text-center leading-[4rem] font-[Giants-Inline] bg-green-100'>
-          {isAdminMe && userId === memberId ? '방장' : isReady && '준비'}
+          {isAdminMe && isMe ? '방장' : isReady && '준비'}
         </div>
       )}
     </div>
