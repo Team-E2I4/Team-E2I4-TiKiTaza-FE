@@ -9,6 +9,8 @@ import {
   CREATE_ROOM_SELECT_LIST,
   GAME_MODE_LIST,
 } from './constants/createRoom';
+import { DEFAULT_TITLES } from './constants/defaultTitles';
+import getRandomTitle from './getRandomTitle';
 import { I_CreateRoomInputName, I_CreateRoomSelectName } from './types';
 
 interface CreateRoomFormProps {
@@ -43,9 +45,11 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
 
   const [selectedMode, setSelectedMode] = useState('SENTENCE');
 
+  const randomTitle = getRandomTitle({ titles: DEFAULT_TITLES });
+
   const getRoomSettings = () => {
     const roomSetting: GameRoomCreateRequest = {
-      title: getValues('roomName'),
+      title: getValues('roomName') || randomTitle,
       maxPlayer: getValues('roomMaxPlayer'),
       round: getValues('roomRound'),
       gameType: selectedMode,
@@ -86,7 +90,9 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
                   <input
                     className='w-[26rem] h-[3.6rem] p-[1rem] border-[0.2rem] border-gray-200 rounded-[0.8rem] focus:outline-none'
                     type={type}
-                    placeholder={placeholder}
+                    placeholder={
+                      name === 'roomName' ? randomTitle : placeholder
+                    }
                     {...register(name, {
                       required,
                       ...validate,
