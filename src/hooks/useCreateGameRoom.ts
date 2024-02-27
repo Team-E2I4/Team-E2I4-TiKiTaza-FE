@@ -6,11 +6,11 @@ import {
   GameRoomCreateRequest,
 } from '@/generated';
 
-interface I_UseCreateGameRoomProps {
+interface UseCreateGameRoomProps {
   onSuccess?: (e: AxiosResponse<ApiResponseGameRoomCreateResponse>) => void;
 }
 
-const useCreateGameRoom = ({ onSuccess }: I_UseCreateGameRoomProps) => {
+const useCreateGameRoom = ({ onSuccess }: UseCreateGameRoomProps) => {
   return useMutation<
     AxiosResponse<ApiResponseGameRoomCreateResponse>,
     Error | AxiosError,
