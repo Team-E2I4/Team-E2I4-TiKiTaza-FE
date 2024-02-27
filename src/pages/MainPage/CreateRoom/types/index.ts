@@ -26,5 +26,6 @@ export interface I_CreateRoomSelectOptionValues {
 }
 export interface I_CreateRoomSelect {
   name: Path<I_CreateRoomSelectName>;
+  label: string;
   optionValues: I_CreateRoomSelectOptionValues[];
 }

@@ -38,6 +38,7 @@ export const CREATE_ROOM_INPUT_LIST: I_CreateRoomInput[] = [
 export const CREATE_ROOM_SELECT_LIST: I_CreateRoomSelect[] = [
   {
     name: 'roomMaxPlayer',
+    label: '인원 수',
     optionValues: Array.from({ length: 8 })
       .map((_, index) => ({
         value: index + 1,
@@ -47,6 +48,7 @@ export const CREATE_ROOM_SELECT_LIST: I_CreateRoomSelect[] = [
   },
   {
     name: 'roomRound',
+    label: '총 라운드',
     optionValues: Array.from({ length: 8 })
       .map((_, index) => ({
         value: index + 1,
