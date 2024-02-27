@@ -1,17 +1,25 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon, PaperPlaneIcon } from '@radix-ui/react-icons';
-import { ComponentProps, ReactNode, useState } from 'react';
+import { ComponentProps, Dispatch, ReactNode, SetStateAction } from 'react';
 import Input from '@/common/Input/Input';
 
 interface PrivateRoomModalProps {
   children: ReactNode;
   className?: ComponentProps<'div'>['className'];
+  handlePasswordSubmit: (roomId: number) => void;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  isOpen: boolean;
+  roomId: number;
 }
 
-const wait = () => new Promise((resolve) => setTimeout(resolve, 2000));
-
-const PrivateRoomModal = ({ children, className }: PrivateRoomModalProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const PrivateRoomModal = ({
+  children,
+  className,
+  handlePasswordSubmit,
+  isOpen,
+  setIsOpen,
+  roomId,
+}: PrivateRoomModalProps) => {
   return (
     <Dialog.Root
       open={isOpen}
@@ -30,7 +38,7 @@ const PrivateRoomModal = ({ children, className }: PrivateRoomModalProps) => {
             className='flex gap-[1rem] items-center'
             onSubmit={(e) => {
               e.preventDefault();
-              wait().then(() => setIsOpen(false));
+              handlePasswordSubmit(roomId);
             }}>
             <Input whSize='w-[20rem] h-[3rem]' />
             <button
