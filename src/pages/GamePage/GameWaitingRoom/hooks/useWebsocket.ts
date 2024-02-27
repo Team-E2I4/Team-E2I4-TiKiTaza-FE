@@ -5,11 +5,16 @@ import { BASE_PATH } from '@/generated/base';
 import storageFactory from '@/utils/storageFactory';
 import { I_GameRoomResponse } from '../../types/websocketType';
 
-const useWebsocket = () => {
+type RoomIdType = number | null;
+
+const useWebsocket = (roomId: RoomIdType) => {
   const stompClient = useRef<Client>();
   const [gameRoomRes, setGameRoomRes] = useState({} as I_GameRoomResponse);
+  const [isWsError, setIsWsError] = useState(false);
 
-  const ROOM_ID_TEST = 58;
+  if (!roomId) {
+    setIsWsError(true);
+  }
 
   useEffect(() => {
     const { getItem, setItem } = storageFactory(localStorage);
@@ -32,11 +37,15 @@ const useWebsocket = () => {
       connectHeaders: connectHeaders,
 
       onConnect: () => {
-        onConnected();
-        handleEnterGameRoom(ROOM_ID_TEST);
+        if (roomId) {
+          onConnected();
+          handleEnterGameRoom(roomId);
+        }
       },
       onDisconnect: () => {
-        onDisconnected(ROOM_ID_TEST);
+        if (roomId) {
+          onDisconnected(roomId);
+        }
       },
       onStompError: (err) => {
         // eslint-disable-next-line no-console
@@ -47,12 +56,12 @@ const useWebsocket = () => {
     const onConnected = () => {
       //TODO: roomId는 방입장 GET요청 응답값으로 사용
       client.subscribe(
-        `/from/game-room/${ROOM_ID_TEST}`,
+        `/from/game-room/${roomId}`,
         (e) => onMessageReceived(e),
         connectHeaders
       );
       client.subscribe(
-        `/from/game-room/${ROOM_ID_TEST}/error`,
+        `/from/game-room/${roomId}/error`,
         // eslint-disable-next-line no-console
         (e) => console.log('----subscribe error----', e),
         connectHeaders
@@ -122,6 +131,7 @@ const useWebsocket = () => {
     gameRoomRes,
     handleReadyGame,
     handleStartGame,
+    isWsError,
   };
 };
 

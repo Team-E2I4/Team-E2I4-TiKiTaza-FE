@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useRoomIdStore from '@/store/useRoomIdStore';
 import { checkEmptyObj } from '@/utils/checkEmptyObj';
 import GameCode from './GameCode/GameCode';
 import GameSentence from './GameSentence/GameSentence';
@@ -10,8 +11,9 @@ import GameWord from './GameWord/GameWord';
 
 const GamePage = () => {
   // TODO: zustand 전역상태값(초대로 들어온 사람이라면 url의 해시값->정제->유효검사 후 상태값) 으로 방번호 추출
+  const { roomId } = useRoomIdStore();
 
-  const { gameRoomRes, handleReadyGame } = useWebsocket();
+  const { gameRoomRes, handleReadyGame } = useWebsocket(roomId);
   const navigate = useNavigate();
 
   const isConnectSuccess = useMemo(
@@ -30,7 +32,10 @@ const GamePage = () => {
   if (!isConnectSuccess) {
     return <WsError />;
   }
-
+  if (!roomId) {
+    // TODO: 진입으로 보내거나 어떤..
+    return <div>잘못된 접근</div>;
+  }
   if (isPlaying) {
     navigate('/main');
   }
@@ -46,6 +51,7 @@ const GamePage = () => {
         )
       ) : (
         <GameWaitingRoom
+          roomId={roomId}
           gameRoomRes={gameRoomRes}
           handleReadyGame={handleReadyGame}
         />
