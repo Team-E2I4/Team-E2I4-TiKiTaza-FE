@@ -16,7 +16,7 @@ const GameWaitingRoom = ({
   ws,
 }: {
   gameRoomRes: I_GameRoomResponse;
-  ws: CompatClient | null;
+  ws: CompatClient;
 }) => {
   const navigate = useNavigate();
 
@@ -32,8 +32,13 @@ const GameWaitingRoom = ({
     <>
       <DisconnectModal
         isOpen={isAlert}
-        handleClickAction={() => navigate('/main')}
-        handleClickCancel={() => setIsAlert(false)}
+        handleClickAction={() => {
+          navigate('/main');
+          navigate(0);
+        }}
+        handleClickCancel={() => {
+          setIsAlert(false);
+        }}
       />
       <div className='w-full flex flex-col justify-center items-center gap-[3rem] select-none'>
         <header className='flex gap-[5rem]'>
