@@ -19,7 +19,6 @@ interface CreateRoomFormProps {
 
 type CreateRoomFormType = I_CreateRoomInputName & I_CreateRoomSelectName;
 
-//비동기 호출 후 모달 잘 닫히는지 test용
 const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
   const {
     register,
@@ -47,7 +46,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
 
   const randomTitle = useRef(getRandomTitle({ titles: DEFAULT_TITLES }));
 
-  //getValues()로 한번에 가져와보기
+  /* ToDo: getValues로 form 값들 하나씩 말고 한번에 가져와보기 */
   const getRoomSettings = () => {
     const roomSetting: GameRoomCreateRequest = {
       title: getValues('roomName') || randomTitle.current,
@@ -108,11 +107,11 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
         )}
         {/* 인원수, 라운드 설정 */}
         <div className='flex justify-between'>
-          {CREATE_ROOM_SELECT_LIST.map(({ name, optionValues }) => (
+          {CREATE_ROOM_SELECT_LIST.map(({ name, label, optionValues }) => (
             <Form.Field
               key={name}
               name={name}>
-              <Form.Label>{name}</Form.Label>
+              <Form.Label>{label}</Form.Label>
               <Form.Control asChild>
                 <select
                   className='border-[0.2rem] border-gray-200 rounded-[0.8rem] px-[0.5rem] ml-[3rem]'
