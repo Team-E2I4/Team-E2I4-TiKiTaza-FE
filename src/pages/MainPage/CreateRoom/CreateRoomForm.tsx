@@ -1,5 +1,5 @@
 import * as Form from '@radix-ui/react-form';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { GameRoomCreateRequest } from '@/generated';
 import useCreateGameRoom from '@/hooks/useCreateGameRoom';
@@ -45,11 +45,12 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
 
   const [selectedMode, setSelectedMode] = useState('SENTENCE');
 
-  const randomTitle = getRandomTitle({ titles: DEFAULT_TITLES });
+  const randomTitle = useRef(getRandomTitle({ titles: DEFAULT_TITLES }));
 
+  //getValues()로 한번에 가져와보기
   const getRoomSettings = () => {
     const roomSetting: GameRoomCreateRequest = {
-      title: getValues('roomName') || randomTitle,
+      title: getValues('roomName') || randomTitle.current,
       maxPlayer: getValues('roomMaxPlayer'),
       round: getValues('roomRound'),
       gameType: selectedMode,
@@ -91,7 +92,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
                     className='w-[26rem] h-[3.6rem] p-[1rem] border-[0.2rem] border-gray-200 rounded-[0.8rem] focus:outline-none'
                     type={type}
                     placeholder={
-                      name === 'roomName' ? randomTitle : placeholder
+                      name === 'roomName' ? randomTitle.current : placeholder
                     }
                     {...register(name, {
                       required,
