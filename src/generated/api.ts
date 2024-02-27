@@ -26,6 +26,62 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 /**
  * 
  * @export
+ * @interface AccountGetResponse
+ */
+export interface AccountGetResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountGetResponse
+     */
+    'memberId': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountGetResponse
+     */
+    'email'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountGetResponse
+     */
+    'nickname': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountGetResponse
+     */
+    'isGuest': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ApiResponseAccountGetResponse
+ */
+export interface ApiResponseAccountGetResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseAccountGetResponse
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseAccountGetResponse
+     */
+    'message': string;
+    /**
+     * 
+     * @type {AccountGetResponse}
+     * @memberof ApiResponseAccountGetResponse
+     */
+    'data'?: AccountGetResponse;
+}
+/**
+ * 
+ * @export
  * @interface ApiResponseAuthResponse
  */
 export interface ApiResponseAuthResponse {
@@ -126,27 +182,27 @@ export interface ApiResponseGameRoomInviteCodeResponse {
 /**
  * 
  * @export
- * @interface ApiResponseMemberGetResponse
+ * @interface ApiResponseListMemberRankResponse
  */
-export interface ApiResponseMemberGetResponse {
+export interface ApiResponseListMemberRankResponse {
     /**
      * 
      * @type {string}
-     * @memberof ApiResponseMemberGetResponse
+     * @memberof ApiResponseListMemberRankResponse
      */
     'code': string;
     /**
      * 
      * @type {string}
-     * @memberof ApiResponseMemberGetResponse
+     * @memberof ApiResponseListMemberRankResponse
      */
     'message': string;
     /**
      * 
-     * @type {MemberGetResponse}
-     * @memberof ApiResponseMemberGetResponse
+     * @type {Array<MemberRankResponse>}
+     * @memberof ApiResponseListMemberRankResponse
      */
-    'data'?: MemberGetResponse;
+    'data'?: Array<MemberRankResponse>;
 }
 /**
  * 
@@ -390,33 +446,39 @@ export interface LoginRequest {
 /**
  * 
  * @export
- * @interface MemberGetResponse
+ * @interface MemberRankResponse
  */
-export interface MemberGetResponse {
+export interface MemberRankResponse {
     /**
      * 
      * @type {number}
-     * @memberof MemberGetResponse
+     * @memberof MemberRankResponse
      */
     'memberId': number;
     /**
      * 
      * @type {string}
-     * @memberof MemberGetResponse
-     */
-    'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MemberGetResponse
+     * @memberof MemberRankResponse
      */
     'nickname': string;
     /**
      * 
-     * @type {string}
-     * @memberof MemberGetResponse
+     * @type {number}
+     * @memberof MemberRankResponse
      */
-    'status': string;
+    'totalScore': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MemberRankResponse
+     */
+    'averageWpm': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MemberRankResponse
+     */
+    'averageAccuracy': number;
 }
 /**
  * 
@@ -615,6 +677,45 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(gameRoomEnterRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 랭킹 조회
+         * @param {string} [gameType] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMemberRanking: async (gameType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/ranks`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (gameType !== undefined) {
+                localVarQueryParameter['gameType'] = gameType;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1025,11 +1126,24 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary 랭킹 조회
+         * @param {string} [gameType] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMemberRanking(gameType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseListMemberRankResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMemberRanking(gameType, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getMemberRanking']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary 내 프로필 조회
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMyProfileInfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseMemberGetResponse>> {
+        async getMyProfileInfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseAccountGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMyProfileInfo(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.getMyProfileInfo']?.[localVarOperationServerIndex]?.url;
@@ -1184,11 +1298,21 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary 랭킹 조회
+         * @param {string} [gameType] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMemberRanking(gameType?: string, options?: any): AxiosPromise<ApiResponseListMemberRankResponse> {
+            return localVarFp.getMemberRanking(gameType, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary 내 프로필 조회
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMyProfileInfo(options?: any): AxiosPromise<ApiResponseMemberGetResponse> {
+        getMyProfileInfo(options?: any): AxiosPromise<ApiResponseAccountGetResponse> {
             return localVarFp.getMyProfileInfo(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1318,6 +1442,18 @@ export class DefaultApi extends BaseAPI {
      */
     public enterGameRoom(roomId: number, gameRoomEnterRequest?: GameRoomEnterRequest, options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).enterGameRoom(roomId, gameRoomEnterRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 랭킹 조회
+     * @param {string} [gameType] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getMemberRanking(gameType?: string, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getMemberRanking(gameType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
