@@ -6,6 +6,7 @@ import { ComponentProps, Dispatch, ReactNode, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorResponse } from '@/generated';
 import useEnterGameRoom from '@/hooks/useEnterGameRoom';
+import useRoomIdStore from '@/store/useRoomIdStore';
 
 interface PrivateRoomModalProps {
   children: ReactNode;
@@ -30,11 +31,18 @@ const PrivateRoomModal = ({
     getValues,
   } = useForm<{ password: string }>();
 
-  const { mutate: mutateEnterGameRoom, isSuccess } = useEnterGameRoom({
+  const { setRoomId } = useRoomIdStore();
+
+  const { mutate: mutateEnterGameRoom } = useEnterGameRoom({
+    onSuccess: () => {
+      setRoomId(roomId);
+      setIsOpen(false);
+    },
     onError: (e: AxiosError<ErrorResponse>) => {
       setError('password', { message: e.response?.data.errorMessage });
     },
   });
+
   return (
     <Dialog.Root
       open={isOpen}
@@ -53,7 +61,6 @@ const PrivateRoomModal = ({
             className='flex gap-[1rem] items-center'
             onSubmit={handleSubmit(() => {
               mutateEnterGameRoom({ roomId, password: getValues('password') });
-              isSuccess && setIsOpen(false);
             })}>
             <Form.Field name='password'>
               <Form.Control
