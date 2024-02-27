@@ -1,6 +1,5 @@
 import { Fragment, useState } from 'react';
 import Divider from '@/common/Divider/Divider';
-import useEnterGameRoom from '@/hooks/useEnterGameRoom';
 import { I_ChangeGameRoomData } from '@/hooks/useSSE';
 import GameRoomListItem from './GameRoonListItem';
 import PrivateRoomModal from './PrivateRoomModal';
@@ -8,7 +7,6 @@ import PrivateRoomModal from './PrivateRoomModal';
 const GAME_ROOM_LIST_CATEGORY = ['방 번호', '방 제목', '게임 모드', '인원수'];
 
 const GameRoomList = ({ data }: { data: I_ChangeGameRoomData[] }) => {
-  const { mutate: mutateEnterGameRoom } = useEnterGameRoom({});
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -46,7 +44,6 @@ const GameRoomList = ({ data }: { data: I_ChangeGameRoomData[] }) => {
                 <GameRoomListItem
                   key={roomData.id}
                   {...roomData}
-                  handleGameRoomItemClick={mutateEnterGameRoom}
                 />
               )
             )}

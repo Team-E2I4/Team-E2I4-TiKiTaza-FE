@@ -1,20 +1,14 @@
 import { LockClosedIcon } from '@radix-ui/react-icons';
 import Divider from '@/common/Divider/Divider';
-import { I_UseEnterGameRoomMutation } from '@/hooks/useEnterGameRoom';
+import useEnterGameRoom from '@/hooks/useEnterGameRoom';
 import { I_ChangeGameRoomData } from '@/hooks/useSSE';
+import useRoomIdStore from '@/store/useRoomIdStore';
 
 const MODE_TYPE = {
   WORD: '짧은 단어',
   SENTENCE: '문장',
   CODE: '코드',
 };
-
-interface GameRoomListItemProps extends I_ChangeGameRoomData {
-  handleGameRoomItemClick?: ({
-    roomId,
-    password,
-  }: I_UseEnterGameRoomMutation) => void;
-}
 
 const GameRoomListItem = ({
   id,
@@ -24,14 +18,22 @@ const GameRoomListItem = ({
   currentPlayer,
   isPlaying,
   isPrivate,
-  handleGameRoomItemClick,
-}: GameRoomListItemProps) => {
+}: I_ChangeGameRoomData) => {
+  const { setRoomId } = useRoomIdStore();
+
+  const { mutate: mutateEnterGameRoom } = useEnterGameRoom({
+    onSuccess: () => {
+      setRoomId(id);
+    },
+  });
+
   if (isPlaying) {
     return;
   }
+
   return (
     <li
-      onClick={() => handleGameRoomItemClick?.({ roomId: id })}
+      onClick={() => mutateEnterGameRoom({ roomId: id })}
       className='h-[5rem] flex items-center shrink-0 w-full py-[1rem] bg-gray-10 hover:bg-coral-50 cursor-pointer'>
       <span className='text-center truncate flex-1'>{`No.${id}`}</span>
       <Divider
