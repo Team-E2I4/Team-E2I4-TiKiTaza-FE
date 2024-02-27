@@ -8,6 +8,10 @@ const MODE_TYPE = {
   CODE: '코드',
 };
 
+interface GameRoomListItemProps extends I_ChangeGameRoomData {
+  handleGameRoomItemClick?: (roomId: number) => void;
+}
+
 const GameRoomListItem = ({
   id,
   title,
@@ -16,7 +20,7 @@ const GameRoomListItem = ({
   currentPlayer,
   isPlaying,
   isPrivate,
-}: I_ChangeGameRoomData) => {
+}: GameRoomListItemProps) => {
   if (isPlaying) {
     return;
   }

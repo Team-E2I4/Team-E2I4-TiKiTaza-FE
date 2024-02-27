@@ -1,5 +1,6 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import Divider from '@/common/Divider/Divider';
+import useEnterGameRoom from '@/hooks/useEnterGameRoom';
 import { I_ChangeGameRoomData } from '@/hooks/useSSE';
 import GameRoomListItem from './GameRoonListItem';
 import PrivateRoomModal from './PrivateRoomModal';
@@ -7,6 +8,11 @@ import PrivateRoomModal from './PrivateRoomModal';
 const GAME_ROOM_LIST_CATEGORY = ['방 번호', '방 제목', '게임 모드', '인원수'];
 
 const GameRoomList = ({ data }: { data: I_ChangeGameRoomData[] }) => {
+  const { mutate: mutateEnterGameRoom } = useEnterGameRoom({});
+  const [isOpen, setIsOpen] = useState(false);
+  const handleEnterGameRoom = (roomId: number) => {
+    mutateEnterGameRoom(roomId);
+  };
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
       <ul className='flex flex-col items-center px-[1.5rem]'>
@@ -31,13 +37,19 @@ const GameRoomList = ({ data }: { data: I_ChangeGameRoomData[] }) => {
           <ul className='w-full flex flex-col gap-[1rem] max-h-[60rem] overflow-y-auto scrollbar-hide pt-[1rem]'>
             {data.map((roomData) =>
               roomData.isPrivate ? (
-                <PrivateRoomModal key={roomData.id}>
+                <PrivateRoomModal
+                  key={roomData.id}
+                  handlePasswordSubmit={handleEnterGameRoom}
+                  setIsOpen={setIsOpen}
+                  roomId={roomData.id}
+                  isOpen={isOpen}>
                   <GameRoomListItem {...roomData} />
                 </PrivateRoomModal>
               ) : (
                 <GameRoomListItem
                   key={roomData.id}
                   {...roomData}
+                  handleGameRoomItemClick={handleEnterGameRoom}
                 />
               )
             )}
