@@ -22,11 +22,6 @@ const GameWaitingRoom = ({
   gameRoomRes: I_GameRoomResponse;
   handleReadyGame: HandleReadyGameType;
 }) => {
-  // TODO :
-  // main -> game 으로 enterGameRoom을 통해 넘어올 때
-  // navigate 에 state로 memberId를 넣어주거나,
-  // 본인 정보 조회 API를 통해 자기 자신의 id를 roomInfo의 hostId와 비교
-
   const navigate = useNavigate();
   const { allMembers, roomInfo } = gameRoomRes;
   const [isAlert, setIsAlert] = useState(false);
