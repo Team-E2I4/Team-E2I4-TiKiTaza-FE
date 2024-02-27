@@ -1,4 +1,6 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
+import EnterRoomErrorFallback from './EnterRoomErrorFallback';
 import GameRoomList from './GameRoomList';
 import SSEErrorBoundary from './SSEErrorBoundary';
 import SSEFallBack from './SSEFallBack';
@@ -23,7 +25,11 @@ const MainPage = () => {
           </article>
         </CreateRoomModal>
         <SSEErrorBoundary fallback={(error) => <SSEFallBack error={error} />}>
-          {(data) => <GameRoomList data={data} />}
+          {(data) => (
+            <ErrorBoundary fallbackRender={EnterRoomErrorFallback}>
+              <GameRoomList data={data} />
+            </ErrorBoundary>
+          )}
         </SSEErrorBoundary>
       </section>
     </main>
