@@ -2,6 +2,7 @@ import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
 import { guestLogin } from '@/apis/api';
 import { BASE_PATH } from '@/generated/base';
+import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import storageFactory from '@/utils/storageFactory';
 import { I_GameRoomResponse } from '../../types/websocketType';
 
@@ -75,6 +76,9 @@ const useWebsocket = (roomId: number | null) => {
     const onMessageReceived = ({ body }: { body: string }) => {
       const responsePublish = JSON.parse(body);
       setGameRoomRes(responsePublish);
+      if (checkIsEmptyObj(responsePublish)) {
+        setIsWsError(true);
+      }
     };
 
     const handleEnterGameRoom = (roomId: number) => {
