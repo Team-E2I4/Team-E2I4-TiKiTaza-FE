@@ -36,7 +36,7 @@ const GamePage = () => {
       Authorization: `Bearer ${token}`,
     };
 
-    const ROOMID_TEST = 37; // 테스트용 RoomId ////////////////////////////////////
+    const ROOMID_TEST = 12; // 테스트용 RoomId ////////////////////////////////////
 
     const onConnected = () => {
       //TODO: roomId는 방입장 GET요청 응답값으로 사용
@@ -82,7 +82,7 @@ const GamePage = () => {
     [gameRoomRes]
   ); //모두 준비인상태에서 방장이 시작했다면 'START' type 이 옴 -> 참여자들 컴포넌트 전환 필요
 
-  if (!isSuccess) {
+  if (!isSuccess || !ws.current) {
     return <WsError />;
   }
   if (isPlaying) {
