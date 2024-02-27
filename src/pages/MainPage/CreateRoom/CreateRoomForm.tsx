@@ -27,13 +27,15 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
   } = useForm<CreateRoomFormType>({
     mode: 'onChange',
   });
+
   const { setRoomId } = useRoomIdStore();
 
-  const { mutate } = useCreateGameRoom({
+  const { mutate: mutateCreateGameRoom } = useCreateGameRoom({
     onSuccess: (e) => {
-      if (e.data.data?.roomId === undefined) {
+      if (!e.data.data) {
         return;
       }
+
       setRoomId(e.data.data.roomId);
       setIsOpen(false);
     },
@@ -48,6 +50,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
       round: getValues('roomRound'),
       gameType: selectedMode,
     };
+
     const password = getValues('roomPassword');
 
     if (password.length) {
@@ -59,7 +62,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
 
   const onCreateRoom = () => {
     const roomSetting = getRoomSettings();
-    mutate({ ...roomSetting });
+    mutateCreateGameRoom({ ...roomSetting });
     setRoomId(Math.random() * 10);
   };
 
