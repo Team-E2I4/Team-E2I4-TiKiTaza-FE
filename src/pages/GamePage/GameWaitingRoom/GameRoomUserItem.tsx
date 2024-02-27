@@ -1,7 +1,7 @@
 import * as Avatar from '@radix-ui/react-avatar';
 import { useMemo } from 'react';
 import close from '@/assets/close.png';
-import { I_AllMember } from '@/ws/types/wsResType';
+import { I_AllMember } from '../types/websocketType';
 
 const GameRoomUserItem = ({
   hostId,
