@@ -1,6 +1,7 @@
 import * as Form from '@radix-ui/react-form';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { GameRoomCreateRequest } from '@/generated';
 import useCreateGameRoom from '@/hooks/useCreateGameRoom';
 import useRoomIdStore from '@/store/useRoomIdStore';
@@ -31,6 +32,8 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
 
   const { setRoomId } = useRoomIdStore();
 
+  const navigate = useNavigate();
+
   const { mutate: mutateCreateGameRoom } = useCreateGameRoom({
     onSuccess: (e) => {
       if (!e.data.data) {
@@ -39,6 +42,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
       alert('방 생성 성공');
       setRoomId(e.data.data.roomId);
       setIsOpen(false);
+      navigate('/game');
     },
   });
 
