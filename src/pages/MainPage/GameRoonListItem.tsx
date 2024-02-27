@@ -1,5 +1,6 @@
 import { LockClosedIcon } from '@radix-ui/react-icons';
 import Divider from '@/common/Divider/Divider';
+import { I_UseEnterGameRoomMutation } from '@/hooks/useEnterGameRoom';
 import { I_ChangeGameRoomData } from '@/hooks/useSSE';
 
 const MODE_TYPE = {
@@ -9,7 +10,10 @@ const MODE_TYPE = {
 };
 
 interface GameRoomListItemProps extends I_ChangeGameRoomData {
-  handleGameRoomItemClick?: (roomId: number) => void;
+  handleGameRoomItemClick?: ({
+    roomId,
+    password,
+  }: I_UseEnterGameRoomMutation) => void;
 }
 
 const GameRoomListItem = ({
@@ -20,12 +24,15 @@ const GameRoomListItem = ({
   currentPlayer,
   isPlaying,
   isPrivate,
+  handleGameRoomItemClick,
 }: GameRoomListItemProps) => {
   if (isPlaying) {
     return;
   }
   return (
-    <li className='h-[5rem] flex items-center shrink-0 w-full py-[1rem] bg-gray-10 hover:bg-coral-50 cursor-pointer'>
+    <li
+      onClick={() => handleGameRoomItemClick?.({ roomId: id })}
+      className='h-[5rem] flex items-center shrink-0 w-full py-[1rem] bg-gray-10 hover:bg-coral-50 cursor-pointer'>
       <span className='text-center truncate flex-1'>{`No.${id}`}</span>
       <Divider
         orientation='vertical'

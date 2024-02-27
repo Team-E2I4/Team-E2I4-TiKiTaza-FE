@@ -2,11 +2,15 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon, PaperPlaneIcon } from '@radix-ui/react-icons';
 import { ComponentProps, Dispatch, ReactNode, SetStateAction } from 'react';
 import Input from '@/common/Input/Input';
+import { I_UseEnterGameRoomMutation } from '@/hooks/useEnterGameRoom';
 
 interface PrivateRoomModalProps {
   children: ReactNode;
   className?: ComponentProps<'div'>['className'];
-  handlePasswordSubmit: (roomId: number) => void;
+  handlePasswordSubmit?: ({
+    roomId,
+    password,
+  }: I_UseEnterGameRoomMutation) => void;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isOpen: boolean;
   roomId: number;
@@ -38,7 +42,7 @@ const PrivateRoomModal = ({
             className='flex gap-[1rem] items-center'
             onSubmit={(e) => {
               e.preventDefault();
-              handlePasswordSubmit(roomId);
+              handlePasswordSubmit?.({ roomId });
             }}>
             <Input whSize='w-[20rem] h-[3rem]' />
             <button
