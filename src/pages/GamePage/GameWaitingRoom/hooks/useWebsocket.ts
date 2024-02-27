@@ -81,9 +81,6 @@ const useWebsocket = () => {
 
     client.activate();
     stompClient.current = client;
-    return () => {
-      client.deactivate();
-    };
   }, []);
 
   const { getItem, setItem } = storageFactory(localStorage);
