@@ -24,7 +24,7 @@ const GamePage = () => {
   );
   const didBossStart = useMemo(
     () => gameRoomRes.type === 'START',
-    [gameRoomRes]
+    [gameRoomRes.type]
   ); //모두 준비인상태에서 방장이 시작했다면 'START' type 이 옴 -> 참여자들 컴포넌트 전환 필요
 
   if (!isConnectSuccess) {
