@@ -83,7 +83,7 @@ const useWebsocket = (roomId: number | null) => {
     stompClient.current = client;
   }, []);
 
-  const handleReadyGame = (roomId: number) => {
+  const handleReadyGame = () => {
     if (!stompClient.current) {
       return;
     }
@@ -93,7 +93,7 @@ const useWebsocket = (roomId: number | null) => {
     });
   };
 
-  const handleStartGame = (roomId: number) => {
+  const handleStartGame = () => {
     if (!stompClient.current) {
       return;
     }
@@ -103,10 +103,21 @@ const useWebsocket = (roomId: number | null) => {
     });
   };
 
+  const handleKickUser = (kickedId: number) => {
+    if (!stompClient.current) {
+      return;
+    }
+    stompClient.current.publish({
+      destination: `/to/game-room/${roomId}/kick/${kickedId}`,
+      headers: connectHeaders,
+    });
+  };
+
   return {
     gameRoomRes,
     handleReadyGame,
     handleStartGame,
+    handleKickUser,
     isWsError,
   };
 };

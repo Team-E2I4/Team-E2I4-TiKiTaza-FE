@@ -1,28 +1,33 @@
 import * as Avatar from '@radix-ui/react-avatar';
 import { useMemo } from 'react';
 import close from '@/assets/close.png';
-import { I_AllMember } from '../types/websocketType';
+import { HandleKickUserType, I_AllMember } from '../types/websocketType';
 
 const GameRoomUserItem = ({
   hostId,
   gameRoomUser,
   userId,
+  handleKickUser,
 }: {
   hostId: number | undefined;
   gameRoomUser: I_AllMember;
   userId: number;
+  handleKickUser: HandleKickUserType;
 }) => {
   const rank = 3; // TODO : 회원조회 쿼리 값으로 변경
 
   const { memberId, nickname, readyStatus: isReady } = gameRoomUser;
 
   const isAdminMe = useMemo(() => hostId === userId, [hostId, userId]); //본인이 방장인지
-  const isMe = useMemo(() => memberId === userId, [memberId]); // 각 유저가 본인인지
+  const isMe = useMemo(() => memberId === userId, [memberId, userId]); // 각 유저가 본인인지
 
   return (
     <div className='w-[25.8rem] h-[21.2rem] p-[1.6rem] pb-[4rem] relative flex flex-col bg-white shadow-md shadow-black/50 rounded-[2.5rem]'>
       <div className='h-[3rem] self-end'>
-        <button>
+        <button
+          onClick={() => {
+            handleKickUser(memberId);
+          }}>
           {isAdminMe && !isMe && (
             <img
               src={close}

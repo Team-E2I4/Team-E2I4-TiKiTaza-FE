@@ -3,6 +3,7 @@ export interface I_GameRoomResponse {
   roomId: number;
   roomInfo?: I_RoomInfo;
   allMembers?: I_AllMember[];
+  exitMemberId?: number;
 }
 export type MessageType =
   | 'ENTER'
@@ -36,3 +37,4 @@ export interface I_AllMember {
 
 export type HandleReadyGameType = (roomId: number) => void;
 export type HandleStartGameType = (roomId: number) => void;
+export type HandleKickUserType = (kickedId: number) => void;
