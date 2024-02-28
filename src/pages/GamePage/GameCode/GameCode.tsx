@@ -14,6 +14,7 @@ import {
 } from '@/common/Ingame/ingameConstants';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
+import Input from '@/common/Input/Input';
 import useCanvas from '@/hooks/useCanvas';
 
 const GameContainer = () => {
@@ -143,18 +144,21 @@ const GameCode = () => {
           <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] z-[2] rounded-[14rem] border-2 border-black '></div>
           <canvas
             ref={canvasRef}
-            className='absolute w-full h-full z-[-1]'
+            className='absolute w-full h-full'
           />
-          <div className='flex items-end gap-4'>
-            <Dashboard
-              type='wpm'
-              value={90}
-            />
-            <GameContainer />
-            <Dashboard
-              type='accuracy'
-              value={100}
-            />
+          <div className='flex flex-col items-center justify-center z-10'>
+            <div className='flex items-end gap-4'>
+              <Dashboard
+                type='wpm'
+                value={90}
+              />
+              <GameContainer />
+              <Dashboard
+                type='accuracy'
+                value={100}
+              />
+            </div>
+            <Input />
           </div>
         </div>
       </div>

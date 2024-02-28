@@ -142,7 +142,7 @@ const GameSentence = () => {
             ref={canvasRef}
             className='absolute w-full h-full z-[-1]'
           />
-          <div className='flex flex-col items-center justify-center'>
+          <div className='flex flex-col items-center justify-center z-10'>
             <SentenceNow text={sentenceDummy[idx]} />
             <Input />
             <SentenceNext text={sentenceDummy[idx + 1]} />
