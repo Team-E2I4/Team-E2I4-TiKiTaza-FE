@@ -9,6 +9,7 @@ import Header from './common/Header/Header.tsx';
 import BodyLayout from './common/Layout/BodyLayout.tsx';
 import Layout from './common/Layout/Layout.tsx';
 import GamePage from './pages/GamePage/GamePage.tsx';
+import KaKaoLoginPage from './pages/KaKaoLoginPage/KaKaoLoginPage.tsx';
 import LoginPage from './pages/LoginPage/LoginPage.tsx';
 import MainPage from './pages/MainPage/MainPage.tsx';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
           {
             path: '/rank',
             element: <RankPage />,
+          },
+          {
+            path: '/login/oauth2/code/kakao',
+            element: <KaKaoLoginPage />,
           },
           {
             path: '/*',
