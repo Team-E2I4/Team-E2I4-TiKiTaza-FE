@@ -1,25 +1,48 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { getMyProfileInfo } from '@/apis/api';
-import { ApiResponseAccountGetResponse, ErrorResponse } from '@/generated';
-import { guestLoginFn } from '@/pages/StartPage/guestLoginFn';
+import { getMyProfileInfo, guestLogin } from '@/apis/api';
+import {
+  ApiResponseAccountGetResponse,
+  ApiResponseAuthResponse,
+  ErrorResponse,
+} from '@/generated';
 import storageFactory from '@/utils/storageFactory';
 
 export interface AuthProps {
-  onSuccess?: () => void;
+  onSuccess?: (e: AxiosResponse<ApiResponseAuthResponse>) => void;
 }
 
 const { setItem, getItem } = storageFactory(localStorage);
 
 export const useGuestLogin = ({ onSuccess }: AuthProps = {}) => {
-  return useMutation({
-    mutationFn: guestLoginFn,
-    onSuccess: (response) => {
-      if (response?.data?.accessToken) {
-        setItem('MyToken', response.data.accessToken);
+  return useMutation<
+    AxiosResponse<ApiResponseAuthResponse>,
+    Error | AxiosError
+  >({
+    mutationFn: guestLogin,
+    mutationKey: ['guestLogin'],
+    onSuccess: (e) => {
+      const token = e.data.data?.accessToken;
+
+      if (token) {
+        setItem('MyToken', token);
       }
 
-      onSuccess?.();
+      onSuccess?.(e);
+    },
+    throwOnError: (e) => {
+      if (!(e instanceof AxiosError)) {
+        return true;
+      }
+      if (
+        e.response?.status === 400 ||
+        e.response?.status === 401 ||
+        e.response?.status === 403 ||
+        e.response?.status === 500
+      ) {
+        return false;
+      }
+      return true;
     },
   });
 };
