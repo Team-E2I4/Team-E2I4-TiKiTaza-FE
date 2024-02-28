@@ -35,6 +35,6 @@ export interface I_AllMember {
   readyStatus: boolean;
 }
 
-export type HandleReadyGameType = (roomId: number) => void;
-export type HandleStartGameType = (roomId: number) => void;
+export type HandleReadyGameType = () => void;
+export type HandleStartGameType = () => void;
 export type HandleKickUserType = (kickedId: number) => void;
