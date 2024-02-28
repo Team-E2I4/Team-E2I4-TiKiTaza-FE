@@ -1,8 +1,10 @@
 import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
+import AuthRoute from './common/AuthRoute/AuthRoute.tsx';
 import Header from './common/Header/Header.tsx';
 import BodyLayout from './common/Layout/BodyLayout.tsx';
 import Layout from './common/Layout/Layout.tsx';
@@ -21,14 +23,14 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: (
-          <>
-            <Layout>
-              <Header />
-              <BodyLayout>
-                <Outlet />
-              </BodyLayout>
-            </Layout>
-          </>
+          <Layout>
+            <Header />
+            <BodyLayout>
+              <ErrorBoundary fallback={<div>연유를 모르는 에러</div>}>
+                <AuthRoute />
+              </ErrorBoundary>
+            </BodyLayout>
+          </Layout>
         ),
         children: [
           {
