@@ -6,6 +6,7 @@ import DisconnectModal from '../DisconnectModal';
 import {
   HandleKickUserType,
   HandleReadyGameType,
+  HandleStartGameType,
   I_GameRoomResponse,
 } from '../types/websocketType';
 import GameModeInfo from './GameModeInfo';
@@ -19,11 +20,13 @@ const GameWaitingRoom = ({
   roomId,
   gameRoomRes,
   handleReadyGame,
+  handleStartGame,
   handleKickUser,
 }: {
   roomId: number;
   gameRoomRes: I_GameRoomResponse;
   handleReadyGame: HandleReadyGameType;
+  handleStartGame: HandleStartGameType;
   handleKickUser: HandleKickUserType;
 }) => {
   const navigate = useNavigate();
@@ -81,6 +84,7 @@ const GameWaitingRoom = ({
             isAdmin={isAdmin}
             allMembers={allMembers}
             handleReadyGame={handleReadyGame}
+            handleStartGame={handleStartGame}
             myRoomId={roomId}
           />
         </footer>

@@ -12,8 +12,13 @@ const GamePage = () => {
   // TODO: 초대로 들어온 사람이라면 url의 해시값->정제->유효검사 후 상태값) 으로 방번호 추출
   const { roomId } = useRoomIdStore();
 
-  const { gameRoomRes, handleReadyGame, handleKickUser, isWsError } =
-    useWebsocket(roomId);
+  const {
+    gameRoomRes,
+    handleReadyGame,
+    handleStartGame,
+    handleKickUser,
+    isWsError,
+  } = useWebsocket(roomId);
   const navigate = useNavigate();
 
   const [selectedMode, isPlaying] = useMemo(
@@ -59,6 +64,7 @@ const GamePage = () => {
           roomId={roomId}
           gameRoomRes={gameRoomRes}
           handleReadyGame={handleReadyGame}
+          handleStartGame={handleStartGame}
           handleKickUser={handleKickUser}
         />
       )}
