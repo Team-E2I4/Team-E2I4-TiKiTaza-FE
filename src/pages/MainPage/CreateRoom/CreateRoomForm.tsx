@@ -28,6 +28,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
     getValues,
   } = useForm<CreateRoomFormType>({
     mode: 'onChange',
+    defaultValues: {}, // 여기에 가져오신 방 설정값 넣어주시면 됩니다
   });
 
   const { setRoomId } = useRoomIdStore();

@@ -18,7 +18,6 @@ interface CreateRoomModalProps {
 
 const CreateRoomModal = ({ children, className }: CreateRoomModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <Dialog.Root
       open={isOpen}
