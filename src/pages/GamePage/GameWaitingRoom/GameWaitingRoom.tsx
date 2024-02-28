@@ -4,6 +4,7 @@ import Backward from '@/common/Backward/Backward';
 import { useAuthCheck } from '@/hooks/useAuth';
 import DisconnectModal from '../DisconnectModal';
 import {
+  HandleKickUserType,
   HandleReadyGameType,
   I_GameRoomResponse,
 } from '../types/websocketType';
@@ -18,10 +19,12 @@ const GameWaitingRoom = ({
   roomId,
   gameRoomRes,
   handleReadyGame,
+  handleKickUser,
 }: {
   roomId: number;
   gameRoomRes: I_GameRoomResponse;
   handleReadyGame: HandleReadyGameType;
+  handleKickUser: HandleKickUserType;
 }) => {
   const navigate = useNavigate();
   const { allMembers, roomInfo } = gameRoomRes;
@@ -68,6 +71,7 @@ const GameWaitingRoom = ({
             gameRoomUserList={allMembers}
             hostId={roomInfo?.hostId}
             userId={userId}
+            handleKickUser={handleKickUser}
           />
         )}
         <footer className='w-[114.8rem] flex gap-[5rem]'>
