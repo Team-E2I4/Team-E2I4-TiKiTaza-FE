@@ -40,34 +40,26 @@ const GamePage = () => {
   if (!roomId || isWsError) {
     return <WsError />;
   }
-
   if (isPlaying) {
     navigate('/main');
   }
-
   if (isKicked) {
     navigate('/main', { replace: true });
   }
-
+  if (!didAdminStart) {
+    <GameWaitingRoom
+      roomId={roomId}
+      gameRoomRes={gameRoomRes}
+      handleReadyGame={handleReadyGame}
+      handleStartGame={handleStartGame}
+      handleKickUser={handleKickUser}
+    />;
+  }
   return (
     <>
-      {didAdminStart ? (
-        selectedMode === 'SENTENCE' ? (
-          <GameSentence />
-        ) : selectedMode === 'CODE' ? (
-          <GameCode />
-        ) : (
-          <GameWord />
-        )
-      ) : (
-        <GameWaitingRoom
-          roomId={roomId}
-          gameRoomRes={gameRoomRes}
-          handleReadyGame={handleReadyGame}
-          handleStartGame={handleStartGame}
-          handleKickUser={handleKickUser}
-        />
-      )}
+      {selectedMode === 'SENTENCE' && <GameSentence />}
+      {selectedMode === 'CODE' && <GameCode />}
+      {selectedMode === 'WORD' && <GameWord />}
     </>
   );
 };
