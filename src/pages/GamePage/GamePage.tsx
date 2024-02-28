@@ -47,13 +47,15 @@ const GamePage = () => {
     navigate('/main', { replace: true });
   }
   if (!didAdminStart) {
-    <GameWaitingRoom
-      roomId={roomId}
-      gameRoomRes={gameRoomRes}
-      handleReadyGame={handleReadyGame}
-      handleStartGame={handleStartGame}
-      handleKickUser={handleKickUser}
-    />;
+    return (
+      <GameWaitingRoom
+        roomId={roomId}
+        gameRoomRes={gameRoomRes}
+        handleReadyGame={handleReadyGame}
+        handleStartGame={handleStartGame}
+        handleKickUser={handleKickUser}
+      />
+    );
   }
   return (
     <>
