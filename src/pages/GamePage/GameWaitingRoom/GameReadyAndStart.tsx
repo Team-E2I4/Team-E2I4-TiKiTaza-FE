@@ -25,7 +25,7 @@ const GameReadyAndStart = ({
 
   const isAllUserReady =
     allMembers?.filter((user) => user.readyStatus === true).length ===
-    allMembers?.length;
+      allMembers?.length && allMembers?.length !== 1;
 
   if (isAdmin) {
     return (
