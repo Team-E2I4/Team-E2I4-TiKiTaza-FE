@@ -10,6 +10,12 @@ interface CreateRoomModalProps {
   className?: ComponentProps<'div'>['className'];
 }
 
+/* 
+  1. 현재 방 세팅 정보를 스토어에 저장해야함 => 어디서 받아올까?
+  2. CreateRoomModal에서 현재 방 정보를 불러와서 form에게 넘겨준다
+  3. CreateRoomForm에 전달된 초깃값이 존재한다면, createGameRoom대신 updateGameRoom사용
+*/
+
 const CreateRoomModal = ({ children, className }: CreateRoomModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
