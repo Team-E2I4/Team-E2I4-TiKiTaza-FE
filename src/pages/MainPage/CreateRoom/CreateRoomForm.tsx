@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { GameRoomCreateRequest } from '@/generated';
 import useCreateGameRoom from '@/hooks/useCreateGameRoom';
+import useUpdateGameRoom from '@/hooks/useUpdateGameRoom';
 import useRoomIdStore from '@/store/useRoomIdStore';
 import getRandomItem from '@/utils/getRandomItem';
 import {
@@ -20,7 +21,11 @@ interface CreateRoomFormProps {
 
 type CreateRoomFormType = I_CreateRoomInputName & I_CreateRoomSelectName;
 
+type SettingModeType = 'Create' | 'Update';
+
 const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -28,12 +33,13 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
     getValues,
   } = useForm<CreateRoomFormType>({
     mode: 'onChange',
-    defaultValues: {}, // 여기에 가져오신 방 설정값 넣어주시면 됩니다
+    defaultValues: {}, // 여기에 가져오신 방 설정값을 input하고 select이름 맞춰서 넣어주시면 됩니다. ex) store에서 가져온 값들... defaultValues:{...storedSettings}
   });
 
   const { setRoomId } = useRoomIdStore();
 
-  const navigate = useNavigate();
+  //방 설정값을 store에서 꺼내신 후 defaultValues에 넣어주셨으면, 상태를 update로 변경해주세요
+  const [settingMode] = useState<SettingModeType>('Create');
 
   const { mutate: mutateCreateGameRoom } = useCreateGameRoom({
     onSuccess: (e) => {
@@ -44,6 +50,13 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
       setRoomId(e.data.data.roomId);
       setIsOpen(false);
       navigate('/game');
+    },
+  });
+
+  const { mutate: mutateUpdateGameRoom } = useUpdateGameRoom({
+    onSuccess: () => {
+      alert('방 수정 성공');
+      setIsOpen(false);
     },
   });
 
@@ -71,7 +84,14 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
 
   const onCreateRoom = () => {
     const roomSetting = getRoomSettings();
-    mutateCreateGameRoom({ ...roomSetting });
+    if (settingMode === 'Create') {
+      mutateCreateGameRoom({ ...roomSetting });
+      return;
+    }
+    mutateUpdateGameRoom({
+      roomId: 0, //받아온 방 정보의 roomId를 기입해주세요
+      gameRoomUpdateRequest: { ...roomSetting },
+    });
   };
 
   return (
