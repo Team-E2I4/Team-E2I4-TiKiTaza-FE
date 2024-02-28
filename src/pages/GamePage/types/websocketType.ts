@@ -38,3 +38,28 @@ export interface I_AllMember {
 export type HandleReadyGameType = () => void;
 export type HandleStartGameType = () => void;
 export type HandleKickUserType = (kickedId: number) => void;
+
+/// 인게임 웹소켓 ----
+
+export interface I_IngameWsResponse {
+  type: MessageType;
+  submittedWord?: string;
+  submitMemberId?: number;
+  gameScore?: GameScoreType;
+  allMembers?: I_AllMember[];
+  questions?: I_Question[];
+}
+export interface I_Question {
+  id: number;
+  question: string;
+}
+export type IngameMessageType =
+  | 'FIRST_ROUND_START'
+  | 'NEXT_ROUND_START'
+  | 'INFO'
+  | 'WORD_DENIED'
+  | 'FINISH';
+
+type GameScoreType = {
+  [key: string]: number;
+};
