@@ -1,31 +1,22 @@
-import { AxiosError } from 'axios';
-import { ReactNode } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth';
 
-const AuthRoute = ({ children }: { children: ReactNode }) => {
+const AuthRoute = () => {
   const { pathname } = useLocation();
-  const { data, isSuccess, isLoading, error } = useAuthCheck();
-
+  const { data, isSuccess, isLoading } = useAuthCheck();
   if (isLoading) {
-    return;
+    return <div>로딩중~</div>;
   }
-
-  if (error instanceof AxiosError) {
-    if (error.response?.data.errorCode === 'sec-401/01') {
-      if (pathname === '/login' || pathname === '/') {
-        alert('로그인한 유저는 들어갈 수 없는 페이지 입니다');
-        return <Navigate to={'/main'} />;
-      }
-      alert(error.response?.data.errorMessage);
+  if (!data && !isSuccess) {
+    if (pathname === '/login' || pathname === '/') {
+      return <Outlet />;
     } else {
-      if (data && isSuccess) {
-        return children;
-      }
+      alert('로그인이 필요한 페이지 입니다');
+      return <Navigate to='/' />;
     }
   }
 
-  return <Navigate to={'/'} />;
+  return <Outlet />;
 };
 
 export default AuthRoute;

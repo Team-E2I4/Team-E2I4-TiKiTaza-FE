@@ -9,7 +9,7 @@ export interface AuthProps {
   onSuccess?: () => void;
 }
 
-const { setItem } = storageFactory(localStorage);
+const { setItem, getItem } = storageFactory(localStorage);
 
 export const useGuestLogin = ({ onSuccess }: AuthProps = {}) => {
   return useMutation({
@@ -37,6 +37,8 @@ export const useAuthCheck = () => {
     queryKey: ['getMyProfileInfo'],
     retryOnMount: false,
     gcTime: 0,
+    refetchOnWindowFocus: false,
+    enabled: !!getItem('MyToken', ''),
     throwOnError: (e) => {
       if (!(e instanceof AxiosError)) {
         return true;
