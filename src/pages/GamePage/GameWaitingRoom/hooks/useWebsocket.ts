@@ -1,6 +1,5 @@
 import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
-import { guestLogin } from '@/apis/api';
 import { BASE_PATH } from '@/generated/base';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import storageFactory from '@/utils/storageFactory';
@@ -10,27 +9,18 @@ const useWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
   const [gameRoomRes, setGameRoomRes] = useState({} as I_GameRoomResponse);
   const [isWsError, setIsWsError] = useState(false);
+  const { getItem } = storageFactory(localStorage);
+
+  const token = getItem('MyToken', '');
+  const connectHeaders = {
+    Authorization: `Bearer ${token}`,
+  };
 
   if (!roomId) {
     setIsWsError(true);
   }
 
   useEffect(() => {
-    const { getItem, setItem } = storageFactory(localStorage);
-
-    const guestLoginFn = async () => {
-      const { data } = await guestLogin();
-      setItem('MyToken', data.data?.accessToken);
-      token = data.data?.accessToken;
-    };
-    let token = getItem('MyToken', '');
-    if (!token) {
-      guestLoginFn();
-    }
-    const connectHeaders = {
-      Authorization: `Bearer ${token}`,
-    };
-
     const client = new Client({
       webSocketFactory: () => new SockJS(`${BASE_PATH}/ws`),
       connectHeaders: connectHeaders,
@@ -92,21 +82,6 @@ const useWebsocket = (roomId: number | null) => {
     client.activate();
     stompClient.current = client;
   }, []);
-
-  const { getItem, setItem } = storageFactory(localStorage);
-
-  const guestLoginFn = async () => {
-    const { data } = await guestLogin();
-    setItem('MyToken', data.data?.accessToken);
-    token = data.data?.accessToken;
-  };
-  let token = getItem('MyToken', '');
-  if (!token) {
-    guestLoginFn();
-  }
-  const connectHeaders = {
-    Authorization: `Bearer ${token}`,
-  };
 
   const handleReadyGame = (roomId: number) => {
     if (!stompClient.current) {
