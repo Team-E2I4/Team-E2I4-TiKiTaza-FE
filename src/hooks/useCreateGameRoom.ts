@@ -6,7 +6,7 @@ import {
   GameRoomCreateRequest,
 } from '@/generated';
 
-interface UseCreateGameRoomProps {
+export interface UseCreateGameRoomProps {
   onSuccess?: (e: AxiosResponse<ApiResponseGameRoomCreateResponse>) => void;
 }
 

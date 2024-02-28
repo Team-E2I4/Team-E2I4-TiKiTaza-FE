@@ -3,7 +3,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { enterGameRoom } from '@/apis/api';
 import { ApiResponseGameRoomEnterResponse, ErrorResponse } from '@/generated';
 
-export interface UseEnterGameRoomProps {
+interface UseEnterGameRoomProps {
   onSuccess?: () => void;
   onError?: (e: AxiosError<ErrorResponse>) => void;
 }

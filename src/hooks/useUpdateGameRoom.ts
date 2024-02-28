@@ -3,42 +3,30 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { ErrorResponse } from 'react-router-dom';
 import { updateGameRoom } from '@/apis/api';
 import { ApiResponseVoid, GameRoomUpdateRequest } from '@/generated';
-import { UseEnterGameRoomProps } from './useEnterGameRoom';
 
 interface I_UseUpdateGameRoomMutation {
   roomId: number;
   gameRoomUpdateRequest: GameRoomUpdateRequest;
 }
 
-const useUpdateGameRoom = ({ onSuccess, onError }: UseEnterGameRoomProps) => {
+export interface UseUpdateGameRoomProps {
+  onSuccess?: (e: AxiosResponse<ApiResponseVoid>) => void;
+}
+
+const useUpdateGameRoom = ({ onSuccess }: UseUpdateGameRoomProps) => {
   return useMutation<
     AxiosResponse<ApiResponseVoid>,
     Error | AxiosError<ErrorResponse>,
-    I_UseUpdateGameRoomMutation
+    I_UseUpdateGameRoomMutation,
+    unknown
   >({
     mutationFn: ({ roomId, gameRoomUpdateRequest }) =>
       updateGameRoom(roomId, gameRoomUpdateRequest),
-    onSuccess: () => {
-      onSuccess?.();
+    mutationKey: ['updateGameRoom'],
+    onSuccess: (e) => {
+      onSuccess?.(e);
     },
-    onError: (e) => {
-      if (e instanceof AxiosError) {
-        onError?.(e);
-      }
-    },
-    throwOnError: (e) => {
-      if (!(e instanceof AxiosError)) {
-        return true;
-      }
-      if (
-        e.response?.status === 400 ||
-        e.response?.status === 404 ||
-        e.response?.status === 409
-      ) {
-        return false;
-      }
-      return true;
-    },
+    throwOnError: true,
   });
 };
 
