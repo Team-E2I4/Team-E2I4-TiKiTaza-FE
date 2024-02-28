@@ -282,49 +282,24 @@ export interface ApiResponseListMemberRankResponse {
  * @interface ApiResponseMemberSignUpResponse
  */
 export interface ApiResponseMemberSignUpResponse {
-  /**
-   *
-   * @type {string}
-   * @memberof ApiResponseMemberSignUpResponse
-   */
-  code: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ApiResponseMemberSignUpResponse
-   */
-  message: string;
-  /**
-   *
-   * @type {MemberSignUpResponse}
-   * @memberof ApiResponseMemberSignUpResponse
-   */
-  data?: MemberSignUpResponse;
-}
-/**
- *
- * @export
- * @interface ApiResponseMemberSignUpResponse
- */
-export interface ApiResponseMemberSignUpResponse {
-  /**
-   *
-   * @type {string}
-   * @memberof ApiResponseMemberSignUpResponse
-   */
-  code: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ApiResponseMemberSignUpResponse
-   */
-  message: string;
-  /**
-   *
-   * @type {MemberSignUpResponse}
-   * @memberof ApiResponseMemberSignUpResponse
-   */
-  data?: MemberSignUpResponse;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseMemberSignUpResponse
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseMemberSignUpResponse
+     */
+    'message': string;
+    /**
+     * 
+     * @type {MemberSignUpResponse}
+     * @memberof ApiResponseMemberSignUpResponse
+     */
+    'data'?: MemberSignUpResponse;
 }
 /**
  *
@@ -735,12 +710,12 @@ export interface MemberSignUpResponse {
  * @interface NicknameUpdateRequest
  */
 export interface NicknameUpdateRequest {
-  /**
-   *
-   * @type {string}
-   * @memberof NicknameUpdateRequest
-   */
-  nickname: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NicknameUpdateRequest
+     */
+    'nickname': string;
 }
 /**
  *
