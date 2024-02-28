@@ -26,8 +26,12 @@ const GameWaitingRoom = ({
   const navigate = useNavigate();
   const { allMembers, roomInfo } = gameRoomRes;
   const [isAlert, setIsAlert] = useState(false);
-  const { data } = useAuthCheck();
+  const { data, isLoading } = useAuthCheck();
 
+  if (isLoading) {
+    // TODO: 로딩시 화면
+    return <div>유저 정보 확인중 ..</div>;
+  }
   let userId = 0;
   if (data && data.data.data) {
     userId = data.data.data.memberId;
