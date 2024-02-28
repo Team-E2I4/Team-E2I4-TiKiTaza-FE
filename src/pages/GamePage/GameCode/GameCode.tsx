@@ -139,9 +139,9 @@ const GameCode = () => {
         <div className='absolute'>
           <IngameRank />
         </div>
-        <div className='flex flex-col items-center justify-center ml-80 h-[60rem] relative z-[2]'>
-          <div className='absolute w-full h-full z-[2] rounded-[14rem] border-2 border-black'></div>
-          <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] z-[2] rounded-[14rem] border-2 border-black '></div>
+        <div className='flex flex-col items-center justify-center ml-80 h-[60rem] relative'>
+          <div className='absolute w-full h-full rounded-[14rem] border-2 border-black'></div>
+          <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] rounded-[14rem] border-2 border-black '></div>
           <canvas
             ref={canvasRef}
             className='absolute w-full h-full'

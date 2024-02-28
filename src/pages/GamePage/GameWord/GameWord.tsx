@@ -74,7 +74,7 @@ const GameWord = () => {
       <IngameHeader />
       <div className='grow'>
         <div className='flex flex-col items-center justify-around h-[60rem]'>
-          <div className='h-[25rem] grid grid-rows-[repeat(8,minmax(0,1fr))] grid-cols-[repeat(15,7rem)] text-[1.4rem]'>
+          <div className='h-[25rem] grid grid-rows-[repeat(8,minmax(0,1fr))] grid-cols-[repeat(15,7rem)] text-[1.6rem] bg-gray-10 rounded-2xl'>
             {words.map((w, i) => {
               return <WordCell key={i + w}>{w}</WordCell>;
             })}
@@ -89,15 +89,13 @@ const GameWord = () => {
                 {wordRankDummy.map((rank, i) => {
                   const { userId, userName, score } = rank;
                   return (
-                    <>
-                      <WordRank
-                        key={i}
-                        track={i}
-                        userId={userId}
-                        userName={userName}
-                        score={score}
-                      />
-                    </>
+                    <WordRank
+                      key={i}
+                      track={i}
+                      userId={userId}
+                      userName={userName}
+                      score={score}
+                    />
                   );
                 })}
               </div>

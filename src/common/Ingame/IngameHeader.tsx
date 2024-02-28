@@ -6,11 +6,11 @@ const IngameHeader = () => {
   const gameRoundCurrent = 2; //TODO: 현재 라운드로 수정. zustand?
 
   return (
-    <div className='flex flex-row items-center gap-20 pb-12'>
+    <div className='flex flex-row items-center gap-20 pb-12 font-[Giants-Inline]'>
       <Backward />
       <div className='w-[40rem] truncate text-4xl'>{gameRoomName}</div>
       <div className='grow'>참여 {gameRoomUserList.length}명</div>
-      <div>
+      <div className='text-3xl'>
         🏁 {gameRoundCurrent} / {gameRoundTotal}
       </div>
     </div>
