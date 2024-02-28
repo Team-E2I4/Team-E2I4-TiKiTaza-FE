@@ -4,9 +4,11 @@ import GameRoomUserItem from './GameRoomUserItem';
 const GameRoomUserList = ({
   gameRoomUserList,
   hostId,
+  userId,
 }: {
   gameRoomUserList: I_AllMember[];
   hostId: number | undefined;
+  userId: number;
 }) => {
   return (
     <>
@@ -17,6 +19,7 @@ const GameRoomUserList = ({
               key={gameRoomUser.memberId}
               hostId={hostId}
               gameRoomUser={gameRoomUser}
+              userId={userId}
             />
           ))}
       </main>
