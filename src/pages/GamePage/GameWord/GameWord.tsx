@@ -74,7 +74,7 @@ const GameWord = () => {
       <IngameHeader />
       <div className='grow'>
         <div className='flex flex-col items-center justify-around h-[60rem]'>
-          <div className='h-[25rem] grid grid-rows-[repeat(8,minmax(0,1fr))] grid-cols-[repeat(15,7rem)] text-[1.6rem] bg-gray-10 rounded-2xl'>
+          <div className='h-[25rem] grid grid-rows-[repeat(8,minmax(0,1fr))] grid-cols-[repeat(15,7rem)] text-[1.6rem] p-4 box-content bg-gray-10 rounded-2xl'>
             {words.map((w, i) => {
               return <WordCell key={i + w}>{w}</WordCell>;
             })}

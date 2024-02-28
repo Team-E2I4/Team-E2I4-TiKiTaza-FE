@@ -39,7 +39,7 @@ const Dashboard = ({ type, value }: DashboardProps) => {
             }}
           />
         </div>
-        <div className='flex justify-evenly mt-4'>
+        <div className='flex justify-evenly mt-4 font-[Giants-Inline]'>
           <div>{dashboardUnit[type].label}</div>
           <div>
             {value}
