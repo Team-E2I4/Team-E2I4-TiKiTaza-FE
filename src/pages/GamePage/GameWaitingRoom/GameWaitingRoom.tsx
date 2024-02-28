@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Backward from '@/common/Backward/Backward';
+import { useAuthCheck } from '@/hooks/useAuth';
 import DisconnectModal from '../DisconnectModal';
 import {
   HandleReadyGameType,
@@ -25,10 +26,13 @@ const GameWaitingRoom = ({
   const navigate = useNavigate();
   const { allMembers, roomInfo } = gameRoomRes;
   const [isAlert, setIsAlert] = useState(false);
+  const { data } = useAuthCheck();
 
-  // 임시 TEST
-  const myUserId = 2;
-  const isAdmin = myUserId === roomInfo?.hostId;
+  let userId = 0;
+  if (data && data.data.data) {
+    userId = data.data.data.memberId;
+  }
+  const isAdmin = userId === roomInfo?.hostId;
 
   const handleClickBackward = () => {
     setIsAlert(true);
