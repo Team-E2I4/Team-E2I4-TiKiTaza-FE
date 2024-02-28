@@ -24,10 +24,6 @@ export const useGuestLogin = ({ onSuccess }: AuthProps = {}) => {
   });
 };
 
-/*
-페이지 이동할때마다 새로 쿼리를 업데이트함. => 이동할때마다 인증처리 + 본인정보 저장
-캐시타임을 짧게 가져간다
-*/
 export const useAuthCheck = () => {
   return useQuery<
     AxiosResponse<ApiResponseAccountGetResponse>,
