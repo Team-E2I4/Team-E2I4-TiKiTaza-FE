@@ -52,7 +52,7 @@ const Header = () => {
         />
         <img
           src={logo_taza}
-          className='h-1/2'
+          className='h-4/6'
           alt='티키타자'
         />
       </section>
