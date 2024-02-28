@@ -62,6 +62,7 @@ const GameWaitingRoom = ({
           <GameRoomUserList
             gameRoomUserList={allMembers}
             hostId={roomInfo?.hostId}
+            userId={userId}
           />
         )}
         <footer className='w-[114.8rem] flex gap-[5rem]'>

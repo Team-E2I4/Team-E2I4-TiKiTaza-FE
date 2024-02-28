@@ -1,25 +1,21 @@
 import * as Avatar from '@radix-ui/react-avatar';
 import { useMemo } from 'react';
 import close from '@/assets/close.png';
-import { useAuthCheck } from '@/hooks/useAuth';
 import { I_AllMember } from '../types/websocketType';
 
 const GameRoomUserItem = ({
   hostId,
   gameRoomUser,
+  userId,
 }: {
   hostId: number | undefined;
   gameRoomUser: I_AllMember;
+  userId: number;
 }) => {
   const rank = 3; // TODO : 회원조회 쿼리 값으로 변경
 
   const { memberId, nickname, readyStatus: isReady } = gameRoomUser;
-  const { data } = useAuthCheck();
 
-  let userId = 0;
-  if (data && data.data.data) {
-    userId = data.data.data.memberId;
-  }
   const isAdminMe = useMemo(() => hostId === userId, [hostId, userId]); //본인이 방장인지
   const isMe = useMemo(() => memberId === userId, [memberId]); // 각 유저가 본인인지
 
