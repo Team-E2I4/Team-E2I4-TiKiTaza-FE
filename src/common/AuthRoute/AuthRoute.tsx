@@ -16,6 +16,11 @@ const AuthRoute = () => {
     }
   }
 
+  if (pathname === '/login' || pathname === '/') {
+    alert('로그인 한 유저는 접근할 수 없는 페이지 입니다');
+    return <Navigate to='/main' />;
+  }
+
   return <Outlet />;
 };
 
