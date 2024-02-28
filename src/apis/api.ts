@@ -23,4 +23,5 @@ export const {
   reIssueAccessToken,
   signUp,
   updateMemberNickname,
+  updateGameRoom,
 } = DefaultApiFactory(undefined, BASE_PATH, axiosInstance);
