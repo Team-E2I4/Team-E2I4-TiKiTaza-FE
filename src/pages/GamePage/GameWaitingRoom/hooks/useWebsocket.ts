@@ -81,6 +81,7 @@ const useWebsocket = (roomId: number | null) => {
 
     client.activate();
     stompClient.current = client;
+    return () => client.deactivate();
   }, []);
 
   const handleReadyGame = () => {
