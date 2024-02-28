@@ -17,7 +17,10 @@ const storageFactory = (storage: Storage) => {
 
   const setItem = <V>(key: string, value: V | unknown) => {
     try {
-      storage.setItem(key, JSON.stringify(value));
+      storage.setItem(
+        key,
+        typeof value === 'string' ? value : JSON.stringify(value)
+      );
     } catch (e) {
       if (e instanceof Error) {
         alert(`${storage}에 아이템 넣는중 도중 오류 발생 ${e.message}`);
