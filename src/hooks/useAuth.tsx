@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError, AxiosPromise } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { getMyProfileInfo } from '@/apis/api';
 import { ApiResponseAccountGetResponse, ErrorResponse } from '@/generated';
 import { guestLoginFn } from '@/pages/StartPage/guestLoginFn';
@@ -30,7 +30,7 @@ export const useGuestLogin = ({ onSuccess }: AuthProps = {}) => {
 */
 export const useAuthCheck = () => {
   return useQuery<
-    AxiosPromise<ApiResponseAccountGetResponse>,
+    AxiosResponse<ApiResponseAccountGetResponse>,
     Error | AxiosError<ErrorResponse>
   >({
     queryFn: getMyProfileInfo,
