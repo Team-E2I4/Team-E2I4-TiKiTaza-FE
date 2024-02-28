@@ -49,6 +49,7 @@ const useWebsocket = (roomId: number | null) => {
       onStompError: (err) => {
         // eslint-disable-next-line no-console
         console.log(err);
+        setIsWsError(true);
       },
     });
 
