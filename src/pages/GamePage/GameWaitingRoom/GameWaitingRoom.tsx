@@ -39,7 +39,12 @@ const GameWaitingRoom = ({
 
   if (isError) {
     alert('로그인이 필요한 페이지 입니다!');
-    return <Navigate to='/' />;
+    return (
+      <Navigate
+        to='/'
+        replace={true}
+      />
+    );
   }
   let userId = 0;
   if (data.data.data) {
@@ -55,7 +60,7 @@ const GameWaitingRoom = ({
       <DisconnectModal
         isOpen={isAlert}
         handleClickAction={() => {
-          navigate('/main');
+          navigate('/main', { replace: true });
           navigate(0);
         }}
         handleClickCancel={() => {

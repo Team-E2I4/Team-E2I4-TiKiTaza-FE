@@ -41,7 +41,7 @@ const GamePage = () => {
     return <WsError />;
   }
   if (isPlaying) {
-    navigate('/main');
+    navigate('/main', { replace: true });
   }
   if (isKicked) {
     navigate('/main', { replace: true });
