@@ -24,8 +24,8 @@ const GameReadyAndStart = ({
   //TODO : allMembers의 readyStatus에 따라 일반 유저면 준비, 준비완료 버튼
 
   const isAllUserReady =
-    allMembers?.filter((user) => user.readyStatus === true).length ===
-      allMembers?.length && allMembers?.length !== 1;
+    allMembers?.every((user) => user.readyStatus === true) &&
+    allMembers?.length !== 1;
 
   if (isAdmin) {
     return (
