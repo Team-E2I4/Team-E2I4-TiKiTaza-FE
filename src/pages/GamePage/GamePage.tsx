@@ -49,7 +49,6 @@ const GamePage = () => {
   if (!didAdminStart) {
     return (
       <GameWaitingRoom
-        roomId={roomId}
         gameRoomRes={gameRoomRes}
         handleReadyGame={handleReadyGame}
         handleStartGame={handleStartGame}

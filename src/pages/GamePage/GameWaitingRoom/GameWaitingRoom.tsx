@@ -17,13 +17,11 @@ import GameRoomSetting from './GameRoomSetting';
 import GameRoomUserList from './GameRoomUserList';
 
 const GameWaitingRoom = ({
-  roomId,
   gameRoomRes,
   handleReadyGame,
   handleStartGame,
   handleKickUser,
 }: {
-  roomId: number;
   gameRoomRes: I_GameRoomResponse;
   handleReadyGame: HandleReadyGameType;
   handleStartGame: HandleStartGameType;
@@ -85,7 +83,6 @@ const GameWaitingRoom = ({
             allMembers={allMembers}
             handleReadyGame={handleReadyGame}
             handleStartGame={handleStartGame}
-            myRoomId={roomId}
           />
         </footer>
       </div>
