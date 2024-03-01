@@ -8,9 +8,9 @@ const IngameHeader = () => {
   return (
     <div className='flex flex-row items-center gap-20 pb-12 font-[Giants-Inline]'>
       <Backward />
-      <div className='w-[40rem] truncate text-4xl'>{gameRoomName}</div>
+      <div className='w-[40rem] truncate text-[4rem]'>{gameRoomName}</div>
       <div className='grow'>참여 {gameRoomUserList.length}명</div>
-      <div className='text-3xl'>
+      <div className='text-[3rem]'>
         🏁 {gameRoundCurrent} / {gameRoundTotal}
       </div>
     </div>

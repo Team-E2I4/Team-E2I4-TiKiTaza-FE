@@ -50,12 +50,14 @@ const IngameRank = ({ rankInfos = rankInfosDummy }: IngameRankProps) => {
           <div
             key={i}
             className={`pl-4 flex bg-gradient-to-r items-center gap-4 mb-1 ${rankInfo.isMe ? 'from-green-100 h-[5rem] w-[30rem]' : 'from-gray-200 h-[4rem] w-[20rem]'}`}>
-            <div className={rankInfo.isMe ? 'text-5xl' : 'text-4xl'}>
+            <div className={rankInfo.isMe ? 'text-[5rem]' : 'text-[4rem]'}>
               {rankInfo.rank}
             </div>
-            <div className={rankInfo.isMe ? 'text-3xl' : 'text-2xl'}>🚗</div>
+            <div className={rankInfo.isMe ? 'text-[3rem]' : 'text-[2rem]'}>
+              🚗
+            </div>
             <div
-              className={`truncate ${rankInfo.isMe ? 'text-3xl' : 'text-2xl'}`}>
+              className={`truncate ${rankInfo.isMe ? 'text-[3rem]' : 'text-[2rem]'}`}>
               {rankInfo.name}
             </div>
           </div>
