@@ -10,8 +10,12 @@ interface CreateRoomModalProps {
   className?: ComponentProps<'div'>['className'];
 }
 
+export type SettingModeType = 'Create' | 'Update';
+
 const CreateRoomModal = ({ children, className }: CreateRoomModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [settingMode, setSettingMode] = useState<SettingModeType>('Create');
+
   return (
     <Dialog.Root
       open={isOpen}
@@ -27,10 +31,14 @@ const CreateRoomModal = ({ children, className }: CreateRoomModalProps) => {
         <Dialog.Content
           className={`rounded-[1rem] border-green-100 border-[0.3rem] w-[95rem] h-[60rem] flex flex-col items-start justify-start p-[2rem] bg-white z-10 fixed inset-1/2 translate-x-[-50%] translate-y-[-50%] ${className}`}>
           <Dialog.Title className='text-[2.4rem] font-semibold'>
-            방 만들기
+            {settingMode === 'Create' ? '방 만들기' : '설정 변경'}
           </Dialog.Title>
           <ErrorBoundary fallbackRender={CreateRoomErrorFallback}>
-            <CreateRoomForm setIsOpen={setIsOpen} />
+            <CreateRoomForm
+              setIsOpen={setIsOpen}
+              settingMode={settingMode}
+              setSettingMode={setSettingMode}
+            />
           </ErrorBoundary>
           <Dialog.Close asChild>
             <button
