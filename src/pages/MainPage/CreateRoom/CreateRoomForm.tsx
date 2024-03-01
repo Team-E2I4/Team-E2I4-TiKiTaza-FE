@@ -68,6 +68,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
   const getRoomSettings = () => {
     const roomSetting: GameRoomCreateRequest = {
       ...getValues(),
+      title: getValues('title').trim(),
       gameType: selectedMode,
     };
 
@@ -184,7 +185,9 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
           </button>
         </Form.Submit>
       </Form.Root>
-      <section className='w-1/2 border-black border-[0.1rem]'></section>
+      <section className='w-1/2 border-black border-[0.1rem]'>
+        이미지 자리
+      </section>
     </div>
   );
 };
