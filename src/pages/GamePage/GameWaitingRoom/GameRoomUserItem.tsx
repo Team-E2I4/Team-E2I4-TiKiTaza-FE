@@ -1,18 +1,18 @@
 import * as Avatar from '@radix-ui/react-avatar';
 import { useMemo } from 'react';
 import close from '@/assets/close.png';
-import { HandleKickUserType, I_AllMember } from '../types/websocketType';
+import { handlePubKickUserType, I_AllMember } from '../types/websocketType';
 
 const GameRoomUserItem = ({
   hostId,
   gameRoomUser,
   userId,
-  handleKickUser,
+  handlePubKickUser,
 }: {
   hostId: number | undefined;
   gameRoomUser: I_AllMember;
   userId: number;
-  handleKickUser: HandleKickUserType;
+  handlePubKickUser: handlePubKickUserType;
 }) => {
   const rank = 3; // TODO : 회원조회 쿼리 값으로 변경
 
@@ -26,7 +26,7 @@ const GameRoomUserItem = ({
       <div className='h-[3rem] self-end'>
         <button
           onClick={() => {
-            handleKickUser(memberId);
+            handlePubKickUser(memberId);
           }}>
           {isAdminMe && !isMe && (
             <img

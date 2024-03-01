@@ -32,12 +32,11 @@ export interface I_AllMember {
   readyStatus: boolean;
 }
 
-export type HandleReadyGameType = () => void;
-export type HandleStartGameType = () => void;
-export type HandleKickUserType = (kickedId: number) => void;
+export type HandlePubReadyGameType = () => void;
+export type HandlePubStartGameType = () => void;
+export type HandlePubKickUserType = (kickedId: number) => void;
 
 /// 인게임 웹소켓 ----
-
 export interface I_IngameWsResponse {
   type: MessageType;
   submittedWord?: string;

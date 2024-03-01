@@ -86,41 +86,29 @@ const useWebsocket = (roomId: number | null) => {
     };
   }, []);
 
-  const handleReadyGame = () => {
-    if (!stompClient.current) {
-      return;
-    }
-    stompClient.current.publish({
-      destination: `/to/game-room/${roomId}/ready`,
+  const publishGameRoom = (destination: string) => {
+    stompClient.current?.publish({
+      destination: `/to/game-room${destination}`,
       headers: connectHeaders,
     });
   };
-
-  const handleStartGame = () => {
-    if (!stompClient.current) {
-      return;
-    }
-    stompClient.current.publish({
-      destination: `/to/game-room/${roomId}/start`,
-      headers: connectHeaders,
-    });
+  const handlePubReadyGame = () => {
+    publishGameRoom(`/${roomId}/ready`);
   };
 
-  const handleKickUser = (kickedId: number) => {
-    if (!stompClient.current) {
-      return;
-    }
-    stompClient.current.publish({
-      destination: `/to/game-room/${roomId}/kick/${kickedId}`,
-      headers: connectHeaders,
-    });
+  const handlePubStartGame = () => {
+    publishGameRoom(`/${roomId}/start`);
+  };
+
+  const handlePubKickUser = (kickedId: number) => {
+    publishGameRoom(`/${roomId}/kick/${kickedId}`);
   };
 
   return {
     gameRoomRes,
-    handleReadyGame,
-    handleStartGame,
-    handleKickUser,
+    handlePubReadyGame,
+    handlePubStartGame,
+    handlePubKickUser,
     isWsError,
   };
 };

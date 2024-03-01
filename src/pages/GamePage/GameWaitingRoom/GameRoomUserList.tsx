@@ -1,16 +1,16 @@
-import { HandleKickUserType, I_AllMember } from '../types/websocketType';
+import { handlePubKickUserType, I_AllMember } from '../types/websocketType';
 import GameRoomUserItem from './GameRoomUserItem';
 
 const GameRoomUserList = ({
   gameRoomUserList,
   hostId,
   userId,
-  handleKickUser,
+  handlePubKickUser,
 }: {
   gameRoomUserList: I_AllMember[];
   hostId: number | undefined;
   userId: number;
-  handleKickUser: HandleKickUserType;
+  handlePubKickUser: handlePubKickUserType;
 }) => {
   return (
     <>
@@ -22,7 +22,7 @@ const GameRoomUserList = ({
               hostId={hostId}
               gameRoomUser={gameRoomUser}
               userId={userId}
-              handleKickUser={handleKickUser}
+              handlePubKickUser={handlePubKickUser}
             />
           ))}
       </main>

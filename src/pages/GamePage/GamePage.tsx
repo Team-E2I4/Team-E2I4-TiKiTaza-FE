@@ -14,9 +14,9 @@ const GamePage = () => {
 
   const {
     gameRoomRes,
-    handleReadyGame,
-    handleStartGame,
-    handleKickUser,
+    handlePubReadyGame,
+    handlePubStartGame,
+    handlePubKickUser,
     isWsError,
   } = useWebsocket(roomId);
   const navigate = useNavigate();
@@ -50,9 +50,9 @@ const GamePage = () => {
     return (
       <GameWaitingRoom
         gameRoomRes={gameRoomRes}
-        handleReadyGame={handleReadyGame}
-        handleStartGame={handleStartGame}
-        handleKickUser={handleKickUser}
+        handlePubReadyGame={handlePubReadyGame}
+        handlePubStartGame={handlePubStartGame}
+        handlePubKickUser={handlePubKickUser}
       />
     );
   }
