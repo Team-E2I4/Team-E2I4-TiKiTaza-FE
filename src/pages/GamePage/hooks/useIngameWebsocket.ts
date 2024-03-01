@@ -61,34 +61,27 @@ const useIngameWebsocket = (roomId: number | null) => {
     };
   }, []);
 
-  ///to/game/{roomId}/word-info  ( 단어 )
-  const handlePubInfo = (roomId: number, currentScore: number) => {
-    stompClient.current &&
-      stompClient.current.publish({
-        destination: `/to/game/${roomId}/info`,
-        headers: connectHeaders,
-        body: JSON.stringify({ currentScore: currentScore }),
-      });
+  const publishIngame = (destination: string, payload: object) => {
+    stompClient.current?.publish({
+      destination: `/to/game${destination}`,
+      headers: connectHeaders,
+      body: JSON.stringify(payload),
+    });
   };
 
   ///to/game/{roomId}/info  ( 문장, 코드 )
-  const handlePubWordInfo = (roomId: number, word: number) => {
-    stompClient.current &&
-      stompClient.current.publish({
-        destination: `/to/game/${roomId}/info`,
-        headers: connectHeaders,
-        body: JSON.stringify({ currentScore: word }),
-      });
+  const handlePubInfo = (roomId: number, currentScore: number) => {
+    publishIngame(`/${roomId}/info`, { currentScore: currentScore });
   };
 
-  ///to/game/{roomId}/round-finish
+  ///to/game/{roomId}/word-info  ( 단어 )
+  const handlePubWordInfo = (roomId: number, word: string) => {
+    publishIngame(`/${roomId}/word-info`, { word: word });
+  };
+
+  ///to/game/{roomId}/round-finish ( 본인 라운드 종료 발행 )
   const handlePubRoundFinish = (roomId: number, currentRound: number) => {
-    stompClient.current &&
-      stompClient.current.publish({
-        destination: `/to/game/${roomId}/round-finish`,
-        headers: connectHeaders,
-        body: JSON.stringify({ currentRound: currentRound }),
-      });
+    publishIngame(`/${roomId}/round-finish`, { currentRound: currentRound });
   };
 
   return {
