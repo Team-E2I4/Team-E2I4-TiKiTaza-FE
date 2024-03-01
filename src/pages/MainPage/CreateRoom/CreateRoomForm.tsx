@@ -13,17 +13,24 @@ import {
   GAME_MODE_LIST,
 } from './constants/createRoom';
 import { DEFAULT_TITLES } from './constants/defaultTitles';
+import { SettingModeType } from './CreateRoomModal';
 import { I_CreateRoomInputName, I_CreateRoomSelectName } from './types';
 
 interface CreateRoomFormProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  settingMode: SettingModeType;
+  setSettingMode: Dispatch<SetStateAction<SettingModeType>>;
 }
 
 type CreateRoomFormType = I_CreateRoomInputName & I_CreateRoomSelectName;
 
-type SettingModeType = 'Create' | 'Update';
-
-const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
+const CreateRoomForm = ({
+  setIsOpen,
+  settingMode,
+  // 사용하실땐 아래 주석과 함께 지워주세요
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setSettingMode,
+}: CreateRoomFormProps) => {
   const navigate = useNavigate();
 
   const {
@@ -33,13 +40,10 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
     getValues,
   } = useForm<CreateRoomFormType>({
     mode: 'onChange',
-    defaultValues: {}, // 여기에 가져오신 방 설정값을 input하고 select이름 맞춰서 넣어주시면 됩니다. ex) store에서 가져온 값들... defaultValues:{...storedSettings}
+    defaultValues: {}, //여기에 불러온 방 설정값들 넣어주시고, setSettingMode로 모드를 Update로 변경해주세요
   });
 
   const { setRoomId } = useRoomIdStore();
-
-  //방 설정값을 store에서 꺼내신 후 defaultValues에 넣어주셨으면, 상태를 update로 변경해주세요
-  const [settingMode] = useState<SettingModeType>('Create');
 
   const { mutate: mutateCreateGameRoom } = useCreateGameRoom({
     onSuccess: (e) => {
@@ -181,7 +185,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
             type='submit'
             className='w-[8rem] p-[0.5rem] rounded-[0.8rem] absolute bottom-[2rem] right-[2rem] bg-coral-100 disabled:cursor-not-allowed disabled:opacity-50 transition-all'
             disabled={!isValid}>
-            방 생성
+            {settingMode === 'Create' ? '방 생성' : '수정'}
           </button>
         </Form.Submit>
       </Form.Root>
