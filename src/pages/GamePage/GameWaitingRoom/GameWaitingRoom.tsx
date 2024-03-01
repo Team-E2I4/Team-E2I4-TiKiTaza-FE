@@ -4,9 +4,9 @@ import Backward from '@/common/Backward/Backward';
 import { useAuthCheck } from '@/hooks/useAuth';
 import DisconnectModal from '../common/DisconnectModal';
 import {
-  HandleKickUserType,
-  HandleReadyGameType,
-  HandleStartGameType,
+  HandlePubKickUserType,
+  HandlePubReadyGameType,
+  HandlePubStartGameType,
   I_GameRoomResponse,
 } from '../types/websocketType';
 import GameModeInfo from './GameModeInfo';
@@ -18,14 +18,14 @@ import GameRoomUserList from './GameRoomUserList';
 
 const GameWaitingRoom = ({
   gameRoomRes,
-  handleReadyGame,
-  handleStartGame,
-  handleKickUser,
+  handlePubReadyGame,
+  handlePubStartGame,
+  handlePubKickUser,
 }: {
   gameRoomRes: I_GameRoomResponse;
-  handleReadyGame: HandleReadyGameType;
-  handleStartGame: HandleStartGameType;
-  handleKickUser: HandleKickUserType;
+  handlePubReadyGame: HandlePubReadyGameType;
+  handlePubStartGame: HandlePubStartGameType;
+  handlePubKickUser: HandlePubKickUserType;
 }) => {
   const navigate = useNavigate();
   const { allMembers, roomInfo } = gameRoomRes;
@@ -77,7 +77,7 @@ const GameWaitingRoom = ({
             gameRoomUserList={allMembers}
             hostId={roomInfo?.hostId}
             userId={userId}
-            handleKickUser={handleKickUser}
+            handlePubKickUser={handlePubKickUser}
           />
         )}
         <footer className='w-[114.8rem] flex gap-[5rem]'>
@@ -86,8 +86,8 @@ const GameWaitingRoom = ({
           <GameReadyAndStart
             isAdmin={isAdmin}
             allMembers={allMembers}
-            handleReadyGame={handleReadyGame}
-            handleStartGame={handleStartGame}
+            handlePubReadyGame={handlePubReadyGame}
+            handlePubStartGame={handlePubStartGame}
           />
         </footer>
       </div>
