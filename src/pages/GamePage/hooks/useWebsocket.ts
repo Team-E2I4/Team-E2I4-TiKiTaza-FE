@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { BASE_PATH } from '@/generated/base';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import storageFactory from '@/utils/storageFactory';
-import { I_GameRoomResponse } from '../../types/websocketType';
+import { I_GameRoomResponse } from '../types/websocketType';
 
 const useWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();

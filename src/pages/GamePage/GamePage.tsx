@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useRoomIdStore from '@/store/useRoomIdStore';
+import WsError from './common/WsError';
 import GameCode from './GameCode/GameCode';
 import GameSentence from './GameSentence/GameSentence';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
-import useWebsocket from './GameWaitingRoom/hooks/useWebsocket';
-import WsError from './GameWaitingRoom/WsError';
 import GameWord from './GameWord/GameWord';
+import useWebsocket from './hooks/useWebsocket';
 
 const GamePage = () => {
   // TODO: 초대로 들어온 사람이라면 url의 해시값->정제->유효검사 후 상태값) 으로 방번호 추출

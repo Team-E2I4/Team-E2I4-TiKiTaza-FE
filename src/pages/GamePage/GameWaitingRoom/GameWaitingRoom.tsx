@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Backward from '@/common/Backward/Backward';
 import { useAuthCheck } from '@/hooks/useAuth';
-import DisconnectModal from '../DisconnectModal';
+import DisconnectModal from '../common/DisconnectModal';
 import {
   HandleKickUserType,
   HandleReadyGameType,
