@@ -4,9 +4,6 @@ import { BASE_PATH } from '@/generated/base';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import storageFactory from '@/utils/storageFactory';
 import { I_IngameWsResponse } from '../types/websocketType';
-///// TODO
-// dev <- #40-wsTest 머지 후에 dev 최신화 하고 이 브랜치에서 rebase dev 해야할듯!
-// 기본 타입 선언이랑 웹소켓 연결 핸들러 작성해두었는데, 확인하고 수정부탁드립니다!
 
 const useIngameWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
