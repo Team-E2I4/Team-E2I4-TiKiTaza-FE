@@ -4,7 +4,7 @@ import { enterGameRoom } from '@/apis/api';
 import { ApiResponseGameRoomEnterResponse, ErrorResponse } from '@/generated';
 
 interface UseEnterGameRoomProps {
-  onSuccess?: () => void;
+  onSuccess?: (e: AxiosResponse<ApiResponseGameRoomEnterResponse>) => void;
   onError?: (e: AxiosError<ErrorResponse>) => void;
 }
 
@@ -22,8 +22,8 @@ const useEnterGameRoom = ({ onSuccess, onError }: UseEnterGameRoomProps) => {
     mutationFn: ({ roomId, password }: I_UseEnterGameRoomMutation) =>
       enterGameRoom(roomId, { password }),
     mutationKey: ['enterGameRoom'],
-    onSuccess: () => {
-      onSuccess?.();
+    onSuccess: (e) => {
+      onSuccess?.(e);
     },
     onError: (e) => {
       if (e instanceof AxiosError) {
