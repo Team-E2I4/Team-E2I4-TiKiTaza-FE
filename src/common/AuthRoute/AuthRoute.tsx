@@ -12,10 +12,9 @@ const AuthRoute = () => {
   if (!getItem('MyToken', '')) {
     if (pathname === '/login' || pathname === '/') {
       return <Outlet />;
-    } else {
-      alert('로그인이 필요한 페이지 입니다');
-      return <Navigate to='/' />;
     }
+    alert('로그인이 필요한 페이지 입니다');
+    return <Navigate to='/' />;
   }
 
   //로컬스토리지에 토큰이 존재할때
