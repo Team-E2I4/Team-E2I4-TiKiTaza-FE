@@ -16,11 +16,10 @@ const useWebsocket = (roomId: number | null) => {
     Authorization: `Bearer ${token}`,
   };
 
-  if (!roomId) {
-    setIsWsError(true);
-  }
-
   useEffect(() => {
+    if (!roomId) {
+      setIsWsError(true);
+    }
     const client = new Client({
       webSocketFactory: () => new SockJS(`${BASE_PATH}/ws`),
       connectHeaders: connectHeaders,
