@@ -1,13 +1,13 @@
 import { Path, RegisterOptions } from 'react-hook-form';
 
 export interface I_CreateRoomInputName {
-  roomName: string;
-  roomPassword: string;
+  title: string;
+  password: string;
 }
 
 export interface I_CreateRoomSelectName {
-  roomRound: number;
-  roomMaxPlayer: number;
+  round: number;
+  maxPlayer: number;
 }
 
 export interface I_CreateRoomInput {

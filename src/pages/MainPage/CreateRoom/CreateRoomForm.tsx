@@ -67,16 +67,13 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
   /* ToDo: getValues로 form 값들 하나씩 말고 한번에 가져와보기 */
   const getRoomSettings = () => {
     const roomSetting: GameRoomCreateRequest = {
-      title: getValues('roomName') || randomTitle.current,
-      maxPlayer: getValues('roomMaxPlayer'),
-      round: getValues('roomRound'),
+      ...getValues(),
       gameType: selectedMode,
     };
 
-    const password = getValues('roomPassword');
-
-    if (password.length) {
-      roomSetting.password = password;
+    //getValues로 인하여 password에 빈 문자열이 들어올 수 있음
+    if (roomSetting.password !== undefined && !roomSetting.password.length) {
+      delete roomSetting.password;
     }
 
     return roomSetting;
@@ -115,7 +112,7 @@ const CreateRoomForm = ({ setIsOpen }: CreateRoomFormProps) => {
                     className='w-[26rem] h-[3.6rem] p-[1rem] border-[0.2rem] border-gray-200 rounded-[0.8rem] focus:outline-none'
                     type={type}
                     placeholder={
-                      name === 'roomName' ? randomTitle.current : placeholder
+                      name === 'title' ? randomTitle.current : placeholder
                     }
                     {...register(name, {
                       required,

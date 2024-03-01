@@ -2,7 +2,7 @@ import { I_CreateRoomInput, I_CreateRoomSelect } from '../types';
 
 export const CREATE_ROOM_INPUT_LIST: I_CreateRoomInput[] = [
   {
-    name: 'roomName',
+    name: 'title',
     value: '',
     type: 'text',
     label: '방 이름',
@@ -20,7 +20,7 @@ export const CREATE_ROOM_INPUT_LIST: I_CreateRoomInput[] = [
     },
   },
   {
-    name: 'roomPassword',
+    name: 'password',
     value: '',
     type: 'password',
     label: '비밀번호 설정',
@@ -37,7 +37,7 @@ export const CREATE_ROOM_INPUT_LIST: I_CreateRoomInput[] = [
 
 export const CREATE_ROOM_SELECT_LIST: I_CreateRoomSelect[] = [
   {
-    name: 'roomMaxPlayer',
+    name: 'maxPlayer',
     label: '인원 수',
     optionValues: Array.from({ length: 8 })
       .map((_, index) => ({
@@ -47,7 +47,7 @@ export const CREATE_ROOM_SELECT_LIST: I_CreateRoomSelect[] = [
       .slice(1),
   },
   {
-    name: 'roomRound',
+    name: 'round',
     label: '총 라운드',
     optionValues: Array.from({ length: 8 })
       .map((_, index) => ({
