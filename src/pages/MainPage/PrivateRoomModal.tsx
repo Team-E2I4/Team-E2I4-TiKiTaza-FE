@@ -2,7 +2,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import * as Form from '@radix-ui/react-form';
 import { Cross2Icon, PaperPlaneIcon } from '@radix-ui/react-icons';
 import { AxiosError } from 'axios';
-import { ComponentProps, Dispatch, ReactNode, SetStateAction } from 'react';
+import { ComponentProps, Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { ErrorResponse } from '@/generated';
@@ -10,7 +10,6 @@ import useEnterGameRoom from '@/hooks/useEnterGameRoom';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 
 interface PrivateRoomModalProps {
-  children: ReactNode;
   className?: ComponentProps<'div'>['className'];
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isOpen: boolean;
@@ -18,7 +17,6 @@ interface PrivateRoomModalProps {
 }
 
 const PrivateRoomModal = ({
-  children,
   className,
   isOpen,
   setIsOpen,
@@ -51,7 +49,7 @@ const PrivateRoomModal = ({
     <Dialog.Root
       open={isOpen}
       onOpenChange={setIsOpen}>
-      <Dialog.Trigger>{children}</Dialog.Trigger>
+      <Dialog.Trigger asChild></Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay
           className={
