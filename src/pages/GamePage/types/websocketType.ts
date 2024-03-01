@@ -11,11 +11,8 @@ export type MessageType =
   | 'READY'
   | 'START'
   | 'START_DENIED'
-  | 'FINISH'
-  | 'ROUND_START'
-  | 'KICKED'
-  | 'UPDATE'
-  | 'WORD_DENIED';
+  | 'MODIFIED'
+  | 'KICKED';
 
 export interface I_RoomInfo {
   id: number;
