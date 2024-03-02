@@ -1,7 +1,7 @@
 import * as Avatar from '@radix-ui/react-avatar';
 import { useMemo } from 'react';
 import close from '@/assets/close.png';
-import { handlePubKickUserType, I_AllMember } from '../types/websocketType';
+import { HandlePubKickUserType, I_AllMember } from '../types/websocketType';
 
 const GameRoomUserItem = ({
   hostId,
@@ -12,14 +12,15 @@ const GameRoomUserItem = ({
   hostId: number | undefined;
   gameRoomUser: I_AllMember;
   userId: number;
-  handlePubKickUser: handlePubKickUserType;
+  handlePubKickUser: HandlePubKickUserType;
 }) => {
   const rank = 3; // TODO : 회원조회 쿼리 값으로 변경
 
   const { memberId, nickname, readyStatus: isReady } = gameRoomUser;
 
+  const isAdmin = useMemo(() => hostId === memberId, [hostId, memberId]); // 방장인지
   const isAdminMe = useMemo(() => hostId === userId, [hostId, userId]); //본인이 방장인지
-  const isMe = useMemo(() => memberId === userId, [memberId, userId]); // 각 유저가 본인인지
+  const isMe = useMemo(() => memberId === userId, [memberId, userId]); // 각 유저가 본인인지 -> 방장이자 본인일떄 강퇴식별용
 
   return (
     <div className='w-[25.8rem] h-[21.2rem] p-[1.6rem] pb-[4rem] relative flex flex-col bg-white shadow-md shadow-black/50 rounded-[2.5rem]'>
@@ -60,7 +61,7 @@ const GameRoomUserItem = ({
       </div>
       {((isAdminMe && isMe) || isReady) && (
         <div className='absolute w-[13rem] h-[4rem] rounded-[2rem_0_2.5rem] right-0 bottom-0 text-center leading-[4rem] font-[Giants-Inline] bg-green-100'>
-          {isAdminMe && isMe ? '방장' : isReady && '준비'}
+          {isAdmin ? '방장' : isReady && '준비'}
         </div>
       )}
     </div>
