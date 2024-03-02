@@ -43,12 +43,10 @@ const GamePage = () => {
   if (!roomId || isWsError) {
     return <WsError />;
   }
-  if (isPlaying) {
+  if (isPlaying || isKicked) {
     navigate('/main', { replace: true });
   }
-  if (isKicked) {
-    navigate('/main', { replace: true });
-  }
+
   if (!didAdminStart) {
     return (
       <GameWaitingRoom
