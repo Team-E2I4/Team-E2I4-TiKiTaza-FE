@@ -2,11 +2,12 @@ import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useRoomIdStore from '@/store/useRoomIdStore';
 import WsError from './common/WsError';
-import GameCode from './GameCode/GameCode';
-import GameSentence from './GameSentence/GameSentence';
+// import GameCode from './GameCode/GameCode';
+// import GameSentence from './GameSentence/GameSentence';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
 import GameWord from './GameWord/GameWord';
 import useWebsocket from './hooks/useWebsocket';
+import { IngameWSErrorBoundary } from './IngameWSErrorBoundary';
 
 const GamePage = () => {
   // TODO: 초대로 들어온 사람이라면 url의 해시값->정제->유효검사 후 상태값) 으로 방번호 추출
@@ -21,6 +22,8 @@ const GamePage = () => {
   } = useWebsocket(roomId);
   const navigate = useNavigate();
 
+  // 아래 TODO
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedMode, isPlaying] = useMemo(
     () => [gameRoomRes.roomInfo?.gameMode, gameRoomRes.roomInfo?.isPlaying],
     [gameRoomRes.roomInfo]
@@ -56,11 +59,27 @@ const GamePage = () => {
       />
     );
   }
+
   return (
     <>
-      {selectedMode === 'SENTENCE' && <GameSentence />}
-      {selectedMode === 'CODE' && <GameCode />}
-      {selectedMode === 'WORD' && <GameWord />}
+      <IngameWSErrorBoundary>
+        {(ingameRoomRes) => (
+          <>
+            <GameWord ingameRoomRes={ingameRoomRes} />
+            {/* // TODO : issue#92 roomInfo전체를 store에 가지면 그걸로 selectedMode 판단 */}
+
+            {/* {selectedMode === 'SENTENCE' && (
+              <GameSentence ingameRoomRes={ingameRoomRes} />
+            )}
+            {selectedMode === 'CODE' && (
+              <GameCode ingameRoomRes={ingameRoomRes} />
+            )}
+            {selectedMode === 'WORD' && (
+              <GameWord ingameRoomRes={ingameRoomRes} />
+            )} */}
+          </>
+        )}
+      </IngameWSErrorBoundary>
     </>
   );
 };
