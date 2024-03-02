@@ -20,6 +20,8 @@ export interface I_RoomInfo {
   title: string;
   gameMode: 'WORD' | 'CODE' | 'SENTENCE';
   inviteCode: string | null;
+  maxRound: number;
+  password: string | null;
   maxPlayer: number;
   currentPlayer: number;
   isPlaying: boolean;
