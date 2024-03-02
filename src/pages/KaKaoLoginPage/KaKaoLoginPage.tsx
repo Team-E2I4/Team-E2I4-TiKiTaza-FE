@@ -1,7 +1,32 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useKaKaoLogin } from '@/hooks/useAuth';
+
 const KaKaoLoginPage = () => {
-  // const AUTHORIZATION_CODE: string = new URL(
-  //   document.location.toString()
-  // ).searchParams.get('code') as string;
+  const navigate = useNavigate();
+
+  const AUTHORIZATION_CODE: string = new URL(
+    document.location.toString()
+  ).searchParams.get('code') as string;
+
+  const { mutateAsync: mutateKaKaoLogin } = useKaKaoLogin();
+
+  useEffect(() => {
+    (async () => {
+      if (!AUTHORIZATION_CODE) {
+        navigate('/login');
+        return;
+      }
+
+      try {
+        mutateKaKaoLogin(AUTHORIZATION_CODE);
+        navigate('/main');
+      } catch (error) {
+        //ToDo: Toast 에러 메시지 처리
+        navigate('/login');
+      }
+    })();
+  }, [AUTHORIZATION_CODE, mutateKaKaoLogin, navigate]);
 
   return (
     <div>
