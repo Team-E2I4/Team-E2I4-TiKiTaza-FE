@@ -35,7 +35,17 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <StartPage />,
+            element: (
+              <ErrorBoundary
+                FallbackComponent={({ error, resetErrorBoundary }) => (
+                  <div>
+                    게스트 로그인 에러 발생: {error.message}
+                    <button onClick={resetErrorBoundary}>다시 시도</button>
+                  </div>
+                )}>
+                <StartPage />
+              </ErrorBoundary>
+            ),
           },
           {
             path: '/login',
