@@ -2,23 +2,20 @@ import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
 import { BASE_PATH } from '@/generated/base';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
-import storageFactory from '@/utils/storageFactory';
 import { I_GameRoomResponse } from '../types/websocketType';
+import { useToken } from './useToken';
 
 const useWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
   const [gameRoomRes, setGameRoomRes] = useState({} as I_GameRoomResponse);
   const [isWsError, setIsWsError] = useState(false);
-  const { getItem } = storageFactory(localStorage);
 
-  const token = getItem('MyToken', '');
-  const connectHeaders = {
-    Authorization: `Bearer ${token}`,
-  };
+  const { connectHeaders } = useToken();
 
   useEffect(() => {
     if (!roomId) {
       setIsWsError(true);
+      return;
     }
     const client = new Client({
       webSocketFactory: () => new SockJS(`${BASE_PATH}/ws`),
