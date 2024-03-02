@@ -18,6 +18,7 @@ export const {
   enterGameRoom,
   getMyProfileInfo,
   guestLogin,
+  kakaoLogin,
   login,
   logout,
   reIssueAccessToken,
