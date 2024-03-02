@@ -72,7 +72,7 @@ const CreateRoomForm = ({
   const getRoomSettings = () => {
     const roomSetting: GameRoomCreateRequest = {
       ...getValues(),
-      title: getValues('title').trim(),
+      title: getValues('title').trim() || randomTitle.current,
       gameType: selectedMode,
     };
 
