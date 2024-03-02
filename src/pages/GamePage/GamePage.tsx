@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth';
-import useRoomIdStore from '@/store/useRoomIdStore';
+import useRoomInfoStore from '@/store/useRoomInfoStore';
 import WsError from './common/WsError';
 // import GameCode from './GameCode/GameCode';
 // import GameSentence from './GameSentence/GameSentence';
@@ -12,7 +12,8 @@ import { IngameWSErrorBoundary } from './IngameWSErrorBoundary';
 
 const GamePage = () => {
   // TODO: 초대로 들어온 사람이라면 url의 해시값->정제->유효검사 후 상태값) 으로 방번호 추출
-  const { roomId } = useRoomIdStore();
+
+  const { roomId, setRoomInfo } = useRoomInfoStore();
 
   const {
     gameRoomRes,
@@ -47,6 +48,10 @@ const GamePage = () => {
   );
 
   useEffect(() => {
+    if (gameRoomRes.roomInfo) {
+      setRoomInfo(gameRoomRes.roomInfo);
+    }
+
     if (isPlaying) {
       navigate('/main', { replace: true });
     }
@@ -54,8 +59,7 @@ const GamePage = () => {
       navigate('/main', { replace: true });
       navigate(0);
     }
-  }, [data, gameRoomRes, isKicked, isPlaying, navigate, userId]);
-
+  }, [data, gameRoomRes, isKicked, isPlaying, navigate, setRoomInfo, userId]);
   if (!roomId || isWsError) {
     return <WsError />;
   }
