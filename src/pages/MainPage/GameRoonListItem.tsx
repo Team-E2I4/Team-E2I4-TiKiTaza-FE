@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Divider from '@/common/Divider/Divider';
 import useEnterGameRoom from '@/hooks/useEnterGameRoom';
 import { I_ChangeGameRoomData } from '@/hooks/useSSE';
-import useRoomIdStore from '@/store/useRoomIdStore';
+import useRoomInfoStore from '@/store/useRoomInfoStore';
 
 const MODE_TYPE = {
   WORD: '짧은 단어',
@@ -20,7 +20,7 @@ const GameRoomListItem = ({
   isPlaying,
   isPrivate,
 }: I_ChangeGameRoomData) => {
-  const { setRoomId } = useRoomIdStore();
+  const { setRoomId } = useRoomInfoStore();
   const navigate = useNavigate();
 
   const { mutate: mutateEnterGameRoom } = useEnterGameRoom({

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { GameRoomCreateRequest } from '@/generated';
 import useCreateGameRoom from '@/hooks/useCreateGameRoom';
 import useUpdateGameRoom from '@/hooks/useUpdateGameRoom';
-import useRoomIdStore from '@/store/useRoomIdStore';
+import useRoomInfoStore from '@/store/useRoomInfoStore';
 import getRandomItem from '@/utils/getRandomItem';
 import {
   CREATE_ROOM_INPUT_LIST,
@@ -43,7 +43,7 @@ const CreateRoomForm = ({
     defaultValues: {}, //여기에 불러온 방 설정값들 넣어주시고, setSettingMode로 모드를 Update로 변경해주세요
   });
 
-  const { setRoomId } = useRoomIdStore();
+  const { setRoomId } = useRoomInfoStore();
 
   const { mutate: mutateCreateGameRoom } = useCreateGameRoom({
     onSuccess: (e) => {

@@ -29,6 +29,7 @@ const GameWaitingRoom = ({
   userId: number;
 }) => {
   const navigate = useNavigate();
+
   const { allMembers, roomInfo } = gameRoomRes;
   const [isAlert, setIsAlert] = useState(false);
 

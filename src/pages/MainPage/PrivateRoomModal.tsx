@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { ErrorResponse } from '@/generated';
 import useEnterGameRoom from '@/hooks/useEnterGameRoom';
-import useRoomIdStore from '@/store/useRoomIdStore';
+import useRoomInfoStore from '@/store/useRoomInfoStore';
 
 interface PrivateRoomModalProps {
   children: ReactNode;
@@ -32,7 +32,7 @@ const PrivateRoomModal = ({
     getValues,
   } = useForm<{ password: string }>();
 
-  const { setRoomId } = useRoomIdStore();
+  const { setRoomId } = useRoomInfoStore();
 
   const navigate = useNavigate();
 
