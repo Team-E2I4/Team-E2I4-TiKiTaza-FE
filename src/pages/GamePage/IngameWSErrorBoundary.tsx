@@ -6,11 +6,15 @@ import { I_IngameWsResponse } from './types/websocketType';
 export const IngameWSErrorBoundary = ({
   children,
 }: {
-  children: (ingameRoomRes: I_IngameWsResponse) => JSX.Element;
+  children: (
+    ingameRoomRes: I_IngameWsResponse,
+    publishIngame: (destination: string, payload: object) => void
+  ) => JSX.Element;
 }) => {
   const { roomId } = useRoomIdStore();
 
-  const { ingameRoomRes, isWsError } = useIngameWebsocket(roomId);
+  const { ingameRoomRes, isWsError, publishIngame } =
+    useIngameWebsocket(roomId);
 
-  return isWsError ? <WsError /> : children(ingameRoomRes);
+  return isWsError ? <WsError /> : children(ingameRoomRes, publishIngame);
 };

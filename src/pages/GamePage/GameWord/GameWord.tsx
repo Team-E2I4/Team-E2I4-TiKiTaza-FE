@@ -69,8 +69,15 @@ const WordRank = (data: WordRankProps) => {
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const GameWord = ({ ingameRoomRes }: { ingameRoomRes: I_IngameWsResponse }) => {
+const GameWord = ({
+  ingameRoomRes,
+  publishIngame,
+}: {
+  ingameRoomRes?: I_IngameWsResponse;
+  publishIngame: (destination: string, payload: object) => void;
+}) => {
+  // eslint-disable-next-line no-console
+  console.log(ingameRoomRes, publishIngame); //unused disable용 콘솔입니다.
   return (
     <>
       <IngameHeader />
