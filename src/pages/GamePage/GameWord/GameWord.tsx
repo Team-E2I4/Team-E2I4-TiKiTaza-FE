@@ -3,6 +3,7 @@ import Divider from '@/common/Divider/Divider';
 import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import Input from '@/common/Input/Input';
+import { I_IngameWsResponse } from '../types/websocketType';
 import { wordDummy, wordRankDummy } from './wordDummy';
 
 const EMPTY_WORD = 20;
@@ -68,7 +69,8 @@ const WordRank = (data: WordRankProps) => {
   );
 };
 
-const GameWord = () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const GameWord = ({ ingameRoomRes }: { ingameRoomRes: I_IngameWsResponse }) => {
   return (
     <>
       <IngameHeader />
