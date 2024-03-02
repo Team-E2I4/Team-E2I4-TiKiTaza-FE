@@ -24,6 +24,7 @@ const useIngameWebsocket = (roomId: number | null) => {
       onConnect: () => {
         if (roomId) {
           onConnected();
+          handleConnectGame(roomId);
         }
       },
       onDisconnect: () => {},
@@ -40,6 +41,12 @@ const useIngameWebsocket = (roomId: number | null) => {
         (e) => onMessageReceived(e),
         connectHeaders
       );
+    };
+    const handleConnectGame = (roomId: number) => {
+      client.publish({
+        destination: `/to/game/${roomId}/connect`,
+        headers: connectHeaders,
+      });
     };
 
     const onMessageReceived = ({ body }: { body: string }) => {
@@ -85,6 +92,7 @@ const useIngameWebsocket = (roomId: number | null) => {
     handlePubInfo,
     handlePubWordInfo,
     handlePubRoundFinish,
+    publishIngame,
     isWsError,
   };
 };
