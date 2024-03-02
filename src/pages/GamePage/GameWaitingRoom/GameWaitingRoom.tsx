@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Backward from '@/common/Backward/Backward';
-import { useAuthCheck } from '@/hooks/useAuth';
 import DisconnectModal from '../common/DisconnectModal';
 import {
   HandlePubKickUserType,
@@ -21,35 +20,18 @@ const GameWaitingRoom = ({
   handlePubReadyGame,
   handlePubStartGame,
   handlePubKickUser,
+  userId,
 }: {
   gameRoomRes: I_GameRoomResponse;
   handlePubReadyGame: HandlePubReadyGameType;
   handlePubStartGame: HandlePubStartGameType;
   handlePubKickUser: HandlePubKickUserType;
+  userId: number;
 }) => {
   const navigate = useNavigate();
   const { allMembers, roomInfo } = gameRoomRes;
   const [isAlert, setIsAlert] = useState(false);
-  const { data, isError, isPending } = useAuthCheck();
 
-  if (isPending) {
-    // TODO: 로딩시 화면
-    return <div>유저 정보 확인중 ..</div>;
-  }
-
-  if (isError) {
-    alert('로그인이 필요한 페이지 입니다!');
-    return (
-      <Navigate
-        to='/'
-        replace={true}
-      />
-    );
-  }
-  let userId = 0;
-  if (data.data.data) {
-    userId = data.data.data.memberId;
-  }
   const isAdmin = userId === roomInfo?.hostId;
 
   const handleClickBackward = () => {

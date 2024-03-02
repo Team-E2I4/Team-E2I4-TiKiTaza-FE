@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useMemo } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuthCheck } from '@/hooks/useAuth';
 import useRoomIdStore from '@/store/useRoomIdStore';
 import WsError from './common/WsError';
 // import GameCode from './GameCode/GameCode';
@@ -33,18 +34,44 @@ const GamePage = () => {
     [gameRoomRes.type]
   ); //모두 준비인상태에서 방장이 시작했다면 'START' type 이 옴 -> 참여자들 컴포넌트 전환 필요
 
-  const isKicked = false;
-  // TODO: userId useQuery로 가져오기
-  // useMemo(
-  //   () => gameRoomRes?.exitMemberId  === myId,
-  //   [gameRoomRes?.exitMemberId]
-  // );
+  const { data, isError, isPending } = useAuthCheck();
+
+  let userId = 0;
+  if (data && data.data.data) {
+    userId = data.data.data.memberId;
+  }
+
+  const isKicked = useMemo(
+    () => gameRoomRes?.exitMemberId === userId,
+    [gameRoomRes?.exitMemberId, userId]
+  );
+
+  useEffect(() => {
+    if (isPlaying) {
+      navigate('/main', { replace: true });
+    }
+    if (isKicked) {
+      navigate('/main', { replace: true });
+      navigate(0);
+    }
+  }, [data, gameRoomRes, isKicked, isPlaying, navigate, userId]);
 
   if (!roomId || isWsError) {
     return <WsError />;
   }
-  if (isPlaying || isKicked) {
-    navigate('/main', { replace: true });
+  if (isPending) {
+    // TODO: 로딩시 화면
+    return <div>유저 정보 확인중 ..</div>;
+  }
+
+  if (isError) {
+    alert('로그인이 필요한 페이지 입니다!');
+    return (
+      <Navigate
+        to='/'
+        replace={true}
+      />
+    );
   }
 
   if (!didAdminStart) {
@@ -54,6 +81,7 @@ const GamePage = () => {
         handlePubReadyGame={handlePubReadyGame}
         handlePubStartGame={handlePubStartGame}
         handlePubKickUser={handlePubKickUser}
+        userId={userId}
       />
     );
   }
