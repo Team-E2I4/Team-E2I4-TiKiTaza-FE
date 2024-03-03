@@ -1,15 +1,16 @@
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { useNavigate } from 'react-router-dom';
 
 interface DisconnectModalProps {
   isOpen: boolean;
-  handleClickAction: () => void;
   handleClickCancel: () => void;
 }
 const DisconnectModal = ({
   isOpen,
-  handleClickAction,
   handleClickCancel,
 }: DisconnectModalProps) => {
+  const navigate = useNavigate();
+
   return (
     <AlertDialog.Root open={isOpen}>
       <AlertDialog.Trigger asChild></AlertDialog.Trigger>
@@ -32,7 +33,10 @@ const DisconnectModal = ({
             </AlertDialog.Cancel>
             <AlertDialog.Action asChild>
               <button
-                onClick={handleClickAction}
+                onClick={() => {
+                  navigate('/main', { replace: true });
+                  navigate(0);
+                }}
                 className='text-red11 bg-red4 hover:bg-red5 focus:shadow-red7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none outline-none focus:shadow-[0_0_0_2px]'>
                 네, 나갈래요
               </button>

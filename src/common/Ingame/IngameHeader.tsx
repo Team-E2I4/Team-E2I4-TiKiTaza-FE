@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import DisconnectModal from '@/pages/GamePage/common/DisconnectModal';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import Backward from '../Backward/Backward';
@@ -7,7 +6,6 @@ import Backward from '../Backward/Backward';
 const IngameHeader = () => {
   const { roomInfo } = useRoomInfoStore();
   const [isAlert, setIsAlert] = useState(false);
-  const navigate = useNavigate();
 
   const handleClickBackward = () => {
     setIsAlert(true);
@@ -17,10 +15,6 @@ const IngameHeader = () => {
     <>
       <DisconnectModal
         isOpen={isAlert}
-        handleClickAction={() => {
-          navigate('/main', { replace: true });
-          navigate(0);
-        }}
         handleClickCancel={() => {
           setIsAlert(false);
         }}

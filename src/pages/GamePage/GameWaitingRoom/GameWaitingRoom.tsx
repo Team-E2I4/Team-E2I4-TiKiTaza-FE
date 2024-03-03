@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Backward from '@/common/Backward/Backward';
 import DisconnectModal from '../common/DisconnectModal';
 import {
@@ -28,8 +27,6 @@ const GameWaitingRoom = ({
   handlePubKickUser: HandlePubKickUserType;
   userId: number;
 }) => {
-  const navigate = useNavigate();
-
   const { allMembers, roomInfo } = gameRoomRes;
   const [isAlert, setIsAlert] = useState(false);
 
@@ -42,10 +39,6 @@ const GameWaitingRoom = ({
     <>
       <DisconnectModal
         isOpen={isAlert}
-        handleClickAction={() => {
-          navigate('/main', { replace: true });
-          navigate(0);
-        }}
         handleClickCancel={() => {
           setIsAlert(false);
         }}
