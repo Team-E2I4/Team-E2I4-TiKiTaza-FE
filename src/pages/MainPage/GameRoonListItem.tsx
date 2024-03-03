@@ -1,10 +1,10 @@
 import { LockClosedIcon } from '@radix-ui/react-icons';
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Divider from '@/common/Divider/Divider';
 import useEnterGameRoom from '@/hooks/useEnterGameRoom';
 import { I_ChangeGameRoomData } from '@/hooks/useSSE';
-import PrivateRoomModal from './PrivateRoomModal';
+import useRoomIdStore from '@/store/useRoomIdStore';
 
 const MODE_TYPE = {
   WORD: '짧은 단어',
@@ -12,19 +12,21 @@ const MODE_TYPE = {
   CODE: '코드',
 };
 
+interface GameRoomListItemProps extends I_ChangeGameRoomData {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}
+
 const GameRoomListItem = ({
   id,
   title,
   gameMode,
   maxPlayer,
   currentPlayer,
-  isPlaying,
   isPrivate,
-}: I_ChangeGameRoomData) => {
-  const { setRoomId } = useRoomInfoStore();
+  setIsOpen,
+}: GameRoomListItemProps) => {
+  const { setRoomId } = useRoomIdStore();
   const navigate = useNavigate();
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const { mutate: mutateEnterGameRoom } = useEnterGameRoom({
     onSuccess: (e) => {
@@ -36,28 +38,14 @@ const GameRoomListItem = ({
     },
   });
 
-  if (isPlaying) {
-    return;
-  }
-
-  const handleEnterRoomMap = new Map([
-    [true, () => setIsOpen(true)],
-    [false, () => mutateEnterGameRoom({ roomId: id })],
-  ]);
-
   return (
     <li
-      onClick={() => {
-        handleEnterRoomMap.get(isPrivate)?.();
-      }}
+      onClick={
+        isPrivate
+          ? () => setIsOpen(true)
+          : () => mutateEnterGameRoom({ roomId: id })
+      }
       className='h-[5rem] flex items-center shrink-0 w-full py-[1rem] bg-gray-10 hover:bg-coral-50 cursor-pointer'>
-      {isPrivate && (
-        <PrivateRoomModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          roomId={id}
-        />
-      )}
       <span className='text-center truncate flex-1'>{`No.${id}`}</span>
       <Divider
         orientation='vertical'
