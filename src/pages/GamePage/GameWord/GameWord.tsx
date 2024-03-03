@@ -3,8 +3,13 @@ import Divider from '@/common/Divider/Divider';
 import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import Input from '@/common/Input/Input';
-import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
-import { wordDummy, wordRankDummy } from './wordDummy';
+import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
+import {
+  I_IngameWsResponse,
+  I_Question,
+  PayloadType,
+} from '../types/websocketType';
+import { wordRankDummy } from './wordDummy';
 
 const EMPTY_WORD = 20;
 const positions = ['center', 'left', 'right'];
@@ -18,10 +23,9 @@ const WordCell = ({ children }: { children: ReactNode }) => {
   );
 };
 // 총 120개의 cell. 서버로부터 받을 단어 100개 + 랜덤20개(EMPTY_WORD)로 구성해야함
-const shuffle = (array: string[]) => {
+const shuffle = (array: I_Question[]) => {
   return array.sort(() => Math.random() - 0.5);
 };
-const words = shuffle(wordDummy.concat(Array(EMPTY_WORD).fill('')));
 interface WordRankProps {
   userId: number;
   track: number;
@@ -78,15 +82,28 @@ const GameWord = ({
 }) => {
   // eslint-disable-next-line no-console
   console.log(ingameRoomRes, publishIngame); //unused disable용 콘솔입니다.
+  if (ingameRoomRes && checkIsEmptyObj(ingameRoomRes)) {
+    return <div>로딩실패</div>;
+  }
+  const dummy = Array(EMPTY_WORD).fill({
+    id: Math.random() * 1001, //
+    question: ' ',
+  });
+  const words = ingameRoomRes?.questions?.concat(
+    ingameRoomRes.questions,
+    dummy
+  );
+
   return (
     <>
       <IngameHeader />
       <div className='grow'>
         <div className='flex flex-col items-center justify-around h-[60rem]'>
-          <div className='h-[25rem] grid grid-rows-[repeat(8,minmax(0,1fr))] grid-cols-[repeat(15,7rem)] text-[1.6rem] p-4 box-content bg-gray-10 rounded-2xl'>
-            {words.map((w, i) => {
-              return <WordCell key={i + w}>{w}</WordCell>;
-            })}
+          <div className='h-[25rem] grid grid-rows-[repeat(8,minmax(0,1fr))] grid-cols-[repeat(14,9rem)] text-[1.6rem] p-4 box-content bg-gray-10 rounded-2xl'>
+            {words &&
+              shuffle(words).map((w, i) => {
+                return <WordCell key={i}>{w.question}</WordCell>;
+              })}
           </div>
           <div className='flex flex-row items-end w-10/12 h-[30rem] mt-4'>
             <Dashboard
