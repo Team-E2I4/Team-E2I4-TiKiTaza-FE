@@ -60,6 +60,7 @@ const GamePage = () => {
       navigate(0);
     }
   }, [data, gameRoomRes, isKicked, isPlaying, navigate, setRoomInfo, userId]);
+
   if (!roomId || isWsError) {
     return <WsError />;
   }
