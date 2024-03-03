@@ -48,10 +48,10 @@ const CreateRoomForm = ({
   } = useForm<CreateRoomFormType>({
     mode: 'onChange',
     defaultValues: {
-      title: roomInfo?.title,
-      password: roomInfo?.password,
-      round: roomInfo?.maxRound,
-      maxPlayer: roomInfo?.maxPlayer,
+      title: roomInfo?.title ?? '',
+      password: roomInfo?.password ?? '',
+      round: roomInfo?.maxRound ?? 2,
+      maxPlayer: roomInfo?.maxPlayer ?? 2,
     },
   });
 
@@ -96,13 +96,12 @@ const CreateRoomForm = ({
 
   const onCreateRoom = () => {
     const roomSetting = getRoomSettings();
-
     if (settingMode === 'Create') {
       mutateCreateGameRoom({ ...roomSetting });
       return;
     }
     mutateUpdateGameRoom({
-      roomId: roomId,
+      roomId,
       gameRoomUpdateRequest: { ...roomSetting },
     });
   };
