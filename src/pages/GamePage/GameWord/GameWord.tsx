@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
+import { useForm } from 'react-hook-form';
 import Divider from '@/common/Divider/Divider';
 import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
-import Input from '@/common/Input/Input';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import {
   I_IngameWsResponse,
@@ -82,6 +82,7 @@ const GameWord = ({
 }) => {
   // eslint-disable-next-line no-console
   console.log(ingameRoomRes, publishIngame); //unused disable용 콘솔입니다.
+  const { register, handleSubmit, setValue, getValues } = useForm();
   if (ingameRoomRes && checkIsEmptyObj(ingameRoomRes)) {
     return <div>로딩실패</div>;
   }
@@ -125,7 +126,16 @@ const GameWord = ({
                   );
                 })}
               </div>
-              <Input whSize={`w-[20rem] h-[4rem]`} />
+              <form
+                onSubmit={handleSubmit(() => {
+                  publishIngame('/word-info', { word: getValues('wordInput') });
+                  setValue('wordInput', '');
+                })}>
+                <input
+                  {...register('wordInput')}
+                  className='w-[20rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl bg-white border-2 border-green-100 my-4 outline-0 text-gray-300 tracking-wider box-border'
+                />
+              </form>
             </div>
             <Dashboard
               type='accuracy'
