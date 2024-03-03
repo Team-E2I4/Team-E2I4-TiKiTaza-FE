@@ -49,7 +49,7 @@ const PrivateRoomModal = ({
     <Dialog.Root
       open={isOpen}
       onOpenChange={setIsOpen}>
-      <Dialog.Trigger asChild></Dialog.Trigger>
+      <Dialog.Trigger></Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay
           className={
@@ -78,7 +78,7 @@ const PrivateRoomModal = ({
                   {...register('password')}
                 />
               </Form.Control>
-              <span className='block text-[1.3rem] h-[2rem] text-red-500 pt-[0.3rem] text-center'>
+              <span className='absolute text-[1.3rem] h-[2rem] text-red-500 pt-[0.3rem] text-center'>
                 {errors.password?.message}
               </span>
             </Form.Field>
