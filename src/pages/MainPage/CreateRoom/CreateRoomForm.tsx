@@ -1,5 +1,5 @@
 import * as Form from '@radix-ui/react-form';
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { GameRoomCreateRequest } from '@/generated';
@@ -27,11 +27,18 @@ type CreateRoomFormType = I_CreateRoomInputName & I_CreateRoomSelectName;
 const CreateRoomForm = ({
   setIsOpen,
   settingMode,
-  // 사용하실땐 아래 주석과 함께 지워주세요
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setSettingMode,
 }: CreateRoomFormProps) => {
   const navigate = useNavigate();
+  const { setRoomId, roomInfo, roomId } = useRoomInfoStore();
+
+  useEffect(() => {
+    if (roomInfo) {
+      setSettingMode('Update');
+      return;
+    }
+    setSettingMode('Create');
+  }, [roomInfo, setSettingMode]);
 
   const {
     register,
@@ -40,10 +47,13 @@ const CreateRoomForm = ({
     getValues,
   } = useForm<CreateRoomFormType>({
     mode: 'onChange',
-    defaultValues: {}, //여기에 불러온 방 설정값들 넣어주시고, setSettingMode로 모드를 Update로 변경해주세요
+    defaultValues: {
+      title: roomInfo?.title,
+      password: roomInfo?.password,
+      round: roomInfo?.maxRound,
+      maxPlayer: roomInfo?.maxPlayer,
+    },
   });
-
-  const { setRoomId } = useRoomInfoStore();
 
   const { mutate: mutateCreateGameRoom } = useCreateGameRoom({
     onSuccess: (e) => {
@@ -77,7 +87,7 @@ const CreateRoomForm = ({
     };
 
     //getValues로 인하여 password에 빈 문자열이 들어올 수 있음
-    if (roomSetting.password !== undefined && !roomSetting.password.length) {
+    if (roomSetting.password != null && !roomSetting.password.length) {
       delete roomSetting.password;
     }
 
@@ -86,12 +96,13 @@ const CreateRoomForm = ({
 
   const onCreateRoom = () => {
     const roomSetting = getRoomSettings();
+
     if (settingMode === 'Create') {
       mutateCreateGameRoom({ ...roomSetting });
       return;
     }
     mutateUpdateGameRoom({
-      roomId: 0, //받아온 방 정보의 roomId를 기입해주세요
+      roomId: roomId,
       gameRoomUpdateRequest: { ...roomSetting },
     });
   };

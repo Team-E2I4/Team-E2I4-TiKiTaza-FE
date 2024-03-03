@@ -21,7 +21,7 @@ export interface I_RoomInfo {
   gameMode: 'WORD' | 'CODE' | 'SENTENCE';
   inviteCode: string | null;
   maxRound: number;
-  password: string | null;
+  password: string;
   maxPlayer: number;
   currentPlayer: number;
   isPlaying: boolean;
