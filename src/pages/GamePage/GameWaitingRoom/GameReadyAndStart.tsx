@@ -25,7 +25,7 @@ const GameReadyAndStart = ({
     return (
       <button
         onClick={() => {
-          handlePubStartGame();
+          isAllUserReady && handlePubStartGame();
         }}
         className={`w-[24.1rem] h-[10rem] flex justify-center items-center text-[2rem] transition-all duration-300 shadow-md shadow-black/50 rounded-[2.5rem]
         ${isAllUserReady ? `bg-coral-100` : `bg-coral-50 opacity-[0.5] cursor-not-allowed`}
