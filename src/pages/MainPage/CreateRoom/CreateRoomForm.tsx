@@ -87,7 +87,7 @@ const CreateRoomForm = ({
     };
 
     //getValues로 인하여 password에 빈 문자열이 들어올 수 있음
-    if (roomSetting.password != null && !roomSetting.password.length) {
+    if (roomSetting.password !== undefined && !roomSetting.password.length) {
       delete roomSetting.password;
     }
 
