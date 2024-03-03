@@ -2,15 +2,15 @@ import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
 import { BASE_PATH } from '@/generated/base';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
+import { getToken } from '@/utils/getToken';
 import { I_GameRoomResponse } from '../types/websocketType';
-import { useToken } from './useToken';
 
 const useWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
   const [gameRoomRes, setGameRoomRes] = useState({} as I_GameRoomResponse);
   const [isWsError, setIsWsError] = useState(false);
 
-  const { connectHeaders } = useToken();
+  const connectHeaders = getToken();
 
   useEffect(() => {
     if (!roomId) {
