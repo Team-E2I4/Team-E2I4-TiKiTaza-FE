@@ -49,7 +49,6 @@ const PrivateRoomModal = ({
     <Dialog.Root
       open={isOpen}
       onOpenChange={setIsOpen}>
-      <Dialog.Trigger></Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay
           className={
