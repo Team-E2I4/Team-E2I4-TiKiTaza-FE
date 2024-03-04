@@ -49,7 +49,6 @@ export interface I_IngameWsResponse {
   questions?: I_Question[];
 }
 export interface I_Question {
-  id: number;
   question: string;
 }
 export type IngameMessageType =
