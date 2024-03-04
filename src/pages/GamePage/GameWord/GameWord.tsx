@@ -1,17 +1,13 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Divider from '@/common/Divider/Divider';
 import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
+import useWordsStore from '@/store/useWordsStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
-import {
-  I_IngameWsResponse,
-  I_Question,
-  PayloadType,
-} from '../types/websocketType';
+import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
 import { wordRankDummy } from './wordDummy';
 
-const EMPTY_WORD = 20;
 const positions = ['center', 'left', 'right'];
 const WordCell = ({ children }: { children: ReactNode }) => {
   const random = positions[Math.floor(Math.random() * positions.length)];
@@ -22,10 +18,7 @@ const WordCell = ({ children }: { children: ReactNode }) => {
     </span>
   );
 };
-// 총 120개의 cell. 서버로부터 받을 단어 100개 + 랜덤20개(EMPTY_WORD)로 구성해야함
-const shuffle = (array: I_Question[]) => {
-  return array.sort(() => Math.random() - 0.5);
-};
+
 interface WordRankProps {
   userId: number;
   track: number;
@@ -83,17 +76,30 @@ const GameWord = ({
   // eslint-disable-next-line no-console
   console.log(ingameRoomRes, publishIngame); //unused disable용 콘솔입니다.
   const { register, handleSubmit, setValue, getValues } = useForm();
-  if (ingameRoomRes && checkIsEmptyObj(ingameRoomRes)) {
+  const { wordsStore, setWords, setWordUsed } = useWordsStore();
+  useEffect(() => {
+    if (ingameRoomRes?.submittedWord) {
+      const obj = {} as { [key: string]: number | string };
+      obj[ingameRoomRes?.submittedWord] = -1;
+      setWordUsed(obj);
+    }
+  }, [ingameRoomRes?.submittedWord]);
+  if (
+    !ingameRoomRes ||
+    !ingameRoomRes.questions ||
+    (ingameRoomRes && checkIsEmptyObj(ingameRoomRes))
+  ) {
     return <div>로딩실패</div>;
   }
-  const dummy = Array(EMPTY_WORD).fill({
-    id: Math.random() * 1001, //
-    question: ' ',
-  });
-  const words = ingameRoomRes?.questions?.concat(
-    ingameRoomRes.questions,
-    dummy
-  );
+
+  if (checkIsEmptyObj(wordsStore)) {
+    const words = {} as { [key: string]: number | string };
+    for (const idx in ingameRoomRes.questions) {
+      words[ingameRoomRes.questions[idx].question] = Number(idx);
+    }
+    setWords(words);
+    localStorage.setItem('test', JSON.stringify(ingameRoomRes.questions));
+  }
 
   return (
     <>
@@ -101,9 +107,9 @@ const GameWord = ({
       <div className='grow'>
         <div className='flex flex-col items-center justify-around h-[60rem]'>
           <div className='h-[25rem] grid grid-rows-[repeat(8,minmax(0,1fr))] grid-cols-[repeat(14,9rem)] text-[1.6rem] p-4 box-content bg-gray-10 rounded-2xl'>
-            {words &&
-              shuffle(words).map((w, i) => {
-                return <WordCell key={i}>{w.question}</WordCell>;
+            {!checkIsEmptyObj(wordsStore) &&
+              Object.entries(wordsStore).map((w, i) => {
+                return <WordCell key={i}>{w[1] >= 0 ? w[0] : ' '}</WordCell>;
               })}
           </div>
           <div className='flex flex-row items-end w-10/12 h-[30rem] mt-4'>
@@ -132,6 +138,7 @@ const GameWord = ({
                   setValue('wordInput', '');
                 })}>
                 <input
+                  autoFocus
                   {...register('wordInput')}
                   className='w-[20rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl bg-white border-2 border-green-100 my-4 outline-0 text-gray-300 tracking-wider box-border'
                 />
