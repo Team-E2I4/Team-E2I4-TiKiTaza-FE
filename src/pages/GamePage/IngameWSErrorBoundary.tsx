@@ -1,4 +1,4 @@
-import useRoomIdStore from '@/store/useRoomIdStore';
+import useRoomInfoStore from '@/store/useRoomInfoStore';
 import WsError from './common/WsError';
 import useIngameWebsocket from './hooks/useIngameWebsocket';
 import { I_IngameWsResponse } from './types/websocketType';
@@ -11,7 +11,7 @@ export const IngameWSErrorBoundary = ({
     publishIngame: (destination: string, payload: object) => void
   ) => JSX.Element;
 }) => {
-  const { roomId } = useRoomIdStore();
+  const { roomId } = useRoomInfoStore();
 
   const { ingameRoomRes, isWsError, publishIngame } =
     useIngameWebsocket(roomId);
