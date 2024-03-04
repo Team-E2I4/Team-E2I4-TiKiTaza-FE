@@ -61,3 +61,8 @@ export type IngameMessageType =
 type GameScoreType = {
   [key: string]: number;
 };
+
+export type PayloadType =
+  | { currentScore: number }
+  | { word: string }
+  | { currentRound: number };

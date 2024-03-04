@@ -3,7 +3,7 @@ import Divider from '@/common/Divider/Divider';
 import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import Input from '@/common/Input/Input';
-import { I_IngameWsResponse } from '../types/websocketType';
+import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
 import { wordDummy, wordRankDummy } from './wordDummy';
 
 const EMPTY_WORD = 20;
@@ -74,7 +74,7 @@ const GameWord = ({
   publishIngame,
 }: {
   ingameRoomRes?: I_IngameWsResponse;
-  publishIngame: (destination: string, payload: object) => void;
+  publishIngame: (destination: string, payload: PayloadType) => void;
 }) => {
   // eslint-disable-next-line no-console
   console.log(ingameRoomRes, publishIngame); //unused disable용 콘솔입니다.
