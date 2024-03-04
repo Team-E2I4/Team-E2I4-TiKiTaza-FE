@@ -4,7 +4,11 @@ import { BASE_PATH } from '@/generated/base';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { getToken } from '@/utils/getToken';
 import { I_IngameWsResponse } from '../types/websocketType';
-import { PayloadType } from '../types/websocketType';
+
+export type PayloadType =
+  | { info: number }
+  | { 'word-info': string }
+  | { currentRound: number };
 
 const useIngameWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
