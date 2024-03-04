@@ -14,9 +14,7 @@ const GameRoomUserItem = ({
   userId: number;
   handlePubKickUser: HandlePubKickUserType;
 }) => {
-  const rank = 3; // TODO : 회원조회 쿼리 값으로 변경
-
-  const { memberId, nickname, readyStatus: isReady } = gameRoomUser;
+  const { memberId, nickname, ranking, readyStatus: isReady } = gameRoomUser;
 
   const isAdmin = useMemo(() => hostId === memberId, [hostId, memberId]); // 방장인지
   const isAdminMe = useMemo(() => hostId === userId, [hostId, userId]); //본인이 방장인지
@@ -54,8 +52,8 @@ const GameRoomUserItem = ({
           <div className='w-[10rem] py-[0.4rem] bg-green-70 rounded-[1rem]'>
             {nickname}
           </div>
-          <div className='w-[5rem] py-[0.4rem] bg-green-70 rounded-[1rem] text-[1.4rem]'>
-            {rank}등
+          <div className='w-[6.4rem] py-[0.4rem] bg-green-70 rounded-[1rem] text-[1.4rem]'>
+            {ranking === -1 ? '등수 없음' : `${ranking}등`}
           </div>
         </div>
       </div>
