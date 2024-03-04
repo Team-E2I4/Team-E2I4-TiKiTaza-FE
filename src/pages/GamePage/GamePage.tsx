@@ -52,10 +52,7 @@ const GamePage = () => {
       setRoomInfo(gameRoomRes.roomInfo);
     }
 
-    if (isPlaying) {
-      navigate('/main', { replace: true });
-    }
-    if (isKicked) {
+    if (isKicked || isPlaying) {
       navigate('/main', { replace: true });
       navigate(0);
     }
