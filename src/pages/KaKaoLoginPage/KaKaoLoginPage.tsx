@@ -9,7 +9,7 @@ const KaKaoLoginPage = () => {
     document.location.toString()
   ).searchParams.get('code') as string;
 
-  const { mutateAsync: mutateKaKaoLogin } = useKaKaoLogin({
+  const { mutate: mutateKaKaoLogin } = useKaKaoLogin({
     onSuccess: () => {
       alert('로그인 성공');
       navigate('/main');
@@ -17,19 +17,17 @@ const KaKaoLoginPage = () => {
   });
 
   useEffect(() => {
-    (async () => {
-      if (!AUTHORIZATION_CODE) {
-        navigate('/login');
-        return;
-      }
+    if (!AUTHORIZATION_CODE) {
+      navigate('/login');
+      return;
+    }
 
-      try {
-        mutateKaKaoLogin(AUTHORIZATION_CODE);
-      } catch (error) {
-        //ToDo: Toast 에러 메시지 처리
-        navigate('/login');
-      }
-    })();
+    try {
+      mutateKaKaoLogin(AUTHORIZATION_CODE);
+    } catch (error) {
+      //ToDo: Toast 에러 메시지 처리
+      navigate('/login');
+    }
   }, [AUTHORIZATION_CODE, mutateKaKaoLogin, navigate]);
 
   return (
