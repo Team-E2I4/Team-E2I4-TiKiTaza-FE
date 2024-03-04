@@ -16,6 +16,7 @@ import IngameRank from '@/common/Ingame/IngameRank';
 import { SentenceNext, SentenceNow } from '@/common/Ingame/SentenceBlocks';
 import Input from '@/common/Input/Input';
 import useCanvas from '@/hooks/useCanvas';
+import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 const sentenceDummy = [
   '저녁 때 돌아갈 집이 있다는 것',
   '힘들 때 마음 속으로 생각 할 사람이 있다는 것',
@@ -25,8 +26,14 @@ const sentenceDummy = [
   '세상에 와서 내가 가진 생각 가운데서',
   '가장 예쁜 생각을 너에게 주고 싶다.',
 ];
-const GameSentence = () => {
+const GameSentence = ({
+  ingameRoomRes,
+  publishIngame,
+}: InagmeWsChildrenProps) => {
   //이하 임의값 테스트 코드입니다
+
+  // eslint-disable-next-line no-console
+  console.log(ingameRoomRes, publishIngame); //unused disable용 콘솔입니다.
   const [idx, setIdx] = useState(1);
   setInterval(() => {
     setIdx((idx) => (idx + 1) % sentenceDummy.length);
