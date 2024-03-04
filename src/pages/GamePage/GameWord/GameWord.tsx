@@ -8,6 +8,7 @@ import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
 import { wordRankDummy } from './wordDummy';
 
+export type WordQuestionType = { [key: string]: number };
 const positions = ['center', 'left', 'right'];
 const WordCell = ({ children }: { children: ReactNode }) => {
   const random = positions[Math.floor(Math.random() * positions.length)];
@@ -73,17 +74,17 @@ const GameWord = ({
   ingameRoomRes?: I_IngameWsResponse;
   publishIngame: (destination: string, payload: PayloadType) => void;
 }) => {
-  // eslint-disable-next-line no-console
-  console.log(ingameRoomRes, publishIngame); //unused disable용 콘솔입니다.
   const { register, handleSubmit, setValue, getValues } = useForm();
-  const { wordsStore, setWords, setWordUsed } = useWordsStore();
+  const { wordsStore, setWordStore, setSubmittedWord } = useWordsStore();
+
   useEffect(() => {
     if (ingameRoomRes?.submittedWord) {
-      const obj = {} as { [key: string]: number | string };
-      obj[ingameRoomRes?.submittedWord] = -1;
-      setWordUsed(obj);
+      const submittedWord: WordQuestionType = {};
+      submittedWord[ingameRoomRes?.submittedWord] = -1;
+      setSubmittedWord(submittedWord);
     }
   }, [ingameRoomRes?.submittedWord]);
+
   if (
     !ingameRoomRes ||
     !ingameRoomRes.questions ||
@@ -93,11 +94,11 @@ const GameWord = ({
   }
 
   if (checkIsEmptyObj(wordsStore)) {
-    const words = {} as { [key: string]: number | string };
+    const words: WordQuestionType = {};
     for (const idx in ingameRoomRes.questions) {
       words[ingameRoomRes.questions[idx].question] = Number(idx);
     }
-    setWords(words);
+    setWordStore(words);
     localStorage.setItem('test', JSON.stringify(ingameRoomRes.questions));
   }
 

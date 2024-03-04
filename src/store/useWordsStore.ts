@@ -1,15 +1,16 @@
 import { create } from 'zustand';
+import { WordQuestionType } from '@/pages/GamePage/GameWord/GameWord';
 
 interface I_UseWordsStore {
-  wordsStore: object;
-  setWords: (wordsAll: object) => void;
-  setWordUsed: (word: object) => void;
+  wordsStore: WordQuestionType;
+  setWordStore: (wordsAll: WordQuestionType) => void;
+  setSubmittedWord: (word: WordQuestionType) => void;
 }
 
 const useWordsStore = create<I_UseWordsStore>((set) => ({
   wordsStore: {},
-  setWords: (wordsAll: object) => set({ wordsStore: wordsAll }),
-  setWordUsed: (word: object) =>
+  setWordStore: (wordsAll: WordQuestionType) => set({ wordsStore: wordsAll }),
+  setSubmittedWord: (word: WordQuestionType) =>
     set((state) => ({ wordsStore: { ...state.wordsStore, ...word } })),
 }));
 
