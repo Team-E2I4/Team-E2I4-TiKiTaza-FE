@@ -26,14 +26,12 @@ const GameRoomListItem = ({
   setIsOpen,
 }: GameRoomListItemProps) => {
   const { setRoomId } = useRoomIdStore();
+
   const navigate = useNavigate();
 
   const { mutate: mutateEnterGameRoom } = useEnterGameRoom({
-    onSuccess: (e) => {
-      if (!e.data.data) {
-        throw new Error('roomId가 존재하지 않습니다');
-      }
-      setRoomId(e.data.data.roomId);
+    onSuccess: () => {
+      setRoomId(id);
       navigate('/game');
     },
   });
