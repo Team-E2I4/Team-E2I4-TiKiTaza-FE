@@ -5,6 +5,11 @@ import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { getToken } from '@/utils/getToken';
 import { I_IngameWsResponse } from '../types/websocketType';
 
+type PayloadType =
+  | { info: number }
+  | { 'word-info': string }
+  | { currentRound: number };
+
 const useIngameWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
   const [ingameRoomRes, setIngameRoomRes] = useState({} as I_IngameWsResponse);
@@ -66,7 +71,7 @@ const useIngameWebsocket = (roomId: number | null) => {
     };
   }, []);
 
-  const publishIngame = (destination: string, payload: object) => {
+  const publishIngame = (destination: string, payload: PayloadType) => {
     stompClient.current?.publish({
       destination: `/to/game/${roomId}${destination}`,
       headers: connectHeaders,
