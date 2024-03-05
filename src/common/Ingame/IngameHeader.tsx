@@ -24,7 +24,8 @@ const IngameHeader = () => {
         <div className='w-[40rem] truncate text-[4rem]'>{roomInfo?.title}</div>
         <div className='grow'>참여 {roomInfo?.currentPlayer}명</div>
         <div className='text-[3rem]'>
-          🏁 {roomInfo?.currentPlayer} / {roomInfo?.maxPlayer}
+          {/* TODO: currentPlayer 대신 currentRound 필요 */}
+          🏁 {roomInfo?.currentPlayer} / {roomInfo?.maxRound}
         </div>
       </div>
     </>
