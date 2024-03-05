@@ -13,10 +13,10 @@ import {
 } from '@/common/Ingame/ingameConstants';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
-import Input from '@/common/Input/Input';
 import useCanvas from '@/hooks/useCanvas';
 import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
 import CodeContainer from './CodeContainer';
+import CodeForm from './CodeForm';
 
 interface GameCodeProps {
   ingameRoomRes: I_IngameWsResponse;
@@ -58,6 +58,9 @@ const GameCode = ({ ingameRoomRes, publishIngame }: GameCodeProps) => {
       }
     }
   }`;
+
+  const convertedDummyCode = dummyCode.split('\n').map((row) => row.trim());
+  // console.table('convertedDummyCode', convertedDummyCode);
 
   const blockOverflowPos = useCallback((pos: I_CarCoord) => {
     if (pos.x === START_X && pos.y === START_Y) {
@@ -160,7 +163,7 @@ const GameCode = ({ ingameRoomRes, publishIngame }: GameCodeProps) => {
                 value={100}
               />
             </div>
-            <Input />
+            <CodeForm convertedDummyCode={convertedDummyCode} />
           </div>
         </div>
       </div>
