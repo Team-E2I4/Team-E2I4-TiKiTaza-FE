@@ -98,7 +98,7 @@ const GameWord = ({
                 return (
                   <WordCell
                     key={i}
-                    rd={i % 3}>
+                    randomIndex={i % 3}>
                     {w[1] >= 0 ? w[0] : ' '}
                   </WordCell>
                 );
