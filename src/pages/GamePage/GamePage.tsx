@@ -3,10 +3,9 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import WsError from './common/WsError';
-// import GameCode from './GameCode/GameCode';
 // import GameSentence from './GameSentence/GameSentence';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
-import GameWord from './GameWord/GameWord';
+// import GameWord from './GameWord/GameWord';
 import useWebsocket from './hooks/useWebsocket';
 import { IngameWSErrorBoundary } from './IngameWSErrorBoundary';
 
@@ -104,10 +103,15 @@ const GamePage = () => {
 
             {/* {selectedMode === 'SENTENCE' && (
               <GameSentence ingameRoomRes={ingameRoomRes} />
-            )}
-            {selectedMode === 'CODE' && (
-              <GameCode ingameRoomRes={ingameRoomRes} />
-            )}
+            )} */}
+            {/* {selectedMode === 'CODE' && (
+            <GameCode
+              ingameRoomRes={ingameRoomRes}
+              publishIngame={publishIngame}
+            />
+            )} */}
+
+            {/*
             {selectedMode === 'WORD' && (
               <GameWord ingameRoomRes={ingameRoomRes} />
             )} */}

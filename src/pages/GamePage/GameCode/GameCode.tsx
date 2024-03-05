@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef } from 'react';
-import Highlight from 'react-highlight';
 import car1 from '@/assets/cars/car11.png';
 import Dashboard from '@/common/Ingame/Dashboard';
 import {
@@ -16,8 +15,33 @@ import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import Input from '@/common/Input/Input';
 import useCanvas from '@/hooks/useCanvas';
+import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
+import CodeContainer from './CodeContainer';
 
-const GameContainer = () => {
+interface GameCodeProps {
+  ingameRoomRes: I_IngameWsResponse;
+  publishIngame: (destination: string, payload: PayloadType) => void;
+}
+interface I_CarCoord {
+  x: number;
+  y: number;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const GameCode = ({ ingameRoomRes, publishIngame }: GameCodeProps) => {
+  const canvasRef = useCanvas({
+    setCanvas: (canvas: HTMLCanvasElement) => {
+      canvas.width = CANVAS_WIDTH;
+      canvas.height = CANVAS_HEIGHT;
+    },
+  });
+
+  const carImageRef = useRef<HTMLImageElement | null>(null);
+  const car1Ref = useRef<I_CarCoord>({ x: START_X, y: START_Y });
+  // 추후: const carsRef = useRef<I_CarCoord[]>([]);
+  const carDirRef = useRef(CAR_DIRECTION.RIGHT);
+
+  // TODO: 추후 서버에서 전달하는 문제를 여기서 꺼내기
   const dummyCode = `function dfs(graph, start, visited) {
     const stack = [];
     stack.push(start);
@@ -34,30 +58,6 @@ const GameContainer = () => {
       }
     }
   }`;
-  return (
-    <>
-      <div className='w-[60rem] select-none'>
-        <Highlight className='javascript'>{dummyCode}</Highlight>
-      </div>
-    </>
-  );
-};
-const GameCode = () => {
-  const canvasRef = useCanvas({
-    setCanvas: (canvas: HTMLCanvasElement) => {
-      canvas.width = CANVAS_WIDTH;
-      canvas.height = CANVAS_HEIGHT;
-    },
-  });
-
-  interface I_CarCoord {
-    x: number;
-    y: number;
-  }
-  const carImageRef = useRef<HTMLImageElement | null>(null);
-  const car1Ref = useRef<I_CarCoord>({ x: START_X, y: START_Y });
-  // 추후: const carsRef = useRef<I_CarCoord[]>([]);
-  const carDirRef = useRef(CAR_DIRECTION.RIGHT);
 
   const blockOverflowPos = useCallback((pos: I_CarCoord) => {
     if (pos.x === START_X && pos.y === START_Y) {
@@ -99,7 +99,13 @@ const GameCode = () => {
     [blockOverflowPos]
   );
 
+  const timerForTest = setInterval(() => {
+    updateCarCoord(car1Ref.current);
+  }, 1500);
+
   useEffect(() => {
+    // console.log('ingameRoomRes', ingameRoomRes);
+
     if (car1) {
       const img = new Image(20, 20); //FIX:사이즈 적용안됨.. car1.png를 불러와서 줄이고싶으면?
       img.src = car1;
@@ -128,10 +134,6 @@ const GameCode = () => {
     };
   }, []);
 
-  const timerForTest = setInterval(() => {
-    updateCarCoord(car1Ref.current);
-  }, 1500);
-
   return (
     <>
       <IngameHeader />
@@ -152,7 +154,7 @@ const GameCode = () => {
                 type='wpm'
                 value={90}
               />
-              <GameContainer />
+              <CodeContainer dummyCode={dummyCode} />
               <Dashboard
                 type='accuracy'
                 value={100}
