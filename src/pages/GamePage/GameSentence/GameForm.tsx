@@ -8,6 +8,43 @@ interface GameFormProps {
   sample: string;
 }
 
+//완성된 글자에 대해 오타검출
+const getTypoCompletedChar = (
+  decomposedSample: (string | string[])[],
+  decomposedUserInput: (string | string[])[]
+) => {
+  const [sampleChosung, sampleJungsung, sampleJongsung] = decomposedSample;
+  const [userChosung, userJungsung, userJongsung] = decomposedUserInput;
+
+  if (sampleChosung === ' ') {
+    return sampleChosung !== userChosung;
+  }
+
+  return (
+    userChosung !== sampleChosung ||
+    [...sampleJungsung].every((el, i) => el !== userJungsung[i]) ||
+    userJongsung !== sampleJongsung
+  );
+};
+
+//현재 입력중인 글자에 대해 오타검출
+const getTypoTypingChar = (
+  decomposedSample: (string | string[])[],
+  decomposedUserInput: (string | string[])[]
+) => {
+  const [sampleChosung, sampleJungsung] = decomposedSample;
+  const [userChosung, userJungsung] = decomposedUserInput;
+
+  //공백이거나 유저가 아직 초성만 입력했을 경우
+  if (sampleChosung === ' ' || !userJungsung) {
+    return sampleChosung !== userChosung;
+  }
+
+  return [...sampleJungsung]
+    .slice(0, userJungsung.length)
+    .every((el, i) => el !== userJungsung[i]);
+};
+
 const GameForm = ({
   inputName,
   sample = '띄어쓰기를 제외한 글자의 총 개수를 백분율화 한다',
@@ -34,10 +71,12 @@ const GameForm = ({
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue('sentence', e.target.value);
+
     setIsTypoCheckList(Array(decomposedSample.length).fill(''));
     if (!e.target.value) {
       return;
     }
+
     let isCorredKeyPressed = true;
 
     const inputText = e.target.value;
@@ -45,59 +84,38 @@ const GameForm = ({
     const decomposedCurrentInput = [...inputText].map((el) =>
       el !== ' ' ? decomposeKrChar(el) : [' ']
     );
-    //현재글자만 비교
+
     const currentIndex = inputText.length - 1;
 
-    const [userChosung, userJungsung] = decomposedCurrentInput[currentIndex];
+    const isTypoAtTypingChar = getTypoTypingChar(
+      decomposedSample[currentIndex],
+      decomposedCurrentInput[currentIndex]
+    );
 
-    const [sampleChosung, sampleJungsung] = decomposedSample[currentIndex];
-
-    const isChosungTypo =
-      userChosung && sampleChosung && userChosung !== sampleChosung;
-
-    if (isChosungTypo) {
+    if (isTypoAtTypingChar) {
       isCorredKeyPressed = false;
       setIsTypoCheckList((arr) => {
         const temp = [...arr];
         temp[currentIndex] = 'typo';
         return temp;
       });
-    }
-
-    const isJungsungTyping = userJungsung?.length;
-    if (isJungsungTyping) {
-      const isJungsungTypo = [...sampleJungsung]
-        .slice(0, userJungsung.length)
-        .every((el, i) => el !== userJungsung[i]);
-      if (isJungsungTypo) {
-        isCorredKeyPressed = false;
-        setIsTypoCheckList((arr) => {
-          const temp = [...arr];
-          temp[currentIndex] = 'typo';
-          return temp;
-        });
-      }
+    } else {
+      setIsTypoCheckList((arr) => {
+        const temp = [...arr];
+        temp[currentIndex] = 'correct';
+        return temp;
+      });
     }
 
     //이전글자까지 비교
     //[]
-
     decomposedSample
       .slice(0, inputText.length - 1)
-      .forEach(([sampleChosung, sampleJungsung, sampleJongsung], i) => {
-        const [userChosung, userJungsung, userJongsung] =
-          decomposedCurrentInput[i];
-
-        let isTypo = false;
-        if (sampleChosung === ' ') {
-          isTypo = sampleChosung !== userChosung;
-        } else {
-          isTypo =
-            userChosung !== sampleChosung ||
-            [...sampleJungsung].every((el, i) => el !== userJungsung[i]) ||
-            userJongsung !== sampleJongsung;
-        }
-
+      .forEach((decomposedSampleEl, i) => {
+        const isTypo = getTypoCompletedChar(
+          decomposedSampleEl,
+          decomposedCurrentInput[i]
+        );
         if (isTypo) {
           isCorredKeyPressed = false;
           setIsTypoCheckList((arr) => {
