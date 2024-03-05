@@ -22,6 +22,7 @@ const getTypoCompletedKrChar = (
 
   return (
     userChosung !== sampleChosung ||
+    sampleJungsung.length !== userJungsung?.length ||
     [...sampleJungsung].every((el, i) => el !== userJungsung[i]) ||
     userJongsung !== sampleJongsung
   );
