@@ -2,6 +2,12 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth';
 import storageFactory from '@/utils/storageFactory';
 
+const authMap = new Map([
+  ['/', 1],
+  ['/login', 1],
+  ['/login/oauth2/code/kakao', 1],
+]);
+
 const AuthRoute = () => {
   const { pathname } = useLocation();
   const { error, isPending } = useAuthCheck();
@@ -10,11 +16,7 @@ const AuthRoute = () => {
 
   //로컬스토리지에 토큰이 없을때
   if (!getItem('MyToken', '')) {
-    if (
-      pathname === '/login' ||
-      pathname === '/' ||
-      pathname === '/login/oauth2/code/kakao'
-    ) {
+    if (authMap.get(pathname)) {
       return <Outlet />;
     }
     alert('로그인이 필요한 페이지 입니다');
@@ -29,11 +31,7 @@ const AuthRoute = () => {
   //로그인 하지 않았을 때(400, 401, 404, 409일때 로그인 안했다고 처리함)
   if (error) {
     //로그인관련 페이지라면 그대로 보여준다
-    if (
-      pathname === '/login' ||
-      pathname === '/' ||
-      pathname === '/login/oauth2/code/kakao'
-    ) {
+    if (authMap.get(pathname)) {
       return <Outlet />;
     }
 
@@ -43,11 +41,7 @@ const AuthRoute = () => {
   }
 
   //로그인 했을때, 로그인 관련 페이지는 접근 불가
-  if (
-    pathname === '/login' ||
-    pathname === '/' ||
-    pathname === '/login/oauth2/code/kakao'
-  ) {
+  if (authMap.get(pathname)) {
     alert('로그인 한 유저는 접근할 수 없는 페이지 입니다');
     return <Navigate to='/main' />;
   }

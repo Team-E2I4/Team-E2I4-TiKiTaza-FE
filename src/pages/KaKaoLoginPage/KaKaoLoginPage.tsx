@@ -5,14 +5,16 @@ import { useKaKaoLogin } from '@/hooks/useAuth';
 const KaKaoLoginPage = () => {
   const navigate = useNavigate();
 
-  const AUTHORIZATION_CODE: string = new URL(
-    document.location.toString()
-  ).searchParams.get('code') as string;
+  const url = new URL(document.location.href);
+  const AUTHORIZATION_CODE = url.searchParams.get('code');
 
-  const { mutate: mutateKaKaoLogin } = useKaKaoLogin({
+  const { mutate: mutateKaKaoLogin, error } = useKaKaoLogin({
     onSuccess: () => {
       alert('로그인 성공');
-      navigate('/main');
+      navigate('/main', { replace: true });
+    },
+    onError: (error) => {
+      alert(error.message);
     },
   });
 
@@ -22,18 +24,14 @@ const KaKaoLoginPage = () => {
       return;
     }
 
-    try {
-      mutateKaKaoLogin(AUTHORIZATION_CODE);
-    } catch (error) {
-      //ToDo: Toast 에러 메시지 처리
-      navigate('/login');
-    }
+    mutateKaKaoLogin(AUTHORIZATION_CODE);
   }, [AUTHORIZATION_CODE, mutateKaKaoLogin, navigate]);
 
   return (
     <div>
       <p>로그인 중입니다.</p>
       <p>잠시만 기다려주세요.</p>
+      {error && <p>{error.message}</p>}
     </div>
   );
 };
