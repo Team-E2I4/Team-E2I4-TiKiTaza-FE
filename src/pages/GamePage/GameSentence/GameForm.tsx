@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { decomposeKrChar } from './decomposeKrChar';
 import useTypingState from './useTypingState';
@@ -6,6 +6,7 @@ import useTypingState from './useTypingState';
 interface GameFormProps {
   inputName: 'sentence';
   sample: string;
+  handleCorrectWordSubmit?: () => void;
 }
 
 //완성된 글자에 대해 오타검출
@@ -60,7 +61,6 @@ const GameForm = ({
 
   const { cpm, accurate, onInputChange } = useTypingState();
 
-  const sampleRef = useRef(null);
   const decomposedSample = useMemo(
     () => [...sample].map((el) => (el !== ' ' ? decomposeKrChar(el) : [' '])),
     [sample]
@@ -79,20 +79,36 @@ const GameForm = ({
     // 제출 시 실행할 로직을 여기에 추가
   };
 
+  const initTypoCheckList = () =>
+    setIsTypoCheckList(Array(decomposedSample.length).fill(''));
+
+  const handleCurrentCharTypoUi = (isTypo: boolean, index: number) =>
+    setIsTypoCheckList((arr) =>
+      arr.map((el, i) => (i === index ? (isTypo ? 'typo' : 'correct') : el))
+    );
+
+  const markTypoAfterIncorrectChar = (index: number) => {
+    if (firstTypoIndex === -1) {
+      return;
+    }
+
+    setIsTypoCheckList((arr) =>
+      arr.map((el, i) => (firstTypoIndex <= i && index >= i ? 'typo' : el))
+    );
+  };
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue('sentence', e.target.value);
-
-    setIsTypoCheckList((arr) => {
-      const temp = [...arr];
-      temp.forEach((_, i, _arr) => {
-        _arr[i] = '';
-      });
-      return temp;
-    });
-
-    let isCorredKeyPressed = true;
-
     const inputText = e.target.value;
+
+    setValue('sentence', inputText);
+
+    initTypoCheckList();
+
+    if (!inputText) {
+      return;
+    }
+
+    let isCorrectKeyPressed = true;
 
     const decomposedCurrentInput = [...inputText].map((el) =>
       el !== ' ' ? decomposeKrChar(el) : [' ']
@@ -106,60 +122,35 @@ const GameForm = ({
     );
 
     if (isTypoAtTypingChar) {
-      isCorredKeyPressed = false;
-      setIsTypoCheckList((arr) => {
-        const temp = [...arr];
-        temp[currentIndex] = 'typo';
-        return temp;
-      });
-    } else {
-      setIsTypoCheckList((arr) => {
-        const temp = [...arr];
-        temp[currentIndex] = 'correct';
-        return temp;
-      });
+      isCorrectKeyPressed = false;
     }
 
+    //현재 타이핑하는 글자 오타를 UI반영하는 함수
+    handleCurrentCharTypoUi(isTypoAtTypingChar, currentIndex);
+
+    //이전 타이핑한 글자 오타를 UI반영하는 로직
     decomposedSample
-      .slice(0, inputText.length - 1)
+      .slice(0, decomposedCurrentInput.length - 1)
       .forEach((decomposedSampleEl, i) => {
         const isTypo = getTypoCompletedKrChar(
           decomposedSampleEl,
           decomposedCurrentInput[i]
         );
+
         if (isTypo) {
-          isCorredKeyPressed = false;
-          setIsTypoCheckList((arr) => {
-            const temp = [...arr];
-            temp[i] = 'typo';
-            return temp;
-          });
-        } else {
-          setIsTypoCheckList((arr) => {
-            const temp = [...arr];
-            temp[i] = 'correct';
-            return temp;
-          });
+          isCorrectKeyPressed = false;
         }
+
+        handleCurrentCharTypoUi(isTypo, i);
       });
 
-    if (firstTypoIndex !== -1) {
-      setIsTypoCheckList((arr) => {
-        const temp = [...arr];
-        temp.forEach((_, i, _arr) => {
-          if (firstTypoIndex <= i && currentIndex >= i) {
-            _arr[i] = 'typo';
-          }
-        });
-        return temp;
-      });
-    }
+    markTypoAfterIncorrectChar(currentIndex);
 
-    onInputChange(isCorredKeyPressed);
+    onInputChange(isCorrectKeyPressed, firstTypoIndex !== -1);
   };
   return (
     <>
-      <div ref={sampleRef}>
+      <div>
         {[...sample].map((char, i) => (
           <span
             className={`

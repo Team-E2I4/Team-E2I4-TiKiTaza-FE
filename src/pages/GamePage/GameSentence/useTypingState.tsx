@@ -12,8 +12,10 @@ const useTypingState = () => {
     setStartTime(new Date());
   };
 
-  const onInputChange = (isCorrectKey: boolean) => {
-    setTotalKeyDown((prevKeyDown) => prevKeyDown + 1);
+  const onInputChange = (isCorrectKey: boolean, didTypo: boolean) => {
+    if (!didTypo) {
+      setTotalKeyDown((prevKeyDown) => prevKeyDown + 1);
+    }
     if (isCorrectKey) {
       setCorrectKeyDown((prevCorrectKeyDown) => prevCorrectKeyDown + 1);
     }
