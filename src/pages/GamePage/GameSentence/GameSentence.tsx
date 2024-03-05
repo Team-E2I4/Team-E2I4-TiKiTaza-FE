@@ -14,9 +14,9 @@ import {
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import { SentenceNext, SentenceNow } from '@/common/Ingame/SentenceBlocks';
-import Input from '@/common/Input/Input';
 import useCanvas from '@/hooks/useCanvas';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
+import GameForm from './GameForm';
 const sentenceDummy = [
   '저녁 때 돌아갈 집이 있다는 것',
   '힘들 때 마음 속으로 생각 할 사람이 있다는 것',
@@ -34,10 +34,13 @@ const GameSentence = ({
 
   // eslint-disable-next-line no-console
   console.log(ingameRoomRes, publishIngame); //unused disable용 콘솔입니다.
+
   const [idx, setIdx] = useState(1);
+
   setInterval(() => {
     setIdx((idx) => (idx + 1) % sentenceDummy.length);
-  }, 30000);
+  }, 300000000);
+
   const [wpmTest, setWpmTest] = useState(0);
   const [accTest, setAccTest] = useState(0);
   setInterval(() => {
@@ -133,8 +136,11 @@ const GameSentence = ({
 
   const timerForTest = setInterval(() => {
     updateCarCoord(car1Ref.current);
-  }, 150000);
+  }, 15000);
 
+  /* 
+
+  */
   return (
     <>
       <IngameHeader />
@@ -151,7 +157,10 @@ const GameSentence = ({
           />
           <div className='flex flex-col items-center justify-center z-10'>
             <SentenceNow text={sentenceDummy[idx]} />
-            <Input />
+            <GameForm
+              inputName='sentence'
+              sample='gd'
+            />
             <SentenceNext text={sentenceDummy[idx + 1]} />
             <SentenceNext text={sentenceDummy[idx + 2]} />
           </div>
