@@ -1,6 +1,6 @@
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import WsError from './common/WsError';
-import useIngameWebsocket, { PayloadType } from './hooks/useIngameWebsocket';
+import useIngameWebsocket from './hooks/useIngameWebsocket';
 import { I_IngameWsResponse } from './types/websocketType';
 import { PayloadType } from './types/websocketType';
 
