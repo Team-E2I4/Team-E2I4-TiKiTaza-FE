@@ -1,6 +1,7 @@
 import { ChangeEvent, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { decomposeKrChar } from './decomposeKrChar';
+import useTypingState from './useTypingState';
 
 interface GameFormProps {
   inputName: 'sentence';
@@ -14,6 +15,8 @@ const GameForm = ({
   const { control, handleSubmit, setValue } = useForm<{ [inputName]: string }>({
     mode: 'onChange',
   });
+
+  const { cpm, accurate, onInputChange, onKeyDown } = useTypingState();
 
   const sampleRef = useRef(null);
 
@@ -32,35 +35,48 @@ const GameForm = ({
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue('sentence', e.target.value);
-    if (!e.target.value) {
-      return;
-    }
-    /* 
-      1. 현재 입력중인 단어는 종성제외 맞으면 ok
-      2. 다음 단어로 넘어갔을 시 종성이 다르면 에러처리
-    */
+
     setIsTypoArr((arr) => {
       let temp = [...arr];
       temp = Array(decomposedSample.length).fill(0);
       return temp;
     });
+
+    if (!e.target.value) {
+      return;
+    }
+    let isCorredKeyPressed = true;
+
     const inputText = e.target.value;
 
     const decomposedCurrentInput = [...inputText].map((el) =>
       el !== ' ' ? decomposeKrChar(el) : [' ']
     );
+
     //현재글자만 비교
     const currentIndex = inputText.length - 1;
+
     const [userChosung, userJungsung] = decomposedCurrentInput[currentIndex];
+
     const [sampleChosung, sampleJungsung] = decomposedSample[currentIndex];
-    if (userChosung && sampleChosung && userChosung !== sampleChosung) {
+
+    const isChosungTypo =
+      userChosung && sampleChosung && userChosung !== sampleChosung;
+
+    if (isChosungTypo) {
+      isCorredKeyPressed = false;
       setIsTypoArr((arr) => {
         const temp = [...arr];
         temp[currentIndex] = 1;
         return temp;
       });
     }
-    if (userJungsung && sampleJungsung && userJungsung !== sampleJungsung) {
+
+    const isJungsungTypo =
+      userJungsung && sampleJungsung && userJungsung !== sampleJungsung;
+
+    if (isJungsungTypo) {
+      isCorredKeyPressed = false;
       setIsTypoArr((arr) => {
         const temp = [...arr];
         temp[currentIndex] = 1;
@@ -80,7 +96,9 @@ const GameForm = ({
         userChosung !== sampleChosung ||
         userJungsung !== sampleJungsung ||
         userJongsung !== sampleJongsung;
+
       if (isTypo) {
+        isCorredKeyPressed = false;
         setIsTypoArr((arr) => {
           const temp = [...arr];
           temp[i] = 1;
@@ -88,6 +106,8 @@ const GameForm = ({
         });
       }
     }
+
+    onInputChange(isCorredKeyPressed);
   };
   return (
     <>
@@ -113,11 +133,15 @@ const GameForm = ({
                 {...field}
                 id={inputName}
                 onChange={handleInputChange}
+                maxLength={decomposedSample.length}
+                onKeyDown={onKeyDown}
               />
             </>
           )}
         />
       </form>
+      <span>타수 : {cpm}</span>
+      <span>정확도 : {accurate}%</span>
       {sample}
     </>
   );
