@@ -3,12 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { BASE_PATH } from '@/generated/base';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { getToken } from '@/utils/getToken';
-import { I_IngameWsResponse } from '../types/websocketType';
-
-export type PayloadType =
-  | { currentScore: number }
-  | { word: string }
-  | { currentRound: number };
+import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
 
 const useIngameWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
