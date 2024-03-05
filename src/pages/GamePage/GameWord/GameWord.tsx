@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Divider from '@/common/Divider/Divider';
 import Dashboard from '@/common/Ingame/Dashboard';
@@ -6,19 +6,10 @@ import IngameHeader from '@/common/Ingame/IngameHeader';
 import useWordsStore from '@/store/useWordsStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
+import WordCell from './WordCell';
 import { wordRankDummy } from './wordDummy';
 
 export type WordQuestionType = { [key: string]: number };
-const positions = ['center', 'left', 'right'];
-const WordCell = ({ children }: { children: ReactNode }) => {
-  const random = positions[Math.floor(Math.random() * positions.length)];
-  return (
-    <span
-      className={`p-1 text-${random} ${Math.round(Math.random()) && 'mt-auto'} ${Math.round(Math.random()) && 'mb-auto'}`}>
-      {children}
-    </span>
-  );
-};
 
 interface WordRankProps {
   userId: number;
@@ -103,7 +94,13 @@ const GameWord = ({
           <div className='h-[25rem] grid grid-rows-[repeat(8,minmax(0,1fr))] grid-cols-[repeat(14,9rem)] text-[1.6rem] p-4 box-content bg-gray-10 rounded-2xl'>
             {!checkIsEmptyObj(wordsStore) &&
               Object.entries(wordsStore).map((w, i) => {
-                return <WordCell key={i}>{w[1] >= 0 ? w[0] : ' '}</WordCell>;
+                return (
+                  <WordCell
+                    key={i}
+                    rd={i % 3}>
+                    {w[1] >= 0 ? w[0] : ' '}
+                  </WordCell>
+                );
               })}
           </div>
           <div className='flex flex-row items-end w-10/12 h-[30rem] mt-4'>
