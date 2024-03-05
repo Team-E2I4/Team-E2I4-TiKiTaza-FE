@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 
 const positions = ['center', 'left', 'right'];
 const margins = ['mt-auto', 'mb-auto'];
+
 const WordCell = ({
   randomIndex,
   children,

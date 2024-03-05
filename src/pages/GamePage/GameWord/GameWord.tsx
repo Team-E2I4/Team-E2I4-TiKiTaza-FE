@@ -66,7 +66,7 @@ const GameWord = ({
   publishIngame: (destination: string, payload: PayloadType) => void;
 }) => {
   const { register, handleSubmit, setValue, getValues } = useForm();
-  const { wordsStore, setWordStore, setSubmittedWord } = useWordsStore();
+  const { wordsStore, setWordsStore, setSubmittedWord } = useWordsStore();
 
   useEffect(() => {
     if (ingameRoomRes.submittedWord) {
@@ -84,7 +84,7 @@ const GameWord = ({
     for (const idx in ingameRoomRes.questions) {
       words[ingameRoomRes.questions[Number(idx)].question] = Number(idx);
     }
-    setWordStore(words);
+    setWordsStore(words);
   }, [ingameRoomRes.questions]);
 
   return (
@@ -94,12 +94,12 @@ const GameWord = ({
         <div className='flex flex-col items-center justify-around h-[60rem]'>
           <div className='h-[25rem] grid grid-rows-[repeat(8,minmax(0,1fr))] grid-cols-[repeat(14,9rem)] text-[1.6rem] p-4 box-content bg-gray-10 rounded-2xl'>
             {!checkIsEmptyObj(wordsStore) &&
-              Object.entries(wordsStore).map((w, i) => {
+              Object.entries(wordsStore).map(([word, wordIdx], i) => {
                 return (
                   <WordCell
                     key={i}
                     randomIndex={i % 3}>
-                    {w[1] >= 0 ? w[0] : ' '}
+                    {wordIdx >= 0 ? word : ' '}
                   </WordCell>
                 );
               })}
