@@ -85,20 +85,15 @@ const GameWord = ({
     }
   }, [ingameRoomRes.submittedWord]);
 
-  if (
-    !ingameRoomRes.questions ||
-    (ingameRoomRes && checkIsEmptyObj(ingameRoomRes))
-  ) {
-    return <div>로딩실패</div>;
-  }
-
-  if (checkIsEmptyObj(wordsStore)) {
-    const words: WordQuestionType = {};
-    for (const idx in ingameRoomRes.questions) {
-      words[ingameRoomRes.questions[idx].question] = Number(idx);
+  useEffect(() => {
+    if (checkIsEmptyObj(wordsStore)) {
+      const words: WordQuestionType = {};
+      for (const idx in ingameRoomRes.questions) {
+        words[ingameRoomRes.questions[Number(idx)].question] = Number(idx);
+      }
+      setWordStore(words);
     }
-    setWordStore(words);
-  }
+  }, [ingameRoomRes.questions]);
 
   return (
     <>

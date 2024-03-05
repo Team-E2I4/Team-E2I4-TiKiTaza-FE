@@ -93,10 +93,12 @@ const GamePage = () => {
       <IngameWSErrorBoundary>
         {(ingameRoomRes, publishIngame) => (
           <>
-            <GameWord
-              ingameRoomRes={ingameRoomRes}
-              publishIngame={publishIngame}
-            />
+            {ingameRoomRes.questions && (
+              <GameWord
+                ingameRoomRes={ingameRoomRes}
+                publishIngame={publishIngame}
+              />
+            )}
             {/* // TODO : issue#92 roomInfo전체를 store에 가지면 그걸로 selectedMode 판단 */}
 
             {/* {selectedMode === 'SENTENCE' && (
