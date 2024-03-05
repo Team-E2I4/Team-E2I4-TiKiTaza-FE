@@ -71,22 +71,21 @@ const GameWord = ({
   ingameRoomRes,
   publishIngame,
 }: {
-  ingameRoomRes?: I_IngameWsResponse;
+  ingameRoomRes: I_IngameWsResponse;
   publishIngame: (destination: string, payload: PayloadType) => void;
 }) => {
   const { register, handleSubmit, setValue, getValues } = useForm();
   const { wordsStore, setWordStore, setSubmittedWord } = useWordsStore();
 
   useEffect(() => {
-    if (ingameRoomRes?.submittedWord) {
+    if (ingameRoomRes.submittedWord) {
       const submittedWord: WordQuestionType = {};
-      submittedWord[ingameRoomRes?.submittedWord] = -1;
+      submittedWord[ingameRoomRes.submittedWord] = -1;
       setSubmittedWord(submittedWord);
     }
-  }, [ingameRoomRes?.submittedWord]);
+  }, [ingameRoomRes.submittedWord]);
 
   if (
-    !ingameRoomRes ||
     !ingameRoomRes.questions ||
     (ingameRoomRes && checkIsEmptyObj(ingameRoomRes))
   ) {
@@ -99,7 +98,6 @@ const GameWord = ({
       words[ingameRoomRes.questions[idx].question] = Number(idx);
     }
     setWordStore(words);
-    localStorage.setItem('test', JSON.stringify(ingameRoomRes.questions));
   }
 
   return (
