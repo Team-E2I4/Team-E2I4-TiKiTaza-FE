@@ -17,6 +17,7 @@ import { SentenceNext, SentenceNow } from '@/common/Ingame/SentenceBlocks';
 import useCanvas from '@/hooks/useCanvas';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 import GameForm from './GameForm';
+import useTypingState from './useTypingState';
 const sentenceDummy = [
   '저녁 때 돌아갈 집이 있다는 것',
   '힘들 때 마음 속으로 생각 할 사람이 있다는 것',
@@ -141,6 +142,8 @@ const GameSentence = ({
   /* 
 
   */
+  const { cpm, accurate, onInputChange } = useTypingState();
+
   return (
     <>
       <IngameHeader />
@@ -160,6 +163,9 @@ const GameSentence = ({
             <GameForm
               inputName='sentence'
               sample='gd'
+              cpm={cpm}
+              accurate={accurate}
+              onInputChange={onInputChange}
             />
             <SentenceNext text={sentenceDummy[idx + 1]} />
             <SentenceNext text={sentenceDummy[idx + 2]} />
