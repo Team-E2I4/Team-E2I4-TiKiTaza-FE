@@ -19,14 +19,13 @@ const GameForm = ({
   const { cpm, accurate, onInputChange, onKeyDown } = useTypingState();
 
   const sampleRef = useRef(null);
-
   const decomposedSample = useMemo(
     () => [...sample].map((el) => (el !== ' ' ? decomposeKrChar(el) : [' '])),
     [sample]
   );
 
-  const [isTypoArr, setIsTypoArr] = useState(
-    Array(decomposedSample.length).fill(0)
+  const [isTypoCheckList, setIsTypoCheckList] = useState(
+    Array(decomposedSample.length).fill('')
   );
 
   const onSubmit = () => {
@@ -35,13 +34,7 @@ const GameForm = ({
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue('sentence', e.target.value);
-
-    setIsTypoArr((arr) => {
-      let temp = [...arr];
-      temp = Array(decomposedSample.length).fill(0);
-      return temp;
-    });
-
+    setIsTypoCheckList(Array(decomposedSample.length).fill(''));
     if (!e.target.value) {
       return;
     }
@@ -64,9 +57,9 @@ const GameForm = ({
 
     if (isChosungTypo) {
       isCorredKeyPressed = false;
-      setIsTypoArr((arr) => {
+      setIsTypoCheckList((arr) => {
         const temp = [...arr];
-        temp[currentIndex] = 1;
+        temp[currentIndex] = 'typo';
         return temp;
       });
     }
@@ -78,36 +71,48 @@ const GameForm = ({
         .every((el, i) => el !== userJungsung[i]);
       if (isJungsungTypo) {
         isCorredKeyPressed = false;
-        setIsTypoArr((arr) => {
+        setIsTypoCheckList((arr) => {
           const temp = [...arr];
-          temp[currentIndex] = 1;
+          temp[currentIndex] = 'typo';
           return temp;
         });
       }
     }
 
     //이전글자까지 비교
-    for (let i = 0; i < inputText.length - 1; i++) {
-      const [userChosung, userJungsung, userJongsung] =
-        decomposedCurrentInput[i];
+    //[]
 
-      const [sampleChosung, sampleJungsung, sampleJongsung] =
-        decomposedSample[i];
+    decomposedSample
+      .slice(0, inputText.length - 1)
+      .forEach(([sampleChosung, sampleJungsung, sampleJongsung], i) => {
+        const [userChosung, userJungsung, userJongsung] =
+          decomposedCurrentInput[i];
 
-      const isTypo =
-        userChosung !== sampleChosung ||
-        [...sampleJungsung].every((el, i) => el !== userJungsung[i]) ||
-        userJongsung !== sampleJongsung;
+        let isTypo = false;
+        if (sampleChosung === ' ') {
+          isTypo = sampleChosung !== userChosung;
+        } else {
+          isTypo =
+            userChosung !== sampleChosung ||
+            [...sampleJungsung].every((el, i) => el !== userJungsung[i]) ||
+            userJongsung !== sampleJongsung;
+        }
 
-      if (isTypo) {
-        isCorredKeyPressed = false;
-        setIsTypoArr((arr) => {
-          const temp = [...arr];
-          temp[i] = 1;
-          return temp;
-        });
-      }
-    }
+        if (isTypo) {
+          isCorredKeyPressed = false;
+          setIsTypoCheckList((arr) => {
+            const temp = [...arr];
+            temp[i] = 'typo';
+            return temp;
+          });
+        } else {
+          setIsTypoCheckList((arr) => {
+            const temp = [...arr];
+            temp[i] = 'correct';
+            return temp;
+          });
+        }
+      });
 
     onInputChange(isCorredKeyPressed);
   };
@@ -116,7 +121,9 @@ const GameForm = ({
       <div ref={sampleRef}>
         {[...sample].map((char, i) => (
           <span
-            className={`${isTypoArr[i] && 'bg-red-500'}`}
+            className={`
+            ${isTypoCheckList[i] === 'typo' ? 'text-red-500' : isTypoCheckList[i] === 'correct' ? 'text-black font-bold' : 'text-gray-500'}
+            `}
             key={`${char}${i}`}
             data-index={i}>
             {char}

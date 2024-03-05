@@ -13,13 +13,13 @@ const temp = '슭기로운 생활';
 
 test('decompose korean charactor', () => {
   expect(
-    [...temp].map((el) => (el !== ' ' ? decomposeKrChar(el) : el))
+    [...temp].map((el) => (el !== ' ' ? decomposeKrChar(el) : [el]))
   ).toEqual([
     ['ㅅ', ['ㅡ'], 'ㄺ'],
     ['ㄱ', ['ㅣ'], ''],
     ['ㄹ', ['ㅗ'], ''],
     ['ㅇ', ['ㅜ'], 'ㄴ'],
-    ' ',
+    [' '],
     ['ㅅ', ['ㅐ'], 'ㅇ'],
     ['ㅎ', ['ㅗ', 'ㅏ'], 'ㄹ'],
   ]);
