@@ -52,7 +52,6 @@ const GameForm = ({
     const decomposedCurrentInput = [...inputText].map((el) =>
       el !== ' ' ? decomposeKrChar(el) : [' ']
     );
-
     //현재글자만 비교
     const currentIndex = inputText.length - 1;
 
@@ -72,16 +71,19 @@ const GameForm = ({
       });
     }
 
-    const isJungsungTypo =
-      userJungsung && sampleJungsung && userJungsung !== sampleJungsung;
-
-    if (isJungsungTypo) {
-      isCorredKeyPressed = false;
-      setIsTypoArr((arr) => {
-        const temp = [...arr];
-        temp[currentIndex] = 1;
-        return temp;
-      });
+    const isJungsungTyping = userJungsung?.length;
+    if (isJungsungTyping) {
+      const isJungsungTypo = [...sampleJungsung]
+        .slice(0, userJungsung.length)
+        .every((el, i) => el !== userJungsung[i]);
+      if (isJungsungTypo) {
+        isCorredKeyPressed = false;
+        setIsTypoArr((arr) => {
+          const temp = [...arr];
+          temp[currentIndex] = 1;
+          return temp;
+        });
+      }
     }
 
     //이전글자까지 비교
@@ -94,7 +96,7 @@ const GameForm = ({
 
       const isTypo =
         userChosung !== sampleChosung ||
-        userJungsung !== sampleJungsung ||
+        [...sampleJungsung].every((el, i) => el !== userJungsung[i]) ||
         userJongsung !== sampleJongsung;
 
       if (isTypo) {
