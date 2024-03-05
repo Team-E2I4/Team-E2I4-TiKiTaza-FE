@@ -77,13 +77,14 @@ const GameWord = ({
   }, [ingameRoomRes.submittedWord]);
 
   useEffect(() => {
-    if (checkIsEmptyObj(wordsStore)) {
-      const words: WordQuestionType = {};
-      for (const idx in ingameRoomRes.questions) {
-        words[ingameRoomRes.questions[Number(idx)].question] = Number(idx);
-      }
-      setWordStore(words);
+    if (!checkIsEmptyObj(wordsStore)) {
+      return;
     }
+    const words: WordQuestionType = {};
+    for (const idx in ingameRoomRes.questions) {
+      words[ingameRoomRes.questions[Number(idx)].question] = Number(idx);
+    }
+    setWordStore(words);
   }, [ingameRoomRes.questions]);
 
   return (
