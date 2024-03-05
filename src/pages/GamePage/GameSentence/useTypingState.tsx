@@ -12,16 +12,17 @@ const useTypingState = () => {
     setStartTime(new Date());
   };
 
-  const onKeyDown = () => setTotalKeyDown((prevKeyDown) => prevKeyDown + 1);
-
   const onInputChange = (isCorrectKey: boolean) => {
+    setTotalKeyDown((prevKeyDown) => prevKeyDown + 1);
     if (isCorrectKey) {
       setCorrectKeyDown((prevCorrectKeyDown) => prevCorrectKeyDown + 1);
     }
+
     if (!startTime) {
       startTyping();
       return;
     }
+
     const endTime = new Date();
     const elapsedTimeInSeconds =
       (endTime.getTime() - startTime.getTime()) / 1000;
@@ -41,7 +42,6 @@ const useTypingState = () => {
   };
   return {
     initializeTyping,
-    onKeyDown,
     onInputChange,
     cpm,
     accurate,

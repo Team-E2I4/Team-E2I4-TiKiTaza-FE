@@ -58,7 +58,7 @@ const GameForm = ({
     mode: 'onChange',
   });
 
-  const { cpm, accurate, onInputChange, onKeyDown } = useTypingState();
+  const { cpm, accurate, onInputChange } = useTypingState();
 
   const sampleRef = useRef(null);
   const decomposedSample = useMemo(
@@ -84,15 +84,11 @@ const GameForm = ({
 
     setIsTypoCheckList((arr) => {
       const temp = [...arr];
-      temp.forEach((el, i, _arr) => {
+      temp.forEach((_, i, _arr) => {
         _arr[i] = '';
       });
       return temp;
     });
-
-    if (!e.target.value) {
-      return;
-    }
 
     let isCorredKeyPressed = true;
 
@@ -187,7 +183,6 @@ const GameForm = ({
               id={inputName}
               onChange={handleInputChange}
               maxLength={decomposedSample.length}
-              onKeyDown={onKeyDown}
             />
           )}
         />
