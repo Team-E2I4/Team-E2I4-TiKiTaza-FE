@@ -16,10 +16,14 @@ const getTypoCompletedKrChar = (
   const [sampleChosung, sampleJungsung, sampleJongsung] = decomposedSample;
   const [userChosung, userJungsung, userJongsung] = decomposedUserInput;
 
+  //공백일 경우
   if (sampleChosung === ' ') {
     return sampleChosung !== userChosung;
   }
 
+  /* 
+  초성 같은지 체크, 중성 길이 같은지 체크(중성없이 초성만 적을 수 있음), 중성길이 같으면 같은지 체크, 종성 체크
+  */
   return (
     userChosung !== sampleChosung ||
     sampleJungsung.length !== userJungsung?.length ||
@@ -62,8 +66,13 @@ const GameForm = ({
     [sample]
   );
 
-  const [isTypoCheckList, setIsTypoCheckList] = useState(
+  const [isTypoCheckList, setIsTypoCheckList] = useState<string[]>(
     Array(decomposedSample.length).fill('')
+  );
+
+  const firstTypoIndex = useMemo(
+    () => isTypoCheckList.indexOf('typo'),
+    [isTypoCheckList]
   );
 
   const onSubmit = () => {
@@ -73,7 +82,14 @@ const GameForm = ({
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue('sentence', e.target.value);
 
-    setIsTypoCheckList(Array(decomposedSample.length).fill(''));
+    setIsTypoCheckList((arr) => {
+      const temp = [...arr];
+      temp.forEach((el, i, _arr) => {
+        _arr[i] = '';
+      });
+      return temp;
+    });
+
     if (!e.target.value) {
       return;
     }
@@ -108,8 +124,6 @@ const GameForm = ({
       });
     }
 
-    //이전글자까지 비교
-    //[]
     decomposedSample
       .slice(0, inputText.length - 1)
       .forEach((decomposedSampleEl, i) => {
@@ -132,6 +146,18 @@ const GameForm = ({
           });
         }
       });
+
+    if (firstTypoIndex !== -1) {
+      setIsTypoCheckList((arr) => {
+        const temp = [...arr];
+        temp.forEach((_, i, _arr) => {
+          if (firstTypoIndex <= i && currentIndex >= i) {
+            _arr[i] = 'typo';
+          }
+        });
+        return temp;
+      });
+    }
 
     onInputChange(isCorredKeyPressed);
   };
@@ -156,15 +182,13 @@ const GameForm = ({
           defaultValue=''
           rules={{ required: '문장을 입력하세요' }}
           render={({ field }) => (
-            <>
-              <input
-                {...field}
-                id={inputName}
-                onChange={handleInputChange}
-                maxLength={decomposedSample.length}
-                onKeyDown={onKeyDown}
-              />
-            </>
+            <input
+              {...field}
+              id={inputName}
+              onChange={handleInputChange}
+              maxLength={decomposedSample.length}
+              onKeyDown={onKeyDown}
+            />
           )}
         />
       </form>
