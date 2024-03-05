@@ -1,13 +1,6 @@
 import { ChangeEvent, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { decomposeKrChar } from './decomposeKrChar';
-import useTypingState from './useTypingState';
-
-interface GameFormProps {
-  inputName: 'sentence';
-  sample: string;
-  handleCorrectWordSubmit?: () => void;
-}
 
 //완성된 글자에 대해 오타검출
 const getTypoCompletedKrChar = (
@@ -51,15 +44,25 @@ const getTypoTypingKrChar = (
     .every((el, i) => el !== userJungsung[i]);
 };
 
+interface GameFormProps {
+  inputName: 'sentence';
+  sample: string;
+  handleCorrectWordSubmit?: () => void;
+  cpm: number;
+  accurate: number;
+  onInputChange: (isCorrectKey: boolean, didTypo: boolean) => void;
+}
+
 const GameForm = ({
   inputName,
   sample = '띄어쓰기를 제외한 글자의 총 개수를 백분율화 한다',
+  cpm,
+  accurate,
+  onInputChange,
 }: GameFormProps) => {
   const { control, handleSubmit, setValue } = useForm<{ [inputName]: string }>({
     mode: 'onChange',
   });
-
-  const { cpm, accurate, onInputChange } = useTypingState();
 
   const decomposedSample = useMemo(
     () => [...sample].map((el) => (el !== ' ' ? decomposeKrChar(el) : [' '])),
@@ -156,8 +159,7 @@ const GameForm = ({
             className={`
             ${isTypoCheckList[i] === 'typo' ? 'text-red-500' : isTypoCheckList[i] === 'correct' ? 'text-black font-bold' : 'text-gray-500'}
             `}
-            key={`${char}${i}`}
-            data-index={i}>
+            key={`${char}${i}`}>
             {char}
           </span>
         ))}
