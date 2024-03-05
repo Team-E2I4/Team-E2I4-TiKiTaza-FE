@@ -9,7 +9,7 @@ interface GameFormProps {
 }
 
 //완성된 글자에 대해 오타검출
-const getTypoCompletedChar = (
+const getTypoCompletedKrChar = (
   decomposedSample: (string | string[])[],
   decomposedUserInput: (string | string[])[]
 ) => {
@@ -28,7 +28,7 @@ const getTypoCompletedChar = (
 };
 
 //현재 입력중인 글자에 대해 오타검출
-const getTypoTypingChar = (
+const getTypoTypingKrChar = (
   decomposedSample: (string | string[])[],
   decomposedUserInput: (string | string[])[]
 ) => {
@@ -87,7 +87,7 @@ const GameForm = ({
 
     const currentIndex = inputText.length - 1;
 
-    const isTypoAtTypingChar = getTypoTypingChar(
+    const isTypoAtTypingChar = getTypoTypingKrChar(
       decomposedSample[currentIndex],
       decomposedCurrentInput[currentIndex]
     );
@@ -112,7 +112,7 @@ const GameForm = ({
     decomposedSample
       .slice(0, inputText.length - 1)
       .forEach((decomposedSampleEl, i) => {
-        const isTypo = getTypoCompletedChar(
+        const isTypo = getTypoCompletedKrChar(
           decomposedSampleEl,
           decomposedCurrentInput[i]
         );
