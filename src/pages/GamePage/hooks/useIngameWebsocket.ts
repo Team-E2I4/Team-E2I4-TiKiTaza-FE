@@ -6,8 +6,8 @@ import { getToken } from '@/utils/getToken';
 import { I_IngameWsResponse } from '../types/websocketType';
 
 export type PayloadType =
-  | { info: number }
-  | { 'word-info': string }
+  | { currentScore: number }
+  | { word: string }
   | { currentRound: number };
 
 const useIngameWebsocket = (roomId: number | null) => {
