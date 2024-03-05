@@ -10,6 +10,7 @@ import storageFactory from '@/utils/storageFactory';
 
 export interface AuthProps {
   onSuccess?: (e: AxiosResponse<ApiResponseAuthResponse>) => void;
+  onError?: (e: AxiosError) => void;
 }
 
 const { setItem, getItem } = storageFactory(localStorage);
@@ -63,6 +64,9 @@ export const useKaKaoLogin = ({ onSuccess }: AuthProps = {}) => {
       }
 
       onSuccess?.(e);
+    },
+    onError: (e) => {
+      throw new Error(e.message);
     },
     throwOnError: (e) => {
       if (!(e instanceof AxiosError)) {
