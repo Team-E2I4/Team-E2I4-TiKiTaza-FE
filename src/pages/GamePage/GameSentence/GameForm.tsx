@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { decomposeKrChar } from './decomposeKrChar';
 
@@ -51,6 +51,7 @@ interface GameFormProps {
   cpm: number;
   accurate: number;
   onInputChange: (isCorrectKey: boolean, didTypo: boolean) => void;
+  onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const GameForm = ({
@@ -59,6 +60,7 @@ const GameForm = ({
   cpm,
   accurate,
   onInputChange,
+  onKeyDown,
 }: GameFormProps) => {
   const { control, handleSubmit, setValue } = useForm<{ [inputName]: string }>({
     mode: 'onChange',
@@ -101,6 +103,9 @@ const GameForm = ({
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length > decomposedSample.length) {
+      e.target.value = e.target.value.slice(0, decomposedSample.length);
+    }
     const inputText = e.target.value;
 
     setValue('sentence', inputText);
@@ -174,8 +179,12 @@ const GameForm = ({
             <input
               {...field}
               id={inputName}
+              autoComplete='off'
+              onKeyDown={onKeyDown}
               onChange={handleInputChange}
               maxLength={decomposedSample.length}
+              onCopy={(e) => e.preventDefault()}
+              onPaste={(e) => e.preventDefault()}
             />
           )}
         />

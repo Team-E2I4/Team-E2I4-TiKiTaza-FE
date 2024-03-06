@@ -1,4 +1,12 @@
-import { useState } from 'react';
+import { KeyboardEvent, useState } from 'react';
+
+const blockedKeys: Record<string, boolean> = {
+  ArrowLeft: true,
+  ArrowUp: true,
+  ArrowRight: true,
+  ArrowDown: true,
+  Delete: true,
+};
 
 const useTypingState = () => {
   const [startTime, setStartTime] = useState<Date | null>(null);
@@ -10,6 +18,18 @@ const useTypingState = () => {
 
   const startTyping = () => {
     setStartTime(new Date());
+  };
+
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (blockedKeys[e.key]) {
+      e.preventDefault();
+    }
+    if (e.key === 'Backspace') {
+      setTotalKeyDown(0);
+      setCorrectKeyDown(0);
+      setCpm(0);
+      setAccurate(0);
+    }
   };
 
   const onInputChange = (isCorrectKey: boolean, didTypo: boolean) => {
@@ -28,11 +48,19 @@ const useTypingState = () => {
     const endTime = new Date();
     const elapsedTimeInSeconds =
       (endTime.getTime() - startTime.getTime()) / 1000;
-    const calculatedTypingSpeed = (totalKeyDown / elapsedTimeInSeconds) * 60;
-    const calculatedAccuracy = (correctKeyDown / totalKeyDown) * 100;
+    let calculatedTypingSpeed = (totalKeyDown / elapsedTimeInSeconds) * 60;
+    let calculatedAccuracy = (correctKeyDown / totalKeyDown) * 100;
 
-    setCpm(Math.floor(calculatedTypingSpeed));
-    setAccurate(Math.floor(calculatedAccuracy));
+    calculatedTypingSpeed = Number.isNaN(calculatedTypingSpeed)
+      ? 0
+      : Math.floor(calculatedTypingSpeed);
+
+    calculatedAccuracy = Number.isNaN(calculatedAccuracy)
+      ? 0
+      : Math.floor(calculatedAccuracy);
+
+    setCpm(calculatedTypingSpeed);
+    setAccurate(calculatedAccuracy);
   };
 
   const initializeTyping = () => {
@@ -47,6 +75,7 @@ const useTypingState = () => {
     onInputChange,
     cpm,
     accurate,
+    onKeyDown,
   };
 };
 
