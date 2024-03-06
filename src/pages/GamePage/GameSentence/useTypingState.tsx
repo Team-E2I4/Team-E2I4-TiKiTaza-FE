@@ -21,7 +21,7 @@ const useTypingState = () => {
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (blockedKeys[e.key]) {
+    if (blockedKeys[e.key] || e.ctrlKey) {
       e.preventDefault();
     }
     if (e.key === 'Backspace') {
