@@ -12,11 +12,16 @@ const WordRank = ({
   gameScore: GameScoreType | I_AllMember[];
   userId: number;
 }) => {
+  function isTypeAllMembers(
+    gameScore: GameScoreType | I_AllMember[]
+  ): gameScore is I_AllMember[] {
+    return gameScore.length > 0;
+  }
   const trackList = useRef<{ [key: string]: number }>();
-  if (Object.prototype.toString.call(gameScore).slice(8, -1) === 'Array') {
+  if (isTypeAllMembers(gameScore)) {
     // I_AllMember[] 인 경우 정제하여 GameScoreType 형태의 값으로 만든 후 렌더하도록합니다
     const scoreFromMembers: { [key: string]: number } = {};
-    for (const member of gameScore as I_AllMember[]) {
+    for (const member of gameScore) {
       scoreFromMembers[member.memberId.toString()] = 0;
     }
     trackList.current = scoreFromMembers;
