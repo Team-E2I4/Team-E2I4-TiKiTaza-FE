@@ -13,8 +13,6 @@ const CHAR_STATE = {
 const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentInputValue, setCurrentInputValue] = useState('');
-  // const convertedDummyCode = ['ho', 'hi'];
-  // console.log('convertedDummyCode', convertedDummyCode);
 
   const isRoundFinish = currentIndex === convertedDummyCode.length;
 
@@ -40,7 +38,6 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
   };
 
   const handleCheckCorrectAndTypo = (currentTypingInput: string) => {
-    // 현재 입력하고 있는 값의 가장 마지막 위치
     if (currentTypingInput === '') {
       return;
     }
@@ -71,18 +68,19 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
     });
   };
 
-  const handleCheckCorrect = (currentInput: string) => {
+  const handleCheckInputCorrect = (currentInput: string) => {
     return currentInput === convertedDummyCode[currentIndex];
   };
 
   const handleActiveEnter = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const isCorrectCode = handleCheckCorrect(currentInputValue);
-    // console.log('isCorrectInput', isCorrectInput);
-    if (isCorrectCode === false || isRoundFinish) {
+    const isCorrectInput = handleCheckInputCorrect(currentInputValue);
+
+    if (isCorrectInput === false || isRoundFinish) {
       return;
     }
+
     // TODO: enter키 누르면 실시간 점수 publish
     setCurrentIndex((prev) =>
       prev < convertedDummyCode.length ? prev + 1 : prev
