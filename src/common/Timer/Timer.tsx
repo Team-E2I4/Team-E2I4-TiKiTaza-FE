@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 interface TimerProps {
   minutes: number;
   seconds: number;
+  onFinishRound: () => void;
 }
 
 const MS = 1000;
@@ -16,7 +17,7 @@ const convertTime = (time: number) => {
   );
 };
 
-const Timer = ({ minutes = 0, seconds = 0 }: TimerProps) => {
+const Timer = ({ minutes = 0, seconds = 0, onFinishRound }: TimerProps) => {
   const timer = useRef<NodeJS.Timeout | null>(null);
   const [timeLeft, setTimeLeft] = useState<number>(
     minutes * MIN_MS + seconds * MS
@@ -28,10 +29,10 @@ const Timer = ({ minutes = 0, seconds = 0 }: TimerProps) => {
         clearInterval(timer.current);
       }
       setTimeLeft(0);
-      //TODO: 타이머 끝난 후 진행하는 이벤트
+      onFinishRound(); //TODO: 타이머 끝난 후 진행하는 이벤트
       alert('라운드 종료!');
     }
-  }, [timeLeft]);
+  }, [timeLeft, onFinishRound]);
 
   useEffect(() => {
     timer.current = setInterval(() => {
