@@ -26,7 +26,7 @@ const useTypingState = () => {
     }
   };
 
-  const onInputChange = (_totalCharCompleted: number, _totalChar: number) => {
+  const onInputChange = (totalCharCompleted: number, totalChar: number) => {
     if (!startTime) {
       startTyping();
       return;
@@ -37,8 +37,8 @@ const useTypingState = () => {
       (endTime.getTime() - startTime.getTime()) / 1000;
 
     let calculatedTypingSpeed =
-      (_totalCharCompleted / elapsedTimeInSeconds) * 200;
-    let calculatedAccuracy = (_totalCharCompleted / _totalChar) * 100;
+      (totalCharCompleted / elapsedTimeInSeconds) * 200;
+    let calculatedAccuracy = (totalCharCompleted / totalChar) * 100;
 
     calculatedTypingSpeed = Number.isNaN(calculatedTypingSpeed)
       ? 0
