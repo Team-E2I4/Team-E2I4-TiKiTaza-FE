@@ -2,11 +2,11 @@ import './dashborad.css';
 import needle from '@/assets/ingame/needle.png';
 
 interface DashboardProps {
-  type: 'wpm' | 'accuracy';
+  type: 'cpm' | 'accuracy';
   value: number;
 }
 const dashboardUnit = {
-  wpm: {
+  cpm: {
     label: '타수',
     unit: '타',
   },
@@ -19,7 +19,7 @@ const dashboardUnit = {
 const Dashboard = ({ type, value }: DashboardProps) => {
   const ratioStyle = new Map([
     [
-      'wpm',
+      'cpm',
       `${value > 1000 ? '225deg' : `${Math.floor((value * 180) / 1000) + 45}deg`}`,
     ],
     ['accuracy', `${value > 100 ? '225deg' : `${value * 1.8 + 45}deg`}`],
