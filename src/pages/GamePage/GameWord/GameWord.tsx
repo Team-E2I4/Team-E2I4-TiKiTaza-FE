@@ -1,101 +1,14 @@
-import { Fragment, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import Divider from '@/common/Divider/Divider';
 import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import useWordsStore from '@/store/useWordsStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
-import {
-  GameScoreType,
-  I_AllMember,
-  I_IngameWsResponse,
-  PayloadType,
-} from '../types/websocketType';
+import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
 import WordCell from './WordCell';
+import WordRank from './WordRank';
 
 export type WordQuestionType = { [key: string]: number };
-
-interface WordRankProps {
-  track: number;
-  score: number;
-  isMe: boolean;
-}
-const WordRank = ({
-  gameScore,
-  userId,
-}: {
-  gameScore: GameScoreType | I_AllMember[];
-  userId: number;
-}) => {
-  const trackList = useRef<{ [key: string]: number }>();
-  if (Object.prototype.toString.call(gameScore).slice(8, -1) === 'Array') {
-    // I_AllMember[] 인 경우 정제하여 GameScoreType 형태의 값으로 만든 후 렌더하도록합니다
-    const scoreFromMembers: { [key: string]: number } = {};
-    for (const member of gameScore as I_AllMember[]) {
-      scoreFromMembers[member.memberId.toString()] = 0;
-    }
-    trackList.current = scoreFromMembers;
-  }
-  const rankData = trackList.current || gameScore;
-
-  return (
-    <>
-      {Object.entries(rankData).map(([memberId, score], i) => {
-        return (
-          <Fragment key={i}>
-            <div className={'h-[24rem] flex justify-between'}>
-              {i === 0 ? (
-                <Divider
-                  orientation='vertical'
-                  className='border-r-[.2rem]'
-                />
-              ) : (
-                <Divider
-                  orientation='vertical'
-                  className='border-dashed border-r-[.2rem]'
-                />
-              )}
-              <WordRankTrack
-                key={i}
-                track={i}
-                isMe={userId === Number(memberId)}
-                score={score}
-              />
-              {i === Object.entries(gameScore).length - 1 && (
-                <Divider
-                  orientation='vertical'
-                  className='border-r-[.2rem]'
-                />
-              )}
-            </div>
-          </Fragment>
-        );
-      })}
-    </>
-  );
-};
-
-const WordRankTrack = (data: WordRankProps) => {
-  // 초기 기본값 2rem. 도착지점일때 20rem
-  const calculatedBottom = `${2 + data.score * 0.2}rem`;
-  return (
-    <>
-      <div className='w-28 h-[24rem] box-content relative'>
-        <div className={'flex justify-between'}>
-          <div
-            style={{ bottom: calculatedBottom }}
-            className={`w-full absolute text-center`}>
-            <span>🚗</span>
-          </div>
-        </div>
-        <div
-          className={`w-full absolute bottom-0 text-center truncate h-[2rem] leading-8 border-t border-gray-300 pt-[0.1rem] ${data.isMe ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
-          {data.track}
-        </div>
-      </div>
-    </>
-  );
-};
 
 const GameWord = ({
   ingameRoomRes,
