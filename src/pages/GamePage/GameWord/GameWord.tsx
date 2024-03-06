@@ -1,11 +1,15 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Divider from '@/common/Divider/Divider';
 import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import useWordsStore from '@/store/useWordsStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
-import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
+import {
+  GameScoreType,
+  I_IngameWsResponse,
+  PayloadType,
+} from '../types/websocketType';
 import WordCell from './WordCell';
 
 export type WordQuestionType = { [key: string]: number };
@@ -17,35 +21,61 @@ interface WordRankProps {
   memberId: string;
   headCount: number;
 }
+const WordRank = ({
+  gameScore,
+  userId,
+}: {
+  gameScore: GameScoreType;
+  userId: number;
+}) => {
+  return (
+    <>
+      {Object.entries(gameScore).map(([memberId, score], i) => {
+        return (
+          <Fragment key={i}>
+            <div className={'h-[21rem] flex justify-between'}>
+              {i === 0 ? (
+                <Divider
+                  orientation='vertical'
+                  className='border-r-[.2rem]'
+                />
+              ) : (
+                <Divider
+                  orientation='vertical'
+                  className='border-dashed border-r-[.2rem]'
+                />
+              )}
+              <WordRankTrack
+                key={i}
+                track={i}
+                memberId={memberId}
+                score={score}
+                userId={userId}
+                headCount={8} //FIXME
+              />
+              {i === Object.entries(gameScore).length - 1 && (
+                <Divider
+                  orientation='vertical'
+                  className='border-r-[.2rem]'
+                />
+              )}
+            </div>
+          </Fragment>
+        );
+      })}
+    </>
+  );
+};
 
-const WordRank = (data: WordRankProps) => {
+const WordRankTrack = (data: WordRankProps) => {
   return (
     <>
       <div className='w-28 box-content relative'>
         <div className={'h-[21rem] flex justify-between'}>
-          {data.track === 0 ? (
-            <Divider
-              orientation='vertical'
-              className='border-r-[.2rem]'
-            />
-          ) : (
-            <Divider
-              orientation='vertical'
-              className='border-dashed border-r-[.2rem]'
-            />
-          )}
-
           <div className='w-full absolute bottom-12 text-center'>
             <span>🚗</span>
           </div>
-          {data.track === data.headCount - 1 && (
-            <Divider
-              orientation='vertical'
-              className='border-r-[.2rem]'
-            />
-          )}
         </div>
-
         <div
           className={`w-full text-center truncate pt-[0.5rem] ${Number(data.memberId) === data.userId ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
           {data.memberId}
@@ -110,21 +140,13 @@ const GameWord = ({
             />
             <div className='flex flex-col grow items-center'>
               <div className='grow flex relative w-full justify-center'>
-                {ingameRoomRes.gameScore &&
-                  Object.entries(ingameRoomRes.gameScore).map(
-                    ([memberId, score], i) => {
-                      return (
-                        <WordRank
-                          key={i}
-                          track={i}
-                          memberId={memberId}
-                          score={score}
-                          userId={userId}
-                          headCount={8} //FIXME
-                        />
-                      );
-                    }
-                  )}
+                {ingameRoomRes.gameScore && (
+                  <WordRank
+                    gameScore={ingameRoomRes.gameScore}
+                    userId={userId}
+                  />
+                )}
+                {/* TODO : ingameRoomRes.allMembers */}
               </div>
               <form
                 onSubmit={handleSubmit(() => {
