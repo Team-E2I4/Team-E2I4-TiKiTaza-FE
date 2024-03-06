@@ -32,12 +32,14 @@ const GameWord = ({
       <div className='grow'>
         <div className='flex flex-col items-center justify-between h-[60rem]'>
           <div className='h-[27rem] grid grid-rows-[repeat(8,minmax(0,1fr))] grid-cols-[repeat(14,9rem)] text-[1.6rem] p-4 box-content bg-gray-10 rounded-2xl'>
-            {ingameRoomRes.questions?.map((w, i) => {
+            {ingameRoomRes.questions?.map((questionObj, i) => {
               return (
                 <WordCell
                   key={i}
                   randomIndex={i % 3}>
-                  {w.question.startsWith('#') ? ' ' : w.question}
+                  {questionObj.question.startsWith('#')
+                    ? ' '
+                    : questionObj.question}
                 </WordCell>
               );
             })}
