@@ -38,10 +38,6 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
   };
 
   const handleCheckCorrectAndTypo = (currentTypingInput: string) => {
-    if (currentTypingInput === '') {
-      return;
-    }
-
     const currentCharIndex = currentTypingInput.length;
     const slicedCurrentCode = convertedDummyCode[currentIndex].slice(
       0,
