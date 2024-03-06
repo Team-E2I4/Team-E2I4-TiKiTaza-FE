@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Divider from '@/common/Divider/Divider';
 import Dashboard from '@/common/Ingame/Dashboard';
@@ -7,6 +7,7 @@ import useWordsStore from '@/store/useWordsStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import {
   GameScoreType,
+  I_AllMember,
   I_IngameWsResponse,
   PayloadType,
 } from '../types/websocketType';
@@ -25,12 +26,23 @@ const WordRank = ({
   gameScore,
   userId,
 }: {
-  gameScore: GameScoreType;
+  gameScore: GameScoreType | I_AllMember[];
   userId: number;
 }) => {
+  const trackList = useRef<{ [key: string]: number }>();
+  if (Object.prototype.toString.call(gameScore).slice(8, -1) === 'Array') {
+    // I_AllMember[] 인 경우 정제하여 GameScoreType 형태의 값으로 만든 후 렌더하도록합니다
+    const scoreFromMembers: { [key: string]: number } = {};
+    for (const member of gameScore as I_AllMember[]) {
+      scoreFromMembers[member.memberId.toString()] = 0;
+    }
+    trackList.current = scoreFromMembers;
+  }
+  const rankData = trackList.current || gameScore;
+
   return (
     <>
-      {Object.entries(gameScore).map(([memberId, score], i) => {
+      {Object.entries(rankData).map(([memberId, score], i) => {
         return (
           <Fragment key={i}>
             <div className={'h-[21rem] flex justify-between'}>
@@ -146,7 +158,12 @@ const GameWord = ({
                     userId={userId}
                   />
                 )}
-                {/* TODO : ingameRoomRes.allMembers */}
+                {ingameRoomRes.allMembers && (
+                  <WordRank
+                    gameScore={ingameRoomRes.allMembers}
+                    userId={userId}
+                  />
+                )}
               </div>
               <form
                 onSubmit={handleSubmit(() => {
