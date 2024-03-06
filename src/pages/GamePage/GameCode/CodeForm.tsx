@@ -105,6 +105,7 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
       <form onSubmit={handleActiveEnter}>
         <input
           autoFocus
+          autoComplete='off'
           type='text'
           className={`w-[60rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl
         bg-white border-2 border-green-100 my-4
