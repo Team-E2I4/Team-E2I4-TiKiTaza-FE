@@ -29,7 +29,7 @@ const Timer = ({ minutes = 0, seconds = 0 }: TimerProps) => {
       }
       setTimeLeft(0);
       //TODO: 타이머 끝난 후 진행하는 이벤트
-      alert('타이머 끝났어요!');
+      alert('라운드 종료!');
     }
   }, [timeLeft]);
 
@@ -46,9 +46,8 @@ const Timer = ({ minutes = 0, seconds = 0 }: TimerProps) => {
   }, []);
 
   return (
-    <div>
-      <h1>Timer</h1>
-      <h2>{convertTime(timeLeft)}</h2>
+    <div className='font-bold font-[Giants-Inline] text-[3.2rem]'>
+      <h1>남은 시간 : {convertTime(timeLeft)}</h1>
     </div>
   );
 };
