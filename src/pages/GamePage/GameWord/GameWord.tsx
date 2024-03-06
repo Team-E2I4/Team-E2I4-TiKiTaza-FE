@@ -85,6 +85,8 @@ const GameWord = ({
                 })}>
                 <input
                   autoFocus
+                  autoComplete='off'
+                  onPaste={(e) => e.preventDefault()}
                   {...register('wordInput')}
                   className='w-[20rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl bg-white border-2 border-green-100 my-4 outline-0 text-gray-300 tracking-wider box-border'
                 />
