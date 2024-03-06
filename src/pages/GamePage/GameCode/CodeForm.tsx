@@ -21,7 +21,7 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
   const checkedCorrectAndTypo = useMemo(
     () =>
       Array.from(
-        { length: convertedDummyCode[currentIndex].length },
+        { length: convertedDummyCode[currentIndex]?.length || 0 },
         () => CHAR_STATE.PENDING
       ),
     [convertedDummyCode, currentIndex]
@@ -79,11 +79,10 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
     e.preventDefault();
 
     const isCorrectCode = handleCheckCorrect(currentInputValue);
-    // console.log('isCorrectCode', isCorrectCode);
+    // console.log('isCorrectInput', isCorrectInput);
     if (isCorrectCode === false || isRoundFinish) {
       return;
     }
-
     // TODO: enter키 누르면 실시간 점수 publish
     setCurrentIndex((prev) =>
       prev < convertedDummyCode.length ? prev + 1 : prev
@@ -95,18 +94,20 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
 
   return (
     <>
-      <div
-        className='w-[60rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl
+      {!isRoundFinish && (
+        <div
+          className='w-[60rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl
         bg-white border-2 border-green-100 my-4
         outline-0 text-gray-300 tracking-wider box-border'>
-        {[...convertedDummyCode[currentIndex]].map((char, idx) => (
-          <span
-            className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-green-600 font-bold' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-500' : 'text-black'}`}
-            key={`${checkedCorrectAndTypo[idx]}${idx}`}>
-            {char === ' ' ? '\u00A0' : char}
-          </span>
-        ))}
-      </div>
+          {[...convertedDummyCode[currentIndex]].map((char, idx) => (
+            <span
+              className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-green-600 font-bold' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-500' : 'text-black'}`}
+              key={`${checkedCorrectAndTypo[idx]}${idx}`}>
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
+        </div>
+      )}
       <form onSubmit={handleActiveEnter}>
         <input
           autoFocus
