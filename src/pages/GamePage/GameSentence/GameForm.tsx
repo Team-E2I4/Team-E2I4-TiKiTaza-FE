@@ -2,46 +2,52 @@ import { ChangeEvent, KeyboardEvent, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { decomposeKrChar } from './decomposeKrChar';
 
-//완성된 글자에 대해 오타검출
-const getTypoCompletedKrChar = (
+//예시 글자와 입력중인 글자에 대해 오타 검출
+const getTypoKrChar = (
   decomposedSample: (string | string[])[],
-  decomposedUserInput: (string | string[])[]
+  decomposedUserInput: (string | string[])[],
+  isPrev = false
 ) => {
   const [sampleChosung, sampleJungsung, sampleJongsung] = decomposedSample;
   const [userChosung, userJungsung, userJongsung] = decomposedUserInput;
 
-  //공백일 경우
-  if (sampleChosung === ' ') {
+  const isUserJungsung = !!userJungsung?.length;
+  const isSampleJungsung = !!sampleJungsung?.length;
+  const isUserJongsung = !!userJongsung?.length && userJongsung[0] !== '';
+  const isSampleJongsung = !!sampleJongsung?.length && sampleJongsung[0] !== '';
+
+  //이전 글자 검사할땐 초,중,종성 모두 검사
+  if (isPrev) {
+    //유저 입력글자에 중성이 없으면, 오타(이전글자 검사에 공백은 들어오지 않는다.)
+    if (!isUserJungsung) {
+      return true;
+    }
+    //샘플에 종성이 있는데, 입력글자에 없었다면 오타
+    if (isSampleJongsung && !isUserJongsung) {
+      return true;
+    }
+    return (
+      [...sampleJongsung].join('') !== [...userJongsung].join('') ||
+      [...sampleJungsung].join('') !== [...userJungsung].join('') ||
+      sampleChosung !== userChosung
+    );
+  }
+
+  //현재 글자 검사할땐, 먼저 중성검사. 중성을 입력한 길이까지 검사한다.
+  if (isUserJungsung && isSampleJungsung) {
+    return (
+      [...sampleJungsung].slice(0, userJungsung.length).join('') !==
+        [...userJungsung].join('') || sampleChosung !== userChosung
+    );
+  }
+
+  //그다음 초성검사. 공백이거나, 초성만 입력시 초성끼리만 비교한다.
+  if (sampleChosung === ' ' || !isUserJungsung) {
     return sampleChosung !== userChosung;
   }
 
-  /* 
-  초성 같은지 체크, 중성 길이 같은지 체크(중성없이 초성만 적을 수 있음), 중성길이 같으면 같은지 체크, 종성 체크
-  */
-  return (
-    userChosung !== sampleChosung ||
-    sampleJungsung.length !== userJungsung?.length ||
-    [...sampleJungsung].every((el, i) => el !== userJungsung[i]) ||
-    userJongsung !== sampleJongsung
-  );
-};
-
-//현재 입력중인 글자에 대해 오타검출
-const getTypoTypingKrChar = (
-  decomposedSample: (string | string[])[],
-  decomposedUserInput: (string | string[])[]
-) => {
-  const [sampleChosung, sampleJungsung] = decomposedSample;
-  const [userChosung, userJungsung] = decomposedUserInput;
-
-  //공백이거나 유저가 아직 초성만 입력했을 경우
-  if (sampleChosung === ' ' || !userJungsung) {
-    return sampleChosung !== userChosung;
-  }
-
-  return [...sampleJungsung]
-    .slice(0, userJungsung.length)
-    .every((el, i) => el !== userJungsung[i]);
+  //나머지. 예시글자에 종성이 없지만, 유저가 종성을 입력한 경우 오타가 아님.
+  return false;
 };
 
 interface GameFormProps {
@@ -71,46 +77,38 @@ const GameForm = ({
     [sample]
   );
 
-  const [isTypoCheckList, setIsTypoCheckList] = useState<string[]>(
+  const [typoMarkList, setTypoMarkList] = useState<string[]>(
     Array(decomposedSample.length).fill('')
   );
 
   const firstTypoIndex = useMemo(
-    () => isTypoCheckList.indexOf('typo'),
-    [isTypoCheckList]
+    () => typoMarkList.indexOf('typo'),
+    [typoMarkList]
   );
 
-  const onSubmit = () => {
-    // 제출 시 실행할 로직을 여기에 추가
-  };
+  const onSubmit = () => {};
 
-  const initTypoCheckList = () =>
-    setIsTypoCheckList(Array(decomposedSample.length).fill(''));
+  const removeTypoMarksAfterCurrentChar = (currentIndex: number) =>
+    setTypoMarkList((arr) =>
+      arr.map((el, index) => (index > currentIndex ? '' : el))
+    );
 
-  const handleCurrentCharTypoUi = (isTypo: boolean, index: number) =>
-    setIsTypoCheckList((arr) =>
+  const handleTypoMark = (isTypo: boolean, index: number) =>
+    setTypoMarkList((arr) =>
       arr.map((el, i) => (i === index ? (isTypo ? 'typo' : 'correct') : el))
     );
 
-  const markTypoAfterIncorrectChar = (index: number) => {
-    if (firstTypoIndex === -1) {
-      return;
-    }
-
-    setIsTypoCheckList((arr) =>
-      arr.map((el, i) => (firstTypoIndex <= i && index >= i ? 'typo' : el))
-    );
-  };
-
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    //지정한 input 최대길이 넘어갈 시, 한 글자 자르기 (조합문자는 완성되어야 최대길이 넘어섰다고 판정됨)
     if (e.target.value.length > decomposedSample.length) {
       e.target.value = e.target.value.slice(0, decomposedSample.length);
     }
+
     const inputText = e.target.value;
 
     setValue('sentence', inputText);
 
-    initTypoCheckList();
+    removeTypoMarksAfterCurrentChar(inputText.length - 1);
 
     if (!inputText) {
       return;
@@ -124,35 +122,33 @@ const GameForm = ({
 
     const currentIndex = inputText.length - 1;
 
-    const isTypoAtTypingChar = getTypoTypingKrChar(
+    //현재 글자에 대해서 오타 검출
+    const isTypoAtTypingChar = getTypoKrChar(
       decomposedSample[currentIndex],
       decomposedCurrentInput[currentIndex]
     );
 
+    handleTypoMark(isTypoAtTypingChar, currentIndex);
+
+    //바로 이전글자도 오타검출. 이전 예시글자가 공백이 아닐때만.
+    if (
+      currentIndex - 1 >= 0 &&
+      decomposedSample[currentIndex - 1][0] !== ' '
+    ) {
+      const isTypoPrevChar = getTypoKrChar(
+        decomposedSample[currentIndex - 1],
+        decomposedCurrentInput[currentIndex - 1],
+        true
+      );
+      handleTypoMark(isTypoPrevChar, currentIndex - 1);
+      if (isTypoPrevChar) {
+        isCorrectKeyPressed = false;
+      }
+    }
+
     if (isTypoAtTypingChar) {
       isCorrectKeyPressed = false;
     }
-
-    //현재 타이핑하는 글자 오타를 UI반영하는 함수
-    handleCurrentCharTypoUi(isTypoAtTypingChar, currentIndex);
-
-    //이전 타이핑한 글자 오타를 UI반영하는 로직
-    decomposedSample
-      .slice(0, decomposedCurrentInput.length - 1)
-      .forEach((decomposedSampleEl, i) => {
-        const isTypo = getTypoCompletedKrChar(
-          decomposedSampleEl,
-          decomposedCurrentInput[i]
-        );
-
-        if (isTypo) {
-          isCorrectKeyPressed = false;
-        }
-
-        handleCurrentCharTypoUi(isTypo, i);
-      });
-
-    markTypoAfterIncorrectChar(currentIndex);
 
     onInputChange(isCorrectKeyPressed, firstTypoIndex !== -1);
   };
@@ -162,7 +158,8 @@ const GameForm = ({
         {[...sample].map((char, i) => (
           <span
             className={`
-            ${isTypoCheckList[i] === 'typo' ? 'text-red-500' : isTypoCheckList[i] === 'correct' ? 'text-black font-bold' : 'text-gray-500'}
+            ${typoMarkList[i] === 'typo' ? 'text-red-500' : typoMarkList[i] === 'correct' ? 'text-black font-bold' : 'text-gray-500'}
+            ${char === ' ' && typoMarkList[i] === 'typo' ? 'bg-red-500' : ''}
             `}
             key={`${char}${i}`}>
             {char}
