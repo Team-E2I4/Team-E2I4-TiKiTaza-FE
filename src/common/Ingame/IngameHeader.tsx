@@ -19,7 +19,7 @@ const IngameHeader = () => {
           setIsAlert(false);
         }}
       />
-      <div className='flex flex-row items-center gap-20 pb-12 font-[Giants-Inline] select-none'>
+      <div className='flex flex-row items-center gap-20 pb-8 font-[Giants-Inline] select-none'>
         <Backward handleClickBackward={handleClickBackward} />
         <div className='w-[40rem] truncate text-[4rem]'>{roomInfo?.title}</div>
         <div className='grow'>참여 {roomInfo?.currentPlayer}명</div>
