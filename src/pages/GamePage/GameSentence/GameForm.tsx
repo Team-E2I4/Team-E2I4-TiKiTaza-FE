@@ -3,9 +3,10 @@ import {
   KeyboardEvent,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { decomposeKrChar } from './decomposeKrChar';
 
 //예시 글자와 입력중인 글자에 대해 오타 검출
@@ -59,37 +60,61 @@ const getTypoKrChar = (
 interface GameFormProps {
   inputName: 'sentence';
   sample: string;
-  handleCorrectWordSubmit?: () => void;
-  cpm: number;
-  accurate: number;
   onInputChange: (_totalCharCompleted: number, _totalChar: number) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
+  handleCorrectWordSubmit?: () => void;
+  handleLineEnd: () => void;
+  initializeTyping: () => void;
 }
+
+type TypoMarkListType = '' | 'typo' | 'correct';
 
 const GameForm = ({
   inputName,
-  sample = '띄어쓰기를 제외한 글자의 총 개수를 백분율화 한다',
-  cpm,
-  accurate,
+  sample,
   onInputChange,
   onKeyDown,
+  initializeTyping,
+  handleLineEnd,
 }: GameFormProps) => {
-  const { control, handleSubmit, setValue, getValues } = useForm<{
+  const { register, handleSubmit, setValue, getValues } = useForm<{
     [inputName]: string;
   }>({
     mode: 'onChange',
   });
+
+  const [typoMarkList, setTypoMarkList] = useState<TypoMarkListType[]>(
+    Array(sample.length).fill('')
+  );
+
+  const isTypoAtLeastOnce = typoMarkList.some((el) => el === 'typo');
 
   const decomposedSample = useMemo(
     () => [...sample].map((el) => (el !== ' ' ? decomposeKrChar(el) : [' '])),
     [sample]
   );
 
-  const [typoMarkList, setTypoMarkList] = useState<string[]>(
-    Array(decomposedSample.length).fill('')
-  );
+  const maxSpacingIndex = useRef(-1);
 
-  const onSubmit = () => {};
+  const initializeTypoMakrList = () =>
+    setTypoMarkList(Array(sample.length).fill(''));
+
+  const onSpacing = (currentSpacingIndex: number) => {
+    //이미 submit한 공백위치면 리턴
+    if (maxSpacingIndex.current >= currentSpacingIndex) {
+      return;
+    }
+
+    //차량이동 api 호출
+  };
+
+  const onSubmit = () => {
+    maxSpacingIndex.current = -1;
+    handleLineEnd();
+    initializeTypoMakrList();
+    initializeTyping();
+    setValue('sentence', '');
+  };
 
   const removeTypoMarksAfterCurrentChar = (currentIndex: number) =>
     setTypoMarkList((arr) =>
@@ -107,7 +132,7 @@ const GameForm = ({
       typoMarkList.filter((el) => el === 'correct').length,
       getValues('sentence').length
     );
-  }, [typoMarkList, getValues, onInputChange]);
+  }, [typoMarkList]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     //지정한 input 최대길이 넘어갈 시, 한 글자 자르기 (조합문자는 완성되어야 최대길이 넘어섰다고 판정됨)
@@ -117,6 +142,7 @@ const GameForm = ({
     }
 
     const inputText = e.target.value;
+
     setValue('sentence', inputText);
 
     removeTypoMarksAfterCurrentChar(inputText.length - 1);
@@ -132,10 +158,16 @@ const GameForm = ({
     const currentIndex = inputText.length - 1;
 
     //현재 글자에 대해서 오타 검출
+    let isLeastCharTypo = false;
+
     const isTypoAtTypingChar = getTypoKrChar(
       decomposedSample[currentIndex],
       decomposedCurrentInput[currentIndex]
     );
+
+    if (isTypoAtTypingChar) {
+      isLeastCharTypo = true;
+    }
 
     handleTypoMark(isTypoAtTypingChar, currentIndex);
 
@@ -149,17 +181,27 @@ const GameForm = ({
         decomposedCurrentInput[currentIndex - 1],
         true
       );
+      if (isTypoAtTypingChar) {
+        isLeastCharTypo = true;
+      }
       handleTypoMark(isTypoPrevChar, currentIndex - 1);
     }
+
+    if (!isLeastCharTypo && !isTypoAtLeastOnce && inputText.at(-1) === ' ') {
+      onSpacing(currentIndex);
+      maxSpacingIndex.current = currentIndex;
+    }
   };
+
   return (
     <>
-      <div>
+      <div className='w-[70rem] h-[4.5rem] flex items-center pl-8 rounded-2xl bg-green-100 tracking-wider'>
         {[...sample].map((char, i) => (
           <span
             className={`
-            ${typoMarkList[i] === 'typo' ? 'text-red-500' : typoMarkList[i] === 'correct' ? 'text-black font-bold' : 'text-gray-500'}
-            ${char === ' ' && typoMarkList[i] === 'typo' ? 'bg-red-500' : ''}
+            text-[2rem]
+            ${typoMarkList[i] === 'typo' ? 'text-red-500' : typoMarkList[i] === 'correct' ? 'text-black font-bold' : 'text-white'}
+            ${char === ' ' ? (typoMarkList[i] === 'typo' ? 'bg-red-500 w-[0.5rem] h-[2rem]' : 'w-[0.5rem] h-[2rem]') : ''}
             `}
             key={`${char}${i}`}>
             {char}
@@ -167,28 +209,21 @@ const GameForm = ({
         ))}
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name={inputName}
-          control={control}
-          defaultValue=''
-          rules={{ required: '문장을 입력하세요' }}
-          render={({ field }) => (
-            <input
-              {...field}
-              id={inputName}
-              autoComplete='off'
-              onKeyDown={onKeyDown}
-              onChange={handleInputChange}
-              maxLength={decomposedSample.length}
-              onCopy={(e) => e.preventDefault()}
-              onPaste={(e) => e.preventDefault()}
-            />
-          )}
+        <input
+          autoFocus
+          className='w-[70rem] h-[4.5rem] flex items-center pl-[1.75rem] rounded-2xl
+        bg-white border-2 border-green-100 my-4
+        outline-0 text-gray-300 tracking-wider box-border'
+          autoComplete='off'
+          onKeyDown={onKeyDown}
+          maxLength={decomposedSample.length}
+          onCopy={(e) => e.preventDefault()}
+          onPaste={(e) => e.preventDefault()}
+          {...register('sentence', {
+            onChange: (e) => handleInputChange(e),
+          })}
         />
       </form>
-      <span>타수 : {cpm}</span>
-      <span>정확도 : {accurate}%</span>
-      {sample}
     </>
   );
 };

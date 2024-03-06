@@ -1,32 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import car1 from '@/assets/cars/car11.png';
-import Dashboard from '@/common/Ingame/Dashboard';
-import {
-  CANVAS_HEIGHT,
-  CANVAS_WIDTH,
-  CAR_DIRECTION,
-  MAX_X,
-  MAX_Y,
-  MOVE_STEP,
-  START_X,
-  START_Y,
-} from '@/common/Ingame/ingameConstants';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
-import { SentenceNext, SentenceNow } from '@/common/Ingame/SentenceBlocks';
-import useCanvas from '@/hooks/useCanvas';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
-import GameForm from './GameForm';
-import useTypingState from './useTypingState';
-const sentenceDummy = [
-  '저녁 때 돌아갈 집이 있다는 것',
-  '힘들 때 마음 속으로 생각 할 사람이 있다는 것',
-  '외로울 때 혼자서 부를 노래 있다는 것',
-  '세상에 와서 내가 하는 말 가운데서',
-  '가장 고운 말을 너에게 들려주고 싶다.',
-  '세상에 와서 내가 가진 생각 가운데서',
-  '가장 예쁜 생각을 너에게 주고 싶다.',
-];
+import GameFormContainer from './GameFormContainer';
+
 const GameSentence = ({
   ingameRoomRes,
   publishIngame,
@@ -36,21 +12,8 @@ const GameSentence = ({
   // eslint-disable-next-line no-console
   console.log(ingameRoomRes, publishIngame); //unused disable용 콘솔입니다.
 
-  const [idx, setIdx] = useState(1);
-
-  setInterval(() => {
-    setIdx((idx) => (idx + 1) % sentenceDummy.length);
-  }, 300000000);
-
-  const [wpmTest, setWpmTest] = useState(0);
-  const [accTest, setAccTest] = useState(0);
-  setInterval(() => {
-    setWpmTest(Math.floor(Math.random() * 1001));
-    setAccTest(Math.floor(Math.random() * 101));
-  }, 200000);
-
   // 전체영역 캔버스 생성
-  const canvasRef = useCanvas({
+  /*   const canvasRef = useCanvas({
     setCanvas: (canvas: HTMLCanvasElement) => {
       canvas.width = CANVAS_WIDTH;
       canvas.height = CANVAS_HEIGHT;
@@ -137,12 +100,7 @@ const GameSentence = ({
 
   const timerForTest = setInterval(() => {
     updateCarCoord(car1Ref.current);
-  }, 15000);
-
-  /* 
-
-  */
-  const { cpm, accurate, onInputChange } = useTypingState();
+  }, 15000); */
 
   return (
     <>
@@ -154,32 +112,11 @@ const GameSentence = ({
         <div className='flex flex-col items-center justify-center ml-80 h-[60rem] relative'>
           <div className='absolute w-full h-full rounded-[14rem] border-2 border-black'></div>
           <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] rounded-[14rem] border-2 border-black '></div>
-          <canvas
+          {/*           <canvas
             ref={canvasRef}
             className='absolute w-full h-full'
-          />
-          <div className='flex flex-col items-center justify-center z-10'>
-            <SentenceNow text={sentenceDummy[idx]} />
-            <GameForm
-              inputName='sentence'
-              sample='gd'
-              cpm={cpm}
-              accurate={accurate}
-              onInputChange={onInputChange}
-            />
-            <SentenceNext text={sentenceDummy[idx + 1]} />
-            <SentenceNext text={sentenceDummy[idx + 2]} />
-          </div>
-          <div className='w-full flex justify-evenly mt-20'>
-            <Dashboard
-              type='wpm'
-              value={wpmTest}
-            />
-            <Dashboard
-              type='accuracy'
-              value={accTest}
-            />
-          </div>
+          /> */}
+          <GameFormContainer />
         </div>
       </div>
     </>
