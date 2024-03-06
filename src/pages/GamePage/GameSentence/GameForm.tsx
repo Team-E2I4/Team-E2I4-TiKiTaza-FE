@@ -1,4 +1,10 @@
-import { ChangeEvent, KeyboardEvent, useMemo, useState } from 'react';
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { decomposeKrChar } from './decomposeKrChar';
 
@@ -56,7 +62,7 @@ interface GameFormProps {
   handleCorrectWordSubmit?: () => void;
   cpm: number;
   accurate: number;
-  onInputChange: (isCorrectKey: boolean, didTypo: boolean) => void;
+  onInputChange: (_totalCharCompleted: number, _totalChar: number) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
@@ -68,7 +74,9 @@ const GameForm = ({
   onInputChange,
   onKeyDown,
 }: GameFormProps) => {
-  const { control, handleSubmit, setValue } = useForm<{ [inputName]: string }>({
+  const { control, handleSubmit, setValue, getValues } = useForm<{
+    [inputName]: string;
+  }>({
     mode: 'onChange',
   });
 
@@ -81,10 +89,9 @@ const GameForm = ({
     Array(decomposedSample.length).fill('')
   );
 
-  const firstTypoIndex = useMemo(
-    () => typoMarkList.indexOf('typo'),
-    [typoMarkList]
-  );
+  const totalCharCompleted = typoMarkList.filter(
+    (el) => el === 'correct'
+  ).length;
 
   const onSubmit = () => {};
 
@@ -93,19 +100,27 @@ const GameForm = ({
       arr.map((el, index) => (index > currentIndex ? '' : el))
     );
 
-  const handleTypoMark = (isTypo: boolean, index: number) =>
+  const handleTypoMark = (isTypo: boolean, markIndex: number) =>
     setTypoMarkList((arr) =>
-      arr.map((el, i) => (i === index ? (isTypo ? 'typo' : 'correct') : el))
+      arr.map((el, i) => (i === markIndex ? (isTypo ? 'typo' : 'correct') : el))
     );
+
+  //상태가 바로 동기화 되지 않는문제로 인하여 effect 사용
+  useEffect(() => {
+    onInputChange(
+      typoMarkList.filter((el) => el === 'correct').length,
+      getValues('sentence').length
+    );
+  }, [typoMarkList, getValues, onInputChange]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     //지정한 input 최대길이 넘어갈 시, 한 글자 자르기 (조합문자는 완성되어야 최대길이 넘어섰다고 판정됨)
     if (e.target.value.length > decomposedSample.length) {
       e.target.value = e.target.value.slice(0, decomposedSample.length);
+      return;
     }
 
     const inputText = e.target.value;
-
     setValue('sentence', inputText);
 
     removeTypoMarksAfterCurrentChar(inputText.length - 1);
@@ -113,8 +128,6 @@ const GameForm = ({
     if (!inputText) {
       return;
     }
-
-    let isCorrectKeyPressed = true;
 
     const decomposedCurrentInput = [...inputText].map((el) =>
       el !== ' ' ? decomposeKrChar(el) : [' ']
@@ -141,16 +154,9 @@ const GameForm = ({
         true
       );
       handleTypoMark(isTypoPrevChar, currentIndex - 1);
-      if (isTypoPrevChar) {
-        isCorrectKeyPressed = false;
-      }
     }
 
-    if (isTypoAtTypingChar) {
-      isCorrectKeyPressed = false;
-    }
-
-    onInputChange(isCorrectKeyPressed, firstTypoIndex !== -1);
+    onInputChange(totalCharCompleted, inputText.length);
   };
   return (
     <>

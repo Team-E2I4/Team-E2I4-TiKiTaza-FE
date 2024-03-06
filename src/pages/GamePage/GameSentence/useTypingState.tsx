@@ -10,9 +10,6 @@ const blockedKeys: Record<string, boolean> = {
 
 const useTypingState = () => {
   const [startTime, setStartTime] = useState<Date | null>(null);
-
-  const [totalKeyDown, setTotalKeyDown] = useState(0);
-  const [correctKeyDown, setCorrectKeyDown] = useState(0);
   const [accurate, setAccurate] = useState(0);
   const [cpm, setCpm] = useState(0);
 
@@ -21,25 +18,15 @@ const useTypingState = () => {
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (blockedKeys[e.key] || e.ctrlKey) {
+    if (blockedKeys[e.key] || e.ctrlKey || e.altKey || e.metaKey) {
       e.preventDefault();
     }
     if (e.key === 'Backspace') {
-      setTotalKeyDown(0);
-      setCorrectKeyDown(0);
-      setCpm(0);
-      setAccurate(0);
+      onInputChange(0, 0);
     }
   };
 
-  const onInputChange = (isCorrectKey: boolean, didTypo: boolean) => {
-    if (!didTypo) {
-      setTotalKeyDown((prevKeyDown) => prevKeyDown + 1);
-    }
-    if (isCorrectKey) {
-      setCorrectKeyDown((prevCorrectKeyDown) => prevCorrectKeyDown + 1);
-    }
-
+  const onInputChange = (_totalCharCompleted: number, _totalChar: number) => {
     if (!startTime) {
       startTyping();
       return;
@@ -48,8 +35,10 @@ const useTypingState = () => {
     const endTime = new Date();
     const elapsedTimeInSeconds =
       (endTime.getTime() - startTime.getTime()) / 1000;
-    let calculatedTypingSpeed = (totalKeyDown / elapsedTimeInSeconds) * 60;
-    let calculatedAccuracy = (correctKeyDown / totalKeyDown) * 100;
+
+    let calculatedTypingSpeed =
+      (_totalCharCompleted / elapsedTimeInSeconds) * 200;
+    let calculatedAccuracy = (_totalCharCompleted / _totalChar) * 100;
 
     calculatedTypingSpeed = Number.isNaN(calculatedTypingSpeed)
       ? 0
@@ -65,8 +54,6 @@ const useTypingState = () => {
 
   const initializeTyping = () => {
     setStartTime(null);
-    setTotalKeyDown(0);
-    setCorrectKeyDown(0);
     setCpm(0);
     setAccurate(0);
   };
