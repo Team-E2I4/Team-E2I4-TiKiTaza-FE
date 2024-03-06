@@ -89,10 +89,6 @@ const GameForm = ({
     Array(decomposedSample.length).fill('')
   );
 
-  const totalCharCompleted = typoMarkList.filter(
-    (el) => el === 'correct'
-  ).length;
-
   const onSubmit = () => {};
 
   const removeTypoMarksAfterCurrentChar = (currentIndex: number) =>
@@ -155,8 +151,6 @@ const GameForm = ({
       );
       handleTypoMark(isTypoPrevChar, currentIndex - 1);
     }
-
-    onInputChange(totalCharCompleted, inputText.length);
   };
   return (
     <>
