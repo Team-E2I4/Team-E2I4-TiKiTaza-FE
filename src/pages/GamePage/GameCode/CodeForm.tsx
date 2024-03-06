@@ -120,6 +120,22 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
           }
           disabled={isRoundFinish ? true : false}
           onChange={handleInputChange}
+          onPaste={(e) => {
+            e.preventDefault();
+          }}
+          onCopy={(e) => {
+            e.preventDefault();
+          }}
+          onKeyDown={(e) => {
+            if (
+              e.code === 'ArrowLeft' ||
+              e.code === 'ArrowRight' ||
+              e.code === 'ArrowUp' ||
+              e.code === 'ArrowDown'
+            ) {
+              e.preventDefault();
+            }
+          }}
         />
       </form>
     </>
