@@ -58,7 +58,7 @@ export type IngameMessageType =
   | 'WORD_DENIED'
   | 'FINISH';
 
-type GameScoreType = {
+export type GameScoreType = {
   [key: string]: number;
 };
 

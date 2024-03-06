@@ -7,19 +7,16 @@ import useWordsStore from '@/store/useWordsStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
 import WordCell from './WordCell';
-import { wordRankDummy } from './wordDummy';
 
 export type WordQuestionType = { [key: string]: number };
 
 interface WordRankProps {
   userId: number;
   track: number;
-  userName: string;
   score: number;
+  memberId: string;
+  headCount: number;
 }
-
-const MY_USER_ID = 3;
-const HEAD_COUNT = 8; // TODO: 참여자수는 게임룸에서부터 받아와햘것 같습니다. 전역 관리 등
 
 const WordRank = (data: WordRankProps) => {
   return (
@@ -41,7 +38,7 @@ const WordRank = (data: WordRankProps) => {
           <div className='w-full absolute bottom-12 text-center'>
             <span>🚗</span>
           </div>
-          {data.track === HEAD_COUNT - 1 && (
+          {data.track === data.headCount - 1 && (
             <Divider
               orientation='vertical'
               className='border-r-[.2rem]'
@@ -50,8 +47,8 @@ const WordRank = (data: WordRankProps) => {
         </div>
 
         <div
-          className={`w-full text-center truncate pt-[0.5rem] ${data.userId === MY_USER_ID ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
-          {data.userName}
+          className={`w-full text-center truncate pt-[0.5rem] ${Number(data.memberId) === data.userId ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
+          {data.memberId}
         </div>
       </div>
     </>
@@ -61,9 +58,11 @@ const WordRank = (data: WordRankProps) => {
 const GameWord = ({
   ingameRoomRes,
   publishIngame,
+  userId,
 }: {
   ingameRoomRes: I_IngameWsResponse;
   publishIngame: (destination: string, payload: PayloadType) => void;
+  userId: number;
 }) => {
   const { register, handleSubmit, setValue, getValues } = useForm();
   const { wordsStore, setWordsStore, setSubmittedWord } = useWordsStore();
@@ -111,18 +110,21 @@ const GameWord = ({
             />
             <div className='flex flex-col grow items-center'>
               <div className='grow flex relative w-full justify-center'>
-                {wordRankDummy.map((rank, i) => {
-                  const { userId, userName, score } = rank;
-                  return (
-                    <WordRank
-                      key={i}
-                      track={i}
-                      userId={userId}
-                      userName={userName}
-                      score={score}
-                    />
-                  );
-                })}
+                {ingameRoomRes.gameScore &&
+                  Object.entries(ingameRoomRes.gameScore).map(
+                    ([memberId, score], i) => {
+                      return (
+                        <WordRank
+                          key={i}
+                          track={i}
+                          memberId={memberId}
+                          score={score}
+                          userId={userId}
+                          headCount={8} //FIXME
+                        />
+                      );
+                    }
+                  )}
               </div>
               <form
                 onSubmit={handleSubmit(() => {
