@@ -16,11 +16,9 @@ import WordCell from './WordCell';
 export type WordQuestionType = { [key: string]: number };
 
 interface WordRankProps {
-  userId: number;
   track: number;
   score: number;
-  memberId: string;
-  headCount: number;
+  isMe: boolean;
 }
 const WordRank = ({
   gameScore,
@@ -45,7 +43,7 @@ const WordRank = ({
       {Object.entries(rankData).map(([memberId, score], i) => {
         return (
           <Fragment key={i}>
-            <div className={'h-[21rem] flex justify-between'}>
+            <div className={'h-[24rem] flex justify-between'}>
               {i === 0 ? (
                 <Divider
                   orientation='vertical'
@@ -60,10 +58,8 @@ const WordRank = ({
               <WordRankTrack
                 key={i}
                 track={i}
-                memberId={memberId}
+                isMe={userId === Number(memberId)}
                 score={score}
-                userId={userId}
-                headCount={8} //FIXME
               />
               {i === Object.entries(gameScore).length - 1 && (
                 <Divider
@@ -80,17 +76,21 @@ const WordRank = ({
 };
 
 const WordRankTrack = (data: WordRankProps) => {
+  // 초기 기본값 2rem. 도착지점일때 20rem
+  const calculatedBottom = `${2 + data.score * 0.2}rem`;
   return (
     <>
-      <div className='w-28 box-content relative'>
-        <div className={'h-[21rem] flex justify-between'}>
-          <div className='w-full absolute bottom-12 text-center'>
+      <div className='w-28 h-[24rem] box-content relative'>
+        <div className={'flex justify-between'}>
+          <div
+            style={{ bottom: calculatedBottom }}
+            className={`w-full absolute text-center`}>
             <span>🚗</span>
           </div>
         </div>
         <div
-          className={`w-full text-center truncate pt-[0.5rem] ${Number(data.memberId) === data.userId ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
-          {data.memberId}
+          className={`w-full absolute bottom-0 text-center truncate h-[2rem] leading-8 border-t border-gray-300 pt-[0.1rem] ${data.isMe ? 'text-[1.8rem] text-green-100' : 'text-[1.4rem] text-gray-200'}`}>
+          {data.track}
         </div>
       </div>
     </>
