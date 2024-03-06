@@ -7,9 +7,9 @@ import { I_ChangeGameRoomData } from '@/hooks/useSSE';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 
 const MODE_TYPE = {
-  WORD: '짧은 단어',
-  SENTENCE: '문장',
-  CODE: '코드',
+  WORD: '단어 게임',
+  SENTENCE: '문장 게임',
+  CODE: '코드 게임',
 };
 
 interface GameRoomListItemProps extends I_ChangeGameRoomData {
