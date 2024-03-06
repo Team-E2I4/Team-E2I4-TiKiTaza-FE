@@ -6,7 +6,7 @@ import useWordsStore from '@/store/useWordsStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
 import WordCell from './WordCell';
-import WordRank from './WordRank';
+import WordRankContainer from './WordRankContainer';
 
 export type WordQuestionType = { [key: string]: number };
 
@@ -66,13 +66,13 @@ const GameWord = ({
             <div className='flex flex-col grow items-center'>
               <div className='grow flex relative w-full justify-center'>
                 {ingameRoomRes.gameScore && (
-                  <WordRank
+                  <WordRankContainer
                     gameScore={ingameRoomRes.gameScore}
                     userId={userId}
                   />
                 )}
                 {ingameRoomRes.allMembers && (
-                  <WordRank
+                  <WordRankContainer
                     gameScore={ingameRoomRes.allMembers}
                     userId={userId}
                   />

@@ -5,7 +5,7 @@ import WordRankTrack from './WordRankTrack';
 
 export type WordQuestionType = { [key: string]: number };
 
-const WordRank = ({
+const WordRankContainer = ({
   gameScore,
   userId,
 }: {
@@ -65,4 +65,4 @@ const WordRank = ({
   );
 };
 
-export default WordRank;
+export default WordRankContainer;
