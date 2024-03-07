@@ -96,6 +96,9 @@ export const useAuthCheck = () => {
     gcTime: 0,
     refetchOnWindowFocus: false,
     enabled: !!getItem('MyToken', ''),
+    meta: {
+      errorMessage: 'faile to fetch getMyProfile',
+    },
     throwOnError: (e) => {
       if (!(e instanceof AxiosError)) {
         return true;
