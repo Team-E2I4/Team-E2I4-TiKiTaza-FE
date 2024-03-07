@@ -6,7 +6,8 @@ import {
   CAR_DIRECTION,
   MAX_X,
   MAX_Y,
-  MOVE_STEP,
+  MOVE_STEP_X,
+  MOVE_STEP_Y,
   START_X,
   START_Y,
 } from '@/common/Ingame/ingameConstants';
@@ -22,6 +23,7 @@ import car5 from './car5.png';
 import car6 from './car6.png';
 import car7 from './car7.png';
 import car8 from './car8.png';
+import { responseDummy } from './testDummy';
 
 interface I_CarCoord {
   x: number;
@@ -98,10 +100,10 @@ const GameSentence = () => {
   // 방향에 따라 진행중인 방향으로 이동시키는 함수
   const moveByDir = (carCoord: I_CarCoord, dir: DirectionType) => {
     const move = {
-      right: (carCoord: I_CarCoord) => (carCoord.x += MOVE_STEP),
-      down: (carCoord: I_CarCoord) => (carCoord.y += MOVE_STEP),
-      left: (carCoord: I_CarCoord) => (carCoord.x -= MOVE_STEP),
-      up: (carCoord: I_CarCoord) => (carCoord.y -= MOVE_STEP),
+      right: (carCoord: I_CarCoord) => (carCoord.x += MOVE_STEP_X),
+      down: (carCoord: I_CarCoord) => (carCoord.y += MOVE_STEP_Y),
+      left: (carCoord: I_CarCoord) => (carCoord.x -= MOVE_STEP_X),
+      up: (carCoord: I_CarCoord) => (carCoord.y -= MOVE_STEP_Y),
     };
     return move[dir](carCoord);
   };
@@ -120,14 +122,11 @@ const GameSentence = () => {
     }
 
     // 필요한 자동차 갯수 만큼 자동차 초기 좌표 지정
-    carsRef.current.push({ x: START_X, y: START_Y });
-    carsRef.current.push({ x: START_X, y: 10 });
-    carsRef.current.push({ x: START_X, y: 20 });
-    carsRef.current.push({ x: START_X, y: 30 });
-    carsRef.current.push({ x: 120, y: 0 });
-    carsRef.current.push({ x: 140, y: 10 });
-    carsRef.current.push({ x: 140, y: 20 });
-    carsRef.current.push({ x: 140, y: 30 });
+    Object.entries(responseDummy.gameScore).forEach((_, idx) => {
+      const x = START_X + Math.floor(idx / 4) * 20;
+      const y = START_Y + (idx % 4) * 10;
+      carsRef.current.push({ x, y });
+    });
 
     // 캔버스 세팅
     const cvs = canvasRef.current;
