@@ -3,7 +3,8 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import WsError from './common/WsError';
-// import GameSentence from './GameSentence/GameSentence';
+import GameSentence from './GameSentence/GameSentence';
+// import GameCode from './GameCode/GameCode';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
 // import GameWord from './GameWord/GameWord';
 import useWebsocket from './hooks/useWebsocket';
@@ -21,6 +22,7 @@ const GamePage = () => {
     handlePubKickUser,
     isWsError,
   } = useWebsocket(roomId);
+
   const navigate = useNavigate();
 
   // 아래 TODO
@@ -92,13 +94,12 @@ const GamePage = () => {
       <IngameWSErrorBoundary>
         {({ ingameRoomRes, publishIngame }) => (
           <>
-            {ingameRoomRes.questions && (
-              <GameWord
+            {
+              <GameSentence
                 ingameRoomRes={ingameRoomRes}
                 publishIngame={publishIngame}
-                userId={userId}
               />
-            )}
+            }
             {/* // TODO : issue#92 roomInfo전체를 store에 가지면 그걸로 selectedMode 판단 */}
 
             {/* {selectedMode === 'SENTENCE' && (
