@@ -1,12 +1,7 @@
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import WsError from './common/WsError';
-import useIngameWebsocket, { PayloadType } from './hooks/useIngameWebsocket';
-import { I_IngameWsResponse } from './types/websocketType';
-
-export type PublishIngameType = (
-  destination: string,
-  payload: PayloadType
-) => void;
+import useIngameWebsocket from './hooks/useIngameWebsocket';
+import { I_IngameWsResponse, PublishIngameType } from './types/websocketType';
 
 export interface InagmeWsChildrenProps {
   ingameRoomRes: I_IngameWsResponse;
