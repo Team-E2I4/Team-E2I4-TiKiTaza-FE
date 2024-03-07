@@ -63,7 +63,7 @@ interface GameFormProps {
   sample: string;
   onInputChange: (_totalCharCompleted: number, _totalChar: number) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
-  handleCorrectWordSubmit: () => void;
+  handleUpdateScore: () => void;
   handleLineEnd: () => void;
   initializeTyping: () => void;
 }
@@ -77,9 +77,16 @@ const GameForm = ({
   onKeyDown,
   initializeTyping,
   handleLineEnd,
-  handleCorrectWordSubmit,
+  handleUpdateScore,
 }: GameFormProps) => {
-  const { register, handleSubmit, setValue, getValues } = useForm<{
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors },
+    setError,
+  } = useForm<{
     [inputName]: string;
   }>();
 
@@ -105,13 +112,20 @@ const GameForm = ({
       return;
     }
 
-    handleCorrectWordSubmit();
+    handleUpdateScore();
     //차량이동 api 호출
   };
 
   const onSubmit = () => {
-    maxSpacingIndex.current = -1;
+    if (typoMarkList.some((el) => el === 'typo' || el === '')) {
+      setError('sentence', {
+        message: '오타가 존재합니다!',
+      });
+      return;
+    }
+    handleUpdateScore();
     handleLineEnd();
+    maxSpacingIndex.current = -1;
     initializeTypoMakrList();
     initializeTyping();
     setValue('sentence', '');
@@ -159,19 +173,17 @@ const GameForm = ({
     //현재 글자 + 바로 이전글자의 오타 boolean
     let isLeastCharTypo = false;
 
-    //현재 글자에 대해서 오타 검출
+    //현재 글자 오타검출
     const isTypoAtTypingChar = getTypoKrChar(
       decomposedSample[currentIndex],
       decomposedCurrentInput[currentIndex]
     );
 
-    if (isTypoAtTypingChar) {
-      isLeastCharTypo = true;
-    }
+    isLeastCharTypo = isTypoAtTypingChar;
 
     handleTypoMark(isTypoAtTypingChar, currentIndex);
 
-    //바로 이전글자도 오타검출. 이전 예시글자가 공백이 아닐때만.
+    //바로 이전글자 오타검출.
     if (
       currentIndex - 1 >= 0 &&
       decomposedSample[currentIndex - 1][0] !== ' '
@@ -181,16 +193,19 @@ const GameForm = ({
         decomposedCurrentInput[currentIndex - 1],
         true
       );
-      if (isTypoAtTypingChar) {
-        isLeastCharTypo = true;
-      }
+
+      isLeastCharTypo = isTypoPrevChar;
+
       handleTypoMark(isTypoPrevChar, currentIndex - 1);
     }
 
-    if (!isLeastCharTypo && !isTypoAtLeastOnce && inputText.at(-1) === ' ') {
-      onSpacing(currentIndex);
-      maxSpacingIndex.current = currentIndex;
+    //현재+바로이전글자 오타 or 지금까지 최소한번의 오타 or 이전글자가 공백이 아니면 return
+    if (isLeastCharTypo || isTypoAtLeastOnce || inputText.at(-1) !== ' ') {
+      return;
     }
+
+    onSpacing(currentIndex);
+    maxSpacingIndex.current = currentIndex;
   };
 
   return (
@@ -208,8 +223,11 @@ const GameForm = ({
           </span>
         ))}
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className='flex flex-col items-center'
+        onSubmit={handleSubmit(onSubmit)}>
         <Input
+          className={`${errors[inputName]?.message ? 'border-red-500' : '장난'}`}
           autoFocus
           autoComplete='off'
           onKeyDown={onKeyDown}
@@ -220,6 +238,9 @@ const GameForm = ({
             onChange: (e) => handleInputChange(e),
           })}
         />
+        <span className='text-red-500 text-[1.2rem] h-[1.6rem]'>
+          {errors[inputName]?.message}
+        </span>
       </form>
     </>
   );

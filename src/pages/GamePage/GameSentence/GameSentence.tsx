@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
@@ -11,12 +12,16 @@ const sentenceDummy = [
   '세상에 와서 내가 가진 생각 가운데서',
   '가장 예쁜 생각을 너에게 주고 싶다.',
 ];
+
+interface GameSentenceProps extends InagmeWsChildrenProps {
+  userId: number;
+}
 const GameSentence = ({
   ingameRoomRes,
   publishIngame,
-}: InagmeWsChildrenProps) => {
+  userId,
+}: GameSentenceProps) => {
   //이하 임의값 테스트 코드입니다
-
   /* 
   1. 유저 정보를 가져온다.
   2. ingameRoomRes객체에 gameScore객체가 들어있다면, gameScore[userId]로 점수를 가져온다.
@@ -121,12 +126,20 @@ const GameSentence = ({
   const timerForTest = setInterval(() => {
     updateCarCoord(car1Ref.current);
   }, 15000); */
+
+  const currentScore = useRef<number>(ingameRoomRes?.gameScore?.[userId] ?? 0);
+
   const TotalSpacedWord = sentenceDummy.reduce(
     (acc, cur) => acc + cur.split(' ').length,
     0
   );
 
   const trackRatio = Number(((1 / TotalSpacedWord) * 100).toFixed(1));
+
+  const handleUpdateScore = () => {
+    publishIngame('/info', { currentScore: currentScore.current + trackRatio });
+    currentScore.current += trackRatio;
+  };
 
   return (
     <>
@@ -144,8 +157,7 @@ const GameSentence = ({
           /> */}
           <GameFormContainer
             sentenceList={sentenceDummy}
-            trackRatio={trackRatio}
-            publishIngame={publishIngame}
+            handleUpdateScore={handleUpdateScore}
           />
         </div>
       </div>
