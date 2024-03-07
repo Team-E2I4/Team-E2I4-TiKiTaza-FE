@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { useCallback, useEffect, useRef } from 'react';
-import car1 from '@/assets/cars/car11.png';
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
@@ -15,8 +14,15 @@ import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import useCanvas from '@/hooks/useCanvas';
 import { DirectionType } from '../GamePage/types/trackType';
-import carblue from './carblue.png';
-import cargreen from './cargreen.png';
+import car1 from './car1.png';
+import car2 from './car2.png';
+import car3 from './car3.png';
+import car4 from './car4.png';
+import car5 from './car5.png';
+import car6 from './car6.png';
+import car7 from './car7.png';
+import car8 from './car8.png';
+
 interface I_CarCoord {
   x: number;
   y: number;
@@ -35,7 +41,7 @@ const GameSentence = () => {
   const carsRef = useRef<I_CarCoord[]>([]);
   const carDirRef = useRef(CAR_DIRECTION.RIGHT); // 자동차가 이동할 방향(상하좌우)
 
-  const carImgs = [car1, cargreen, carblue];
+  const carImgs = [car1, car2, car3, car4, car5, car6, car7, car8];
   let isArrived = 0;
 
   // 자동차 진행 방향 바꾸는 함수
@@ -114,9 +120,14 @@ const GameSentence = () => {
     }
 
     // 필요한 자동차 갯수 만큼 자동차 초기 좌표 지정
-    carsRef.current.push({ x: 100, y: START_Y });
-    carsRef.current.push({ x: 100, y: 1 });
-    carsRef.current.push({ x: 200, y: 0 });
+    carsRef.current.push({ x: START_X, y: START_Y });
+    carsRef.current.push({ x: START_X, y: 10 });
+    carsRef.current.push({ x: START_X, y: 20 });
+    carsRef.current.push({ x: START_X, y: 30 });
+    carsRef.current.push({ x: 120, y: 0 });
+    carsRef.current.push({ x: 140, y: 10 });
+    carsRef.current.push({ x: 140, y: 20 });
+    carsRef.current.push({ x: 140, y: 30 });
 
     // 캔버스 세팅
     const cvs = canvasRef.current;
@@ -161,7 +172,7 @@ const GameSentence = () => {
   setTimeout(() => {
     isArrived = 1;
     console.log('임시 종료');
-  }, 3000);
+  }, 1000);
   console.log('컴포넌트가 렌더링');
   return (
     <>
