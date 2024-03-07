@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useCallback, useEffect, useRef } from 'react';
 import car1 from '@/assets/cars/car11.png';
 import {
@@ -13,7 +14,8 @@ import {
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import useCanvas from '@/hooks/useCanvas';
-
+import carblue from './carblue.png';
+import cargreen from './cargreen.png';
 interface I_CarCoord {
   x: number;
   y: number;
@@ -28,13 +30,14 @@ const GameSentence = () => {
     },
   });
 
-  const carImageRef = useRef<HTMLImageElement | null>(null);
-  const car1Ref = useRef<I_CarCoord>({ x: START_X, y: START_Y });
-  // 추후: const carsRef = useRef<I_CarCoord[]>([]);
+  const carImagesRef = useRef<HTMLImageElement[] | null>(null);
+  const carsRef = useRef<I_CarCoord[]>([]);
   const carDirRef = useRef(CAR_DIRECTION.RIGHT); // 자동차가 이동할 방향(상하좌우)
 
+  const carImgs = [car1, cargreen, carblue];
   let isArrived = 0;
 
+  // 자동차 진행 방향 바꾸는 함수
   const changeCarDir = useCallback((pos: I_CarCoord) => {
     if (pos.x === START_X && pos.y === START_Y) {
       // eslint-disable-next-line no-console
@@ -79,48 +82,78 @@ const GameSentence = () => {
 
   useEffect(() => {
     // 자동차 이미지 로드
-    if (car1) {
-      const img = new Image(20, 20); //FIXME: 사이즈 적용안됨.. car1.png를 불러와서 줄이고싶으면?
-      img.src = car1;
-      img.alt = '자동차';
-      carImageRef.current = img;
-      car1Ref.current = { x: START_X, y: START_Y };
+    if (carImgs.length) {
+      const carImagesArr = [];
+      for (const carImg of carImgs) {
+        const newImg = new Image(20, 20);
+        newImg.src = carImg;
+        newImg.alt = '자동차';
+        carImagesArr.push(newImg);
+      }
+      carImagesRef.current = carImagesArr;
     }
 
-    //자동차를 화면에 그린다
-    let rafTimer: ReturnType<typeof requestAnimationFrame>;
-    const coord = car1Ref.current;
+    // 필요한 자동차 갯수 만큼 자동차 초기 좌표 지정
+    carsRef.current.push({ x: START_X, y: START_Y });
+    carsRef.current.push({ x: 300, y: START_Y });
+    carsRef.current.push({ x: 400, y: START_Y });
+
+    // 캔버스 세팅
     const cvs = canvasRef.current;
     const ctx = cvs?.getContext('2d');
     if (!ctx) {
       return;
     }
-
+    //자동차를 화면에 그린다
+    let rafTimer: ReturnType<typeof requestAnimationFrame>;
+    const coordCars = carsRef.current;
     const animate = () => {
-      // console.log('ANI');
+      console.log('animate 호출');
       ctx?.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); // 이전 값 삭제
-      const car = carImageRef.current;
-      if (car) {
-        ctx.drawImage(car, coord.x, coord.y); // 위치!px단위
+      const imgrefcurrent = carImagesRef.current;
+      if (imgrefcurrent) {
+        coordCars.forEach((eachCarCoord, idx) => {
+          const carImg = imgrefcurrent[idx];
+          //이미지 로드 이후 drawImage에 전달 가능
+          if (carImg) {
+            ctx.drawImage(carImg, eachCarCoord.x, eachCarCoord.y); // 위치!px단위
+          }
+        });
       }
+
+      // 도착전까지만 animate를 실행한다. (임시)
       if (!isArrived) {
-        // 도착전까지만 animate를 실행한다.
         rafTimer = requestAnimationFrame(animate);
       }
     };
 
-    rafTimer = requestAnimationFrame(animate);
+    rafTimer = requestAnimationFrame(animate); //////////////실행
     return () => {
       rafTimer && cancelAnimationFrame(rafTimer);
     };
   }, []);
 
   const timerForTest = setInterval(() => {
-    updateCarCoord(car1Ref.current);
+    // carsRef.current.forEach((eachCarCoord, ix) => {
+    //   updateCarCoord(eachCarCoord);
+    // });
   }, 1500);
-  // console.log('컴포넌트가 렌더링');
+
+  console.log('컴포넌트가 렌더링');
   return (
     <>
+      <button
+        onClick={() => {
+          updateCarCoord(carsRef.current[1]);
+        }}>
+        그린카
+      </button>
+      <button
+        onClick={() => {
+          updateCarCoord(carsRef.current[2]);
+        }}>
+        블루카
+      </button>
       <IngameHeader />
       <div>
         <div className='absolute'>
