@@ -6,7 +6,7 @@ import storageFactory from '@/utils/storageFactory';
 const StartPage = () => {
   const navigate = useNavigate();
 
-  const { getItem, removeItem } = storageFactory(localStorage);
+  const { removeItem } = storageFactory(localStorage);
 
   const { mutate: guestLoginMutate } = useGuestLogin({
     onSuccess: () => {
@@ -16,10 +16,7 @@ const StartPage = () => {
   });
 
   const handleClick = () => {
-    const token = getItem('MyToken', '');
-    if (token) {
-      removeItem('MyToken');
-    }
+    removeItem('MyToken');
     guestLoginMutate();
   };
 
