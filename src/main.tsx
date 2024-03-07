@@ -8,6 +8,7 @@ import AuthRoute from './common/AuthRoute/AuthRoute.tsx';
 import Header from './common/Header/Header.tsx';
 import BodyLayout from './common/Layout/BodyLayout.tsx';
 import Layout from './common/Layout/Layout.tsx';
+import Test2 from './pages/ATest/Test2.tsx';
 import GamePage from './pages/GamePage/GamePage.tsx';
 import KaKaoLoginPage from './pages/KaKaoLoginPage/KaKaoLoginPage.tsx';
 import LoginPage from './pages/LoginPage/LoginPage.tsx';
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
           {
             path: '/login/oauth2/code/kakao',
             element: <KaKaoLoginPage />,
+          },
+          {
+            path: '/test',
+            element: <Test2 />,
           },
           {
             path: '/*',
