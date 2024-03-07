@@ -19,18 +19,17 @@ import {
   START_X,
   START_Y,
 } from '@/common/Ingame/ingameConstants';
-import IngameHeader from '@/common/Ingame/IngameHeader';
-import IngameRank from '@/common/Ingame/IngameRank';
 import useCanvas from '@/hooks/useCanvas';
 import { DirectionType } from '../types/trackType';
-import { responseDummy } from './testDummy';
+import { GameScoreType } from '../types/websocketType';
 
 interface I_CarCoord {
   x: number;
   y: number;
 }
 
-const GameSentence = () => {
+const CanvasTrack = ({ gameScore }: { gameScore: GameScoreType }) => {
+  console.log(gameScore);
   // 전체영역 캔버스 생성
   const canvasRef = useCanvas({
     setCanvas: (canvas: HTMLCanvasElement) => {
@@ -122,7 +121,7 @@ const GameSentence = () => {
     }
 
     // 필요한 자동차 갯수 만큼 자동차 초기 좌표 지정
-    Object.entries(responseDummy.gameScore).forEach((_, idx) => {
+    Object.entries(gameScore).forEach((_, idx) => {
       const x = START_X + Math.floor(idx / 4) * 20;
       const y = START_Y + (idx % 4) * 10;
       carsRef.current.push({ x, y });
@@ -173,60 +172,29 @@ const GameSentence = () => {
     console.log('임시 종료');
   }, 1000);
   console.log('컴포넌트가 렌더링');
+
   return (
     <>
-      <IngameHeader />
-      <div>
-        <div className='absolute'>
-          <IngameRank />
-        </div>
-        <div className='flex flex-col items-center justify-center ml-80 h-[61rem] relative'>
-          <div className='absolute w-[110rem] h-full rounded-[10rem] border-2 border-black'></div>
-          <div className='absolute w-[100rem] h-[calc(100%-10rem)] rounded-[5rem] border-2 border-black '></div>
-          <canvas
-            ref={canvasRef}
-            className='absolute w-full h-full'
-          />
-          <div className='flex flex-col items-center justify-center z-10 h-[51rem] bg-slate-400 mt-[5rem]'>
-            <div>
-              <button
-                onClick={() => {
-                  updateCarCoord(carsRef.current[1]);
-                }}>
-                그린카
-              </button>
-              <button
-                onClick={() => {
-                  updateCarCoord(carsRef.current[2]);
-                }}>
-                블루카
-              </button>
-            </div>
-            {/* <SentenceNow text={sentenceDummy[idx]} />
-            <GameForm
-              inputName='sentence'
-              sample='gd'
-              cpm={cpm}
-              accurate={accurate}
-              onInputChange={onInputChange}
-            />
-            <SentenceNext text={sentenceDummy[idx + 1]} />
-            <SentenceNext text={sentenceDummy[idx + 2]} /> */}
-          </div>
-          <div className='w-full flex justify-evenly mt-20'>
-            {/* <Dashboard
-              type='wpm'
-              value={wpmTest}
-            />
-            <Dashboard
-              type='accuracy'
-              value={accTest}
-            /> */}
-          </div>
-        </div>
+      <canvas
+        ref={canvasRef}
+        className='absolute w-full h-full'
+      />
+      <div className='absolute'>
+        <button
+          onClick={() => {
+            updateCarCoord(carsRef.current[1]);
+          }}>
+          그린카
+        </button>
+        <button
+          onClick={() => {
+            updateCarCoord(carsRef.current[2]);
+          }}>
+          블루카
+        </button>
       </div>
     </>
   );
 };
 
-export default GameSentence;
+export default CanvasTrack;
