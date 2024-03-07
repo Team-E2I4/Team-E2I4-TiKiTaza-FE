@@ -1,9 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import logo_big_shadow from '@/assets/logo_big_shadow.png';
 import { useGuestLogin } from '@/hooks/useAuth';
+import storageFactory from '@/utils/storageFactory';
 
 const StartPage = () => {
   const navigate = useNavigate();
+
+  const { getItem, removeItem } = storageFactory(localStorage);
 
   const { mutate: guestLoginMutate } = useGuestLogin({
     onSuccess: () => {
@@ -13,6 +16,10 @@ const StartPage = () => {
   });
 
   const handleClick = () => {
+    const token = getItem('MyToken', '');
+    if (token) {
+      removeItem('MyToken');
+    }
     guestLoginMutate();
   };
 
