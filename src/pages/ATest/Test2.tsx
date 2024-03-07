@@ -114,9 +114,9 @@ const GameSentence = () => {
     }
 
     // 필요한 자동차 갯수 만큼 자동차 초기 좌표 지정
-    carsRef.current.push({ x: START_X, y: START_Y });
-    carsRef.current.push({ x: 300, y: START_Y });
-    carsRef.current.push({ x: 400, y: START_Y });
+    carsRef.current.push({ x: 100, y: START_Y });
+    carsRef.current.push({ x: 100, y: 1 });
+    carsRef.current.push({ x: 200, y: 0 });
 
     // 캔버스 세팅
     const cvs = canvasRef.current;
@@ -158,35 +158,40 @@ const GameSentence = () => {
     //   updateCarCoord(eachCarCoord);
     // });
   }, 1500);
-
+  setTimeout(() => {
+    isArrived = 1;
+    console.log('임시 종료');
+  }, 3000);
   console.log('컴포넌트가 렌더링');
   return (
     <>
-      <button
-        onClick={() => {
-          updateCarCoord(carsRef.current[1]);
-        }}>
-        그린카
-      </button>
-      <button
-        onClick={() => {
-          updateCarCoord(carsRef.current[2]);
-        }}>
-        블루카
-      </button>
       <IngameHeader />
       <div>
         <div className='absolute'>
           <IngameRank />
         </div>
-        <div className='flex flex-col items-center justify-center ml-80 h-[60rem] relative'>
-          <div className='absolute w-full h-full rounded-[14rem] border-2 border-black'></div>
-          <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] rounded-[14rem] border-2 border-black '></div>
+        <div className='flex flex-col items-center justify-center ml-80 h-[61rem] relative'>
+          <div className='absolute w-[110rem] h-full rounded-[10rem] border-2 border-black'></div>
+          <div className='absolute w-[100rem] h-[calc(100%-10rem)] rounded-[5rem] border-2 border-black '></div>
           <canvas
             ref={canvasRef}
             className='absolute w-full h-full'
           />
-          <div className='flex flex-col items-center justify-center z-10'>
+          <div className='flex flex-col items-center justify-center z-10 h-[51rem] bg-slate-400 mt-[5rem]'>
+            <div>
+              <button
+                onClick={() => {
+                  updateCarCoord(carsRef.current[1]);
+                }}>
+                그린카
+              </button>
+              <button
+                onClick={() => {
+                  updateCarCoord(carsRef.current[2]);
+                }}>
+                블루카
+              </button>
+            </div>
             {/* <SentenceNow text={sentenceDummy[idx]} />
             <GameForm
               inputName='sentence'
