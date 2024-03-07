@@ -16,15 +16,6 @@ const useTypingState = () => {
     setStartTime(new Date());
   };
 
-  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (blockedKeys[e.key] || e.ctrlKey || e.altKey || e.metaKey) {
-      e.preventDefault();
-    }
-    if (e.key === 'Backspace') {
-      onInputChange(0, 0);
-    }
-  };
-
   const onInputChange = useCallback(
     (totalCharCompleted: number, totalChar: number) => {
       if (!startTime) {
@@ -54,11 +45,23 @@ const useTypingState = () => {
     [startTime]
   );
 
-  const initializeTyping = () => {
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (blockedKeys[e.key] || e.ctrlKey || e.altKey || e.metaKey) {
+        e.preventDefault();
+      }
+      if (e.key === 'Backspace') {
+        onInputChange(0, 0);
+      }
+    },
+    [onInputChange]
+  );
+
+  const initializeTyping = useCallback(() => {
     setStartTime(null);
     setCpm(0);
     setAccurate(0);
-  };
+  }, []);
 
   return {
     initializeTyping,
