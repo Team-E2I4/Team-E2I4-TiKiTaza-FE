@@ -98,6 +98,7 @@ const GamePage = () => {
               <GameSentence
                 ingameRoomRes={ingameRoomRes}
                 publishIngame={publishIngame}
+                userId={userId}
               />
             }
             {/* // TODO : issue#92 roomInfo전체를 store에 가지면 그걸로 selectedMode 판단 */}

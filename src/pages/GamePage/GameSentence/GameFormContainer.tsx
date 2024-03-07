@@ -1,40 +1,33 @@
 import { useState } from 'react';
 import Dashboard from '@/common/Ingame/Dashboard';
 import { SentenceNext } from '@/common/Ingame/SentenceBlocks';
-import { PublishIngameType } from '../types/websocketType';
 import GameForm from './GameForm';
 import useTypingState from './useTypingState';
 
 interface GameFormContainerProps {
   sentenceList: string[];
-  trackRatio: number;
-  publishIngame: PublishIngameType;
+  handleUpdateScore: () => void;
 }
 
 const GameFormContainer = ({
   sentenceList,
-  trackRatio,
-  publishIngame,
+  handleUpdateScore,
 }: GameFormContainerProps) => {
   const { cpm, accurate, onInputChange, onKeyDown, initializeTyping } =
     useTypingState();
 
   const [idx, setIdx] = useState(1);
 
-  const handleCorrectWordSubmit = () => {
-    publishIngame('/info', { currentScore: trackRatio });
-  };
-
   return (
     <>
       <div className='flex flex-col items-center justify-center z-10'>
         <GameForm
+          key={sentenceList[idx]}
           inputName='sentence'
           sample={sentenceList[idx]}
-          key={sentenceList[idx]}
           onInputChange={onInputChange}
           onKeyDown={onKeyDown}
-          handleCorrectWordSubmit={handleCorrectWordSubmit}
+          handleUpdateScore={handleUpdateScore}
           handleLineEnd={() => setIdx((idx) => (idx + 1) % sentenceList.length)}
           initializeTyping={initializeTyping}
         />
