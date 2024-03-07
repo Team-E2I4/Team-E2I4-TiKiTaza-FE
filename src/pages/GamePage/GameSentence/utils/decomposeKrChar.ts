@@ -1,4 +1,8 @@
-import { chosungList, jongsungList, jungsungList } from './koreanCharacters';
+import {
+  chosungList,
+  jongsungList,
+  jungsungList,
+} from '../constants/koreanCharacters';
 
 export const decomposeKrChar = (char: string) => {
   const BASE_CODE = 44032; // '가'의 유니코드 코드 포인트
