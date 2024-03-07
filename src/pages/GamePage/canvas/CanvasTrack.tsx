@@ -1,5 +1,13 @@
 /* eslint-disable no-console */
 import { useCallback, useEffect, useRef } from 'react';
+import car1 from '@/assets/canvasCars/car1.png';
+import car2 from '@/assets/canvasCars/car2.png';
+import car3 from '@/assets/canvasCars/car3.png';
+import car4 from '@/assets/canvasCars/car4.png';
+import car5 from '@/assets/canvasCars/car5.png';
+import car6 from '@/assets/canvasCars/car6.png';
+import car7 from '@/assets/canvasCars/car7.png';
+import car8 from '@/assets/canvasCars/car8.png';
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
@@ -14,15 +22,7 @@ import {
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import useCanvas from '@/hooks/useCanvas';
-import { DirectionType } from '../GamePage/types/trackType';
-import car1 from './car1.png';
-import car2 from './car2.png';
-import car3 from './car3.png';
-import car4 from './car4.png';
-import car5 from './car5.png';
-import car6 from './car6.png';
-import car7 from './car7.png';
-import car8 from './car8.png';
+import { DirectionType } from '../types/trackType';
 import { responseDummy } from './testDummy';
 
 interface I_CarCoord {
