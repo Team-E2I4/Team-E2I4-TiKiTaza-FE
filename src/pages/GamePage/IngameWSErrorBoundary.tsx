@@ -7,8 +7,6 @@ export interface InagmeWsChildrenProps {
   ingameRoomRes: I_IngameWsResponse;
   publishIngame: PublishIngameType;
 }
-import useIngameWebsocket from './hooks/useIngameWebsocket';
-import { I_IngameWsResponse, PayloadType } from './types/websocketType';
 
 export const IngameWSErrorBoundary = ({
   children,
