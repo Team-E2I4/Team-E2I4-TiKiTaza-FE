@@ -1,4 +1,4 @@
-import {
+import React, {
   ChangeEvent,
   KeyboardEvent,
   useEffect,
@@ -7,7 +7,8 @@ import {
   useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
-import { decomposeKrChar } from './decomposeKrChar';
+import Input from '@/common/Input/Input';
+import { decomposeKrChar } from './utils/decomposeKrChar';
 
 //예시 글자와 입력중인 글자에 대해 오타 검출
 const getTypoKrChar = (
@@ -62,7 +63,7 @@ interface GameFormProps {
   sample: string;
   onInputChange: (_totalCharCompleted: number, _totalChar: number) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
-  handleCorrectWordSubmit?: () => void;
+  handleCorrectWordSubmit: () => void;
   handleLineEnd: () => void;
   initializeTyping: () => void;
 }
@@ -76,12 +77,11 @@ const GameForm = ({
   onKeyDown,
   initializeTyping,
   handleLineEnd,
+  handleCorrectWordSubmit,
 }: GameFormProps) => {
   const { register, handleSubmit, setValue, getValues } = useForm<{
     [inputName]: string;
-  }>({
-    mode: 'onChange',
-  });
+  }>();
 
   const [typoMarkList, setTypoMarkList] = useState<TypoMarkListType[]>(
     Array(sample.length).fill('')
@@ -104,6 +104,8 @@ const GameForm = ({
     if (maxSpacingIndex.current >= currentSpacingIndex) {
       return;
     }
+
+    handleCorrectWordSubmit();
 
     //차량이동 api 호출
   };
@@ -143,8 +145,6 @@ const GameForm = ({
 
     const inputText = e.target.value;
 
-    setValue('sentence', inputText);
-
     removeTypoMarksAfterCurrentChar(inputText.length - 1);
 
     if (!inputText) {
@@ -157,9 +157,10 @@ const GameForm = ({
 
     const currentIndex = inputText.length - 1;
 
-    //현재 글자에 대해서 오타 검출
+    //현재 글자 + 바로 이전글자의 오타 boolean
     let isLeastCharTypo = false;
 
+    //현재 글자에 대해서 오타 검출
     const isTypoAtTypingChar = getTypoKrChar(
       decomposedSample[currentIndex],
       decomposedCurrentInput[currentIndex]
@@ -209,11 +210,8 @@ const GameForm = ({
         ))}
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
+        <Input
           autoFocus
-          className='w-[70rem] h-[4.5rem] flex items-center pl-[1.75rem] rounded-2xl
-        bg-white border-2 border-green-100 my-4
-        outline-0 text-gray-300 tracking-wider box-border'
           autoComplete='off'
           onKeyDown={onKeyDown}
           maxLength={decomposedSample.length}
