@@ -106,7 +106,6 @@ const GameForm = ({
     }
 
     handleCorrectWordSubmit();
-
     //차량이동 api 호출
   };
 

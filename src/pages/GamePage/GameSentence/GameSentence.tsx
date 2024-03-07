@@ -2,16 +2,36 @@ import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 import GameFormContainer from './GameFormContainer';
-
+const sentenceDummy = [
+  '저녁 때 돌아갈 집이 있다는 것',
+  '힘들 때 마음 속으로 생각 할 사람이 있다는 것',
+  '외로울 때 혼자서 부를 노래 있다는 것',
+  '세상에 와서 내가 하는 말 가운데서',
+  '가장 고운 말을 너에게 들려주고 싶다.',
+  '세상에 와서 내가 가진 생각 가운데서',
+  '가장 예쁜 생각을 너에게 주고 싶다.',
+];
 const GameSentence = ({
   ingameRoomRes,
   publishIngame,
 }: InagmeWsChildrenProps) => {
   //이하 임의값 테스트 코드입니다
 
+  /* 
+  1. 유저 정보를 가져온다.
+  2. ingameRoomRes객체에 gameScore객체가 들어있다면, gameScore[userId]로 점수를 가져온다.
+    a. 만약 gameScore객체가 없다면, 점수는 0이다.
+  3. 점수는 라운드 돌아가는 동안 들고있어야함.
+  
+  ...
+  그렇다면 유저의 data가 필요하다. => 캐싱 해두는게 낫다. => 얼마나 캐싱 해야할까?...? => 게임중에는 refresh토큰을 계속 업데이트 해주어야하나?
+  const { data, isPending } = useAuthCheck();
+
+  const currentScore = ingameRoomRes?.gameScore ?? 0;
+  */
+
   // eslint-disable-next-line no-console
   console.log(ingameRoomRes, publishIngame); //unused disable용 콘솔입니다.
-
   // 전체영역 캔버스 생성
   /*   const canvasRef = useCanvas({
     setCanvas: (canvas: HTMLCanvasElement) => {
@@ -101,6 +121,12 @@ const GameSentence = ({
   const timerForTest = setInterval(() => {
     updateCarCoord(car1Ref.current);
   }, 15000); */
+  const TotalSpacedWord = sentenceDummy.reduce(
+    (acc, cur) => acc + cur.split(' ').length,
+    0
+  );
+
+  const trackRatio = Number(((1 / TotalSpacedWord) * 100).toFixed(1));
 
   return (
     <>
@@ -116,7 +142,11 @@ const GameSentence = ({
             ref={canvasRef}
             className='absolute w-full h-full'
           /> */}
-          <GameFormContainer />
+          <GameFormContainer
+            sentenceList={sentenceDummy}
+            trackRatio={trackRatio}
+            publishIngame={publishIngame}
+          />
         </div>
       </div>
     </>
