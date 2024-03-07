@@ -1,4 +1,11 @@
-import { ChangeEvent, FormEvent, useMemo, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  KeyboardEvent,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 interface CodeFormProps {
   convertedDummyCode: string[];
@@ -13,6 +20,9 @@ const CHAR_STATE = {
 const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentInputValue, setCurrentInputValue] = useState('');
+
+  const currentPublishIndex = useRef(0);
+  const divideBySpace = convertedDummyCode[currentIndex]?.split(' ') || null;
 
   const isRoundFinish = currentIndex === convertedDummyCode.length;
 
@@ -30,6 +40,41 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
     // TODO: 시간 종료를 통해 한 라운드가 끝났음을 서버에 발행
     // console.log('모든 코드 제출!');
   }
+
+  const handlePublishBySpaceKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (divideBySpace === null) {
+      return;
+    }
+
+    const currentTypingInput = e.currentTarget.value;
+
+    handleCheckCorrectAndTypo(currentTypingInput);
+
+    const splittedTypingInput = currentTypingInput.split(' ');
+    const numberOfSpaceKey = splittedTypingInput.length;
+
+    const isLastWord = currentTypingInput.includes(
+      divideBySpace[divideBySpace.length - 1]
+    );
+    const isPublished = numberOfSpaceKey <= currentPublishIndex.current;
+    const isSameCodeWord =
+      divideBySpace[currentPublishIndex.current] ===
+      splittedTypingInput[numberOfSpaceKey - 1];
+    const isEveryCharCorrect = checkedCorrectAndTypo
+      .slice(0, currentTypingInput.length)
+      .every((charState) => charState === CHAR_STATE.CORRECT);
+
+    if (
+      isLastWord === false &&
+      isPublished === false &&
+      isSameCodeWord &&
+      isEveryCharCorrect
+    ) {
+      //TODO: publish
+      currentPublishIndex.current += 1;
+      // console.log(`publish! by space ${currentPublishIndex.current}`);
+    }
+  };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const currentTypingInput = e.target.value;
@@ -84,6 +129,8 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
 
     setCurrentInputValue('');
     // console.log('정답 제출!');
+    // console.log('publish by Enter!');
+    currentPublishIndex.current = 0;
   };
 
   return (
@@ -135,6 +182,9 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
               e.code === 'ArrowDown'
             ) {
               e.preventDefault();
+            }
+            if (e.code === 'Space') {
+              handlePublishBySpaceKey(e);
             }
           }}
         />
