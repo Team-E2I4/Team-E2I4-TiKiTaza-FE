@@ -14,6 +14,7 @@ import {
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import useCanvas from '@/hooks/useCanvas';
+import { DirectionType } from '../GamePage/types/trackType';
 import carblue from './carblue.png';
 import cargreen from './cargreen.png';
 interface I_CarCoord {
@@ -46,39 +47,58 @@ const GameSentence = () => {
       clearInterval(timerForTest);
       return;
     }
-    if (pos.x >= MAX_X && carDirRef.current === 'right') {
-      carDirRef.current = CAR_DIRECTION.DOWN;
-    }
-    if (pos.y >= MAX_Y && carDirRef.current === 'down') {
-      carDirRef.current = CAR_DIRECTION.LEFT;
-    }
-    if (pos.x <= 0 && carDirRef.current === 'left') {
-      carDirRef.current = CAR_DIRECTION.UP;
-    }
-    if (pos.y <= 0 && carDirRef.current === 'up') {
-      carDirRef.current = CAR_DIRECTION.RIGHT;
-    }
+    changeDir(pos, carDirRef.current);
     pos.x = Math.max(0, Math.min(pos.x, MAX_X));
     pos.y = Math.max(0, Math.min(pos.y, MAX_Y));
   }, []);
+
+  // 방향에 따라 테두리에 도달할 시 방향 바꾸는 함수
+  const changeDir = (pos: I_CarCoord, dir: DirectionType) => {
+    const change = {
+      right: () => {
+        if (pos.x >= MAX_X) {
+          carDirRef.current = CAR_DIRECTION.DOWN;
+        }
+      },
+      down: () => {
+        if (pos.y >= MAX_Y) {
+          carDirRef.current = CAR_DIRECTION.LEFT;
+        }
+      },
+      left: () => {
+        if (pos.x <= 0) {
+          carDirRef.current = CAR_DIRECTION.UP;
+        }
+      },
+      up: () => {
+        if (pos.y <= 0) {
+          carDirRef.current = CAR_DIRECTION.RIGHT;
+        }
+      },
+    };
+    return change[dir]();
+  };
 
   // 자동차 위치 바꾸는 함수
   const updateCarCoord = useCallback(
     (carCoord: I_CarCoord) => {
       const dir = carDirRef.current;
-      if (dir === 'right') {
-        carCoord.x += MOVE_STEP;
-      } else if (dir === 'down') {
-        carCoord.y += MOVE_STEP;
-      } else if (dir === 'left') {
-        carCoord.x -= MOVE_STEP;
-      } else {
-        carCoord.y -= MOVE_STEP; // up
-      }
+      moveByDir(carCoord, dir);
       changeCarDir(carCoord);
     },
     [changeCarDir]
   );
+
+  // 방향에 따라 진행중인 방향으로 이동시키는 함수
+  const moveByDir = (carCoord: I_CarCoord, dir: DirectionType) => {
+    const move = {
+      right: (carCoord: I_CarCoord) => (carCoord.x += MOVE_STEP),
+      down: (carCoord: I_CarCoord) => (carCoord.y += MOVE_STEP),
+      left: (carCoord: I_CarCoord) => (carCoord.x -= MOVE_STEP),
+      up: (carCoord: I_CarCoord) => (carCoord.y -= MOVE_STEP),
+    };
+    return move[dir](carCoord);
+  };
 
   useEffect(() => {
     // 자동차 이미지 로드
