@@ -60,7 +60,6 @@ const GameCode = ({ ingameRoomRes, publishIngame }: GameCodeProps) => {
   }`;
 
   const convertedDummyCode = dummyCode.split('\n').map((row) => row.trim());
-  // console.table('convertedDummyCode', convertedDummyCode);
 
   const blockOverflowPos = useCallback((pos: I_CarCoord) => {
     if (pos.x === START_X && pos.y === START_Y) {
@@ -107,8 +106,6 @@ const GameCode = ({ ingameRoomRes, publishIngame }: GameCodeProps) => {
   }, 1500);
 
   useEffect(() => {
-    // console.log('ingameRoomRes', ingameRoomRes);
-
     if (car1) {
       const img = new Image(20, 20); //FIX:사이즈 적용안됨.. car1.png를 불러와서 줄이고싶으면?
       img.src = car1;

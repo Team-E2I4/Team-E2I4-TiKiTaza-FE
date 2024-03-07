@@ -38,7 +38,6 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
   if (isRoundFinish) {
     // TODO: 모든 코드 제출을 통해 한 라운드가 끝났음을 서버에 발행
     // TODO: 시간 종료를 통해 한 라운드가 끝났음을 서버에 발행
-    // console.log('모든 코드 제출!');
   }
 
   const handlePublishBySpaceKey = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -70,9 +69,8 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
       isSameCodeWord &&
       isEveryCharCorrect
     ) {
-      //TODO: publish
       currentPublishIndex.current += 1;
-      // console.log(`publish! by space ${currentPublishIndex.current}`);
+      //TODO: publish
     }
   };
 
@@ -122,15 +120,14 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
       return;
     }
 
-    // TODO: enter키 누르면 실시간 점수 publish
     setCurrentIndex((prev) =>
       prev < convertedDummyCode.length ? prev + 1 : prev
     );
 
     setCurrentInputValue('');
-    // console.log('정답 제출!');
-    // console.log('publish by Enter!');
+
     currentPublishIndex.current = 0;
+    // TODO: enter키 누르면 실시간 점수 publish
   };
 
   return (
