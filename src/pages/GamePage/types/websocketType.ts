@@ -66,3 +66,8 @@ export type PayloadType =
   | { currentScore: number }
   | { word: string }
   | { currentRound: number };
+
+export type PublishIngameType = (
+  destination: string,
+  payload: PayloadType
+) => void;
