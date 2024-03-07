@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.18.1",
+    "@tanstack/react-query-devtools": "^5.25.0",
     "@types/event-source-polyfill": "^1",
     "@types/node": "^20.11.16",
     "@types/react": "^18.2.43",
