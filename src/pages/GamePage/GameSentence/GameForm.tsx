@@ -94,6 +94,8 @@ const GameForm = ({
     Array(sample.length).fill('')
   );
 
+  const oneLineDone = useRef(false);
+
   const isTypoAtLeastOnce = typoMarkList.some((el) => el === 'typo');
 
   const decomposedSample = useMemo(
@@ -117,14 +119,18 @@ const GameForm = ({
   };
 
   const onSubmit = () => {
-    if (typoMarkList.some((el) => el === 'typo' || el === '')) {
+    if (
+      typoMarkList.some((el) => el === 'typo' || el === '') ||
+      !oneLineDone.current
+    ) {
       setError('sentence', {
-        message: '오타가 존재합니다!',
+        message: '오타가 존재하거나 입력을 마치지 않았습니다!',
       });
       return;
     }
     handleUpdateScore();
     handleLineEnd();
+    oneLineDone.current = false;
     maxSpacingIndex.current = -1;
     initializeTypoMakrList();
     initializeTyping();
@@ -167,6 +173,18 @@ const GameForm = ({
     const decomposedCurrentInput = [...inputText].map((el) =>
       el !== ' ' ? decomposeKrChar(el) : [' ']
     );
+
+    if (inputText.length === sample.length) {
+      oneLineDone.current =
+        decomposedSample.reduce(
+          (acc, cur) => acc + cur.flat(3).filter((el) => !!el).length,
+          0
+        ) ===
+        decomposedCurrentInput.reduce(
+          (acc, cur) => acc + cur.flat(3).filter((el) => !!el).length,
+          0
+        );
+    }
 
     const currentIndex = inputText.length - 1;
 
