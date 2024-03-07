@@ -6,8 +6,8 @@ import storageFactory from '@/utils/storageFactory';
 const { getItem } = storageFactory(localStorage);
 
 async function refreshToken() {
-  /*   const response = await reIssueAccessToken();
-  return response.data.data?.accessToken; */
+  const response = await reIssueAccessToken();
+  return response.data.data?.accessToken;
 }
 
 //임시로 MyToken이라는 값을 정해두었습니다

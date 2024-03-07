@@ -609,7 +609,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
-         * @summary 게임 방 생성: 방장은 생성 후 자동입장됩니다.
+         * @summary 게임 방 생성: 방장은 생성 후 자동 입장
          * @param {GameRoomCreateRequest} gameRoomCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -842,7 +842,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary 게임방 초대코드로 방 번호 반환
+         * @summary 게임방 초대 코드로 방 번호 반환
          * @param {string} inviteCode 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1043,13 +1043,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 토큰 재발급
-         * @param {string} refreshToken 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reIssueAccessToken: async (refreshToken: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'refreshToken' is not null or undefined
-            assertParamExists('reIssueAccessToken', 'refreshToken', refreshToken)
+        reIssueAccessToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/auth/reissue`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1213,7 +1210,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary 게임 방 생성: 방장은 생성 후 자동입장됩니다.
+         * @summary 게임 방 생성: 방장은 생성 후 자동 입장
          * @param {GameRoomCreateRequest} gameRoomCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1291,7 +1288,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary 게임방 초대코드로 방 번호 반환
+         * @summary 게임방 초대 코드로 방 번호 반환
          * @param {string} inviteCode 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1357,12 +1354,11 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 토큰 재발급
-         * @param {string} refreshToken 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async reIssueAccessToken(refreshToken: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseAuthResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.reIssueAccessToken(refreshToken, options);
+        async reIssueAccessToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseAuthResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reIssueAccessToken(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.reIssueAccessToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1419,7 +1415,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
-         * @summary 게임 방 생성: 방장은 생성 후 자동입장됩니다.
+         * @summary 게임 방 생성: 방장은 생성 후 자동 입장
          * @param {GameRoomCreateRequest} gameRoomCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1479,7 +1475,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary 게임방 초대코드로 방 번호 반환
+         * @summary 게임방 초대 코드로 방 번호 반환
          * @param {string} inviteCode 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1530,12 +1526,11 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary 토큰 재발급
-         * @param {string} refreshToken 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reIssueAccessToken(refreshToken: string, options?: any): AxiosPromise<ApiResponseAuthResponse> {
-            return localVarFp.reIssueAccessToken(refreshToken, options).then((request) => request(axios, basePath));
+        reIssueAccessToken(options?: any): AxiosPromise<ApiResponseAuthResponse> {
+            return localVarFp.reIssueAccessToken(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1580,7 +1575,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
 export class DefaultApi extends BaseAPI {
     /**
      * 
-     * @summary 게임 방 생성: 방장은 생성 후 자동입장됩니다.
+     * @summary 게임 방 생성: 방장은 생성 후 자동 입장
      * @param {GameRoomCreateRequest} gameRoomCreateRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1652,7 +1647,7 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary 게임방 초대코드로 방 번호 반환
+     * @summary 게임방 초대 코드로 방 번호 반환
      * @param {string} inviteCode 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1713,13 +1708,12 @@ export class DefaultApi extends BaseAPI {
     /**
      * 
      * @summary 토큰 재발급
-     * @param {string} refreshToken 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public reIssueAccessToken(refreshToken: string, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).reIssueAccessToken(refreshToken, options).then((request) => request(this.axios, this.basePath));
+    public reIssueAccessToken(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).reIssueAccessToken(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
