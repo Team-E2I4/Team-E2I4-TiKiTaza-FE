@@ -42,7 +42,7 @@ export type HandlePubKickUserType = (kickedId: number) => void;
 
 /// 인게임 웹소켓 ----
 export interface I_IngameWsResponse {
-  type: MessageType;
+  type: IngameMessageType;
   submittedWord?: string;
   submitMemberId?: number;
   gameScore?: GameScoreType;
