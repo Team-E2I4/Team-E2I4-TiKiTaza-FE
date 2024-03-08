@@ -3,7 +3,7 @@ import { DefaultApiFactory } from '@/generated';
 import { BASE_PATH } from '@/generated/base';
 import storageFactory from '@/utils/storageFactory';
 
-const { getItem } = storageFactory(localStorage);
+const { getItem, setItem } = storageFactory(localStorage);
 
 async function refreshToken() {
   const response = await reIssueAccessToken();
@@ -27,10 +27,17 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originRequest = error.config;
     const errorCode = error.response.data.errorCode;
-    if (errorCode === 'mem-404/01' && !originRequest._retry) {
-      originRequest._retry = true;
-      await refreshToken();
-      return axiosInstance;
+    if (errorCode === 'sec-401/02') {
+      const accessToken = await refreshToken();
+      if (accessToken) {
+        originRequest.headers = {
+          ...originRequest.headers,
+          Authorization: `Bearer ${accessToken}`,
+        };
+        setItem('MyToken', accessToken);
+        const response = await axios.request(originRequest);
+        return response;
+      }
     }
     return Promise.reject(error);
   }
