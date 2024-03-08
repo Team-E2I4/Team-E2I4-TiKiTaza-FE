@@ -24,12 +24,12 @@ const RankPage = () => {
       className='flex flex-col gap-[4rem] w-[60%] mx-auto'
       defaultValue=''
       onValueChange={setSelectedTab}>
-      <Tabs.List className='flex gap-[11rem] justify-center font-bold font-[Giants-Inline] text-4xl text-white'>
+      <Tabs.List className='flex gap-[11rem] justify-center font-bold font-[Giants-Inline] text-4x'>
         {tabData.map(({ value, text }) => (
           <Tabs.Trigger
             key={value}
             value={value}
-            className='bg-coral-100 rounded-[1rem] px-8 py-4'>
+            className='bg-green-70 rounded-[1rem] px-8 py-4'>
             {text}
           </Tabs.Trigger>
         ))}
