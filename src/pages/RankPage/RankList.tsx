@@ -2,7 +2,7 @@ import { MemberRankResponse } from '@/generated';
 import RankItem from './RankItem';
 
 export interface RankListProps {
-  data: MemberRankResponse[];
+  data: MemberRankResponse[] | undefined;
 }
 
 const RankList = ({ data }: RankListProps) => {
@@ -15,7 +15,7 @@ const RankList = ({ data }: RankListProps) => {
         <span className='w-[20%] text-center'>평균 정확도</span>
         <span className='w-[20%] text-center'>점수</span>
       </div>
-      {data.map((rank, index) => (
+      {data?.map((rank, index) => (
         <RankItem
           key={rank.memberId}
           rank={rank}
