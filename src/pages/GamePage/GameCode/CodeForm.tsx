@@ -9,7 +9,7 @@ import {
 
 interface CodeFormProps {
   convertedDummyCode: string[];
-  handleUpdateScore: () => void;
+  handleUpdateScore: (isAllSubmitted?: boolean) => void;
 }
 
 const CHAR_STATE = {
@@ -119,6 +119,11 @@ const CodeForm = ({ convertedDummyCode, handleUpdateScore }: CodeFormProps) => {
     setCurrentInputValue('');
 
     currentPublishIndex.current = 0;
+    if (currentIndex === convertedDummyCode.length - 1) {
+      const isAllSubmitted = true;
+      handleUpdateScore(isAllSubmitted);
+      return;
+    }
     handleUpdateScore();
     // TODO: enter키 누르면 실시간 점수 publish
   };
