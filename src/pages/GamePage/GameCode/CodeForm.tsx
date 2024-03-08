@@ -33,7 +33,7 @@ const CodeForm = ({ convertedDummyCode, handleUpdateScore }: CodeFormProps) => {
         { length: convertedDummyCode[currentIndex]?.length || 0 },
         () => CHAR_STATE.PENDING
       ),
-    [convertedDummyCode, currentIndex]
+    [currentIndex]
   );
 
   if (isRoundFinish) {
