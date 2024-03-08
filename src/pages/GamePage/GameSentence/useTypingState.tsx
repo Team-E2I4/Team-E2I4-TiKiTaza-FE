@@ -26,7 +26,6 @@ const useTypingState = () => {
       const endTime = new Date();
       const elapsedTimeInSeconds =
         (endTime.getTime() - startTime.getTime()) / 1000;
-
       let calculatedTypingSpeed =
         (totalCharCompleted / elapsedTimeInSeconds) * TYPING_CONSTANT;
       let calculatedAccuracy = (totalCharCompleted / totalChar) * 100;

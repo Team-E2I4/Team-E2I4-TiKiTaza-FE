@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import CanvasTrack from '../common/CanvasTrack';
@@ -16,14 +17,47 @@ const sentenceDummy = [
 interface GameSentenceProps extends InagmeWsChildrenProps {
   userId: number;
 }
+
+export interface I_RankInfoList {
+  memberId: number;
+  nickname: string;
+  currentScore: number;
+  isMe: boolean;
+}
 const GameSentence = ({
   ingameRoomRes,
   publishIngame,
   userId,
 }: GameSentenceProps) => {
-  const currentScore =
-    ingameRoomRes.allMembers?.find(({ memberId }) => memberId === userId)
-      ?.score ?? 0;
+  const currentScore = useRef<number>(ingameRoomRes?.gameScore?.[userId] ?? 0);
+
+  const currentMembers = useRef(ingameRoomRes.allMembers);
+
+  const initialRankInfo = () =>
+    currentMembers.current?.map((el) => ({
+      memberId: el.memberId,
+      nickname: el.nickname,
+      currentScore: 0,
+      isMe: el.memberId === userId,
+    }));
+
+  const [rankInfoList, setRankInfoList] = useState(initialRankInfo);
+
+  useEffect(() => {
+    if (rankInfoList && ingameRoomRes?.gameScore) {
+      const temp = { ...ingameRoomRes.gameScore };
+      setRankInfoList(() => {
+        const tempInfoList = [...rankInfoList]
+          .map((rankInfo) => ({
+            ...rankInfo,
+            currentScore: temp[rankInfo.memberId],
+          }))
+          .sort((prev, next) => next.currentScore - prev.currentScore);
+        return tempInfoList;
+      });
+    }
+  }, [ingameRoomRes.gameScore]);
+
   const TotalSpacedWord = sentenceDummy.reduce(
     (acc, cur) => acc + cur.split(' ').length,
     0
@@ -41,7 +75,7 @@ const GameSentence = ({
       <IngameHeader />
       <div>
         <div className='absolute'>
-          <IngameRank />
+          <IngameRank rankInfos={rankInfoList as I_RankInfoList[]} />
         </div>
         <div className='flex flex-col items-center justify-center ml-80 h-[61rem] relative w-[110rem]'>
           <div className='absolute w-[110rem] h-full rounded-[10rem] border-2 border-black'></div>
