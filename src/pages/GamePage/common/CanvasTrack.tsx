@@ -1,13 +1,7 @@
 /* eslint-disable no-console */
 import { useEffect, useRef } from 'react';
-import car1 from '@/assets/canvasCars/car1.png';
-import car2 from '@/assets/canvasCars/car2.png';
-import car3 from '@/assets/canvasCars/car3.png';
-import car4 from '@/assets/canvasCars/car4.png';
-import car5 from '@/assets/canvasCars/car5.png';
-import car6 from '@/assets/canvasCars/car6.png';
-import car7 from '@/assets/canvasCars/car7.png';
-import car8 from '@/assets/canvasCars/car8.png';
+// eslint-disable-next-line prettier/prettier
+import { car1,car2,car3,car4,car5,car6,car7,car8 } from '@/assets/canvasCars';
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,

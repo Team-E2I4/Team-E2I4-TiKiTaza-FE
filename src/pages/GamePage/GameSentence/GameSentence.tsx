@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
-import CanvasTrack from '../canvas/CanvasTrack';
+import CanvasTrack from '../common/CanvasTrack';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 import { GameScoreType } from '../types/websocketType';
 import GameFormContainer from './GameFormContainer';
@@ -38,7 +38,6 @@ const GameSentence = ({
     });
     currentScore.current += scorePerTrankLength;
   };
-
   return (
     <>
       <IngameHeader />
