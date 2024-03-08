@@ -14,7 +14,8 @@ const CodeFormContainer = ({
   convertedDummyCode,
   handleUpdateScore,
 }: CodeFormContainerProps) => {
-  const { cpm, accurate, onInputChange, initializeTyping } = useTypingState();
+  const { cpm, accurate, onInputChange, onKeyDown, initializeTyping } =
+    useTypingState();
   return (
     <div className='flex flex-col items-center justify-center z-10'>
       <div className='flex items-end gap-4'>
@@ -29,9 +30,11 @@ const CodeFormContainer = ({
         />
       </div>
       <CodeForm
+        inputName='code'
         convertedDummyCode={convertedDummyCode}
         handleUpdateScore={handleUpdateScore}
         onInputChange={onInputChange}
+        onKeyDown={onKeyDown}
         initializeTyping={initializeTyping}
       />
     </div>
