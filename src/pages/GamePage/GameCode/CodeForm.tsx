@@ -1,13 +1,15 @@
 import {
   ChangeEvent,
-  FormEvent,
   KeyboardEvent,
-  useMemo,
+  useCallback,
+  useEffect,
   useRef,
   useState,
 } from 'react';
+import { useForm } from 'react-hook-form';
 
 interface CodeFormProps {
+  inputName: 'code';
   convertedDummyCode: string[];
   handleUpdateScore: (_isAllSubmitted?: boolean) => void;
   onInputChange: (
@@ -15,6 +17,7 @@ interface CodeFormProps {
     _totalChar: number,
     TYPING_CONSTANT?: number
   ) => void;
+  onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
   initializeTyping: () => void;
 }
 
@@ -25,122 +28,133 @@ const CHAR_STATE = {
 };
 
 const CodeForm = ({
+  inputName,
   convertedDummyCode,
   handleUpdateScore,
   onInputChange,
+  onKeyDown,
   initializeTyping,
 }: CodeFormProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentInputValue, setCurrentInputValue] = useState('');
+  const { register, handleSubmit, setValue, getValues } = useForm<{
+    [inputName]: string;
+  }>();
 
   const currentPublishIndex = useRef(0);
-  const divideBySpace = convertedDummyCode[currentIndex]?.split(' ') || null;
+  const divideBySpace = convertedDummyCode[currentIndex]?.split(' ') ?? null;
 
-  const isRoundFinish = currentIndex === convertedDummyCode.length;
+  const isRoundFinish =
+    currentIndex === convertedDummyCode[currentIndex].length;
 
-  const checkedCorrectAndTypo = useMemo(
-    () =>
-      Array.from(
-        { length: convertedDummyCode[currentIndex]?.length || 0 },
-        () => CHAR_STATE.PENDING
-      ),
-    [currentIndex]
+  const [checkedCorrectAndTypo, setCheckedCorrectAndTypo] = useState(
+    Array.from(
+      { length: convertedDummyCode[currentIndex]?.length ?? 0 },
+      () => CHAR_STATE.PENDING
+    )
   );
+
+  const initializeCheckedCorrectAndTypo = () => {
+    setCheckedCorrectAndTypo(
+      Array.from(
+        { length: convertedDummyCode[currentIndex]?.length ?? 0 },
+        () => CHAR_STATE.PENDING
+      )
+    );
+  };
 
   if (isRoundFinish) {
     // TODO: 모든 코드 제출을 통해 한 라운드가 끝났음을 서버에 발행
     // TODO: 시간 종료를 통해 한 라운드가 끝났음을 서버에 발행
   }
 
-  const handlePublishBySpaceKey = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (divideBySpace === null) {
-      return;
-    }
-
-    const currentTypingInput = e.currentTarget.value;
-
-    const splittedTypingInput = currentTypingInput.split(' ');
-    const numberOfSpaceKey = splittedTypingInput.length;
-
-    const isLastWord = currentTypingInput.includes(
-      divideBySpace[divideBySpace.length - 1]
-    );
-    const isPublished = numberOfSpaceKey <= currentPublishIndex.current;
-    const isSameCodeWord =
-      divideBySpace[currentPublishIndex.current] ===
-      splittedTypingInput[numberOfSpaceKey - 1];
-
-    if (isLastWord === false && isPublished === false && isSameCodeWord) {
-      currentPublishIndex.current += 1;
-      handleUpdateScore();
-      //TODO: publish
-    }
-  };
-
-  const handleCheckCorrectAndTypo = (currentTypingInput: string) => {
-    const currentCharIndex = currentTypingInput.length;
-    const slicedCurrentCode = convertedDummyCode[currentIndex].slice(
-      0,
-      currentCharIndex
-    );
-
-    let isTypoExist = false;
-    Array(...currentTypingInput).forEach((currentInputChar, idx) => {
-      if (
-        currentInputChar === slicedCurrentCode[idx] &&
-        isTypoExist === false
-      ) {
-        checkedCorrectAndTypo[idx] = CHAR_STATE.CORRECT;
-      } else {
-        checkedCorrectAndTypo[idx] = CHAR_STATE.TYPO;
-        isTypoExist = true;
+  const handlePublishBySpaceKey = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (divideBySpace === null) {
+        return;
       }
-    });
 
-    checkedCorrectAndTypo.forEach((_, idx) => {
-      if (idx >= currentCharIndex) {
-        checkedCorrectAndTypo[idx] = CHAR_STATE.PENDING;
-      }
-    });
-  };
+      const currentTypingInput = e.currentTarget.value;
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const currentTypingInput = e.target.value;
-    setCurrentInputValue(() => currentTypingInput);
+      const splittedTypingInput = currentTypingInput.split(' ');
+      const numberOfSpaceKey = splittedTypingInput.length;
 
-    handleCheckCorrectAndTypo(currentTypingInput);
-
-    if (
-      currentTypingInput.slice(0, currentTypingInput.length - 1) ===
-      currentInputValue
-    ) {
-      onInputChange(
-        checkedCorrectAndTypo.filter((el) => el === CHAR_STATE.CORRECT).length,
-        currentTypingInput.length,
-        50
+      const isLastWord = currentTypingInput.includes(
+        divideBySpace[divideBySpace.length - 1]
       );
-    }
-  };
+      const isPublished = numberOfSpaceKey <= currentPublishIndex.current;
+      const isSameCodeWord =
+        divideBySpace[currentPublishIndex.current] ===
+        splittedTypingInput[numberOfSpaceKey - 1];
 
-  const handleCheckInputCorrect = (currentInput: string) => {
-    return currentInput === convertedDummyCode[currentIndex];
-  };
+      if (isLastWord === false && isPublished === false && isSameCodeWord) {
+        currentPublishIndex.current += 1;
+        handleUpdateScore();
+        //TODO: publish
+      }
+    },
+    [divideBySpace, handleUpdateScore]
+  );
 
-  const handleActiveEnter = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleCheckCorrectAndTypo = useCallback(
+    (currentTypingInput: string) => {
+      const currentCharIndex = currentTypingInput.length;
+      const slicedCurrentCode = convertedDummyCode[currentIndex].slice(
+        0,
+        currentCharIndex
+      );
 
-    const isCorrectInput = handleCheckInputCorrect(currentInputValue);
+      let isTypoExist = false;
+
+      setCheckedCorrectAndTypo((prevState) =>
+        prevState.map((value, idx) => {
+          if (idx >= currentCharIndex) {
+            return CHAR_STATE.PENDING;
+          }
+
+          if (
+            isTypoExist === false &&
+            currentTypingInput[idx] === slicedCurrentCode[idx]
+          ) {
+            return CHAR_STATE.CORRECT;
+          }
+
+          isTypoExist = true;
+          return CHAR_STATE.TYPO;
+        })
+      );
+    },
+    [convertedDummyCode, currentIndex]
+  );
+
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const currentTypingInput = e.target.value;
+
+      setValue('code', currentTypingInput);
+      handleCheckCorrectAndTypo(currentTypingInput);
+    },
+    [handleCheckCorrectAndTypo, setValue]
+  );
+
+  const handleCheckInputCorrect = useCallback(
+    (currentInput: string) => {
+      return currentInput === convertedDummyCode[currentIndex];
+    },
+    [convertedDummyCode, currentIndex]
+  );
+
+  const handleActiveEnter = useCallback(() => {
+    const isCorrectInput = handleCheckInputCorrect(getValues('code'));
 
     if (isCorrectInput === false || isRoundFinish) {
       return;
     }
 
+    setValue('code', '');
+    initializeTyping();
     setCurrentIndex((prev) =>
       prev < convertedDummyCode.length ? prev + 1 : prev
     );
-
-    setCurrentInputValue('');
-    initializeTyping();
 
     currentPublishIndex.current = 0;
     if (currentIndex === convertedDummyCode.length - 1) {
@@ -150,7 +164,28 @@ const CodeForm = ({
     }
     handleUpdateScore();
     // TODO: enter키 누르면 실시간 점수 publish
-  };
+  }, [
+    convertedDummyCode.length,
+    currentIndex,
+    getValues,
+    handleCheckInputCorrect,
+    handleUpdateScore,
+    initializeTyping,
+    isRoundFinish,
+    setValue,
+  ]);
+
+  useEffect(() => {
+    initializeCheckedCorrectAndTypo();
+  }, [currentIndex]);
+
+  useEffect(() => {
+    onInputChange(
+      checkedCorrectAndTypo.filter((el) => el === CHAR_STATE.CORRECT).length,
+      getValues('code').length,
+      50
+    );
+  }, [checkedCorrectAndTypo]);
 
   return (
     <>
@@ -168,7 +203,7 @@ const CodeForm = ({
           ))}
         </div>
       )}
-      <form onSubmit={handleActiveEnter}>
+      <form onSubmit={handleSubmit(handleActiveEnter)}>
         <input
           autoFocus
           autoComplete='off'
@@ -176,7 +211,6 @@ const CodeForm = ({
           className={`w-[60rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl
         bg-white border-2 border-green-100 
         outline-0 text-gray-300 tracking-wider box-border`}
-          value={currentInputValue}
           placeholder={
             isRoundFinish
               ? '라운드가 끝났습니다!'
@@ -186,29 +220,15 @@ const CodeForm = ({
             isRoundFinish ? 0 : convertedDummyCode[currentIndex].length
           }
           disabled={isRoundFinish ? true : false}
-          onChange={handleInputChange}
-          onPaste={(e) => {
-            e.preventDefault();
-          }}
-          onCopy={(e) => {
-            e.preventDefault();
-          }}
+          {...register('code', {
+            onChange: (e) => handleInputChange(e),
+          })}
+          onPaste={(e) => e.preventDefault()}
+          onCopy={(e) => e.preventDefault()}
           onKeyDown={(e) => {
-            if (
-              e.code === 'ArrowLeft' ||
-              e.code === 'ArrowRight' ||
-              e.code === 'ArrowUp' ||
-              e.code === 'ArrowDown' ||
-              e.code === 'Meta' ||
-              e.code === 'Control'
-            ) {
-              e.preventDefault();
-            }
+            onKeyDown(e);
             if (e.code === 'Space') {
               handlePublishBySpaceKey(e);
-            }
-            if (e.code === 'Backspace') {
-              onInputChange(0, 0);
             }
           }}
         />
