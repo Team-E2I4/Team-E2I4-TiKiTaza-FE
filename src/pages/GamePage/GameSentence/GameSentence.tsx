@@ -1,7 +1,9 @@
 import { useRef } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
+import CanvasTrack from '../canvas/CanvasTrack';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
+import { GameScoreType } from '../types/websocketType';
 import GameFormContainer from './GameFormContainer';
 const sentenceDummy = [
   '저녁 때 돌아갈 집이 있다는 것',
@@ -44,9 +46,16 @@ const GameSentence = ({
         <div className='absolute'>
           <IngameRank />
         </div>
-        <div className='flex flex-col items-center justify-center ml-80 h-[60rem] relative'>
-          <div className='absolute w-full h-full rounded-[14rem] border-2 border-black'></div>
-          <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] rounded-[14rem] border-2 border-black '></div>
+        <div className='flex flex-col items-center justify-center ml-80 h-[61rem] relative w-[110rem]'>
+          <div className='absolute w-[110rem] h-full rounded-[10rem] border-2 border-black'></div>
+          <div className='absolute w-[100rem] h-[calc(100%-10rem)] rounded-[5rem] border-2 border-black '></div>
+          {ingameRoomRes.gameScore && (
+            <CanvasTrack
+              gameScore={ingameRoomRes.gameScore as GameScoreType}
+              messageType={ingameRoomRes.type}
+              // messageType='NEXT_ROUND_START'
+            />
+          )}
           <GameFormContainer
             sentenceList={sentenceDummy}
             handleUpdateScore={handleUpdateScore}
