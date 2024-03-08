@@ -16,6 +16,9 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
+  if (config.url?.endsWith('reissue')) {
+    return config;
+  }
   config.headers.Authorization = `Bearer ${getItem('MyToken', '')}`;
   return config;
 });
