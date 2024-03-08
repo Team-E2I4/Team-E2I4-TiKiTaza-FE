@@ -9,7 +9,13 @@ import {
 
 interface CodeFormProps {
   convertedDummyCode: string[];
-  handleUpdateScore: (isAllSubmitted?: boolean) => void;
+  handleUpdateScore: (_isAllSubmitted?: boolean) => void;
+  onInputChange: (
+    _totalCharCompleted: number,
+    _totalChar: number,
+    TYPING_CONSTANT?: number
+  ) => void;
+  initializeTyping: () => void;
 }
 
 const CHAR_STATE = {
@@ -18,7 +24,12 @@ const CHAR_STATE = {
   TYPO: 'typo',
 };
 
-const CodeForm = ({ convertedDummyCode, handleUpdateScore }: CodeFormProps) => {
+const CodeForm = ({
+  convertedDummyCode,
+  handleUpdateScore,
+  onInputChange,
+  initializeTyping,
+}: CodeFormProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentInputValue, setCurrentInputValue] = useState('');
 
@@ -66,12 +77,6 @@ const CodeForm = ({ convertedDummyCode, handleUpdateScore }: CodeFormProps) => {
     }
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const currentTypingInput = e.target.value;
-    setCurrentInputValue(() => currentTypingInput);
-    handleCheckCorrectAndTypo(currentTypingInput);
-  };
-
   const handleCheckCorrectAndTypo = (currentTypingInput: string) => {
     const currentCharIndex = currentTypingInput.length;
     const slicedCurrentCode = convertedDummyCode[currentIndex].slice(
@@ -99,6 +104,24 @@ const CodeForm = ({ convertedDummyCode, handleUpdateScore }: CodeFormProps) => {
     });
   };
 
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const currentTypingInput = e.target.value;
+    setCurrentInputValue(() => currentTypingInput);
+
+    handleCheckCorrectAndTypo(currentTypingInput);
+
+    if (
+      currentTypingInput.slice(0, currentTypingInput.length - 1) ===
+      currentInputValue
+    ) {
+      onInputChange(
+        checkedCorrectAndTypo.filter((el) => el === CHAR_STATE.CORRECT).length,
+        currentTypingInput.length,
+        50
+      );
+    }
+  };
+
   const handleCheckInputCorrect = (currentInput: string) => {
     return currentInput === convertedDummyCode[currentIndex];
   };
@@ -117,6 +140,7 @@ const CodeForm = ({ convertedDummyCode, handleUpdateScore }: CodeFormProps) => {
     );
 
     setCurrentInputValue('');
+    initializeTyping();
 
     currentPublishIndex.current = 0;
     if (currentIndex === convertedDummyCode.length - 1) {
@@ -182,6 +206,9 @@ const CodeForm = ({ convertedDummyCode, handleUpdateScore }: CodeFormProps) => {
             }
             if (e.code === 'Space') {
               handlePublishBySpaceKey(e);
+            }
+            if (e.code === 'Backspace') {
+              onInputChange(0, 0);
             }
           }}
         />
