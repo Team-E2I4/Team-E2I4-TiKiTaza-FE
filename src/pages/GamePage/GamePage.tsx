@@ -116,6 +116,7 @@ const GamePage = () => {
                 <GameCode
                   ingameRoomRes={ingameRoomRes}
                   publishIngame={publishIngame}
+                  userId={userId}
                 />
               )
             }

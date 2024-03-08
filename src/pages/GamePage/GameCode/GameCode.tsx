@@ -14,13 +14,12 @@ import {
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import useCanvas from '@/hooks/useCanvas';
-import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
+import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 import CodeContainer from './CodeContainer';
 import CodeForm from './CodeForm';
 
-interface GameCodeProps {
-  ingameRoomRes: I_IngameWsResponse;
-  publishIngame: (destination: string, payload: PayloadType) => void;
+interface GameCodeProps extends InagmeWsChildrenProps {
+  userId: number;
 }
 interface I_CarCoord {
   x: number;
@@ -28,7 +27,7 @@ interface I_CarCoord {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const GameCode = ({ ingameRoomRes, publishIngame }: GameCodeProps) => {
+const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
   const canvasRef = useCanvas({
     setCanvas: (canvas: HTMLCanvasElement) => {
       canvas.width = CANVAS_WIDTH;
@@ -60,6 +59,18 @@ const GameCode = ({ ingameRoomRes, publishIngame }: GameCodeProps) => {
   }`;
 
   const convertedDummyCode = dummyCode.split('\n').map((row) => row.trim());
+
+  const myCurrentScore = useRef(ingameRoomRes.gameScore?.[userId] ?? 0);
+  const totalSpacedWord = convertedDummyCode.reduce(
+    (prev, cur) => prev + cur.split(' ').length,
+    0
+  );
+  const scorePerSubmit = Number(((1 / totalSpacedWord) * 100).toFixed(1));
+
+  const handleUpdateScore = () => {
+    myCurrentScore.current += scorePerSubmit;
+    publishIngame('/info', { currentScore: myCurrentScore.current });
+  };
 
   const blockOverflowPos = useCallback((pos: I_CarCoord) => {
     if (pos.x === START_X && pos.y === START_Y) {
@@ -160,7 +171,10 @@ const GameCode = ({ ingameRoomRes, publishIngame }: GameCodeProps) => {
                 value={100}
               />
             </div>
-            <CodeForm convertedDummyCode={convertedDummyCode} />
+            <CodeForm
+              convertedDummyCode={convertedDummyCode}
+              handleUpdateScore={handleUpdateScore}
+            />
           </div>
         </div>
       </div>
