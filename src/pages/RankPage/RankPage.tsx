@@ -1,18 +1,29 @@
 import * as Tabs from '@radix-ui/react-tabs';
-import { DUMMY_DATA } from './RankData';
+import { useEffect, useState } from 'react';
+import { useRank } from '@/hooks/useRank';
 import RankList from './RankList';
 
 const RankPage = () => {
+  const [selectedTab, setSelectedTab] = useState('');
+  const { data: rankData, refetch } = useRank(selectedTab);
+
   const tabData = [
-    { value: 'tab1', text: '전체', data: DUMMY_DATA },
-    { value: 'tab2', text: '단어', data: DUMMY_DATA },
-    { value: 'tab3', text: '문장', data: DUMMY_DATA },
-    { value: 'tab4', text: '코드', data: DUMMY_DATA },
+    { value: '', text: '전체' },
+    { value: 'WORD', text: '단어' },
+    { value: 'SENTENCE', text: '문장' },
+    { value: 'CODE', text: '코드' },
   ];
+
+  useEffect(() => {
+    // 탭이 변경될 때마다 refetch 함수를 호출하여 랭킹 데이터를 갱신합니다.
+    refetch();
+  }, [selectedTab, refetch]);
+
   return (
     <Tabs.Root
       className='flex flex-col gap-[4rem] w-[60%] mx-auto'
-      defaultValue='tab1'>
+      defaultValue=''
+      onValueChange={setSelectedTab}>
       <Tabs.List className='flex gap-[11rem] justify-center font-bold font-[Giants-Inline] text-4xl text-white'>
         {tabData.map(({ value, text }) => (
           <Tabs.Trigger
@@ -23,13 +34,14 @@ const RankPage = () => {
           </Tabs.Trigger>
         ))}
       </Tabs.List>
-      {tabData.map(({ value, data }) => (
-        <Tabs.Content
-          key={value}
-          value={value}>
-          <RankList data={data} />
-        </Tabs.Content>
-      ))}
+      {rankData &&
+        tabData.map(({ value }) => (
+          <Tabs.Content
+            key={value}
+            value={value}>
+            <RankList data={rankData} />
+          </Tabs.Content>
+        ))}
     </Tabs.Root>
   );
 };
