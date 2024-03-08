@@ -48,8 +48,6 @@ const CodeForm = ({ convertedDummyCode, handleUpdateScore }: CodeFormProps) => {
 
     const currentTypingInput = e.currentTarget.value;
 
-    handleCheckCorrectAndTypo(currentTypingInput);
-
     const splittedTypingInput = currentTypingInput.split(' ');
     const numberOfSpaceKey = splittedTypingInput.length;
 
@@ -60,16 +58,8 @@ const CodeForm = ({ convertedDummyCode, handleUpdateScore }: CodeFormProps) => {
     const isSameCodeWord =
       divideBySpace[currentPublishIndex.current] ===
       splittedTypingInput[numberOfSpaceKey - 1];
-    const isEveryCharCorrect = checkedCorrectAndTypo
-      .slice(0, currentTypingInput.length)
-      .every((charState) => charState === CHAR_STATE.CORRECT);
 
-    if (
-      isLastWord === false &&
-      isPublished === false &&
-      isSameCodeWord &&
-      isEveryCharCorrect
-    ) {
+    if (isLastWord === false && isPublished === false && isSameCodeWord) {
       currentPublishIndex.current += 1;
       handleUpdateScore();
       //TODO: publish
