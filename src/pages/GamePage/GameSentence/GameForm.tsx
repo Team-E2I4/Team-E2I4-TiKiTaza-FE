@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent,
   KeyboardEvent,
   useEffect,
@@ -120,7 +120,8 @@ const GameForm = ({
 
   const onSubmit = () => {
     if (
-      typoMarkList.some((el) => el === 'typo' || el === '') ||
+      typoMarkList.some((el) => el === 'typo') ||
+      getValues('sentence').length !== sample.length ||
       !oneLineDone.current
     ) {
       setError('sentence', {
@@ -174,18 +175,6 @@ const GameForm = ({
       el !== ' ' ? decomposeKrChar(el) : [' ']
     );
 
-    if (inputText.length === sample.length) {
-      oneLineDone.current =
-        decomposedSample.reduce(
-          (acc, cur) => acc + cur.flat(3).filter((el) => !!el).length,
-          0
-        ) ===
-        decomposedCurrentInput.reduce(
-          (acc, cur) => acc + cur.flat(3).filter((el) => !!el).length,
-          0
-        );
-    }
-
     const currentIndex = inputText.length - 1;
 
     //현재 글자 + 바로 이전글자의 오타 boolean
@@ -217,6 +206,18 @@ const GameForm = ({
       handleTypoMark(isTypoPrevChar, currentIndex - 1);
     }
 
+    if (inputText.length === sample.length) {
+      oneLineDone.current =
+        decomposedSample.reduce(
+          (acc, cur) => acc + cur.flat(3).filter((el) => !!el).length,
+          0
+        ) ===
+        decomposedCurrentInput.reduce(
+          (acc, cur) => acc + cur.flat(3).filter((el) => !!el).length,
+          0
+        );
+    }
+
     //현재+바로이전글자 오타 or 지금까지 최소한번의 오타 or 이전글자가 공백이 아니면 return
     if (isLeastCharTypo || isTypoAtLeastOnce || inputText.at(-1) !== ' ') {
       return;
@@ -245,7 +246,7 @@ const GameForm = ({
         className='flex flex-col items-center'
         onSubmit={handleSubmit(onSubmit)}>
         <Input
-          className={`${errors[inputName]?.message ? 'border-red-500' : '장난'}`}
+          isError={!!errors[inputName]?.message}
           autoFocus
           autoComplete='off'
           onKeyDown={onKeyDown}
@@ -256,9 +257,6 @@ const GameForm = ({
             onChange: (e) => handleInputChange(e),
           })}
         />
-        <span className='text-red-500 text-[1.2rem] h-[1.6rem]'>
-          {errors[inputName]?.message}
-        </span>
       </form>
     </>
   );

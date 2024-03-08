@@ -35,8 +35,6 @@ const GameSentence = ({
   const currentScore = ingameRoomRes?.gameScore ?? 0;
   */
 
-  // eslint-disable-next-line no-console
-  console.log(ingameRoomRes, publishIngame); //unused disable용 콘솔입니다.
   // 전체영역 캔버스 생성
   /*   const canvasRef = useCanvas({
     setCanvas: (canvas: HTMLCanvasElement) => {
@@ -134,11 +132,13 @@ const GameSentence = ({
     0
   );
 
-  const trackRatio = Number(((1 / TotalSpacedWord) * 100).toFixed(1));
+  const scorePerTrankLength = Number(((1 / TotalSpacedWord) * 100).toFixed(1));
 
   const handleUpdateScore = () => {
-    publishIngame('/info', { currentScore: currentScore.current + trackRatio });
-    currentScore.current += trackRatio;
+    publishIngame('/info', {
+      currentScore: currentScore.current + scorePerTrankLength,
+    });
+    currentScore.current += scorePerTrankLength;
   };
 
   return (
