@@ -9,6 +9,7 @@ import {
 
 interface CodeFormProps {
   convertedDummyCode: string[];
+  handleUpdateScore: () => void;
 }
 
 const CHAR_STATE = {
@@ -17,7 +18,7 @@ const CHAR_STATE = {
   TYPO: 'typo',
 };
 
-const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
+const CodeForm = ({ convertedDummyCode, handleUpdateScore }: CodeFormProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentInputValue, setCurrentInputValue] = useState('');
 
@@ -70,6 +71,7 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
       isEveryCharCorrect
     ) {
       currentPublishIndex.current += 1;
+      handleUpdateScore();
       //TODO: publish
     }
   };
@@ -127,6 +129,7 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
     setCurrentInputValue('');
 
     currentPublishIndex.current = 0;
+    handleUpdateScore();
     // TODO: enter키 누르면 실시간 점수 publish
   };
 
