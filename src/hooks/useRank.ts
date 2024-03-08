@@ -9,6 +9,13 @@ export const useRank = (gameType: string) => {
     Error | AxiosError
   >({
     queryKey: ['rank', gameType],
-    queryFn: () => getMemberRanking(gameType),
+    queryFn: () => {
+      if (!gameType) {
+        //gameType이 없을 경우 전체 랭킹을 가져옵니다.
+        return getMemberRanking();
+      }
+      // gameType이 있을 경우 해당 게임(Code, Sentence, WorD)의 랭킹을 가져옵니다.
+      return getMemberRanking(gameType);
+    },
   });
 };
