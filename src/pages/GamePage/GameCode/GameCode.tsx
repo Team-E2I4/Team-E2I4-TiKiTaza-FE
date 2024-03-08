@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
 import car1 from '@/assets/cars/car11.png';
-import Dashboard from '@/common/Ingame/Dashboard';
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
@@ -15,8 +14,7 @@ import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import useCanvas from '@/hooks/useCanvas';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
-import CodeContainer from './CodeContainer';
-import CodeForm from './CodeForm';
+import CodeFormContainer from './CodeFormContainer';
 
 interface GameCodeProps extends InagmeWsChildrenProps {
   userId: number;
@@ -67,9 +65,9 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
   );
   const scorePerSubmit = Math.floor((1 / totalSpacedWord) * 100);
 
-  const handleUpdateScore = (isAllSubmitted?: boolean) => {
+  const handleUpdateScore = (_isAllSubmitted?: boolean) => {
     myCurrentScore.current += scorePerSubmit;
-    if (isAllSubmitted) {
+    if (_isAllSubmitted) {
       myCurrentScore.current = 100;
     }
     publishIngame('/info', { currentScore: myCurrentScore.current });
@@ -163,23 +161,11 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
             ref={canvasRef}
             className='absolute w-full h-full'
           />
-          <div className='flex flex-col items-center justify-center z-10'>
-            <div className='flex items-end gap-4'>
-              <Dashboard
-                type='wpm'
-                value={90}
-              />
-              <CodeContainer dummyCode={dummyCode} />
-              <Dashboard
-                type='accuracy'
-                value={100}
-              />
-            </div>
-            <CodeForm
-              convertedDummyCode={convertedDummyCode}
-              handleUpdateScore={handleUpdateScore}
-            />
-          </div>
+          <CodeFormContainer
+            dummyCode={dummyCode}
+            convertedDummyCode={convertedDummyCode}
+            handleUpdateScore={handleUpdateScore}
+          />
         </div>
       </div>
     </>
