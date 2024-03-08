@@ -39,7 +39,7 @@ const RankPage = () => {
           <Tabs.Content
             key={value}
             value={value}>
-            <RankList data={rankData} />
+            <RankList data={rankData.data.data} />
           </Tabs.Content>
         ))}
     </Tabs.Root>

@@ -1,12 +1,10 @@
 import first from '@/assets/rank/first_rank.png';
 import second from '@/assets/rank/second_rank.png';
 import third from '@/assets/rank/third_rank.png';
+import { MemberRankResponse } from '@/generated';
 
 interface RankItemProps {
-  rank: {
-    nickname: string;
-    score: number;
-  };
+  rank: MemberRankResponse;
   index: number;
 }
 
@@ -30,7 +28,7 @@ const RankItem = ({ rank, index }: RankItemProps) => {
         )}
       </span>
       <span className='w-[40%] text-center'>{rank.nickname}</span>
-      <span className='w-[30%] text-center'>{rank.score}</span>
+      <span className='w-[30%] text-center'>{rank.totalScore}</span>
     </div>
   );
 };
