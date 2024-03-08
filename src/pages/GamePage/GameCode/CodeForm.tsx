@@ -135,11 +135,11 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
       {!isRoundFinish && (
         <div
           className='w-[60rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl
-        bg-white border-2 border-green-100 my-4
+        bg-green-100 border-2 border-green-100 mt-[1rem] mb-[0.5rem]
         outline-0 text-gray-300 tracking-wider box-border'>
           {[...convertedDummyCode[currentIndex]].map((char, idx) => (
             <span
-              className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-green-600 font-bold' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-500' : 'text-black'}`}
+              className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-black font-bold' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-500 font-bold' : 'text-white'}`}
               key={`${checkedCorrectAndTypo[idx]}${idx}`}>
               {char === ' ' ? '\u00A0' : char}
             </span>
@@ -152,7 +152,7 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
           autoComplete='off'
           type='text'
           className={`w-[60rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl
-        bg-white border-2 border-green-100 my-4
+        bg-white border-2 border-green-100 
         outline-0 text-gray-300 tracking-wider box-border`}
           value={currentInputValue}
           placeholder={
@@ -176,7 +176,9 @@ const CodeForm = ({ convertedDummyCode }: CodeFormProps) => {
               e.code === 'ArrowLeft' ||
               e.code === 'ArrowRight' ||
               e.code === 'ArrowUp' ||
-              e.code === 'ArrowDown'
+              e.code === 'ArrowDown' ||
+              e.code === 'Meta' ||
+              e.code === 'Control'
             ) {
               e.preventDefault();
             }

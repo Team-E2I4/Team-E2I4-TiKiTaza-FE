@@ -98,24 +98,27 @@ const GamePage = () => {
       <IngameWSErrorBoundary>
         {({ ingameRoomRes, publishIngame }) => (
           <>
-            {!checkIsEmptyObj(ingameRoomRes) && (
+            {/* {!checkIsEmptyObj(ingameRoomRes) && (
               <GameSentence
                 ingameRoomRes={ingameRoomRes}
                 publishIngame={publishIngame}
                 userId={userId}
               />
-            )}
+            )} */}
             {/* // TODO : issue#92 roomInfo전체를 store에 가지면 그걸로 selectedMode 판단 */}
 
             {/* {selectedMode === 'SENTENCE' && (
               <GameSentence ingameRoomRes={ingameRoomRes} />
             )} */}
-            {/* {selectedMode === 'CODE' && (
-            <GameCode
-              ingameRoomRes={ingameRoomRes}
-              publishIngame={publishIngame}
-            />
-            )} */}
+            {
+              // selectedMode === 'CODE' &&
+              !checkIsEmptyObj(ingameRoomRes) && (
+                <GameCode
+                  ingameRoomRes={ingameRoomRes}
+                  publishIngame={publishIngame}
+                />
+              )
+            }
 
             {/*
             {selectedMode === 'WORD' && (
