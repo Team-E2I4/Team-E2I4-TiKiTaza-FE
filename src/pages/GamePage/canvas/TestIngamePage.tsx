@@ -1,11 +1,19 @@
 /* eslint-disable no-console */
+import { useState } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import { GameScoreType } from '../types/websocketType';
 import CanvasTrack from './CanvasTrack';
-import { responseDummy } from './testDummy';
+import { responseDummy, responseDummy2 } from './testDummy';
 
 const GameSentence = () => {
+  const [data, setData] = useState(responseDummy);
+  console.log('GameSentence 에서 data : ', data.gameScore);
+  setTimeout(() => {
+    setData(responseDummy2);
+    console.log('------DATA변경됨! : ', data.gameScore);
+  }, 3000);
+
   return (
     <>
       <IngameHeader />
@@ -13,10 +21,14 @@ const GameSentence = () => {
         <div className='absolute'>
           <IngameRank />
         </div>
-        <div className='flex flex-col items-center justify-center ml-80 h-[61rem] relative'>
+        <div className='flex flex-col items-center justify-center ml-80 h-[61rem] relative w-[110rem]'>
           <div className='absolute w-[110rem] h-full rounded-[10rem] border-2 border-black'></div>
           <div className='absolute w-[100rem] h-[calc(100%-10rem)] rounded-[5rem] border-2 border-black '></div>
-          <CanvasTrack gameScore={responseDummy.gameScore as GameScoreType} />
+          <CanvasTrack
+            gameScore={data.gameScore as GameScoreType}
+            messageType='INFO'
+            // messageType='NEXT_ROUND_START'
+          />
           <div className='flex flex-col items-center justify-center z-10 h-[51rem] bg-slate-400 mt-[5rem]'>
             {/* <SentenceNow text={sentenceDummy[idx]} />
             <GameForm

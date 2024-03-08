@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import car1 from '@/assets/canvasCars/car1.png';
 import car2 from '@/assets/canvasCars/car2.png';
 import car3 from '@/assets/canvasCars/car3.png';
@@ -11,25 +11,32 @@ import car8 from '@/assets/canvasCars/car8.png';
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
-  CAR_DIRECTION,
-  MAX_X,
-  MAX_Y,
+  CAR_SIZE,
+  EAST_START_Y,
   MOVE_STEP_X,
   MOVE_STEP_Y,
+  SOUTH_START_X,
   START_X,
-  START_Y,
+  TRACK_WIDHT,
+  WEST_START_Y,
 } from '@/common/Ingame/ingameConstants';
 import useCanvas from '@/hooks/useCanvas';
-import { DirectionType } from '../types/trackType';
 import { GameScoreType } from '../types/websocketType';
 
 interface I_CarCoord {
   x: number;
   y: number;
+  userId?: string; // 인덱스번호 처럼 쓸 userId/ 0~3(g1), 4~7(g2)
+  idx?: number; // 인덱스 번호 -> 트랙 라인 식별용
 }
 
-const CanvasTrack = ({ gameScore }: { gameScore: GameScoreType }) => {
-  console.log(gameScore);
+const CanvasTrack = ({
+  gameScore,
+  messageType,
+}: {
+  gameScore: GameScoreType;
+  messageType: string;
+}) => {
   // 전체영역 캔버스 생성
   const canvasRef = useCanvas({
     setCanvas: (canvas: HTMLCanvasElement) => {
@@ -40,74 +47,18 @@ const CanvasTrack = ({ gameScore }: { gameScore: GameScoreType }) => {
 
   const carImagesRef = useRef<HTMLImageElement[] | null>(null);
   const carsRef = useRef<I_CarCoord[]>([]);
-  const carDirRef = useRef(CAR_DIRECTION.RIGHT); // 자동차가 이동할 방향(상하좌우)
 
   const carImgs = [car1, car2, car3, car4, car5, car6, car7, car8];
   let isArrived = 0;
 
-  // 자동차 진행 방향 바꾸는 함수
-  const changeCarDir = useCallback((pos: I_CarCoord) => {
-    if (pos.x === START_X && pos.y === START_Y) {
-      // eslint-disable-next-line no-console
-      console.log('끝!');
-      isArrived = 1;
-      clearInterval(timerForTest);
+  useEffect(() => {
+    // 캔버스 세팅
+    const cvs = canvasRef.current;
+    const ctx = cvs?.getContext('2d');
+    if (!ctx || messageType === 'NEXT_ROUND_START') {
       return;
     }
-    changeDir(pos, carDirRef.current);
-    pos.x = Math.max(0, Math.min(pos.x, MAX_X));
-    pos.y = Math.max(0, Math.min(pos.y, MAX_Y));
-  }, []);
 
-  // 방향에 따라 테두리에 도달할 시 방향 바꾸는 함수
-  const changeDir = (pos: I_CarCoord, dir: DirectionType) => {
-    const change = {
-      right: () => {
-        if (pos.x >= MAX_X) {
-          carDirRef.current = CAR_DIRECTION.DOWN;
-        }
-      },
-      down: () => {
-        if (pos.y >= MAX_Y) {
-          carDirRef.current = CAR_DIRECTION.LEFT;
-        }
-      },
-      left: () => {
-        if (pos.x <= 0) {
-          carDirRef.current = CAR_DIRECTION.UP;
-        }
-      },
-      up: () => {
-        if (pos.y <= 0) {
-          carDirRef.current = CAR_DIRECTION.RIGHT;
-        }
-      },
-    };
-    return change[dir]();
-  };
-
-  // 자동차 위치 바꾸는 함수
-  const updateCarCoord = useCallback(
-    (carCoord: I_CarCoord) => {
-      const dir = carDirRef.current;
-      moveByDir(carCoord, dir);
-      changeCarDir(carCoord);
-    },
-    [changeCarDir]
-  );
-
-  // 방향에 따라 진행중인 방향으로 이동시키는 함수
-  const moveByDir = (carCoord: I_CarCoord, dir: DirectionType) => {
-    const move = {
-      right: (carCoord: I_CarCoord) => (carCoord.x += MOVE_STEP_X),
-      down: (carCoord: I_CarCoord) => (carCoord.y += MOVE_STEP_Y),
-      left: (carCoord: I_CarCoord) => (carCoord.x -= MOVE_STEP_X),
-      up: (carCoord: I_CarCoord) => (carCoord.y -= MOVE_STEP_Y),
-    };
-    return move[dir](carCoord);
-  };
-
-  useEffect(() => {
     // 자동차 이미지 로드
     if (carImgs.length) {
       const carImagesArr = [];
@@ -120,19 +71,51 @@ const CanvasTrack = ({ gameScore }: { gameScore: GameScoreType }) => {
       carImagesRef.current = carImagesArr;
     }
 
-    // 필요한 자동차 갯수 만큼 자동차 초기 좌표 지정
-    Object.entries(gameScore).forEach((_, idx) => {
-      const x = START_X + Math.floor(idx / 4) * 20;
-      const y = START_Y + (idx % 4) * 10;
-      carsRef.current.push({ x, y });
+    // gameScore의 자동차 갯수 만큼 좌표 지정
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Object.entries(gameScore).forEach(([userId, score], idx) => {
+      const lineGap = (idx % 4) * 10;
+      let x = 0;
+      let y = 0;
+      if (score === 0) {
+        x = START_X + Math.floor(idx / 4) * 20;
+        y = lineGap;
+      } else if (score <= 31) {
+        x = START_X + MOVE_STEP_X * score;
+        y = lineGap;
+        if (score === 31) {
+          x -= CAR_SIZE;
+          y += CAR_SIZE;
+        }
+      } else if (score <= 49) {
+        x = CANVAS_WIDTH - lineGap - CAR_SIZE;
+        y = EAST_START_Y + MOVE_STEP_Y * (score - 32); //32번부터 하강
+        if (score === 49) {
+          x -= CAR_SIZE;
+          y -= CAR_SIZE;
+        }
+      } else if (score <= 81) {
+        x = SOUTH_START_X - MOVE_STEP_X * (score - 50); //50번부터 좌측으로 이동
+        y = CANVAS_HEIGHT - lineGap;
+        if (score === 81) {
+          x += CAR_SIZE;
+          y -= CAR_SIZE;
+        }
+      } else if (score <= 99) {
+        x = TRACK_WIDHT - lineGap;
+        y = WEST_START_Y - MOVE_STEP_Y * (score - 82); //82번부터 상승
+        if (score === 99) {
+          x += CAR_SIZE;
+          y += CAR_SIZE;
+        }
+      } else if (score === 100) {
+        x = START_X;
+        y = lineGap;
+      }
+      carsRef.current[idx] = { x, y, idx };
     });
+    console.log(carsRef.current);
 
-    // 캔버스 세팅
-    const cvs = canvasRef.current;
-    const ctx = cvs?.getContext('2d');
-    if (!ctx) {
-      return;
-    }
     //자동차를 화면에 그린다
     let rafTimer: ReturnType<typeof requestAnimationFrame>;
     const coordCars = carsRef.current;
@@ -160,40 +143,23 @@ const CanvasTrack = ({ gameScore }: { gameScore: GameScoreType }) => {
     return () => {
       rafTimer && cancelAnimationFrame(rafTimer);
     };
-  }, []);
+  }, [gameScore]);
 
-  const timerForTest = setInterval(() => {
-    // carsRef.current.forEach((eachCarCoord, ix) => {
-    //   updateCarCoord(eachCarCoord);
-    // });
-  }, 1500);
+  // const timerForTest = setInterval(() => {
+  // carsRef.current.forEach((eachCarCoord, ix) => {
+  //   updateCarCoord(eachCarCoord);
+  // });
+  // }, 1500);
   setTimeout(() => {
     isArrived = 1;
     console.log('임시 종료');
-  }, 1000);
-  console.log('컴포넌트가 렌더링');
+  }, 5000);
 
   return (
-    <>
-      <canvas
-        ref={canvasRef}
-        className='absolute w-full h-full'
-      />
-      <div className='absolute'>
-        <button
-          onClick={() => {
-            updateCarCoord(carsRef.current[1]);
-          }}>
-          그린카
-        </button>
-        <button
-          onClick={() => {
-            updateCarCoord(carsRef.current[2]);
-          }}>
-          블루카
-        </button>
-      </div>
-    </>
+    <canvas
+      ref={canvasRef}
+      className='absolute w-full h-full'
+    />
   );
 };
 
