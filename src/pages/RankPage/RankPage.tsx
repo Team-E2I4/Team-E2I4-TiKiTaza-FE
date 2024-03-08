@@ -5,7 +5,7 @@ import RankList from './RankList';
 
 const RankPage = () => {
   const [selectedTab, setSelectedTab] = useState('');
-  const { data: rankData, refetch } = useRank(selectedTab);
+  const { data: rankData, refetch } = useRank(selectedTab || undefined);
 
   const tabData = [
     { value: '', text: '전체' },
@@ -27,7 +27,7 @@ const RankPage = () => {
       <Tabs.List className='flex gap-[11rem] justify-center font-bold font-[Giants-Inline] text-4x'>
         {tabData.map(({ value, text }) => (
           <Tabs.Trigger
-            key={value}
+            key={text}
             value={value}
             className='bg-green-70 rounded-[1rem] px-8 py-4'>
             {text}
@@ -35,9 +35,9 @@ const RankPage = () => {
         ))}
       </Tabs.List>
       {rankData &&
-        tabData.map(({ value }) => (
+        tabData.map(({ value, text }) => (
           <Tabs.Content
-            key={value}
+            key={text}
             value={value}>
             <RankList data={rankData.data.data} />
           </Tabs.Content>
