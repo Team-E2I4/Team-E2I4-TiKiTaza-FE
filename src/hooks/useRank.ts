@@ -9,6 +9,6 @@ export const useRank = (gameType: string) => {
     Error | AxiosError
   >({
     queryKey: ['rank', gameType],
-    queryFn: () => getMemberRanking(),
+    queryFn: () => getMemberRanking(gameType),
   });
 };
