@@ -2,21 +2,16 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
-import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
+import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 import WordCell from './WordCell';
 import WordRankContainer from './WordRankContainer';
 
 export type WordQuestionType = { [key: string]: number };
-
-const GameWord = ({
-  ingameRoomRes,
-  publishIngame,
-  userId,
-}: {
-  ingameRoomRes: I_IngameWsResponse;
-  publishIngame: (destination: string, payload: PayloadType) => void;
+interface GameWordProps extends InagmeWsChildrenProps {
   userId: number;
-}) => {
+}
+
+const GameWord = ({ ingameRoomRes, publishIngame, userId }: GameWordProps) => {
   const { register, handleSubmit, setValue, getValues } = useForm();
 
   useEffect(() => {
@@ -46,7 +41,7 @@ const GameWord = ({
           </div>
           <div className='flex flex-row items-end w-10/12 h-[30rem] mt-4'>
             <Dashboard
-              type='wpm'
+              type='cpm'
               value={300}
             />
             <div className='flex flex-col grow items-center'>
