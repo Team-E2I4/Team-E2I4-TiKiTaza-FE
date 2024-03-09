@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
@@ -6,20 +5,12 @@ import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 import WordCell from './WordCell';
 import WordRankContainer from './WordRankContainer';
 
-export type WordQuestionType = { [key: string]: number };
 interface GameWordProps extends InagmeWsChildrenProps {
   userId: number;
 }
 
 const GameWord = ({ ingameRoomRes, publishIngame, userId }: GameWordProps) => {
   const { register, handleSubmit, setValue, getValues } = useForm();
-
-  useEffect(() => {
-    if (ingameRoomRes.submittedWord) {
-      const submittedWord: WordQuestionType = {};
-      submittedWord[ingameRoomRes.submittedWord] = -1;
-    }
-  }, [ingameRoomRes.submittedWord]);
 
   return (
     <>
@@ -46,15 +37,9 @@ const GameWord = ({ ingameRoomRes, publishIngame, userId }: GameWordProps) => {
             />
             <div className='flex flex-col grow items-center'>
               <div className='grow flex relative w-full justify-center'>
-                {ingameRoomRes.gameScore && (
-                  <WordRankContainer
-                    gameScore={ingameRoomRes.gameScore}
-                    userId={userId}
-                  />
-                )}
                 {ingameRoomRes.allMembers && (
                   <WordRankContainer
-                    gameScore={ingameRoomRes.allMembers}
+                    allMembers={ingameRoomRes.allMembers}
                     userId={userId}
                   />
                 )}
