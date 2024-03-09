@@ -1,9 +1,7 @@
-import { useRef } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import CanvasTrack from '../common/CanvasTrack';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
-import { GameScoreType } from '../types/websocketType';
 import GameFormContainer from './GameFormContainer';
 const sentenceDummy = [
   '저녁 때 돌아갈 집이 있다는 것',
@@ -23,8 +21,9 @@ const GameSentence = ({
   publishIngame,
   userId,
 }: GameSentenceProps) => {
-  const currentScore = useRef<number>(ingameRoomRes?.gameScore?.[userId] ?? 0);
-
+  const currentScore =
+    ingameRoomRes.allMembers?.find(({ memberId }) => memberId === userId)
+      ?.score ?? 0;
   const TotalSpacedWord = sentenceDummy.reduce(
     (acc, cur) => acc + cur.split(' ').length,
     0
@@ -34,9 +33,9 @@ const GameSentence = ({
 
   const handleUpdateScore = () => {
     publishIngame('/info', {
-      currentScore: currentScore.current + scorePerTrankLength,
+      currentScore: currentScore + scorePerTrankLength,
     });
-    currentScore.current += scorePerTrankLength;
+    // currentScore += scorePerTrankLength;
   };
   return (
     <>
@@ -47,12 +46,11 @@ const GameSentence = ({
         </div>
         <div className='flex flex-col items-center justify-center ml-80 h-[61rem] relative w-[110rem]'>
           <div className='absolute w-[110rem] h-full rounded-[10rem] border-2 border-black'></div>
-          <div className='absolute w-[100rem] h-[calc(100%-10rem)] rounded-[5rem] border-2 border-black '></div>
-          {ingameRoomRes.gameScore && (
+          <div className='absolute w-[100rem] h-[calc(100%-10rem)] rounded-[5rem] border-2 border-black'></div>
+          {ingameRoomRes.allMembers && (
             <CanvasTrack
-              gameScore={ingameRoomRes.gameScore as GameScoreType}
+              allMembers={ingameRoomRes.allMembers}
               messageType={ingameRoomRes.type}
-              // messageType='NEXT_ROUND_START'
             />
           )}
           <GameFormContainer
