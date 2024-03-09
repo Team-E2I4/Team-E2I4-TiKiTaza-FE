@@ -43,8 +43,7 @@ const CodeForm = ({
   const currentPublishIndex = useRef(0);
   const divideBySpace = convertedDummyCode[currentIndex]?.split(' ') ?? null;
 
-  const isRoundFinish =
-    currentIndex === convertedDummyCode[currentIndex].length;
+  const isRoundFinish = currentIndex === convertedDummyCode.length;
 
   const [checkedCorrectAndTypo, setCheckedCorrectAndTypo] = useState(
     Array.from(
@@ -106,7 +105,7 @@ const CodeForm = ({
       let isTypoExist = false;
 
       setCheckedCorrectAndTypo((prevState) =>
-        prevState.map((value, idx) => {
+        prevState.map((_, idx) => {
           if (idx >= currentCharIndex) {
             return CHAR_STATE.PENDING;
           }
@@ -164,16 +163,7 @@ const CodeForm = ({
     }
     handleUpdateScore();
     // TODO: enter키 누르면 실시간 점수 publish
-  }, [
-    convertedDummyCode.length,
-    currentIndex,
-    getValues,
-    handleCheckInputCorrect,
-    handleUpdateScore,
-    initializeTyping,
-    isRoundFinish,
-    setValue,
-  ]);
+  }, [convertedDummyCode.length, currentIndex, isRoundFinish]);
 
   useEffect(() => {
     initializeCheckedCorrectAndTypo();
@@ -183,7 +173,7 @@ const CodeForm = ({
     onInputChange(
       checkedCorrectAndTypo.filter((el) => el === CHAR_STATE.CORRECT).length,
       getValues('code').length,
-      50
+      70
     );
   }, [checkedCorrectAndTypo]);
 
