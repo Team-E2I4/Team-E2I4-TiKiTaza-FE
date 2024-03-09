@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import CanvasTrack from '../common/CanvasTrack';
@@ -29,34 +29,26 @@ const GameSentence = ({
   publishIngame,
   userId,
 }: GameSentenceProps) => {
-  const currentScore = useRef<number>(ingameRoomRes?.gameScore?.[userId] ?? 0);
+  const currentScore =
+    ingameRoomRes.allMembers.find(({ memberId }) => memberId === userId)
+      ?.score ?? 0;
 
-  const currentMembers = useRef(ingameRoomRes.allMembers);
+  const sentencList = useRef(ingameRoomRes.questions);
 
-  const initialRankInfo = () =>
-    currentMembers.current?.map((el) => ({
-      memberId: el.memberId,
-      nickname: el.nickname,
-      currentScore: 0,
-      isMe: el.memberId === userId,
-    }));
+  const [currentRound, setCurrentRound] = useState(1);
 
-  const [rankInfoList, setRankInfoList] = useState(initialRankInfo);
-
-  useEffect(() => {
-    if (rankInfoList && ingameRoomRes?.gameScore) {
-      const temp = { ...ingameRoomRes.gameScore };
-      setRankInfoList(() => {
-        const tempInfoList = [...rankInfoList]
-          .map((rankInfo) => ({
-            ...rankInfo,
-            currentScore: temp[rankInfo.memberId],
-          }))
-          .sort((prev, next) => next.currentScore - prev.currentScore);
-        return tempInfoList;
-      });
-    }
-  }, [ingameRoomRes.gameScore]);
+  const rankInfoList = useMemo(
+    () =>
+      ingameRoomRes.allMembers
+        .map(({ memberId, nickname, score }) => ({
+          memberId,
+          nickname,
+          currentScore: score ?? 0,
+          isMe: memberId === userId,
+        }))
+        .sort((prev, next) => next.currentScore - prev.currentScore),
+    [ingameRoomRes.allMembers, userId]
+  );
 
   const TotalSpacedWord = sentenceDummy.reduce(
     (acc, cur) => acc + cur.split(' ').length,
@@ -65,17 +57,28 @@ const GameSentence = ({
 
   const scorePerTrankLength = Number(((1 / TotalSpacedWord) * 100).toFixed(1));
 
-  const handleUpdateScore = () => {
+  const handleUpdateScore = useCallback(() => {
     publishIngame('/info', {
       currentScore: currentScore + scorePerTrankLength,
+      currentScore: currentScore + scorePerTrankLength,
     });
-  };
+  }, [currentScore, publishIngame, scorePerTrankLength]);
+
+  const handleRoundFinish = useCallback(() => {
+    publishIngame('/round-finish', { currentRound });
+    setCurrentRound((prev) => prev + 1);
+  }, [currentRound, publishIngame]);
+
+  //현재 유저의 게임 점수가 100점 이상일시 handleRoundFinsh 호출 && 100점 미만인데 시간 지나면 호출
+
+  //처음에는 allMembers의 nickname, 점수가 바뀌면 gameScore에서 userId
+
   return (
     <>
-      <IngameHeader />
+      <IngameHeader handleRoundFinish={handleRoundFinish} />
       <div>
         <div className='absolute'>
-          <IngameRank rankInfos={rankInfoList as I_RankInfoList[]} />
+          <IngameRank rankInfos={rankInfoList} />
         </div>
         <div className='flex flex-col items-center justify-center ml-80 h-[61rem] relative w-[110rem]'>
           <div className='absolute w-[110rem] h-full rounded-[10rem] border-2 border-black'></div>
@@ -84,10 +87,12 @@ const GameSentence = ({
             allMembers={ingameRoomRes.allMembers}
             isNextRoundStart={ingameRoomRes.type === 'NEXT_ROUND_START'}
           />
-          <GameFormContainer
-            sentenceList={sentenceDummy}
-            handleUpdateScore={handleUpdateScore}
-          />
+          {sentencList.current && (
+            <GameFormContainer
+              sentenceList={sentencList.current}
+              handleUpdateScore={handleUpdateScore}
+            />
+          )}
         </div>
       </div>
     </>
