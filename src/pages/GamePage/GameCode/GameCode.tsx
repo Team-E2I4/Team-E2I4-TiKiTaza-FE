@@ -65,7 +65,7 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
   );
   const scorePerSubmit = Math.floor((1 / totalSpacedWord) * 100);
 
-  const handleUpdateScore = (_isAllSubmitted?: boolean) => {
+  const handleUpdateScore = (_isAllSubmitted: boolean) => {
     myCurrentScore.current += scorePerSubmit;
     if (_isAllSubmitted) {
       myCurrentScore.current = 100;
