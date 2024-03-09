@@ -6,7 +6,7 @@ import CodeForm from './CodeForm';
 interface CodeFormContainerProps {
   dummyCode: string;
   convertedDummyCode: string[];
-  handleUpdateScore: (_isAllSubmitted?: boolean) => void;
+  handleUpdateScore: (_isAllSubmitted: boolean) => void;
 }
 
 const CodeFormContainer = ({

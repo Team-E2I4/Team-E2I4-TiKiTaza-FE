@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 interface CodeFormProps {
   inputName: 'code';
   convertedDummyCode: string[];
-  handleUpdateScore: (_isAllSubmitted?: boolean) => void;
+  handleUpdateScore: (_isAllSubmitted: boolean) => void;
   onInputChange: (
     _totalCharCompleted: number,
     _totalChar: number,
@@ -87,7 +87,7 @@ const CodeForm = ({
 
       if (isLastWord === false && isPublished === false && isSameCodeWord) {
         currentPublishIndex.current += 1;
-        handleUpdateScore();
+        handleUpdateScore(false);
         //TODO: publish
       }
     },
@@ -161,7 +161,7 @@ const CodeForm = ({
       handleUpdateScore(isAllSubmitted);
       return;
     }
-    handleUpdateScore();
+    handleUpdateScore(false);
     // TODO: enter키 누르면 실시간 점수 publish
   }, [convertedDummyCode.length, currentIndex, isRoundFinish]);
 
@@ -179,20 +179,24 @@ const CodeForm = ({
 
   return (
     <>
-      {!isRoundFinish && (
+      {
         <div
           className='w-[60rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl
         bg-green-100 border-2 border-green-100 mt-[1rem] mb-[0.5rem]
         outline-0 text-gray-300 tracking-wider box-border'>
-          {[...convertedDummyCode[currentIndex]].map((char, idx) => (
-            <span
-              className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-black font-bold' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-500 font-bold' : 'text-white'}`}
-              key={`${checkedCorrectAndTypo[idx]}${idx}`}>
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          ))}
+          {isRoundFinish === false ? (
+            <>
+              {[...convertedDummyCode[currentIndex]].map((char, idx) => (
+                <span
+                  className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-black font-bold' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-500 font-bold' : 'text-white'}`}
+                  key={`${checkedCorrectAndTypo[idx]}${idx}`}>
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              ))}
+            </>
+          ) : null}
         </div>
-      )}
+      }
       <form onSubmit={handleSubmit(handleActiveEnter)}>
         <input
           autoFocus
