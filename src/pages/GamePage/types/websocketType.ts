@@ -33,6 +33,7 @@ export interface I_AllMember {
   nickname: string;
   ranking: number;
   readyStatus: boolean;
+  score: number;
 }
 
 export type HandlePubReadyGameType = () => void;
@@ -45,7 +46,7 @@ export interface I_IngameWsResponse {
   submittedWord?: string;
   submitMemberId?: number;
   gameScore?: GameScoreType;
-  allMembers?: I_AllMember[];
+  allMembers: I_AllMember[];
   questions?: I_Question[];
 }
 export interface I_Question {
