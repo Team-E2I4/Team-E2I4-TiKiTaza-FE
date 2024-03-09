@@ -2,8 +2,13 @@ import { useState } from 'react';
 import DisconnectModal from '@/pages/GamePage/common/DisconnectModal';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import Backward from '../Backward/Backward';
+import Timer from '../Timer/Timer';
 
-const IngameHeader = () => {
+interface IngameHeaderProps {
+  handleRoundFinish: () => void;
+}
+
+const IngameHeader = ({ handleRoundFinish }: IngameHeaderProps) => {
   const { roomInfo } = useRoomInfoStore();
   const [isAlert, setIsAlert] = useState(false);
 
@@ -23,6 +28,11 @@ const IngameHeader = () => {
         <Backward handleClickBackward={handleClickBackward} />
         <div className='w-[40rem] truncate text-[4rem]'>{roomInfo?.title}</div>
         <div className='grow'>참여 {roomInfo?.currentPlayer}명</div>
+        <Timer
+          minutes={5}
+          seconds={0}
+          onFinishRound={handleRoundFinish}
+        />
         <div className='text-[3rem]'>
           {/* TODO: currentPlayer 대신 currentRound 필요 */}
           🏁 {roomInfo?.currentPlayer} / {roomInfo?.maxRound}
