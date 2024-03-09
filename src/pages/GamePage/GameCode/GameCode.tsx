@@ -58,7 +58,11 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
 
   const convertedDummyCode = dummyCode.split('\n').map((row) => row.trim());
 
-  const myCurrentScore = useRef(ingameRoomRes.gameScore?.[userId] ?? 0);
+  const myCurrentScore = useRef(
+    ingameRoomRes.allMembers?.find(({ memberId }) => memberId === userId)
+      ?.score ?? 0
+  );
+
   const totalSpacedWord = convertedDummyCode.reduce(
     (prev, cur) => prev + cur.split(' ').length,
     0
