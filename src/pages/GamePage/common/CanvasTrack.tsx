@@ -15,7 +15,7 @@ import {
   WEST_START_Y,
 } from '@/common/Ingame/ingameConstants';
 import useCanvas from '@/hooks/useCanvas';
-import { GameScoreType } from '../types/websocketType';
+import { I_AllMember } from '../types/websocketType';
 
 interface I_CarCoord {
   x: number;
@@ -25,10 +25,10 @@ interface I_CarCoord {
 }
 
 const CanvasTrack = ({
-  gameScore,
+  allMembers,
   messageType,
 }: {
-  gameScore: GameScoreType;
+  allMembers: I_AllMember[];
   messageType: string;
 }) => {
   // 전체영역 캔버스 생성
@@ -65,9 +65,10 @@ const CanvasTrack = ({
       carImagesRef.current = carImagesArr;
     }
 
-    // gameScore의 자동차 갯수 만큼 좌표 지정
+    // allMembers 유저수 만큼 좌표 지정
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    Object.entries(gameScore).forEach(([userId, score], idx) => {
+    allMembers.forEach((member, idx) => {
+      const { score } = member;
       const lineGap = (idx % 4) * 10;
       let x = 0;
       let y = 0;
@@ -90,13 +91,13 @@ const CanvasTrack = ({
         }
       } else if (score <= 81) {
         x = SOUTH_START_X - MOVE_STEP_X * (score - 50); //50번부터 좌측으로 이동
-        y = CANVAS_HEIGHT - lineGap;
+        y = CANVAS_HEIGHT - lineGap - CAR_SIZE;
         if (score === 81) {
           x += CAR_SIZE;
           y -= CAR_SIZE;
         }
       } else if (score <= 99) {
-        x = TRACK_WIDHT - lineGap;
+        x = TRACK_WIDHT - lineGap - CAR_SIZE;
         y = WEST_START_Y - MOVE_STEP_Y * (score - 82); //82번부터 상승
         if (score === 99) {
           x += CAR_SIZE;
@@ -137,7 +138,7 @@ const CanvasTrack = ({
     return () => {
       rafTimer && cancelAnimationFrame(rafTimer);
     };
-  }, [gameScore]);
+  }, [allMembers]);
 
   // const timerForTest = setInterval(() => {
   // carsRef.current.forEach((eachCarCoord, ix) => {
