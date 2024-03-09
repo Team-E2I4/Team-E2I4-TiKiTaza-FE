@@ -71,7 +71,6 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
       myCurrentScore.current = 100;
     }
     publishIngame('/info', { currentScore: myCurrentScore.current });
-    // console.log('myCurrentScore.current ', myCurrentScore.current);
   };
 
   const blockOverflowPos = useCallback((pos: I_CarCoord) => {
