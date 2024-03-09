@@ -32,8 +32,8 @@ export interface I_AllMember {
   memberId: number;
   nickname: string;
   readyStatus: boolean;
-  score: number;
   ranking: number;
+  score: number;
 }
 
 export type HandlePubReadyGameType = () => void;
