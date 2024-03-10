@@ -3,10 +3,13 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import WsError from './common/WsError';
-// import GameCode from './GameCode/GameCode';
+// eslint-disable-next-line unused-imports/no-unused-imports, @typescript-eslint/no-unused-vars
+import GameCode from './GameCode/GameCode';
+// eslint-disable-next-line unused-imports/no-unused-imports, @typescript-eslint/no-unused-vars
+import GameSentence from './GameSentence/GameSentence';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
+// eslint-disable-next-line unused-imports/no-unused-imports, @typescript-eslint/no-unused-vars
 import GameWord from './GameWord/GameWord';
-// import GameWord from './GameWord/GameWord';
 import useWebsocket from './hooks/useWebsocket';
 import { IngameWSErrorBoundary } from './IngameWSErrorBoundary';
 
