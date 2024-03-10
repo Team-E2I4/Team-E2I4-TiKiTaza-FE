@@ -61,7 +61,7 @@ const GameWordContainer = ({
             onSubmit={handleSubmit(() => {
               publishIngame('/word-info', { word: getValues('wordInput') });
               setValue('wordInput', '');
-              initializeTyping(true);
+              initializeTyping();
               submitCount.current += 1;
             })}>
             <input
@@ -70,10 +70,7 @@ const GameWordContainer = ({
               onPaste={(e) => e.preventDefault()}
               {...register('wordInput', {
                 onChange: (e) =>
-                  onInputChange(
-                    e.target.value.trim().length,
-                    100 // 단어게임에선 totalChar가 없습니다
-                  ),
+                  onInputChange(e.target.value.trim().length, 100), // 단어게임에선 totalChar가 없습니다
               })}
               className='w-[20rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl bg-white border-2 border-green-100 my-4 outline-0 text-gray-300 tracking-wider box-border'
             />

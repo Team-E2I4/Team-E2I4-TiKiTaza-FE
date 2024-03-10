@@ -57,10 +57,12 @@ const useTypingState = () => {
     [onInputChange]
   );
 
-  const initializeTyping = useCallback(() => {
+  const initializeTyping = useCallback((isWord?: boolean) => {
     setStartTime(null);
     setCpm(0);
-    setAccurate(0);
+    if (!isWord) {
+      setAccurate(0);
+    }
   }, []);
 
   return {

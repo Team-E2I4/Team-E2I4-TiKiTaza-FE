@@ -29,7 +29,6 @@ const Dashboard = ({ type, value }: DashboardProps) => {
     <>
       <div>
         <div className='w-[24rem] h-[12rem] p-8 box-border rounded-[12rem_12rem_0_0] dashboardStyle'>
-          {/* <div className='w-[24rem] h-[12rem] p-8 bg-gradient-radial bg-origin-content'> */}
           <img
             src={needle}
             alt='계기판'
