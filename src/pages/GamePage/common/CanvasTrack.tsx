@@ -39,12 +39,13 @@ const CanvasTrack = ({
     },
   });
 
+  const prevData = useRef<I_AllMember[]>(allMembers);
   const carImagesRef = useRef<HTMLImageElement[] | null>(null);
   const carsRef = useRef<I_CarCoord[]>([]);
 
   const carImgs = [car1, car2, car3, car4, car5, car6, car7, car8];
   let isArrived = 0;
-
+  console.log(carsRef.current);
   useEffect(() => {
     // 캔버스 세팅
     const cvs = canvasRef.current;
@@ -66,16 +67,24 @@ const CanvasTrack = ({
     }
 
     // allMembers 유저수 만큼 좌표 지정
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     allMembers.forEach((member, idx) => {
       const { score } = member;
       const lineGap = (idx % 4) * 10;
+
       let x = 0;
       let y = 0;
-      if (score === 0) {
-        x = START_X + Math.floor(idx / 4) * 20;
-        y = lineGap;
-      } else if (score <= 31) {
+
+      // 변화 없는 유저 얼리리턴
+      if (prevData.current[idx].score === member.score) {
+        if (score === 0) {
+          x = START_X + Math.floor(idx / 4) * 20;
+          y = lineGap;
+          carsRef.current[idx] = { x, y, idx };
+        }
+        return;
+      }
+
+      if (score <= 31) {
         x = START_X + MOVE_STEP_X * score;
         y = lineGap;
         if (score === 31) {
@@ -108,6 +117,7 @@ const CanvasTrack = ({
         y = lineGap;
       }
       carsRef.current[idx] = { x, y, idx };
+      prevData.current[idx].score = member.score;
     });
     console.log(carsRef.current);
 
@@ -140,11 +150,6 @@ const CanvasTrack = ({
     };
   }, [allMembers]);
 
-  // const timerForTest = setInterval(() => {
-  // carsRef.current.forEach((eachCarCoord, ix) => {
-  //   updateCarCoord(eachCarCoord);
-  // });
-  // }, 1500);
   setTimeout(() => {
     isArrived = 1;
     console.log('임시 종료');
