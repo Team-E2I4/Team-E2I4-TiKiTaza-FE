@@ -17,7 +17,7 @@ const useTypingState = () => {
   };
 
   const onInputChange = useCallback(
-    (totalCharCompleted: number, totalChar: number) => {
+    (totalCharCompleted: number, totalChar: number, TYPING_CONTANT = 200) => {
       if (!startTime) {
         startTyping();
         return;
@@ -28,7 +28,7 @@ const useTypingState = () => {
         (endTime.getTime() - startTime.getTime()) / 1000;
 
       let calculatedTypingSpeed =
-        (totalCharCompleted / elapsedTimeInSeconds) * 200;
+        (totalCharCompleted / elapsedTimeInSeconds) * TYPING_CONTANT;
       let calculatedAccuracy = (totalCharCompleted / totalChar) * 100;
 
       calculatedTypingSpeed = Number.isNaN(calculatedTypingSpeed)
