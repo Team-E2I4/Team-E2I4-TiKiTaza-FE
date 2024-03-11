@@ -8,6 +8,7 @@ interface IngameHeaderProps {
   handleRoundFinish: () => void;
   currentRound: number;
   timeLimit: number;
+  isNextRound: boolean;
 }
 
 export const SECONDS_PER_MINUTE = 60;
@@ -16,6 +17,7 @@ const IngameHeader = ({
   handleRoundFinish,
   currentRound,
   timeLimit,
+  isNextRound,
 }: IngameHeaderProps) => {
   const { roomInfo } = useRoomInfoStore();
   const [isAlert, setIsAlert] = useState(false);
@@ -24,7 +26,7 @@ const IngameHeader = ({
     seconds: timeLimit % SECONDS_PER_MINUTE,
     onFinishRound: () => {
       handleRoundFinish();
-      resetTimer();
+      isNextRound && resetTimer();
     },
   });
 
