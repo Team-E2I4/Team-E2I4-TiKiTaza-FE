@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import car1 from '@/assets/cars/car11.png';
 import {
   CANVAS_HEIGHT,
@@ -59,15 +59,19 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
   const convertedDummyCode = dummyCode.split('\n').map((row) => row.trim());
 
   const myCurrentScore = useRef(
-    ingameRoomRes.allMembers?.find(({ memberId }) => memberId === userId)
+    ingameRoomRes.allMembers.find(({ memberId }) => memberId === userId)
       ?.score ?? 0
   );
 
-  const totalSpacedWord = convertedDummyCode.reduce(
-    (prev, cur) => prev + cur.split(' ').length,
-    0
+  const totalSpacedWord = useMemo(
+    () =>
+      convertedDummyCode.reduce((prev, cur) => prev + cur.split(' ').length, 0),
+    [convertedDummyCode]
   );
-  const scorePerSubmit = Math.floor((1 / totalSpacedWord) * 100);
+  const scorePerSubmit = useMemo(
+    () => Math.floor((1 / totalSpacedWord) * 100),
+    [totalSpacedWord]
+  );
 
   const handleUpdateScore = (_isAllSubmitted: boolean) => {
     myCurrentScore.current += scorePerSubmit;
