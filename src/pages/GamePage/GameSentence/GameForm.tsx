@@ -8,7 +8,16 @@ import {
 } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '@/common/Input/Input';
+import { UpdateScoreType } from './GameSentence';
 import { decomposeKrChar } from './utils/decomposeKrChar';
+
+const isKorean = (char: string): boolean => {
+  const unicodeVal: number = char.charCodeAt(0);
+  return (
+    (44032 <= unicodeVal && unicodeVal <= 55203) || // 한글 음절 범위
+    (12593 <= unicodeVal && unicodeVal <= 12678) // 자음-모음 범위
+  );
+};
 
 //예시 글자와 입력중인 글자에 대해 오타 검출
 const getTypoKrChar = (
@@ -18,6 +27,10 @@ const getTypoKrChar = (
 ) => {
   const [sampleChosung, sampleJungsung, sampleJongsung] = decomposedSample;
   const [userChosung, userJungsung, userJongsung] = decomposedUserInput;
+
+  if (!isKorean(sampleChosung[0])) {
+    return sampleChosung !== userChosung;
+  }
 
   const isUserJungsung = !!userJungsung?.length;
   const isSampleJungsung = !!sampleJungsung?.length;
@@ -59,25 +72,27 @@ const getTypoKrChar = (
 };
 
 interface GameFormProps {
-  inputName: 'sentence';
   sample: string;
   onInputChange: (_totalCharCompleted: number, _totalChar: number) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
-  handleUpdateScore: () => void;
-  handleLineEnd: () => void;
   initializeTyping: () => void;
+  handleUpdateScore: UpdateScoreType;
+  handleLineEnd: () => void;
+  handleRoundFinish: () => void;
+  isLastSentence: boolean;
 }
 
 type TypoMarkListType = '' | 'typo' | 'correct';
 
 const GameForm = ({
-  inputName,
   sample,
   onInputChange,
   onKeyDown,
   initializeTyping,
   handleLineEnd,
   handleUpdateScore,
+  handleRoundFinish,
+  isLastSentence,
 }: GameFormProps) => {
   const {
     register,
@@ -87,7 +102,7 @@ const GameForm = ({
     formState: { errors },
     setError,
   } = useForm<{
-    [inputName]: string;
+    ['sentence']: string;
   }>();
 
   const [typoMarkList, setTypoMarkList] = useState<TypoMarkListType[]>(
@@ -109,33 +124,11 @@ const GameForm = ({
     setTypoMarkList(Array(sample.length).fill(''));
 
   const onSpacing = (currentSpacingIndex: number) => {
-    //이미 submit한 공백위치면 리턴
     if (maxSpacingIndex.current >= currentSpacingIndex) {
       return;
     }
 
     handleUpdateScore();
-    //차량이동 api 호출
-  };
-
-  const onSubmit = () => {
-    if (
-      typoMarkList.some((el) => el === 'typo') ||
-      getValues('sentence').length !== sample.length ||
-      !oneLineDone.current
-    ) {
-      setError('sentence', {
-        message: '오타가 존재하거나 입력을 마치지 않았습니다!',
-      });
-      return;
-    }
-    handleUpdateScore();
-    handleLineEnd();
-    oneLineDone.current = false;
-    maxSpacingIndex.current = -1;
-    initializeTypoMakrList();
-    initializeTyping();
-    setValue('sentence', '');
   };
 
   const removeTypoMarksAfterCurrentChar = (currentIndex: number) =>
@@ -155,6 +148,29 @@ const GameForm = ({
       getValues('sentence').length
     );
   }, [typoMarkList]);
+
+  const onSubmit = () => {
+    if (
+      typoMarkList.some((el) => el === 'typo') ||
+      getValues('sentence').length !== sample.length ||
+      !oneLineDone.current
+    ) {
+      setError('sentence', {
+        message: '오타가 존재하거나 입력을 마치지 않았습니다!',
+      });
+      return;
+    }
+    handleUpdateScore(isLastSentence);
+    if (isLastSentence) {
+      handleRoundFinish();
+    }
+    handleLineEnd();
+    oneLineDone.current = false;
+    maxSpacingIndex.current = -1;
+    initializeTypoMakrList();
+    initializeTyping();
+    setValue('sentence', '');
+  };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     //지정한 input 최대길이 넘어갈 시, 한 글자 자르기 (조합문자는 완성되어야 최대길이 넘어섰다고 판정됨)
@@ -246,7 +262,7 @@ const GameForm = ({
         className='flex flex-col items-center'
         onSubmit={handleSubmit(onSubmit)}>
         <Input
-          isError={!!errors[inputName]?.message}
+          isError={!!errors['sentence']?.message}
           autoFocus
           autoComplete='off'
           onKeyDown={onKeyDown}
