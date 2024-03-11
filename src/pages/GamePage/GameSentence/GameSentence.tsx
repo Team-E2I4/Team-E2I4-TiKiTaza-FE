@@ -35,7 +35,6 @@ const GameSentence = ({
     publishIngame('/info', {
       currentScore: currentScore + scorePerTrankLength,
     });
-    // currentScore += scorePerTrankLength;
   };
   return (
     <>
