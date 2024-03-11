@@ -7,6 +7,7 @@ import WordGameLayout from './WordGameLayout';
 interface GameWordProps extends InagmeWsChildrenProps {
   userId: number;
 }
+const SECONDS_FOR_ALL_WORDS = 120;
 
 const GameWord = ({ ingameRoomRes, publishIngame, userId }: GameWordProps) => {
   const [currentRound, setCurrentRound] = useState(1);
@@ -33,7 +34,9 @@ const GameWord = ({ ingameRoomRes, publishIngame, userId }: GameWordProps) => {
       <IngameHeader
         handleRoundFinish={handleRoundFinish}
         currentRound={currentRound}
-        timeLimit={Math.ceil(120 / ingameRoomRes.allMembers.length)}
+        timeLimit={Math.ceil(
+          SECONDS_FOR_ALL_WORDS / ingameRoomRes.allMembers.length
+        )}
         isNextRound={ingameRoomRes.type === 'NEXT_ROUND_START'}
       />
       <div className='grow'>
