@@ -91,6 +91,7 @@ const GameSentence = ({
         handleRoundFinish={handleRoundFinish}
         currentRound={currentRound}
         timeLimit={sentencList.current.length * SECONDS_PER_SENTENCE}
+        isNextRound={ingameRoomRes.type === 'NEXT_ROUND_START'}
       />
       <div>
         <div className='absolute'>
@@ -101,7 +102,7 @@ const GameSentence = ({
           <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] rounded-[14rem] border-2 border-black '></div>
           <CanvasTrack allMembers={ingameRoomRes.allMembers} />
           <GameFormContainer
-            sentenceList={sentencList.current.slice(0, 2)}
+            sentenceList={sentencList.current}
             handleUpdateScore={handleUpdateScore}
             handleRoundFinish={handleRoundFinish}
           />
