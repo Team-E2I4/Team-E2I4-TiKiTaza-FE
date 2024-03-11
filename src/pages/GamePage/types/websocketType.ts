@@ -45,7 +45,6 @@ export interface I_IngameWsResponse {
   type: IngameMessageType;
   submittedWord?: string;
   submitMemberId?: number;
-  gameScore?: GameScoreType;
   allMembers: I_AllMember[];
   questions?: I_Question[];
 }
