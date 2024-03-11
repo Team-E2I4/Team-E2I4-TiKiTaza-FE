@@ -1,16 +1,9 @@
-import {
-  ChangeEvent,
-  KeyboardEvent,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '@/common/Input/Input';
 import { UpdateScoreType } from './GameSentence';
-import compareChar from './utils/compareChar';
 import { decomposeKrChar } from './utils/decomposeKrChar';
+import getTypo from './utils/getTypo';
 
 //예시 글자와 입력중인 글자에 대해 오타 검출
 
@@ -55,11 +48,6 @@ const GameForm = ({
   const oneLineDone = useRef(false);
 
   const isTypoAtLeastOnce = typoMarkList.some((el) => el === 'typo');
-
-  const decomposedSample = useMemo(
-    () => [...sample].map((el) => (el !== ' ' ? decomposeKrChar(el) : [' '])),
-    [sample]
-  );
 
   const maxSpacingIndex = useRef(-1);
 
@@ -117,8 +105,8 @@ const GameForm = ({
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     //지정한 input 최대길이 넘어갈 시, 한 글자 자르기 (조합문자는 완성되어야 최대길이 넘어섰다고 판정됨)
-    if (e.target.value.length > decomposedSample.length) {
-      e.target.value = e.target.value.slice(0, decomposedSample.length);
+    if (e.target.value.length > sample.length) {
+      e.target.value = e.target.value.slice(0, sample.length);
       return;
     }
 
@@ -130,19 +118,15 @@ const GameForm = ({
       return;
     }
 
-    const decomposedCurrentInput = [...inputText].map((el) =>
-      el !== ' ' ? decomposeKrChar(el) : [' ']
-    );
-
     const currentIndex = inputText.length - 1;
 
     //현재 글자 + 바로 이전글자의 오타 boolean
     let isLeastCharTypo = false;
 
     //현재 글자 오타검출
-    const isTypoAtTypingChar = compareChar(
-      decomposedSample[currentIndex],
-      decomposedCurrentInput[currentIndex]
+    const isTypoAtTypingChar = getTypo(
+      sample[currentIndex],
+      inputText[currentIndex]
     );
 
     isLeastCharTypo = isTypoAtTypingChar;
@@ -150,13 +134,10 @@ const GameForm = ({
     handleTypoMark(isTypoAtTypingChar, currentIndex);
 
     //바로 이전글자 오타검출.
-    if (
-      currentIndex - 1 >= 0 &&
-      decomposedSample[currentIndex - 1][0] !== ' '
-    ) {
-      const isTypoPrevChar = compareChar(
-        decomposedSample[currentIndex - 1],
-        decomposedCurrentInput[currentIndex - 1],
+    if (currentIndex - 1 >= 0 && sample[currentIndex - 1] !== ' ') {
+      const isTypoPrevChar = getTypo(
+        sample[currentIndex - 1],
+        inputText[currentIndex - 1],
         true
       );
 
@@ -167,12 +148,12 @@ const GameForm = ({
 
     if (inputText.length === sample.length) {
       oneLineDone.current =
-        decomposedSample.reduce(
-          (acc, cur) => acc + cur.flat(3).filter((el) => !!el).length,
+        decomposeKrChar(sample).reduce(
+          (acc, cur) => acc + [...cur].flat(3).filter((el) => !!el).length,
           0
         ) ===
-        decomposedCurrentInput.reduce(
-          (acc, cur) => acc + cur.flat(3).filter((el) => !!el).length,
+        decomposeKrChar(inputText).reduce(
+          (acc, cur) => acc + [...cur].flat(3).filter((el) => !!el).length,
           0
         );
     }
@@ -209,7 +190,7 @@ const GameForm = ({
           autoFocus
           autoComplete='off'
           onKeyDown={onKeyDown}
-          maxLength={decomposedSample.length}
+          maxLength={sample.length}
           onCopy={(e) => e.preventDefault()}
           onPaste={(e) => e.preventDefault()}
           {...register('sentence', {
