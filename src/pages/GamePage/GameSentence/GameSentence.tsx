@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import CanvasTrack from '../common/CanvasTrack';
@@ -26,8 +25,6 @@ const GameSentence = ({
   publishIngame,
   userId,
 }: GameSentenceProps) => {
-  const navigate = useNavigate();
-
   //참여자중에 본인은 무조건 존재하므로 non-nullable
   const currentScore = ingameRoomRes.allMembers.find(
     ({ memberId }) => memberId === userId
@@ -46,11 +43,6 @@ const GameSentence = ({
       sentencList.current = ingameRoomRes.questions!;
       didRoundFinishSubmitted.current = false;
       return;
-    }
-
-    if (ingameRoomRes.type === 'FINISH') {
-      //임시로 쫓아냄
-      navigate('/main', { replace: true });
     }
   }, [ingameRoomRes.type]);
 
@@ -112,7 +104,7 @@ const GameSentence = ({
             isNextRoundStart={ingameRoomRes.type === 'NEXT_ROUND_START'}
           />
           <GameFormContainer
-            sentenceList={sentencList.current.slice(0, 5)}
+            sentenceList={sentencList.current.slice(0, 2)}
             handleUpdateScore={handleUpdateScore}
             handleRoundFinish={handleRoundFinish}
           />

@@ -1,6 +1,6 @@
 import RankItem from './RankItem';
 
-interface RankProps {
+export interface RankProps {
   id: number;
   nickname: string;
   score: number;

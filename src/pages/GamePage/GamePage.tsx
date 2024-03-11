@@ -7,6 +7,7 @@ import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import WsError from './common/WsError';
 // eslint-disable-next-line unused-imports/no-unused-imports, @typescript-eslint/no-unused-vars
 import GameCode from './GameCode/GameCode';
+import GameFinish from './GameFinish/GameFinish';
 // eslint-disable-next-line unused-imports/no-unused-imports, @typescript-eslint/no-unused-vars
 import GameSentence from './GameSentence/GameSentence';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
@@ -98,6 +99,7 @@ const GamePage = () => {
         {({ ingameRoomRes, publishIngame }) => (
           <>
             {!checkIsEmptyObj(ingameRoomRes) &&
+              ingameRoomRes.type !== 'FINISH' &&
               (roomInfo.gameMode === 'SENTENCE' ? (
                 <GameSentence
                   ingameRoomRes={ingameRoomRes}
@@ -117,6 +119,21 @@ const GamePage = () => {
                   userId={userId}
                 />
               ))}
+            {!checkIsEmptyObj(ingameRoomRes) &&
+              ingameRoomRes.type === 'FINISH' && (
+                <GameFinish
+                  rankList={ingameRoomRes.allMembers
+                    .map(({ nickname, score, memberId }) => ({
+                      id: memberId,
+                      nickname,
+                      score,
+                    }))
+                    .sort(
+                      ({ score: prevScore }, { score: nextScore }) =>
+                        nextScore - prevScore
+                    )}
+                />
+              )}
           </>
         )}
       </IngameWSErrorBoundary>
