@@ -26,10 +26,10 @@ interface I_CarCoord {
 
 const CanvasTrack = ({
   allMembers,
-  messageType,
+  isNextRoundStart,
 }: {
   allMembers: I_AllMember[];
-  messageType: string;
+  isNextRoundStart: boolean;
 }) => {
   // 전체영역 캔버스 생성
   const canvasRef = useCanvas({
@@ -50,7 +50,7 @@ const CanvasTrack = ({
     // 캔버스 세팅
     const cvs = canvasRef.current;
     const ctx = cvs?.getContext('2d');
-    if (!ctx || messageType === 'NEXT_ROUND_START') {
+    if (!ctx || isNextRoundStart) {
       return;
     }
 
