@@ -65,10 +65,6 @@ const GamePage = () => {
   if (!roomId || isWsError) {
     return <WsError />;
   }
-  if (isPending) {
-    // TODO: 로딩시 화면
-    return <div>유저 정보 확인중 ..</div>;
-  }
 
   if (isError) {
     alert('로그인이 필요한 페이지 입니다!');
@@ -80,7 +76,7 @@ const GamePage = () => {
     );
   }
 
-  if (checkIsEmptyObj(gameRoomRes)) {
+  if (isPending || checkIsEmptyObj(gameRoomRes) || !roomInfo) {
     return <Loading />;
   }
 
@@ -95,9 +91,7 @@ const GamePage = () => {
       />
     );
   }
-  if (!roomInfo) {
-    return <Fragment>{/* 로딩화면 */}</Fragment>;
-  }
+
   return (
     <>
       <IngameWSErrorBoundary>
