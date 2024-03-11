@@ -13,6 +13,7 @@ import {
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import useCanvas from '@/hooks/useCanvas';
+import CanvasTrack from '../common/CanvasTrack';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 import CodeFormContainer from './CodeFormContainer';
 
@@ -162,10 +163,10 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
         <div className='flex flex-col items-center justify-center ml-80 h-[60rem] relative'>
           <div className='absolute w-full h-full rounded-[14rem] border-2 border-black'></div>
           <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] rounded-[14rem] border-2 border-black '></div>
-          {/* <canvas
-            ref={canvasRef}
-            className='absolute w-full h-full'
-          /> */}
+          <CanvasTrack
+            allMembers={ingameRoomRes.allMembers}
+            isNextRoundStart={ingameRoomRes.type === 'NEXT_ROUND_START'}
+          />
           <CodeFormContainer
             dummyCode={dummyCode}
             convertedDummyCode={convertedDummyCode}
