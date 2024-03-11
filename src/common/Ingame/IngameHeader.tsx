@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useTimer from '@/hooks/useTimer';
 import DisconnectModal from '@/pages/GamePage/common/DisconnectModal';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
@@ -26,10 +26,11 @@ const IngameHeader = ({
     seconds: timeLimit % SECONDS_PER_MINUTE,
     onFinishRound: () => {
       handleRoundFinish();
-      isNextRound && resetTimer();
     },
   });
-
+  useEffect(() => {
+    isNextRound && resetTimer();
+  }, [isNextRound]);
   const handleClickBackward = () => {
     setIsAlert(true);
   };
