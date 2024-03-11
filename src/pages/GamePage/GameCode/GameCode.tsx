@@ -24,7 +24,6 @@ interface I_CarCoord {
   y: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
   const canvasRef = useCanvas({
     setCanvas: (canvas: HTMLCanvasElement) => {
@@ -32,7 +31,6 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
       canvas.height = CANVAS_HEIGHT;
     },
   });
-
   const carImageRef = useRef<HTMLImageElement | null>(null);
   const car1Ref = useRef<I_CarCoord>({ x: START_X, y: START_Y });
   // 추후: const carsRef = useRef<I_CarCoord[]>([]);
