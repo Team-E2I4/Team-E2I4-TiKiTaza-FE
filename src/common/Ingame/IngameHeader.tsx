@@ -19,10 +19,13 @@ const IngameHeader = ({
 }: IngameHeaderProps) => {
   const { roomInfo } = useRoomInfoStore();
   const [isAlert, setIsAlert] = useState(false);
-  const { timeLeft } = useTimer({
+  const { timeLeft, resetTimer } = useTimer({
     minutes: Math.floor(timeLimit / SECONDS_PER_MINUTE),
     seconds: timeLimit % SECONDS_PER_MINUTE,
-    onFinishRound: handleRoundFinish,
+    onFinishRound: () => {
+      handleRoundFinish();
+      resetTimer();
+    },
   });
 
   const handleClickBackward = () => {
