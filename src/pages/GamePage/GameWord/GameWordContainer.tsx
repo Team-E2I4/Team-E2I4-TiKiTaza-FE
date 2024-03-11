@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Dashboard from '@/common/Ingame/Dashboard';
-import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import useTypingState from '../GameSentence/useTypingState';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 import WordCell from './WordCell';
@@ -21,7 +20,6 @@ const GameWordContainer = ({
 
   const submitCount = useRef(0);
   const approvedSubmitCount = useRef(0);
-
   useEffect(() => {
     if (ingameRoomRes.submitMemberId === userId) {
       approvedSubmitCount.current += 1;
@@ -51,12 +49,10 @@ const GameWordContainer = ({
         />
         <div className='flex flex-col grow items-center'>
           <div className='grow flex relative w-full justify-center'>
-            {!checkIsEmptyObj(ingameRoomRes) && (
-              <WordRankContainer
-                allMembers={ingameRoomRes.allMembers}
-                userId={userId}
-              />
-            )}
+            <WordRankContainer
+              allMembers={ingameRoomRes.allMembers}
+              userId={userId}
+            />
           </div>
           <form
             onSubmit={handleSubmit(() => {
