@@ -41,13 +41,15 @@ const useSSE = ({ url, options = {} }: UseSSEProps) => {
   useEffect(() => {
     const sse = new EventSourcePolyfill(url, { ...memorizedOptions.current });
 
-    const handleChangeGameRoom = (e: MessageEvent) => {
-      const data = JSON.parse(e.data);
+    const handleChangeGameRoom = (e: Event) => {
+      const messageEvent = e as MessageEvent;
+      const data = JSON.parse(messageEvent.data);
       setData(data);
     };
 
-    const handleInitConnect = (e: MessageEvent) => {
-      const data = JSON.parse(e.data);
+    const handleInitConnect = (e: Event) => {
+      const messageEvent = e as MessageEvent;
+      const data = JSON.parse(messageEvent.data);
       setData(data);
     };
 
