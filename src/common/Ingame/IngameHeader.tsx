@@ -6,9 +6,13 @@ import Timer from '../Timer/Timer';
 
 interface IngameHeaderProps {
   handleRoundFinish: () => void;
+  currentRound: number;
 }
 
-const IngameHeader = ({ handleRoundFinish }: IngameHeaderProps) => {
+const IngameHeader = ({
+  handleRoundFinish,
+  currentRound,
+}: IngameHeaderProps) => {
   const { roomInfo } = useRoomInfoStore();
   const [isAlert, setIsAlert] = useState(false);
 
@@ -35,7 +39,7 @@ const IngameHeader = ({ handleRoundFinish }: IngameHeaderProps) => {
         />
         <div className='text-[3rem]'>
           {/* TODO: currentPlayer 대신 currentRound 필요 */}
-          🏁 {roomInfo?.currentPlayer} / {roomInfo?.maxRound}
+          🏁 {currentRound} / {roomInfo?.maxRound}
         </div>
       </div>
     </>
