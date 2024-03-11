@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { Fragment, useEffect, useMemo } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
@@ -17,7 +17,7 @@ import { IngameWSErrorBoundary } from './IngameWSErrorBoundary';
 const GamePage = () => {
   // TODO: 초대로 들어온 사람이라면 url의 해시값->정제->유효검사 후 상태값) 으로 방번호 추출
 
-  const { roomId, setRoomInfo } = useRoomInfoStore();
+  const { roomId, setRoomInfo, roomInfo } = useRoomInfoStore();
 
   const {
     gameRoomRes,
@@ -29,16 +29,14 @@ const GamePage = () => {
 
   const navigate = useNavigate();
 
-  // 아래 TODO
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedMode, isPlaying] = useMemo(
-    () => [gameRoomRes.roomInfo?.gameMode, gameRoomRes.roomInfo?.isPlaying],
+  const isPlaying = useMemo(
+    () => gameRoomRes.roomInfo?.isPlaying,
     [gameRoomRes.roomInfo]
   );
   const didAdminStart = useMemo(
     () => gameRoomRes.type === 'START',
     [gameRoomRes.type]
-  ); //모두 준비인상태에서 방장이 시작했다면 'START' type 이 옴 -> 참여자들 컴포넌트 전환 필요
+  );
 
   const { data, isError, isPending } = useAuthCheck();
 
@@ -92,39 +90,34 @@ const GamePage = () => {
       />
     );
   }
-
+  if (!roomInfo) {
+    return <Fragment>{/* 로딩화면 */}</Fragment>;
+  }
   return (
     <>
       <IngameWSErrorBoundary>
         {({ ingameRoomRes, publishIngame }) => (
           <>
-            {/* {!checkIsEmptyObj(ingameRoomRes) && (
-              <GameSentence
-                ingameRoomRes={ingameRoomRes}
-                publishIngame={publishIngame}
-                userId={userId}
-              />
-            )} */}
-            {/* // TODO : issue#92 roomInfo전체를 store에 가지면 그걸로 selectedMode 판단 */}
-
-            {/* {selectedMode === 'SENTENCE' && (
-              <GameSentence ingameRoomRes={ingameRoomRes} />
-            )} */}
-            {
-              // selectedMode === 'CODE' &&
-              !checkIsEmptyObj(ingameRoomRes) && (
+            {!checkIsEmptyObj(ingameRoomRes) &&
+              (roomInfo.gameMode === 'SENTENCE' ? (
+                <GameSentence
+                  ingameRoomRes={ingameRoomRes}
+                  publishIngame={publishIngame}
+                  userId={userId}
+                />
+              ) : roomInfo.gameMode === 'CODE' ? (
                 <GameCode
                   ingameRoomRes={ingameRoomRes}
                   publishIngame={publishIngame}
                   userId={userId}
                 />
-              )
-            }
-
-            {/*
-            {selectedMode === 'WORD' && (
-              <GameWord ingameRoomRes={ingameRoomRes} />
-            )} */}
+              ) : (
+                <GameWord
+                  ingameRoomRes={ingameRoomRes}
+                  publishIngame={publishIngame}
+                  userId={userId}
+                />
+              ))}
           </>
         )}
       </IngameWSErrorBoundary>
