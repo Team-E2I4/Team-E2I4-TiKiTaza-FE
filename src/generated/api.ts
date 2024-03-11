@@ -52,7 +52,25 @@ export interface AccountGetResponse {
      * @type {number}
      * @memberof AccountGetResponse
      */
-    'rank': number;
+    'rank'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountGetResponse
+     */
+    'gameCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountGetResponse
+     */
+    'averageCpm'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountGetResponse
+     */
+    'averageAccuracy': number;
     /**
      * 
      * @type {boolean}
@@ -188,27 +206,27 @@ export interface ApiResponseGameRoomInviteCodeResponse {
 /**
  * 
  * @export
- * @interface ApiResponseListMemberRankResponse
+ * @interface ApiResponseListRankingResponse
  */
-export interface ApiResponseListMemberRankResponse {
+export interface ApiResponseListRankingResponse {
     /**
      * 
      * @type {string}
-     * @memberof ApiResponseListMemberRankResponse
+     * @memberof ApiResponseListRankingResponse
      */
     'code': string;
     /**
      * 
      * @type {string}
-     * @memberof ApiResponseListMemberRankResponse
+     * @memberof ApiResponseListRankingResponse
      */
     'message': string;
     /**
      * 
-     * @type {Array<MemberRankResponse>}
-     * @memberof ApiResponseListMemberRankResponse
+     * @type {Array<RankingResponse>}
+     * @memberof ApiResponseListRankingResponse
      */
-    'data'?: Array<MemberRankResponse>;
+    'data'?: Array<RankingResponse>;
 }
 /**
  * 
@@ -477,43 +495,6 @@ export interface LoginRequest {
 /**
  * 
  * @export
- * @interface MemberRankResponse
- */
-export interface MemberRankResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof MemberRankResponse
-     */
-    'memberId': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof MemberRankResponse
-     */
-    'nickname': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof MemberRankResponse
-     */
-    'totalScore': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof MemberRankResponse
-     */
-    'averageWpm': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof MemberRankResponse
-     */
-    'averageAccuracy': number;
-}
-/**
- * 
- * @export
  * @interface MemberSignUpRequest
  */
 export interface MemberSignUpRequest {
@@ -586,6 +567,31 @@ export interface OnlineMemberGetResponse {
      * @memberof OnlineMemberGetResponse
      */
     'nickname': string;
+}
+/**
+ * 
+ * @export
+ * @interface RankingResponse
+ */
+export interface RankingResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof RankingResponse
+     */
+    'nickname': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RankingResponse
+     */
+    'ranking': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RankingResponse
+     */
+    'score': number;
 }
 /**
  * 
@@ -735,45 +741,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary 랭킹 조회
-         * @param {string} [gameType] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMemberRanking: async (gameType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/ranks`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (gameType !== undefined) {
-                localVarQueryParameter['gameType'] = gameType;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary 내 프로필 조회
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -828,6 +795,45 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 랭킹 조회
+         * @param {string} [gameType] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRanking: async (gameType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/ranks`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (gameType !== undefined) {
+                localVarQueryParameter['gameType'] = gameType;
+            }
 
 
     
@@ -1251,19 +1257,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary 랭킹 조회
-         * @param {string} [gameType] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getMemberRanking(gameType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseListMemberRankResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMemberRanking(gameType, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getMemberRanking']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary 내 프로필 조회
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1284,6 +1277,19 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOnlineMembers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.getOnlineMembers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary 랭킹 조회
+         * @param {string} [gameType] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRanking(gameType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseListRankingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRanking(gameType, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getRanking']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1447,16 +1453,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary 랭킹 조회
-         * @param {string} [gameType] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMemberRanking(gameType?: string, options?: any): AxiosPromise<ApiResponseListMemberRankResponse> {
-            return localVarFp.getMemberRanking(gameType, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary 내 프로필 조회
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1472,6 +1468,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         getOnlineMembers(options?: any): AxiosPromise<ApiResponseSetOnlineMemberGetResponse> {
             return localVarFp.getOnlineMembers(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 랭킹 조회
+         * @param {string} [gameType] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRanking(gameType?: string, options?: any): AxiosPromise<ApiResponseListRankingResponse> {
+            return localVarFp.getRanking(gameType, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1613,18 +1619,6 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary 랭킹 조회
-     * @param {string} [gameType] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getMemberRanking(gameType?: string, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getMemberRanking(gameType, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary 내 프로필 조회
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1643,6 +1637,18 @@ export class DefaultApi extends BaseAPI {
      */
     public getOnlineMembers(options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getOnlineMembers(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 랭킹 조회
+     * @param {string} [gameType] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getRanking(gameType?: string, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getRanking(gameType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
