@@ -6,7 +6,7 @@ import {
   CAR_DIRECTION,
   MAX_X,
   MAX_Y,
-  MOVE_STEP,
+  MOVE_STEP_X,
   START_X,
   START_Y,
 } from '@/common/Ingame/ingameConstants';
@@ -108,13 +108,13 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
     (carCoord: I_CarCoord) => {
       const dir = carDirRef.current;
       if (dir === 'right') {
-        carCoord.x += MOVE_STEP;
+        carCoord.x += MOVE_STEP_X;
       } else if (dir === 'down') {
-        carCoord.y += MOVE_STEP;
+        carCoord.y += MOVE_STEP_X;
       } else if (dir === 'left') {
-        carCoord.x -= MOVE_STEP;
+        carCoord.x -= MOVE_STEP_X;
       } else {
-        carCoord.y -= MOVE_STEP; // up
+        carCoord.y -= MOVE_STEP_X; // up
       }
       blockOverflowPos(carCoord);
     },
@@ -164,10 +164,10 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
         <div className='flex flex-col items-center justify-center ml-80 h-[60rem] relative'>
           <div className='absolute w-full h-full rounded-[14rem] border-2 border-black'></div>
           <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] rounded-[14rem] border-2 border-black '></div>
-          <canvas
+          {/* <canvas
             ref={canvasRef}
             className='absolute w-full h-full'
-          />
+          /> */}
           <CodeFormContainer
             dummyCode={dummyCode}
             convertedDummyCode={convertedDummyCode}
