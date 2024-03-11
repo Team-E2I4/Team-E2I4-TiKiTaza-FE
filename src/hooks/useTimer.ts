@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { MIN_MS, MS } from '@/common/Timer/constants/time';
 import { convertTime } from '@/common/Timer/utils/convertTime';
+
+export const SECOND = 1000;
+export const MIN_SECOND = 60 * SECOND;
 
 interface TimerProps {
   minutes: number;
@@ -9,9 +11,9 @@ interface TimerProps {
 }
 
 // 커스텀 훅 useTimer 정의
-const useTimer = ({ minutes, seconds, onFinishRound }: TimerProps) => {
+const useTimer = ({ minutes = 0, seconds = 0, onFinishRound }: TimerProps) => {
   const [timeLeft, setTimeLeft] = useState<number>(
-    minutes * MIN_MS + seconds * MS
+    minutes * MIN_SECOND + seconds * SECOND
   );
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -25,8 +27,8 @@ const useTimer = ({ minutes, seconds, onFinishRound }: TimerProps) => {
 
   useEffect(() => {
     timerRef.current = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - MS);
-    }, MS);
+      setTimeLeft((prevTime) => prevTime - SECOND);
+    }, SECOND);
 
     return () => {
       if (timerRef.current !== null) {
@@ -37,14 +39,14 @@ const useTimer = ({ minutes, seconds, onFinishRound }: TimerProps) => {
 
   // 타이머를 초기화하는 로직
   const resetTimer = () => {
-    setTimeLeft(minutes * MIN_MS + seconds * MS);
+    setTimeLeft(minutes * MIN_SECOND + seconds * SECOND);
     if (timerRef.current !== null) {
       clearInterval(timerRef.current);
     }
     // 타이머 다시 시작
     timerRef.current = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - MS);
-    }, MS);
+      setTimeLeft((prevTime) => prevTime - SECOND);
+    }, SECOND);
   };
 
   return { timeLeft: convertTime(timeLeft), resetTimer };
