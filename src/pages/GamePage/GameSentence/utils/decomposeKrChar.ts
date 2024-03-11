@@ -5,6 +5,9 @@ import {
 } from '../constants/koreanCharacters';
 
 export const decomposeKrChar = (char: string) => {
+  if (char === ' ') {
+    return [' '];
+  }
   const BASE_CODE = 44032; // '가'의 유니코드 코드 포인트
   const JUNGSUNG_COUNT = 21; // 중성 개수
   const JONGSUNG_COUNT = 28; // 종성 개수
