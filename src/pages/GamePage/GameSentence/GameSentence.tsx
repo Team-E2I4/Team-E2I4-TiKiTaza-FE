@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import CanvasTrack from '../common/CanvasTrack';
@@ -25,6 +26,8 @@ const GameSentence = ({
   publishIngame,
   userId,
 }: GameSentenceProps) => {
+  const navigate = useNavigate();
+
   //참여자중에 본인은 무조건 존재하므로 non-nullable
   const currentScore = ingameRoomRes.allMembers.find(
     ({ memberId }) => memberId === userId
@@ -40,11 +43,14 @@ const GameSentence = ({
   useEffect(() => {
     if (ingameRoomRes.type === 'NEXT_ROUND_START') {
       setCurrentRound((prev) => prev + 1);
+      sentencList.current = ingameRoomRes.questions!;
       didRoundFinishSubmitted.current = false;
       return;
     }
+
     if (ingameRoomRes.type === 'FINISH') {
-      //게임이 끝났을때 로직
+      //임시로 쫓아냄
+      navigate('/main', { replace: true });
     }
   }, [ingameRoomRes.type]);
 
@@ -86,10 +92,6 @@ const GameSentence = ({
     publishIngame('/round-finish', { currentRound });
     didRoundFinishSubmitted.current = true;
   }, [currentRound, publishIngame]);
-
-  //현재 유저의 게임 점수가 100점 이상일시 handleRoundFinsh 호출 && 100점 미만인데 시간 지나면 호출
-
-  //처음에는 allMembers의 nickname, 점수가 바뀌면 gameScore에서 userId
 
   return (
     <>
