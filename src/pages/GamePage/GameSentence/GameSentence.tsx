@@ -31,7 +31,7 @@ const GameSentence = ({
   )!.score;
 
   //첫 응답에 quetions가 무조건 존재하므로 non-nullable
-  const sentencList = useRef<I_Question[]>(ingameRoomRes.questions!);
+  const sentenceList = useRef<I_Question[]>(ingameRoomRes.questions!);
 
   const [currentRound, setCurrentRound] = useState(1);
 
@@ -40,7 +40,7 @@ const GameSentence = ({
   useEffect(() => {
     if (ingameRoomRes.type === 'NEXT_ROUND_START') {
       setCurrentRound((prev) => prev + 1);
-      sentencList.current = ingameRoomRes.questions!;
+      sentenceList.current = ingameRoomRes.questions!;
       didRoundFinishSubmitted.current = false;
       return;
     }
@@ -59,7 +59,7 @@ const GameSentence = ({
     [ingameRoomRes.allMembers, userId]
   );
 
-  const TotalSpacedWord = sentencList.current.reduce(
+  const TotalSpacedWord = sentenceList.current.reduce(
     (acc, cur) => acc + cur.question.split(' ').length,
     0
   );
@@ -90,7 +90,7 @@ const GameSentence = ({
       <IngameHeader
         handleRoundFinish={handleRoundFinish}
         currentRound={currentRound}
-        timeLimit={sentencList.current.length * SECONDS_PER_SENTENCE}
+        timeLimit={sentenceList.current.length * SECONDS_PER_SENTENCE}
         isNextRound={ingameRoomRes.type === 'NEXT_ROUND_START'}
       />
       <div>
@@ -102,7 +102,7 @@ const GameSentence = ({
           <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] rounded-[14rem] border-2 border-black '></div>
           <CanvasTrack allMembers={ingameRoomRes.allMembers} />
           <GameFormContainer
-            sentenceList={sentencList.current}
+            sentenceList={sentenceList.current}
             handleUpdateScore={handleUpdateScore}
             handleRoundFinish={handleRoundFinish}
           />
