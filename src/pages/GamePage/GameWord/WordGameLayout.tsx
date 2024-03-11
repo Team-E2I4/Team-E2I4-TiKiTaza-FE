@@ -19,11 +19,11 @@ const WordGameLayout = ({
   const { cpm, onInputChange, initializeTyping } = useTypingState();
 
   const submitCount = useRef(0);
-  const approvedSubmitCount = useRef(0);
+  const currentScore =
+    ingameRoomRes.allMembers.find(({ memberId }) => memberId === userId)
+      ?.score ?? 0;
+
   useEffect(() => {
-    if (ingameRoomRes.submitMemberId === userId) {
-      approvedSubmitCount.current += 1;
-    }
     onInputChange(0, 100, 150); //동기화..
   }, [ingameRoomRes]);
 
@@ -75,11 +75,7 @@ const WordGameLayout = ({
         </div>
         <Dashboard
           type='accuracy'
-          value={
-            Math.floor(
-              (approvedSubmitCount.current / submitCount.current) * 100
-            ) || 0
-          }
+          value={Math.floor((currentScore / submitCount.current) * 100) || 0}
         />
       </div>
     </>
