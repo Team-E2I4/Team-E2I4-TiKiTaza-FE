@@ -1,12 +1,19 @@
-import { DUMMY_DATA } from '../../RankPage/RankData';
-import RankList from '../../RankPage/RankList';
+import { useNavigate } from 'react-router-dom';
+import useTimer from '@/hooks/useTimer';
+import RankList, { RankProps } from '../../RankPage/RankList';
 
-const GameFinish = () => {
+const GameFinish = ({ rankList }: { rankList: RankProps[] }) => {
+  const navigate = useNavigate();
+  const { timeLeft } = useTimer({
+    minutes: 0,
+    seconds: 4,
+    onFinishRound: () => navigate('/main', { replace: true }),
+  });
   return (
     <div className='flex flex-col gap-[8rem] items-center'>
       <section>
         <span className='text-[3rem] font-bold font-[Giants-Inline]'>
-          3초 뒤 자동으로 로비로 이동합니다...
+          {`${timeLeft}초 뒤 메인화면으로 이동합니다.`}
         </span>
       </section>
       <section className='flex gap-[10rem] w-full'>
@@ -41,7 +48,7 @@ const GameFinish = () => {
         </div>
 
         <div className='flex-1'>
-          <RankList data={DUMMY_DATA} />
+          <RankList data={rankList} />
         </div>
       </section>
       <section className='flex gap-10 font-[Giants-Inline]'>
