@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useMemo } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import Loading from '@/common/Loading/Loading';
 import { useAuthCheck } from '@/hooks/useAuth';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
@@ -77,6 +78,10 @@ const GamePage = () => {
         replace={true}
       />
     );
+  }
+
+  if (checkIsEmptyObj(gameRoomRes)) {
+    return <Loading />;
   }
 
   if (!didAdminStart) {
