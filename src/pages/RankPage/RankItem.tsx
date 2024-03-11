@@ -16,7 +16,7 @@ const RankItem = ({ rank, index }: RankItemProps) => {
   };
   return (
     <div className='flex gap-2 justify-center items-center font-bold text-4xl py-6 px-4 border-b border-gray-100'>
-      <span className='w-[20%] flex justify-center items-center'>
+      <span className='flex flex-1 justify-center items-center'>
         {index < 3 ? (
           <img
             src={mappedRank[index]}
@@ -27,10 +27,10 @@ const RankItem = ({ rank, index }: RankItemProps) => {
           index + 1
         )}
       </span>
-      <span className='w-[20%] text-center'>{rank.nickname}</span>
-      <span className='w-[20%] text-center'>{rank.averageWpm}</span>
-      <span className='w-[20%] text-center'>{rank.averageAccuracy}</span>
-      <span className='w-[20%] text-center'>{rank.totalScore}</span>
+      <span className='flex-1 text-center'>{rank.nickname}</span>
+      <span className='flex-1 text-center'>{rank.averageWpm}</span>
+      <span className='flex-1 text-center'>{rank.averageAccuracy}</span>
+      <span className='flex-1 text-center'>{rank.totalScore}</span>
     </div>
   );
 };
