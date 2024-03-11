@@ -2,18 +2,8 @@
 import { useEffect, useRef } from 'react';
 // eslint-disable-next-line prettier/prettier
 import { car1,car2,car3,car4,car5,car6,car7,car8 } from '@/assets/canvasCars';
-import {
-  CANVAS_HEIGHT,
-  CANVAS_WIDTH,
-  CAR_SIZE,
-  EAST_START_Y,
-  MOVE_STEP_X,
-  MOVE_STEP_Y,
-  SOUTH_START_X,
-  START_X,
-  TRACK_WIDHT,
-  WEST_START_Y,
-} from '@/common/Ingame/ingameConstants';
+// eslint-disable-next-line prettier/prettier
+import {CANVAS_HEIGHT, CANVAS_WIDTH, CAR_SIZE, EAST_LAST_SCORE, EAST_START_Y, MOVE_STEP_X, MOVE_STEP_Y, NORTH_LAST_SCORE, SOUTH_LAST_SCORE, SOUTH_START_X, START_X, TRACK_WIDHT, WEST_LAST_SCORE, WEST_START_Y} from '@/common/Ingame/ingameConstants';
 import useCanvas from '@/hooks/useCanvas';
 import { I_AllMember } from '../types/websocketType';
 
@@ -84,31 +74,31 @@ const CanvasTrack = ({
         return;
       }
 
-      if (score <= 31) {
+      if (score <= NORTH_LAST_SCORE) {
         x = START_X + MOVE_STEP_X * score;
         y = lineGap;
-        if (score === 31) {
+        if (score === NORTH_LAST_SCORE) {
           x -= CAR_SIZE;
           y += CAR_SIZE;
         }
-      } else if (score <= 49) {
+      } else if (score <= EAST_LAST_SCORE) {
         x = CANVAS_WIDTH - lineGap - CAR_SIZE;
-        y = EAST_START_Y + MOVE_STEP_Y * (score - 32); //32번부터 하강
-        if (score === 49) {
+        y = EAST_START_Y + MOVE_STEP_Y * (score - (NORTH_LAST_SCORE + 1));
+        if (score === EAST_LAST_SCORE) {
           x -= CAR_SIZE;
           y -= CAR_SIZE;
         }
-      } else if (score <= 81) {
-        x = SOUTH_START_X - MOVE_STEP_X * (score - 50); //50번부터 좌측으로 이동
+      } else if (score <= SOUTH_LAST_SCORE) {
+        x = SOUTH_START_X - MOVE_STEP_X * (score - (EAST_LAST_SCORE + 1));
         y = CANVAS_HEIGHT - lineGap - CAR_SIZE;
-        if (score === 81) {
+        if (score === SOUTH_LAST_SCORE) {
           x += CAR_SIZE;
           y -= CAR_SIZE;
         }
-      } else if (score <= 99) {
+      } else if (score <= WEST_LAST_SCORE) {
         x = TRACK_WIDHT - lineGap - CAR_SIZE;
-        y = WEST_START_Y - MOVE_STEP_Y * (score - 82); //82번부터 상승
-        if (score === 99) {
+        y = WEST_START_Y - MOVE_STEP_Y * (score - (SOUTH_LAST_SCORE + 1));
+        if (score === WEST_LAST_SCORE) {
           x += CAR_SIZE;
           y += CAR_SIZE;
         }
@@ -133,7 +123,7 @@ const CanvasTrack = ({
           const carImg = imgrefcurrent[idx];
           //이미지 로드 이후 drawImage에 전달 가능
           if (carImg) {
-            ctx.drawImage(carImg, eachCarCoord.x, eachCarCoord.y); // 위치!px단위
+            ctx.drawImage(carImg, eachCarCoord.x, eachCarCoord.y);
           }
         });
       }
