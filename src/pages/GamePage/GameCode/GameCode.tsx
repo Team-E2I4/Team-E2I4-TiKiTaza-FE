@@ -82,8 +82,6 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
 
   const blockOverflowPos = useCallback((pos: I_CarCoord) => {
     if (pos.x === START_X && pos.y === START_Y) {
-      // eslint-disable-next-line no-console
-      console.log('끝!');
       clearInterval(timerForTest);
       return;
     }

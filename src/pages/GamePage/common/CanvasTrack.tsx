@@ -53,7 +53,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
 
   const carImgs = [car1, car2, car3, car4, car5, car6, car7, car8];
   let isArrived = 0;
-  console.log(carsRef.current);
+
   useEffect(() => {
     // 캔버스 세팅
     const cvs = canvasRef.current;
@@ -127,13 +127,11 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
       carsRef.current[idx] = { x, y, idx };
       prevData.current[idx].score = member.score;
     });
-    console.log(carsRef.current);
 
     //자동차를 화면에 그린다
     let rafTimer: ReturnType<typeof requestAnimationFrame>;
     const coordCars = carsRef.current;
     const animate = () => {
-      console.log('animate 호출');
       ctx?.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); // 이전 값 삭제
       const imgrefcurrent = carImagesRef.current;
       if (imgrefcurrent) {

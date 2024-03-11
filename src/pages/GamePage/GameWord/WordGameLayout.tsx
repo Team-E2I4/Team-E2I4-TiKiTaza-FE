@@ -28,7 +28,7 @@ const WordGameLayout = ({
   const submittedQuestions = ingameRoomRes.questions?.filter((question) =>
     question.question.startsWith('#')
   );
-  if (submittedQuestions?.length === 10) {
+  if (submittedQuestions?.length === 100) {
     handleRoundFinish();
   }
 
