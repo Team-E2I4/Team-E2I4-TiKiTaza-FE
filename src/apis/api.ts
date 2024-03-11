@@ -57,7 +57,7 @@ export const {
   logout,
   reIssueAccessToken,
   signUp,
-  getMemberRanking,
+  getRanking,
   updateMemberNickname,
   updateGameRoom,
 } = DefaultApiFactory(undefined, BASE_PATH, axiosInstance);
