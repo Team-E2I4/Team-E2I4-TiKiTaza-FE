@@ -5,19 +5,11 @@ import CanvasTrack from '../common/CanvasTrack';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 import { I_Question } from '../types/websocketType';
 import GameFormContainer from './GameFormContainer';
-const sentenceDummy = [
-  '저녁 때 돌아갈 집이 있다는 것',
-  '힘들 때 마음 속으로 생각 할 사람이 있다는 것',
-  '외로울 때 혼자서 부를 노래 있다는 것',
-  '세상에 와서 내가 하는 말 가운데서',
-  '가장 고운 말을 너에게 들려주고 싶다.',
-  '세상에 와서 내가 가진 생각 가운데서',
-  '가장 예쁜 생각을 너에게 주고 싶다.',
-];
-
 interface GameSentenceProps extends InagmeWsChildrenProps {
   userId: number;
 }
+
+const SECONDS_PER_SENTENCE = 7;
 
 export type UpdateScoreType = (lastUpdate?: boolean) => void;
 
@@ -69,8 +61,8 @@ const GameSentence = ({
     [ingameRoomRes.allMembers, userId]
   );
 
-  const TotalSpacedWord = sentenceDummy.reduce(
-    (acc, cur) => acc + cur.split(' ').length,
+  const TotalSpacedWord = sentencList.current.reduce(
+    (acc, cur) => acc + cur.question.split(' ').length,
     0
   );
 
@@ -104,6 +96,7 @@ const GameSentence = ({
       <IngameHeader
         handleRoundFinish={handleRoundFinish}
         currentRound={currentRound}
+        timeLimit={sentencList.current.length * SECONDS_PER_SENTENCE}
       />
       <div>
         <div className='absolute'>
