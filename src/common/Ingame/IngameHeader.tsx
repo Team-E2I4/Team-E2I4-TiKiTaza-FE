@@ -1,20 +1,29 @@
 import { useState } from 'react';
+import useTimer from '@/hooks/useTimer';
 import DisconnectModal from '@/pages/GamePage/common/DisconnectModal';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import Backward from '../Backward/Backward';
-import Timer from '../Timer/Timer';
 
 interface IngameHeaderProps {
   handleRoundFinish: () => void;
   currentRound: number;
+  timeLimit: number;
 }
+
+export const SECONDS_PER_MINUTE = 60;
 
 const IngameHeader = ({
   handleRoundFinish,
   currentRound,
+  timeLimit,
 }: IngameHeaderProps) => {
   const { roomInfo } = useRoomInfoStore();
   const [isAlert, setIsAlert] = useState(false);
+  const { timeLeft } = useTimer({
+    minutes: Math.floor(timeLimit / SECONDS_PER_MINUTE),
+    seconds: timeLimit % SECONDS_PER_MINUTE,
+    onFinishRound: handleRoundFinish,
+  });
 
   const handleClickBackward = () => {
     setIsAlert(true);
@@ -32,11 +41,11 @@ const IngameHeader = ({
         <Backward handleClickBackward={handleClickBackward} />
         <div className='w-[40rem] truncate text-[4rem]'>{roomInfo?.title}</div>
         <div className='grow'>참여 {roomInfo?.currentPlayer}명</div>
-        <Timer
-          minutes={5}
-          seconds={0}
-          onFinishRound={handleRoundFinish}
-        />
+        <div>
+          <span className='font-bold font-[Giants-Inline] text-[3.2rem]'>
+            남은 시간 : {timeLeft}
+          </span>
+        </div>
         <div className='text-[3rem]'>
           {/* TODO: currentPlayer 대신 currentRound 필요 */}
           🏁 {currentRound} / {roomInfo?.maxRound}
