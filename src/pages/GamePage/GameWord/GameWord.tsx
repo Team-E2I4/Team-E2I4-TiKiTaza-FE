@@ -1,4 +1,5 @@
 import IngameHeader from '@/common/Ingame/IngameHeader';
+import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 import GameWordContainer from './GameWordContainer';
 
@@ -12,11 +13,13 @@ const GameWord = ({ ingameRoomRes, publishIngame, userId }: GameWordProps) => {
       <IngameHeader />
       <div className='grow'>
         <div className='flex flex-col items-center justify-between h-[61rem]'>
-          <GameWordContainer
-            ingameRoomRes={ingameRoomRes}
-            publishIngame={publishIngame}
-            userId={userId}
-          />
+          {!checkIsEmptyObj(ingameRoomRes) && (
+            <GameWordContainer
+              ingameRoomRes={ingameRoomRes}
+              publishIngame={publishIngame}
+              userId={userId}
+            />
+          )}
         </div>
       </div>
     </>
