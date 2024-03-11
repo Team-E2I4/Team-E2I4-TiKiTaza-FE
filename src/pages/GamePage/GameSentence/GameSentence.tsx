@@ -99,10 +99,7 @@ const GameSentence = ({
         <div className='flex flex-col items-center justify-center ml-80 h-[60rem] relative'>
           <div className='absolute w-full h-full rounded-[14rem] border-2 border-black'></div>
           <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] rounded-[14rem] border-2 border-black '></div>
-          <CanvasTrack
-            allMembers={ingameRoomRes.allMembers}
-            isNextRoundStart={ingameRoomRes.type === 'NEXT_ROUND_START'}
-          />
+          <CanvasTrack allMembers={ingameRoomRes.allMembers} />
           <GameFormContainer
             sentenceList={sentencList.current.slice(0, 2)}
             handleUpdateScore={handleUpdateScore}

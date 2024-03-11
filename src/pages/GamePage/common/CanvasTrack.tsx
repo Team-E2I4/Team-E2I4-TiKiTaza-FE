@@ -1,9 +1,33 @@
 /* eslint-disable no-console */
 import { useEffect, useRef } from 'react';
 // eslint-disable-next-line prettier/prettier
-import { car1,car2,car3,car4,car5,car6,car7,car8 } from '@/assets/canvasCars';
+import {
+  car1,
+  car2,
+  car3,
+  car4,
+  car5,
+  car6,
+  car7,
+  car8,
+} from '@/assets/canvasCars';
 // eslint-disable-next-line prettier/prettier
-import {CANVAS_HEIGHT, CANVAS_WIDTH, CAR_SIZE, EAST_LAST_SCORE, EAST_START_Y, MOVE_STEP_X, MOVE_STEP_Y, NORTH_LAST_SCORE, SOUTH_LAST_SCORE, SOUTH_START_X, START_X, TRACK_WIDHT, WEST_LAST_SCORE, WEST_START_Y} from '@/common/Ingame/ingameConstants';
+import {
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
+  CAR_SIZE,
+  EAST_LAST_SCORE,
+  EAST_START_Y,
+  MOVE_STEP_X,
+  MOVE_STEP_Y,
+  NORTH_LAST_SCORE,
+  SOUTH_LAST_SCORE,
+  SOUTH_START_X,
+  START_X,
+  TRACK_WIDHT,
+  WEST_LAST_SCORE,
+  WEST_START_Y,
+} from '@/common/Ingame/ingameConstants';
 import useCanvas from '@/hooks/useCanvas';
 import { I_AllMember } from '../types/websocketType';
 
@@ -14,13 +38,7 @@ interface I_CarCoord {
   idx?: number; // 인덱스 번호 -> 트랙 라인 식별용
 }
 
-const CanvasTrack = ({
-  allMembers,
-  isNextRoundStart,
-}: {
-  allMembers: I_AllMember[];
-  isNextRoundStart: boolean;
-}) => {
+const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
   // 전체영역 캔버스 생성
   const canvasRef = useCanvas({
     setCanvas: (canvas: HTMLCanvasElement) => {
@@ -40,7 +58,7 @@ const CanvasTrack = ({
     // 캔버스 세팅
     const cvs = canvasRef.current;
     const ctx = cvs?.getContext('2d');
-    if (!ctx || isNextRoundStart) {
+    if (!ctx) {
       return;
     }
 
