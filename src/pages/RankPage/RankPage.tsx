@@ -34,14 +34,13 @@ const RankPage = () => {
           </Tabs.Trigger>
         ))}
       </Tabs.List>
-      {rankData &&
-        tabData.map(({ value, text }) => (
-          <Tabs.Content
-            key={text}
-            value={value}>
-            <RankList data={rankData.data.data} />
-          </Tabs.Content>
-        ))}
+      {tabData.map(({ value, text }) => (
+        <Tabs.Content
+          key={text}
+          value={value}>
+          <RankList rankData={rankData.data.data} />
+        </Tabs.Content>
+      ))}
     </Tabs.Root>
   );
 };
