@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Env
+.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -23,5 +26,14 @@ dist-ssr
 *.sln
 *.sw?
 
-#eslint
+# eslint
 .eslintcache
+
+#yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

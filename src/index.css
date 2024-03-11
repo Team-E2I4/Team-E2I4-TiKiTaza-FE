@@ -2,12 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
-  html{
-    font-size:62.5%;
+@layer base {
+  html {
+    font-size: 62.5%;
   }
-  
-  body{
-    font-size:1.6rem;
+
+  body {
+    font-size: 1.6rem;
   }
 }
+
+ @font-face {
+  font-family: 'Giants-Inline';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Inline.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+ 
