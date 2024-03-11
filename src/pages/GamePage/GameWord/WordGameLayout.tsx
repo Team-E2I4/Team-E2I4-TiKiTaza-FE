@@ -8,12 +8,14 @@ import WordRankContainer from './WordRankContainer';
 
 interface GameWordProps extends InagmeWsChildrenProps {
   userId: number;
+  handleRoundFinish: () => void;
 }
 
 const WordGameLayout = ({
   ingameRoomRes,
   publishIngame,
   userId,
+  handleRoundFinish,
 }: GameWordProps) => {
   const { register, handleSubmit, setValue, getValues } = useForm();
   const { cpm, onInputChange, initializeTyping } = useTypingState();
@@ -22,6 +24,20 @@ const WordGameLayout = ({
   const currentScore =
     ingameRoomRes.allMembers.find(({ memberId }) => memberId === userId)
       ?.score ?? 0;
+
+  const remainedQuestionCnt = ingameRoomRes.questions?.reduce(
+    (cnt, question) => {
+      if (question.question.startsWith('#')) {
+        return cnt + 1;
+      } else {
+        return cnt;
+      }
+    },
+    0
+  );
+  if (remainedQuestionCnt === 100) {
+    handleRoundFinish();
+  }
 
   useEffect(() => {
     onInputChange(0, 100, 150); //동기화..
