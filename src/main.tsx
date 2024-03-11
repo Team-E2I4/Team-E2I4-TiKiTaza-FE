@@ -1,5 +1,5 @@
 import './index.css';
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -66,7 +66,11 @@ export const router = createBrowserRouter([
           },
           {
             path: '/rank',
-            element: <RankPage />,
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <RankPage />
+              </Suspense>
+            ),
           },
           {
             path: '/login/oauth2/code/kakao',
