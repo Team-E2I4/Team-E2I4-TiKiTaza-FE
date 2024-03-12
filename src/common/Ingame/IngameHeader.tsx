@@ -28,10 +28,11 @@ const IngameHeader = ({
       handleRoundFinish();
     },
   });
-
+  
   useEffect(() => {
     isNextRound && resetTimer();
   }, [isNextRound]);
+  
   const handleClickBackward = () => {
     setIsAlert(true);
   };

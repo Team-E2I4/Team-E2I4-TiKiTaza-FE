@@ -1,14 +1,17 @@
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import CanvasTrack from '../common/CanvasTrack';
 import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
 import { I_Question } from '../types/websocketType';
+
 import CodeFormContainer from './CodeFormContainer';
 
 interface GameCodeProps extends InagmeWsChildrenProps {
   userId: number;
 }
+
 
 const SECONDS_PER_SENTENCE = 7;
 
@@ -44,6 +47,7 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
     () => Math.floor((1 / totalSpacedWord) * 100),
     [totalSpacedWord]
   );
+
 
   const rankInfoList = useMemo(
     () =>
@@ -99,6 +103,7 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
       <div>
         <div className='absolute'>
           <IngameRank rankInfos={rankInfoList} />
+
         </div>
         <div className='flex flex-col items-center justify-center ml-80 h-[60rem] relative'>
           <div className='absolute w-full h-full rounded-[14rem] border-2 border-black'></div>

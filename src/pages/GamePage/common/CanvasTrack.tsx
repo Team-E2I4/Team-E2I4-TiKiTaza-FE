@@ -53,6 +53,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
 
   const carImgs = [car1, car2, car3, car4, car5, car6, car7, car8];
   let isArrived = 0;
+
   useEffect(() => {
     // 캔버스 세팅
     const cvs = canvasRef.current;
@@ -131,6 +132,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
     let rafTimer: ReturnType<typeof requestAnimationFrame>;
     const coordCars = carsRef.current;
     const animate = () => {
+
       ctx?.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); // 이전 값 삭제
       const imgrefcurrent = carImagesRef.current;
       if (imgrefcurrent) {
@@ -157,7 +159,9 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
 
   setTimeout(() => {
     isArrived = 1;
+
     // console.log('임시 종료');
+
   }, 5000);
 
   return (

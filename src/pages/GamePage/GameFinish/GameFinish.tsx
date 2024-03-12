@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+
 import { RankingResponse } from '@/generated';
 import useTimer from '@/hooks/useTimer';
 import RankList from '../../RankPage/RankList';
 
 const GameFinish = ({ rankData }: { rankData: RankingResponse[] }) => {
+
   const navigate = useNavigate();
   const { timeLeft } = useTimer({
     minutes: 0,

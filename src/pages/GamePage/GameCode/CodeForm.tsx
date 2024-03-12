@@ -9,6 +9,7 @@ import {
 import { useForm } from 'react-hook-form';
 
 interface CodeFormProps {
+
   isLastSentence: boolean;
   isRoundFinish: boolean;
   codeItem: string[];
@@ -20,6 +21,7 @@ interface CodeFormProps {
   ) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
   initializeTyping: () => void;
+
   handleUpdateProblem: () => void;
   handleRoundFinish: () => void;
 }
@@ -31,6 +33,7 @@ const CHAR_STATE = {
 };
 
 const CodeForm = ({
+
   isLastSentence,
   isRoundFinish,
   codeItem,
@@ -38,6 +41,7 @@ const CodeForm = ({
   onInputChange,
   onKeyDown,
   initializeTyping,
+
   handleUpdateProblem,
   handleRoundFinish,
 }: CodeFormProps) => {
@@ -59,11 +63,13 @@ const CodeForm = ({
   const initializeCheckedCorrectAndTypo = () => {
     setCheckedCorrectAndTypo(
       Array.from(
+
         { length: codeItem[currentIndex]?.length ?? 0 },
         () => CHAR_STATE.PENDING
       )
     );
   };
+
 
   const handlePublishBySpaceKey = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
@@ -87,6 +93,7 @@ const CodeForm = ({
       if (isLastWord === false && isPublished === false && isSameCodeWord) {
         currentPublishIndex.current += 1;
         handleUpdateScore(false);
+
       }
     },
     [divideBySpace, handleUpdateScore]
@@ -95,6 +102,7 @@ const CodeForm = ({
   const handleCheckCorrectAndTypo = useCallback(
     (currentTypingInput: string) => {
       const currentCharIndex = currentTypingInput.length;
+
       const slicedCurrentCode = codeItem[currentIndex].slice(
         0,
         currentCharIndex
@@ -120,6 +128,7 @@ const CodeForm = ({
         })
       );
     },
+
     [codeItem, currentIndex]
   );
 
@@ -135,6 +144,7 @@ const CodeForm = ({
 
   const handleCheckInputCorrect = useCallback(
     (currentInput: string) => {
+
       return currentInput === codeItem[currentIndex];
     },
     [codeItem, currentIndex]
@@ -143,12 +153,14 @@ const CodeForm = ({
   const handleActiveEnter = useCallback(() => {
     const isCorrectInput = handleCheckInputCorrect(getValues('code'));
 
+
     if (isCorrectInput === false) {
       return;
     }
 
     setValue('code', '');
     initializeTyping();
+
     setCurrentIndex((prev) => (prev < codeItem.length ? prev + 1 : prev));
     currentPublishIndex.current = 0;
 
@@ -184,6 +196,7 @@ const CodeForm = ({
   }, [currentIndex]);
 
   useEffect(() => {
+
     if (isRoundFinish) {
       return;
     }
