@@ -1,5 +1,7 @@
+import './init.ts';
 import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
+import SockJS from 'sockjs-client';
 import { BASE_PATH } from '@/generated/base';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { getToken } from '@/utils/getToken';
