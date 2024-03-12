@@ -11,8 +11,6 @@ const useGameRound = ({
   onNextRound,
   onRoundFinish,
 }: UseGameRoundProps) => {
-  //TODO: publishIngame -> zustand에서 가져오기?!
-
   const [currentRound, setCurrentRound] = useState(1);
   const didRoundFinishSubmitted = useRef(false);
 
