@@ -1,6 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { useEffect, useState } from 'react';
+import UpdateNicknameForm from './UpdateNicknameForm';
 
 interface UpdateNicknameModalProps {
   initialIsOpen: boolean;
@@ -29,6 +30,7 @@ const UpdateNicknameModal = ({
           <Dialog.Title className='text-[1.6rem] font-semibold'>
             닉네임 설정
           </Dialog.Title>
+          <UpdateNicknameForm />
           <Dialog.Close asChild>
             <button
               aria-label='Close'
