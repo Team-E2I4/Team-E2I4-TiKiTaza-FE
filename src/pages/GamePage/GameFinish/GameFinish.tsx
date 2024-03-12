@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+import { RankingResponse } from '@/generated';
 import useTimer from '@/hooks/useTimer';
-import RankList, { RankProps } from '../../RankPage/RankList';
+import RankList from '../../RankPage/RankList';
 
-const GameFinish = ({ rankList }: { rankList: RankProps[] }) => {
+const GameFinish = ({ rankData }: { rankData: RankingResponse[] }) => {
   const navigate = useNavigate();
   const { timeLeft } = useTimer({
     minutes: 0,
@@ -48,7 +49,7 @@ const GameFinish = ({ rankList }: { rankList: RankProps[] }) => {
         </div>
 
         <div className='flex-1'>
-          <RankList data={rankList} />
+          <RankList rankData={rankData} />
         </div>
       </section>
       <section className='flex gap-10 font-[Giants-Inline]'>

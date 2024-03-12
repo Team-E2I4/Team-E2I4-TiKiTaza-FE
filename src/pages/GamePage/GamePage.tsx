@@ -122,16 +122,16 @@ const GamePage = () => {
             {!checkIsEmptyObj(ingameRoomRes) &&
               ingameRoomRes.type === 'FINISH' && (
                 <GameFinish
-                  rankList={ingameRoomRes.allMembers
-                    .map(({ nickname, score, memberId }) => ({
-                      id: memberId,
+                  rankData={ingameRoomRes.allMembers
+                    .map(({ nickname, score }) => ({
                       nickname,
                       score,
                     }))
                     .sort(
                       ({ score: prevScore }, { score: nextScore }) =>
                         nextScore - prevScore
-                    )}
+                    )
+                    .map((el, i) => ({ ...el, ranking: i + 1 }))}
                 />
               )}
           </>
