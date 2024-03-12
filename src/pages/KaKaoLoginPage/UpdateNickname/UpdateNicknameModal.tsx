@@ -24,10 +24,9 @@ const UpdateNicknameModal = ({
             'fixed inset-0 w-[100vw] h-[100vh] bg-black/30 animate-[overlayShow_150ms_cubic-bezier(0.16,1,0.3,1)]'
           }
         />
-        {/* Todo: 색상대신 깃발 펄럭이는 이미지 배경에 깔아두기 */}
         <Dialog.Content
-          className={`rounded-[1rem] border-green-100 border-[0.3rem] w-[95rem] h-[60rem] flex flex-col items-start justify-start p-[2rem] bg-white z-10 fixed inset-1/2 translate-x-[-50%] translate-y-[-50%]`}>
-          <Dialog.Title className='text-[2.4rem] font-semibold'>
+          className={`rounded-[1rem] border-green-100 border-[0.3rem] w-[45rem] h-[25rem] flex flex-col text-center p-[2rem] bg-white z-10 fixed inset-1/2 translate-x-[-50%] translate-y-[-50%]`}>
+          <Dialog.Title className='text-[1.6rem] font-semibold'>
             닉네임 설정
           </Dialog.Title>
           <Dialog.Close asChild>
