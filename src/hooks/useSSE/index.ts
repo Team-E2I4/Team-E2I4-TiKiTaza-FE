@@ -50,6 +50,7 @@ const useSSE = ({ url, options = {} }: UseSSEProps) => {
     const handleInitConnect = (e: Event) => {
       const messageEvent = e as MessageEvent;
       const data = JSON.parse(messageEvent.data);
+
       setData(data);
     };
 

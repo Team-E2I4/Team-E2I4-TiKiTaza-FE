@@ -8,6 +8,7 @@ import WordRankContainer from './WordRankContainer';
 
 interface GameWordProps extends InagmeWsChildrenProps {
   userId: number;
+
   handleRoundFinish: () => void;
 }
 
@@ -15,6 +16,7 @@ const WordGameLayout = ({
   ingameRoomRes,
   publishIngame,
   userId,
+
   handleRoundFinish,
 }: GameWordProps) => {
   const { register, handleSubmit, setValue, getValues } = useForm();

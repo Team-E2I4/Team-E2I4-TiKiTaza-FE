@@ -7,6 +7,7 @@ import WordGameLayout from './WordGameLayout';
 interface GameWordProps extends InagmeWsChildrenProps {
   userId: number;
 }
+
 const SECONDS_FOR_ALL_WORDS = 120;
 
 const GameWord = ({ ingameRoomRes, publishIngame, userId }: GameWordProps) => {
@@ -39,6 +40,7 @@ const GameWord = ({ ingameRoomRes, publishIngame, userId }: GameWordProps) => {
         )}
         isNextRound={ingameRoomRes.type === 'NEXT_ROUND_START'}
       />
+
       <div className='grow'>
         <div className='flex flex-col items-center justify-between h-[61rem]'>
           {!checkIsEmptyObj(ingameRoomRes) && (

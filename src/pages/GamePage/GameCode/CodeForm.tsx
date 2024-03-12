@@ -20,6 +20,7 @@ interface CodeFormProps {
   ) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
   initializeTyping: () => void;
+
   handleUpdateProblem: () => void;
   handleRoundFinish: () => void;
 }
@@ -38,6 +39,7 @@ const CodeForm = ({
   onInputChange,
   onKeyDown,
   initializeTyping,
+
   handleUpdateProblem,
   handleRoundFinish,
 }: CodeFormProps) => {
@@ -95,6 +97,7 @@ const CodeForm = ({
   const handleCheckCorrectAndTypo = useCallback(
     (currentTypingInput: string) => {
       const currentCharIndex = currentTypingInput.length;
+
       const slicedCurrentCode = codeItem[currentIndex].slice(
         0,
         currentCharIndex
@@ -120,6 +123,7 @@ const CodeForm = ({
         })
       );
     },
+
     [codeItem, currentIndex]
   );
 
@@ -149,6 +153,7 @@ const CodeForm = ({
 
     setValue('code', '');
     initializeTyping();
+
     setCurrentIndex((prev) => (prev < codeItem.length ? prev + 1 : prev));
     currentPublishIndex.current = 0;
 

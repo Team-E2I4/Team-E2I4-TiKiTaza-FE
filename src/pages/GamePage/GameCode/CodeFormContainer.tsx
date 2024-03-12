@@ -34,6 +34,7 @@ const CodeFormContainer = ({
           type='cpm'
           value={cpm}
         />
+
         <CodeContainer
           codeItem={
             currentProblemIndex === convertedCodeList.length
@@ -41,6 +42,7 @@ const CodeFormContainer = ({
               : codeList[currentProblemIndex].question
           }
         />
+
         <Dashboard
           type='accuracy'
           value={accurate}

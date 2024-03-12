@@ -32,6 +32,7 @@ const IngameHeader = ({
   useEffect(() => {
     isNextRound && resetTimer();
   }, [isNextRound]);
+
   const handleClickBackward = () => {
     setIsAlert(true);
   };
