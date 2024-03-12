@@ -27,9 +27,22 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
   const { currentRound, handleRoundFinish } = useGameRound({
     isNextRound: ingameRoomRes.type === 'NEXT_ROUND_START',
     onNextRound: handleNextRound,
-    onRoundFinish: (currRound: number) =>
-      publishIngame('/round-finish', { currentRound: currRound }),
+    onRoundFinish: (currentRound: number) =>
+      publishIngame('/round-finish', { currentRound }),
   });
+
+  const rankInfoList = useMemo(
+    () =>
+      ingameRoomRes.allMembers
+        .map(({ memberId, nickname, score }) => ({
+          memberId,
+          nickname,
+          currentScore: score,
+          isMe: memberId === userId,
+        }))
+        .sort((prev, next) => next.currentScore - prev.currentScore),
+    [ingameRoomRes.allMembers, userId]
+  );
 
   const currentScore = ingameRoomRes.allMembers.find(
     ({ memberId }) => memberId === userId
@@ -51,19 +64,6 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
   const scorePerSubmit = useMemo(
     () => Math.floor((1 / totalSpacedWord) * 100),
     [totalSpacedWord]
-  );
-
-  const rankInfoList = useMemo(
-    () =>
-      ingameRoomRes.allMembers
-        .map(({ memberId, nickname, score }) => ({
-          memberId,
-          nickname,
-          currentScore: score,
-          isMe: memberId === userId,
-        }))
-        .sort((prev, next) => next.currentScore - prev.currentScore),
-    [ingameRoomRes.allMembers, userId]
   );
 
   const handleUpdateScore = useCallback(
