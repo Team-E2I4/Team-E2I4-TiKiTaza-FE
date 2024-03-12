@@ -53,7 +53,6 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
 
   const carImgs = [car1, car2, car3, car4, car5, car6, car7, car8];
   let isArrived = 0;
-
   useEffect(() => {
     // 캔버스 세팅
     const cvs = canvasRef.current;
@@ -158,7 +157,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
 
   setTimeout(() => {
     isArrived = 1;
-    console.log('임시 종료');
+    // console.log('임시 종료');
   }, 5000);
 
   return (
