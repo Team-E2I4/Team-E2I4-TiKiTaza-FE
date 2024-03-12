@@ -1,5 +1,6 @@
 import * as Form from '@radix-ui/react-form';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import useUpdateNickname from '@/hooks/useUpdateNickname';
 
 type UpdateNicknameFormType = {
@@ -7,6 +8,8 @@ type UpdateNicknameFormType = {
 };
 
 const UpdateNicknameForm = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -19,6 +22,7 @@ const UpdateNicknameForm = () => {
   const { mutate: mutateUpdateNickname } = useUpdateNickname({
     onSuccess: () => {
       alert('닉네임 변경 성공');
+      navigate('/main');
     },
   });
 
