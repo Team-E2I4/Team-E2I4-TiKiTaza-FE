@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import CanvasTrack from '../common/CanvasTrack';
-import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
+import useGameRound from '../hooks/useGameRound';
+import { IngameWsChildrenProps } from '../IngameWSErrorBoundary';
 import { I_Question } from '../types/websocketType';
 import GameFormContainer from './GameFormContainer';
-interface GameSentenceProps extends InagmeWsChildrenProps {
+interface GameSentenceProps extends IngameWsChildrenProps {
   userId: number;
 }
 
@@ -33,18 +34,16 @@ const GameSentence = ({
   //첫 응답에 quetions가 무조건 존재하므로 non-nullable
   const sentenceList = useRef<I_Question[]>(ingameRoomRes.questions!);
 
-  const [currentRound, setCurrentRound] = useState(1);
+  const handleNextRound = useCallback(() => {
+    sentenceList.current = ingameRoomRes.questions!;
+  }, [ingameRoomRes.questions]);
 
-  const didRoundFinishSubmitted = useRef(false);
-
-  useEffect(() => {
-    if (ingameRoomRes.type === 'NEXT_ROUND_START') {
-      setCurrentRound((prev) => prev + 1);
-      sentenceList.current = ingameRoomRes.questions!;
-      didRoundFinishSubmitted.current = false;
-      return;
-    }
-  }, [ingameRoomRes.type]);
+  const { currentRound, handleRoundFinish } = useGameRound({
+    isNextRound: ingameRoomRes.type === 'NEXT_ROUND_START',
+    onNextRound: handleNextRound,
+    onRoundFinish: (currentRound) =>
+      publishIngame('/round-finish', { currentRound }),
+  });
 
   const rankInfoList = useMemo(
     () =>
@@ -75,15 +74,6 @@ const GameSentence = ({
     },
     [currentScore, publishIngame, scorePerTrankLength]
   );
-
-  const handleRoundFinish = useCallback(() => {
-    if (didRoundFinishSubmitted.current) {
-      return;
-    }
-
-    publishIngame('/round-finish', { currentRound });
-    didRoundFinishSubmitted.current = true;
-  }, [currentRound, publishIngame]);
 
   return (
     <>

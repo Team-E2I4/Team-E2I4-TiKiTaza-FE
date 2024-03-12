@@ -1,34 +1,30 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
-import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
+import useGameRound from '../hooks/useGameRound';
+import { IngameWsChildrenProps } from '../IngameWSErrorBoundary';
 import WordGameLayout from './WordGameLayout';
 
-interface GameWordProps extends InagmeWsChildrenProps {
+interface GameWordProps extends IngameWsChildrenProps {
   userId: number;
 }
 
 const SECONDS_FOR_ALL_WORDS = 120;
 
+/* 
+  1. 인게임헤더
+  2. 트랙
+  3. 대시보드
+  4. 공통로직
+  
+  GameXXX (공통로직 보유) => Sentence, Word, Code
+*/
+
 const GameWord = ({ ingameRoomRes, publishIngame, userId }: GameWordProps) => {
-  const [currentRound, setCurrentRound] = useState(1);
-  const didRoundFinishSubmitted = useRef(false);
-
-  useEffect(() => {
-    if (ingameRoomRes.type === 'NEXT_ROUND_START') {
-      setCurrentRound((prev) => prev + 1);
-      didRoundFinishSubmitted.current = false;
-      return;
-    }
-  }, [ingameRoomRes.type]);
-
-  const handleRoundFinish = useCallback(() => {
-    if (didRoundFinishSubmitted.current) {
-      return;
-    }
-    publishIngame('/round-finish', { currentRound });
-    didRoundFinishSubmitted.current = true;
-  }, [currentRound, publishIngame]);
+  const { currentRound, handleRoundFinish } = useGameRound({
+    isNextRound: ingameRoomRes.type === 'NEXT_ROUND_START',
+    onRoundFinish: (currentRound) =>
+      publishIngame('/round-finish', { currentRound }),
+  });
 
   return (
     <>
