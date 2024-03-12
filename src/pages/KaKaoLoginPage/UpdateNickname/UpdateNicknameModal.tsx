@@ -26,7 +26,9 @@ const UpdateNicknameModal = ({
           }
         />
         <Dialog.Content
-          className={`rounded-[1rem] border-green-100 border-[0.3rem] w-[45rem] h-[25rem] flex flex-col text-center p-[2rem] bg-white z-10 fixed inset-1/2 translate-x-[-50%] translate-y-[-50%]`}>
+          className={
+            'rounded-[1rem] border-green-100 border-[0.3rem] w-[40rem] h-[20rem] flex flex-col gap-[2.5rem] text-center p-[2rem] bg-white z-10 fixed inset-1/2 translate-x-[-50%] translate-y-[-50%]'
+          }>
           <Dialog.Title className='font-bold font-[Giants-Inline] text-[2rem]'>
             닉네임 설정
           </Dialog.Title>
