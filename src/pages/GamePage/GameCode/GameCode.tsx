@@ -1,12 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import CanvasTrack from '../common/CanvasTrack';
-import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
+import useGameRound from '../hooks/useGameRound';
+import { IngameWsChildrenProps } from '../IngameWSErrorBoundary';
 import { I_Question } from '../types/websocketType';
 import CodeFormContainer from './CodeFormContainer';
 
-interface GameCodeProps extends InagmeWsChildrenProps {
+interface GameCodeProps extends IngameWsChildrenProps {
   userId: number;
 }
 
@@ -15,15 +16,22 @@ const SECONDS_PER_SENTENCE = 7;
 const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
   const codeList = useRef<I_Question[]>(ingameRoomRes.questions!);
 
-  const [currentRound, setCurrentRound] = useState(1);
-
-  const didRoundFinishSubmitted = useRef(false);
-
   const convertedCodeList = codeList.current.map(({ question }) =>
     question.split('\n').map((code) => code.trim())
   );
 
-  const myCurrentScore = ingameRoomRes.allMembers.find(
+  const handleNextRound = useCallback(() => {
+    codeList.current = ingameRoomRes.questions!;
+  }, [ingameRoomRes.questions]);
+
+  const { currentRound, handleRoundFinish } = useGameRound({
+    isNextRound: ingameRoomRes.type === 'NEXT_ROUND_START',
+    onNextRound: handleNextRound,
+    onRoundFinish: (currRound: number) =>
+      publishIngame('/round-finish', { currentRound: currRound }),
+  });
+
+  const currentScore = ingameRoomRes.allMembers.find(
     ({ memberId }) => memberId === userId
   )!.score;
 
@@ -60,29 +68,11 @@ const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
 
   const handleUpdateScore = useCallback(
     (_isAllSubmitted: boolean) => {
-      const newScore = _isAllSubmitted ? 100 : myCurrentScore + scorePerSubmit;
+      const newScore = _isAllSubmitted ? 100 : currentScore + scorePerSubmit;
       publishIngame('/info', { currentScore: newScore });
     },
-    [myCurrentScore, publishIngame, scorePerSubmit]
+    [currentScore, publishIngame, scorePerSubmit]
   );
-
-  const handleRoundFinish = useCallback(() => {
-    if (didRoundFinishSubmitted.current) {
-      return;
-    }
-
-    publishIngame('/round-finish', { currentRound });
-    didRoundFinishSubmitted.current = true;
-  }, [currentRound, publishIngame]);
-
-  useEffect(() => {
-    if (ingameRoomRes.type === 'NEXT_ROUND_START') {
-      setCurrentRound((prev) => prev + 1);
-      codeList.current = ingameRoomRes.questions!;
-      didRoundFinishSubmitted.current = false;
-      return;
-    }
-  }, [ingameRoomRes.type]);
 
   return (
     <>
