@@ -3,7 +3,7 @@ import WsError from './common/WsError';
 import useIngameWebsocket from './hooks/useIngameWebsocket';
 import { I_IngameWsResponse, PublishIngameType } from './types/websocketType';
 
-export interface InagmeWsChildrenProps {
+export interface IngameWsChildrenProps {
   ingameRoomRes: I_IngameWsResponse;
   publishIngame: PublishIngameType;
 }
@@ -14,7 +14,7 @@ export const IngameWSErrorBoundary = ({
   children: ({
     ingameRoomRes,
     publishIngame,
-  }: InagmeWsChildrenProps) => JSX.Element;
+  }: IngameWsChildrenProps) => JSX.Element;
 }) => {
   const { roomId } = useRoomInfoStore();
 
