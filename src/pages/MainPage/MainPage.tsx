@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useNavigate } from 'react-router-dom';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import EnterRoomErrorFallback from './EnterRoomErrorFallback';
 import GameRoomList from './GameRoomList';
@@ -9,6 +10,8 @@ import UserCard from './UserCard';
 import UserList from './UserList';
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
   return (
     <main className='flex pb-[4rem] gap-[3rem]'>
       <section className='flex flex-col gap-[3rem] w-[25rem]'>
@@ -17,7 +20,9 @@ const MainPage = () => {
             <UserList />
           </Suspense>
         </ErrorBoundary>
-        <article className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full'></article>
+        <article className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full cursor-pointer hover:bg-green-100 transition-all'>
+          <button onClick={() => navigate('/rank')}>전체 랭킹 페이지</button>
+        </article>
         <UserCard />
       </section>
       <section className='flex-1 grid grid-cols-[3fr_1fr] grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
