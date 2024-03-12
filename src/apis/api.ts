@@ -60,4 +60,5 @@ export const {
   getRanking,
   updateMemberNickname,
   updateGameRoom,
+  getOnlineMembers,
 } = DefaultApiFactory(undefined, BASE_PATH, axiosInstance);

@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import EnterRoomErrorFallback from './EnterRoomErrorFallback';
@@ -11,7 +12,11 @@ const MainPage = () => {
   return (
     <main className='flex pb-[4rem] gap-[3rem]'>
       <section className='flex flex-col gap-[3rem] w-[25rem]'>
-        <UserList />
+        <ErrorBoundary fallback={<div>온라인 접속자 에러</div>}>
+          <Suspense fallback={<span>온라인 접속자 로딩중</span>}>
+            <UserList />
+          </Suspense>
+        </ErrorBoundary>
         <article className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full'></article>
         <UserCard />
       </section>
