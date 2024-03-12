@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Dashboard from '@/common/Ingame/Dashboard';
 import useTypingState from '../GameSentence/useTypingState';
-import { InagmeWsChildrenProps } from '../IngameWSErrorBoundary';
+import { IngameWsChildrenProps } from '../IngameWSErrorBoundary';
 import WordCell from './WordCell';
 import WordRankContainer from './WordRankContainer';
 
-interface GameWordProps extends InagmeWsChildrenProps {
+interface GameWordProps extends IngameWsChildrenProps {
   userId: number;
 
   handleRoundFinish: () => void;
