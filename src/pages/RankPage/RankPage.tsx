@@ -29,7 +29,8 @@ const RankPage = () => {
           <Tabs.Trigger
             key={text}
             value={value}
-            className='bg-green-70 rounded-[1rem] px-8 py-4'>
+            className='bg-green-70 rounded-[1rem] px-8 py-4 data-[state=active]:bg-green-100'
+            data-state={value === selectedTab ? 'active' : 'inactive'}>
             {text}
           </Tabs.Trigger>
         ))}
