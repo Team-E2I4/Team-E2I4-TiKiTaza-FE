@@ -28,6 +28,7 @@ const IngameHeader = ({
       handleRoundFinish();
     },
   });
+
   useEffect(() => {
     isNextRound && resetTimer();
   }, [isNextRound]);
@@ -53,7 +54,6 @@ const IngameHeader = ({
           </span>
         </div>
         <div className='text-[3rem]'>
-          {/* TODO: currentPlayer 대신 currentRound 필요 */}
           🏁 {currentRound} / {roomInfo?.maxRound}
         </div>
       </div>
