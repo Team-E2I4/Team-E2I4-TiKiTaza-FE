@@ -37,7 +37,9 @@ const UpdateNicknameForm = () => {
 
   return (
     <div>
-      <Form.Root onSubmit={handleSubmit(onSubmit)}>
+      <Form.Root
+        onSubmit={handleSubmit(onSubmit)}
+        className='flex flex-col items-center gap-4'>
         <Form.Field name='nickname'>
           <Form.Control asChild>
             <input
@@ -61,14 +63,14 @@ const UpdateNicknameForm = () => {
               className='w-[26rem] h-[3.6rem] p-[1rem] border-[0.2rem] border-gray-200 rounded-[0.8rem] focus:outline-none'
             />
           </Form.Control>
-          <span className='block text-[1.3rem] h-[2rem] text-red-500 pt-[0.3rem] text-center'>
+          <span className='block text-[1.3rem] h-[2rem] text-red-500 py-[0.3rem] text-center'>
             {errors['nickname']?.message}
           </span>
         </Form.Field>
         <Form.Submit asChild>
           <button
             type='submit'
-            className='w-[8rem] p-[0.5rem] rounded-[0.8rem] bg-coral-100 disabled:cursor-not-allowed disabled:opacity-50 transition-all'
+            className='w-[7rem] p-[0.5rem] rounded-[0.8rem] bg-coral-100 disabled:cursor-not-allowed disabled:opacity-50 transition-all'
             disabled={!isValid}>
             변경
           </button>
