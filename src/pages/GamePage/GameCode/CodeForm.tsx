@@ -9,8 +9,9 @@ import {
 import { useForm } from 'react-hook-form';
 
 interface CodeFormProps {
-  inputName: 'code';
-  convertedDummyCode: string[];
+  isLastSentence: boolean;
+  isRoundFinish: boolean;
+  codeItem: string[];
   handleUpdateScore: (_isAllSubmitted: boolean) => void;
   onInputChange: (
     _totalCharCompleted: number,
@@ -19,6 +20,8 @@ interface CodeFormProps {
   ) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
   initializeTyping: () => void;
+  handleUpdateProblem: () => void;
+  handleRoundFinish: () => void;
 }
 
 const CHAR_STATE = {
@@ -28,26 +31,27 @@ const CHAR_STATE = {
 };
 
 const CodeForm = ({
-  inputName,
-  convertedDummyCode,
+  isLastSentence,
+  isRoundFinish,
+  codeItem,
   handleUpdateScore,
   onInputChange,
   onKeyDown,
   initializeTyping,
+  handleUpdateProblem,
+  handleRoundFinish,
 }: CodeFormProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { register, handleSubmit, setValue, getValues } = useForm<{
-    [inputName]: string;
+    ['code']: string;
   }>();
 
   const currentPublishIndex = useRef(0);
-  const divideBySpace = convertedDummyCode[currentIndex]?.split(' ') ?? null;
-
-  const isRoundFinish = currentIndex === convertedDummyCode.length;
+  const divideBySpace = codeItem?.[currentIndex]?.split(' ') ?? null;
 
   const [checkedCorrectAndTypo, setCheckedCorrectAndTypo] = useState(
     Array.from(
-      { length: convertedDummyCode[currentIndex]?.length ?? 0 },
+      { length: codeItem[currentIndex]?.length ?? 0 },
       () => CHAR_STATE.PENDING
     )
   );
@@ -55,16 +59,11 @@ const CodeForm = ({
   const initializeCheckedCorrectAndTypo = () => {
     setCheckedCorrectAndTypo(
       Array.from(
-        { length: convertedDummyCode[currentIndex]?.length ?? 0 },
+        { length: codeItem[currentIndex]?.length ?? 0 },
         () => CHAR_STATE.PENDING
       )
     );
   };
-
-  if (isRoundFinish) {
-    // TODO: 모든 코드 제출을 통해 한 라운드가 끝났음을 서버에 발행
-    // TODO: 시간 종료를 통해 한 라운드가 끝났음을 서버에 발행
-  }
 
   const handlePublishBySpaceKey = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
@@ -88,7 +87,6 @@ const CodeForm = ({
       if (isLastWord === false && isPublished === false && isSameCodeWord) {
         currentPublishIndex.current += 1;
         handleUpdateScore(false);
-        //TODO: publish
       }
     },
     [divideBySpace, handleUpdateScore]
@@ -97,7 +95,7 @@ const CodeForm = ({
   const handleCheckCorrectAndTypo = useCallback(
     (currentTypingInput: string) => {
       const currentCharIndex = currentTypingInput.length;
-      const slicedCurrentCode = convertedDummyCode[currentIndex].slice(
+      const slicedCurrentCode = codeItem[currentIndex].slice(
         0,
         currentCharIndex
       );
@@ -122,7 +120,7 @@ const CodeForm = ({
         })
       );
     },
-    [convertedDummyCode, currentIndex]
+    [codeItem, currentIndex]
   );
 
   const handleInputChange = useCallback(
@@ -137,39 +135,58 @@ const CodeForm = ({
 
   const handleCheckInputCorrect = useCallback(
     (currentInput: string) => {
-      return currentInput === convertedDummyCode[currentIndex];
+      return currentInput === codeItem[currentIndex];
     },
-    [convertedDummyCode, currentIndex]
+    [codeItem, currentIndex]
   );
 
   const handleActiveEnter = useCallback(() => {
     const isCorrectInput = handleCheckInputCorrect(getValues('code'));
 
-    if (isCorrectInput === false || isRoundFinish) {
+    if (isCorrectInput === false) {
       return;
     }
 
     setValue('code', '');
     initializeTyping();
-    setCurrentIndex((prev) =>
-      prev < convertedDummyCode.length ? prev + 1 : prev
-    );
-
+    setCurrentIndex((prev) => (prev < codeItem.length ? prev + 1 : prev));
     currentPublishIndex.current = 0;
-    if (currentIndex === convertedDummyCode.length - 1) {
-      const isAllSubmitted = true;
-      handleUpdateScore(isAllSubmitted);
-      return;
+
+    const isLastSentenceOfLastProblem =
+      isLastSentence && currentIndex === codeItem.length - 1;
+
+    handleUpdateScore(isLastSentenceOfLastProblem);
+    if (currentIndex === codeItem.length - 1) {
+      handleUpdateProblem();
+      setCurrentIndex(0);
     }
-    handleUpdateScore(false);
+    isLastSentenceOfLastProblem && handleRoundFinish();
+
     // TODO: enter키 누르면 실시간 점수 publish
-  }, [convertedDummyCode.length, currentIndex, isRoundFinish]);
+  }, [
+    codeItem.length,
+    currentIndex,
+    getValues,
+    handleCheckInputCorrect,
+    handleRoundFinish,
+    handleUpdateProblem,
+    handleUpdateScore,
+    initializeTyping,
+    isLastSentence,
+    setValue,
+  ]);
 
   useEffect(() => {
+    if (isRoundFinish) {
+      return;
+    }
     initializeCheckedCorrectAndTypo();
   }, [currentIndex]);
 
   useEffect(() => {
+    if (isRoundFinish) {
+      return;
+    }
     onInputChange(
       checkedCorrectAndTypo.filter((el) => el === CHAR_STATE.CORRECT).length,
       getValues('code').length,
@@ -186,7 +203,7 @@ const CodeForm = ({
         outline-0 text-gray-300 tracking-wider box-border'>
           {isRoundFinish === false ? (
             <>
-              {[...convertedDummyCode[currentIndex]].map((char, idx) => (
+              {[...codeItem[currentIndex]].map((char, idx) => (
                 <span
                   className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-black font-bold' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-500 font-bold' : 'text-white'}`}
                   key={`${checkedCorrectAndTypo[idx]}${idx}`}>
@@ -206,13 +223,9 @@ const CodeForm = ({
         bg-white border-2 border-green-100 
         outline-0 text-gray-300 tracking-wider box-border`}
           placeholder={
-            isRoundFinish
-              ? '라운드가 끝났습니다!'
-              : convertedDummyCode[currentIndex]
+            isRoundFinish ? '라운드가 끝났습니다!' : codeItem[currentIndex]
           }
-          maxLength={
-            isRoundFinish ? 0 : convertedDummyCode[currentIndex].length
-          }
+          maxLength={isRoundFinish ? 0 : codeItem[currentIndex].length}
           disabled={isRoundFinish ? true : false}
           {...register('code', {
             onChange: (e) => handleInputChange(e),

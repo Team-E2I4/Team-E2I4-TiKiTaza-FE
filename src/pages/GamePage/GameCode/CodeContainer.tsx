@@ -1,14 +1,14 @@
 import Highlight from 'react-highlight';
 
 interface CodeContainerProps {
-  dummyCode: string;
+  codeItem: string;
 }
 
-const CodeContainer = ({ dummyCode }: CodeContainerProps) => {
+const CodeContainer = ({ codeItem }: CodeContainerProps) => {
   return (
     <>
       <div className='w-[60rem] select-none'>
-        <Highlight className='javascript'>{dummyCode}</Highlight>
+        <Highlight className='javascript'>{codeItem}</Highlight>
       </div>
     </>
   );
