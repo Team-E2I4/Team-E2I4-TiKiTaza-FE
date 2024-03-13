@@ -127,7 +127,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
           const carImg = imgrefcurrent[idx];
           //이미지 로드 이후 drawImage에 전달 가능
           if (carImg) {
-            ctx.drawImage(carImg, eachCarCoord.x, eachCarCoord.y);
+            ctx.drawImage(carImg, eachCarCoord.x, eachCarCoord.y, 20, 20);
           }
         });
       }
