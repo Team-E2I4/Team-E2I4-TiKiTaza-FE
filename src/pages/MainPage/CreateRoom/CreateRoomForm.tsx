@@ -2,6 +2,9 @@ import * as Form from '@radix-ui/react-form';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import CODE from '@/assets/ingame/CODE.png';
+import SENTENCE from '@/assets/ingame/SENTENCE.png';
+import WORD from '@/assets/ingame/WORD.png';
 import { GameRoomCreateRequest } from '@/generated';
 import useCreateGameRoom from '@/hooks/useCreateGameRoom';
 import useUpdateGameRoom from '@/hooks/useUpdateGameRoom';
@@ -23,6 +26,16 @@ interface CreateRoomFormProps {
 }
 
 type CreateRoomFormType = I_CreateRoomInputName & I_CreateRoomSelectName;
+
+type ImageType = {
+  [index: string]: string;
+};
+
+const IMAGE_SRC: ImageType = {
+  CODE,
+  SENTENCE,
+  WORD,
+};
 
 const CreateRoomForm = ({
   setIsOpen,
@@ -78,7 +91,6 @@ const CreateRoomForm = ({
 
   const randomTitle = useRef(getRandomItem({ items: DEFAULT_TITLES }));
 
-  /* ToDo: getValues로 form 값들 하나씩 말고 한번에 가져와보기 */
   const getRoomSettings = () => {
     const roomSetting: GameRoomCreateRequest = {
       ...getValues(),
@@ -107,7 +119,7 @@ const CreateRoomForm = ({
   };
 
   return (
-    <div className='flex flex-1 w-full text-[1.8rem] pt-[3rem]'>
+    <div className='flex flex-1 gap-[2rem] w-full text-[1.8rem] pt-[3rem]'>
       <Form.Root
         onSubmit={handleSubmit(onCreateRoom)}
         className='flex flex-col w-1/2 gap-[1rem]'>
@@ -115,7 +127,7 @@ const CreateRoomForm = ({
         {CREATE_ROOM_INPUT_LIST.map(
           ({ name, type, label, placeholder, required, validate }) => (
             <Form.Field
-              className='flex justify-between'
+              className='w-[37rem] flex justify-between'
               key={name}
               name={name}>
               <Form.Label>{label}</Form.Label>
@@ -143,15 +155,16 @@ const CreateRoomForm = ({
           )
         )}
         {/* 인원수, 라운드 설정 */}
-        <div className='flex justify-between'>
+        <div className='w-[37rem] flex gap-[3rem]'>
           {CREATE_ROOM_SELECT_LIST.map(({ name, label, optionValues }) => (
             <Form.Field
               key={name}
-              name={name}>
+              name={name}
+              className='flex gap-[2rem]'>
               <Form.Label>{label}</Form.Label>
               <Form.Control asChild>
                 <select
-                  className='border-[0.2rem] border-gray-200 rounded-[0.8rem] px-[0.5rem] ml-[3rem]'
+                  className='border-[0.2rem] border-gray-200 rounded-[0.8rem] px-[0.5rem] '
                   {...register(name)}>
                   {optionValues.map(({ value, text }) => (
                     <option
@@ -172,7 +185,6 @@ const CreateRoomForm = ({
               type='button'
               onClick={() => {
                 setSelectedMode(mode);
-                // TODO : 버튼 클릭시 오른쪽 섹션에 모드의 인게임 사진 보여줘야함
               }}
               key={value}
               className={`relative p-[1.5rem] inline-block h-[6rem] text-left transition-all rounded-tl-[0.8rem]
@@ -199,8 +211,14 @@ const CreateRoomForm = ({
           </button>
         </Form.Submit>
       </Form.Root>
-      <section className='w-1/2 border-black border-[0.1rem]'>
-        이미지 자리
+      {/* 이미지 자리 */}
+      <section className='flex'>
+        <img
+          decoding='async'
+          alt='게임 모드'
+          src={IMAGE_SRC[selectedMode]}
+          className='w-full h-[40rem]'
+        />
       </section>
     </div>
   );
