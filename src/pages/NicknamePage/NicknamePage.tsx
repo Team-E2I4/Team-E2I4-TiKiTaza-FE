@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { ApiResponseAccountGetResponse } from '@/generated';
 import UpdateNicknameModal from './UpdateNickname/UpdateNicknameModal';
 
+interface NicknamePageProps {
+  data: ApiResponseAccountGetResponse;
+}
+
 const NicknamePage = () => {
   const navigate = useNavigate();
 
@@ -12,16 +16,16 @@ const NicknamePage = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const profileData = queryClient.getQueryData<ApiResponseAccountGetResponse>(
-      ['getMyProfileInfo']
-    );
+    const profileData = queryClient.getQueryData<NicknamePageProps>([
+      'getMyProfileInfo',
+    ]);
 
     if (profileData?.data?.data?.nickname) {
       navigate('/main');
     } else {
       setIsOpen(true);
     }
-  }, [queryClient, navigate]);
+  }, [queryClient]);
 
   return (
     <div>
