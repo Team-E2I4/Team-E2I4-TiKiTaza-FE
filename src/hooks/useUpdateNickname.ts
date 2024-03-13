@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { updateMemberNickname } from '@/apis/api';
 import { ApiResponseVoid, NicknameUpdateRequest } from '@/generated';
@@ -13,6 +13,8 @@ interface UseUpdateNicknameProps {
 }
 
 const useUpdateNickname = ({ onSuccess, onError }: UseUpdateNicknameProps) => {
+  const queryClient = useQueryClient();
+
   return useMutation<
     AxiosResponse<ApiResponseVoid>,
     Error | AxiosError,
@@ -23,6 +25,7 @@ const useUpdateNickname = ({ onSuccess, onError }: UseUpdateNicknameProps) => {
     mutationKey: ['updateNickname'],
     onSuccess: (e) => {
       onSuccess?.(e);
+      queryClient.invalidateQueries({ queryKey: ['getMyProfileInfo'] });
     },
     onError: (e) => {
       onError?.(e);
