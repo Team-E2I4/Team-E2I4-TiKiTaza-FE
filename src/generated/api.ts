@@ -52,19 +52,19 @@ export interface AccountGetResponse {
      * @type {number}
      * @memberof AccountGetResponse
      */
-    'rank'?: number;
+    'rank': number;
     /**
      * 
      * @type {number}
      * @memberof AccountGetResponse
      */
-    'gameCount'?: number;
+    'gameCount': number;
     /**
      * 
      * @type {number}
      * @memberof AccountGetResponse
      */
-    'averageCpm'?: number;
+    'averageCpm': number;
     /**
      * 
      * @type {number}

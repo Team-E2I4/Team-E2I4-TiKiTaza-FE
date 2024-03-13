@@ -33,7 +33,14 @@ const MainPage = () => {
         <article className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full cursor-pointer hover:bg-green-100 transition-all'>
           <button onClick={() => navigate('/rank')}>전체 랭킹 페이지</button>
         </article>
-        <UserCard />
+        <UserCard
+          nickname={userData.data.data!.nickname}
+          isGuest={userData.data.data!.isGuest}
+          rank={userData.data.data!.rank}
+          gameCount={userData.data.data!.gameCount}
+          averageCpm={userData.data.data!.averageCpm}
+          averageAccuracy={userData.data.data!.averageAccuracy}
+        />
       </section>
       <section className='flex-1 grid grid-cols-[3fr_1fr] grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
         <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100'>
