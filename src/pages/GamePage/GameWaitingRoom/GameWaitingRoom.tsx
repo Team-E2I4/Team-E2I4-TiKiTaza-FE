@@ -5,7 +5,8 @@ import {
   HandlePubKickUserType,
   HandlePubReadyGameType,
   HandlePubStartGameType,
-  I_GameRoomResponse,
+  I_AllMember,
+  I_RoomInfo,
 } from '../types/websocketType';
 import GameModeInfo from './GameModeInfo';
 import GameReadyAndStart from './GameReadyAndStart';
@@ -15,19 +16,20 @@ import GameRoomSetting from './GameRoomSetting';
 import GameRoomUserList from './GameRoomUserList';
 
 const GameWaitingRoom = ({
-  gameRoomRes,
+  allMembers,
+  roomInfo,
   handlePubReadyGame,
   handlePubStartGame,
   handlePubKickUser,
   userId,
 }: {
-  gameRoomRes: I_GameRoomResponse;
+  allMembers: I_AllMember[];
+  roomInfo: I_RoomInfo;
   handlePubReadyGame: HandlePubReadyGameType;
   handlePubStartGame: HandlePubStartGameType;
   handlePubKickUser: HandlePubKickUserType;
   userId: number;
 }) => {
-  const { allMembers, roomInfo } = gameRoomRes;
   const [isAlert, setIsAlert] = useState(false);
 
   const isAdmin = userId === roomInfo?.hostId;
@@ -46,7 +48,10 @@ const GameWaitingRoom = ({
       <div className='w-full flex flex-col justify-center items-center gap-[3rem] select-none'>
         <header className='flex gap-[5rem]'>
           <Backward handleClickBackward={handleClickBackward} />
-          <GameRoomInfo gameRoomRes={gameRoomRes} />
+          <GameRoomInfo
+            allMembers={allMembers}
+            roomInfo={roomInfo}
+          />
         </header>
         {allMembers && (
           <GameRoomUserList
