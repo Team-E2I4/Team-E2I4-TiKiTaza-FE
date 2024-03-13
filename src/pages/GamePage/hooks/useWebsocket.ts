@@ -15,7 +15,7 @@ const useWebsocket = (roomId: number | null) => {
   const connectHeaders = getToken();
 
   const { setGameRoomRes, isWsError, setIsWsError } = useGameWaitingRoomStore();
-  const { setIngameRoomRes } = useIngameStore();
+  const { setIsIngameWsError, setIngameRoomRes } = useIngameStore();
 
   useEffect(() => {
     if (!roomId) {
@@ -122,7 +122,7 @@ const useWebsocket = (roomId: number | null) => {
     console.log('ingameResponsePublish-----', responsePublish);
     setIngameRoomRes(responsePublish);
     if (checkIsEmptyObj(responsePublish)) {
-      setIsWsError(true);
+      setIsIngameWsError(true);
     }
   };
   const publishIngame = (destination: string, payload: PayloadType) => {
