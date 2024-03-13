@@ -13,7 +13,7 @@ interface SSEErrorBoundaryProps {
   children: (data: I_ChangeGameRoomData[]) => ReactNode;
 }
 
-const SSE_TIME_OUT_LIMIT = 1000 * 60 * 60; //1hour
+const SSE_TIME_OUT_LIMIT = 1000 * 60; // 60 seconds
 
 const SSEErrorBoundary = ({ fallback, children }: SSEErrorBoundaryProps) => {
   const { getItem } = storageFactory(localStorage);
