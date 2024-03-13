@@ -14,7 +14,12 @@ const GameRoomUserItem = ({
   userId: number;
   handlePubKickUser: HandlePubKickUserType;
 }) => {
-  const { memberId, nickname, ranking, readyStatus: isReady } = gameRoomUser;
+  const {
+    memberId,
+    nickname,
+    ranking = 0,
+    readyStatus: isReady,
+  } = gameRoomUser;
 
   const isAdmin = useMemo(() => hostId === memberId, [hostId, memberId]); // 방장인지
   const isAdminMe = useMemo(() => hostId === userId, [hostId, userId]); //본인이 방장인지
@@ -49,11 +54,15 @@ const GameRoomUserItem = ({
           <Avatar.Fallback delayMs={6000}>test</Avatar.Fallback>
         </Avatar.Root>
         <div className='w-1/2 flex flex-col justify-evenly text-center'>
-          <div className='w-[10rem] py-[0.4rem] bg-green-70 rounded-[1rem]'>
+          <div className='w-[10rem] h-[3rem] py-[0.4rem] bg-green-70 rounded-[1rem]'>
             {nickname}
           </div>
-          <div className='w-[6.4rem] py-[0.4rem] bg-green-70 rounded-[1rem] text-[1.4rem]'>
-            {ranking === -1 ? '등수 없음' : `${ranking}등`}
+          <div className='w-[10rem] h-[3rem] py-[0.4rem] bg-green-70 rounded-[1rem] text-[1.4rem]'>
+            {ranking === -1
+              ? '등수 없음'
+              : ranking === 0
+                ? '랭킹 반영중'
+                : `${ranking}등`}
           </div>
         </div>
       </div>

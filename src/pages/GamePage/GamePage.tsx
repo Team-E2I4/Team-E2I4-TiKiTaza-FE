@@ -14,7 +14,6 @@ const GamePage = () => {
   const navigate = useNavigate();
 
   const { roomId, setRoomInfo, roomInfo } = useRoomInfoStore();
-
   const {
     handlePubReadyGame,
     handlePubStartGame,
@@ -24,15 +23,11 @@ const GamePage = () => {
     handleConnectIngame,
   } = useWebsocket(roomId);
 
-  const { gameRoomRes, isWsError } = useGameWaitingRoomStore();
+  const { gameRoomRes, isWsError, didAdminStart, allMembers } =
+    useGameWaitingRoomStore();
   const isPlaying = useMemo(
     () => gameRoomRes?.roomInfo?.isPlaying,
     [gameRoomRes?.roomInfo]
-  );
-
-  const didAdminStart = useMemo(
-    () => gameRoomRes?.type === 'START',
-    [gameRoomRes?.type]
   );
 
   //Todo => useSuspenseQuery로 변경...
@@ -70,7 +65,7 @@ const GamePage = () => {
     );
   }
 
-  if (isPending || !gameRoomRes || !roomInfo) {
+  if (isPending || !allMembers || !roomInfo) {
     return <Loading />;
   }
 
@@ -81,7 +76,8 @@ const GamePage = () => {
   if (!didAdminStart) {
     return (
       <GameWaitingRoom
-        gameRoomRes={gameRoomRes}
+        allMembers={allMembers}
+        roomInfo={roomInfo}
         handlePubReadyGame={handlePubReadyGame}
         handlePubStartGame={handlePubStartGame}
         handlePubKickUser={handlePubKickUser}
