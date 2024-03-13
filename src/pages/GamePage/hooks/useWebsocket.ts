@@ -1,18 +1,18 @@
 import './init.ts';
 import { Client } from '@stomp/stompjs';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { BASE_PATH } from '@/generated/base';
+import useGameWaitingRoomStore from '@/store/useGameWaitingRoomStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { getToken } from '@/utils/getToken';
-import { I_GameRoomResponse } from '../types/websocketType';
 
 const useWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
-  const [gameRoomRes, setGameRoomRes] = useState({} as I_GameRoomResponse);
-  const [isWsError, setIsWsError] = useState(false);
 
   const connectHeaders = getToken();
+
+  const { setGameRoomRes, isWsError, setIsWsError } = useGameWaitingRoomStore();
 
   useEffect(() => {
     if (!roomId) {
@@ -64,6 +64,7 @@ const useWebsocket = (roomId: number | null) => {
 
     const onMessageReceived = ({ body }: { body: string }) => {
       const responsePublish = JSON.parse(body);
+
       setGameRoomRes(responsePublish);
       if (checkIsEmptyObj(responsePublish)) {
         setIsWsError(true);
@@ -103,7 +104,7 @@ const useWebsocket = (roomId: number | null) => {
   };
 
   return {
-    gameRoomRes,
+    // gameRoomRes,
     handlePubReadyGame,
     handlePubStartGame,
     handlePubKickUser,
