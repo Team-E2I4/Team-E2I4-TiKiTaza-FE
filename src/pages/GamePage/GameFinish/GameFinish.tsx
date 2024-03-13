@@ -13,7 +13,7 @@ const GameFinish = ({ rankData }: { rankData: RankingResponse[] }) => {
 
   const { timeLeft } = useTimer({
     minutes: 0,
-    seconds: 4,
+    seconds: 10,
     onFinishRound: () => {
       onMoveToGameRoom();
     },
