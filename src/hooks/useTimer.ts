@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { convertTime } from '@/common/Timer/utils/convertTime';
 
 export const SECOND = 1000;
 export const MIN_SECOND = 60 * SECOND;
@@ -49,7 +48,7 @@ const useTimer = ({ minutes = 0, seconds = 0, onFinishRound }: TimerProps) => {
     }, SECOND);
   };
 
-  return { timeLeft: convertTime(timeLeft), resetTimer };
+  return { timeLeft, resetTimer };
 };
 
 export default useTimer;
