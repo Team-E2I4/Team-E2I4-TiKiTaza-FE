@@ -19,9 +19,9 @@ const GamePage = () => {
     handlePubReadyGame,
     handlePubStartGame,
     handlePubKickUser,
-    onIngameWSConnected,
+    onIngameConnected,
     publishIngame,
-    handleConnectGame,
+    handleConnectIngame,
   } = useWebsocket(roomId);
 
   const { gameRoomRes, isWsError } = useGameWaitingRoomStore();
@@ -94,8 +94,8 @@ const GamePage = () => {
     <IngameWebsocketLayer
       userId={userId}
       publishIngame={publishIngame}
-      onIngameWSConnected={onIngameWSConnected}
-      handleConnectGame={handleConnectGame}
+      onIngameConnected={onIngameConnected}
+      handleConnectIngame={handleConnectIngame}
     />
   );
 };

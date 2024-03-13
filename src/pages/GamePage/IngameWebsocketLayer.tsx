@@ -12,21 +12,21 @@ import { PublishIngameType } from './types/websocketType';
 interface IngameWebsocketLayerProps {
   userId: number;
   publishIngame: PublishIngameType;
-  onIngameWSConnected: () => void;
-  handleConnectGame: (roomId: number) => void;
+  onIngameConnected: () => void;
+  handleConnectIngame: (roomId: number) => void;
 }
 const IngameWebsocketLayer = ({
   userId,
   publishIngame,
-  onIngameWSConnected,
-  handleConnectGame,
+  onIngameConnected,
+  handleConnectIngame,
 }: IngameWebsocketLayerProps) => {
   const { roomId, roomInfo } = useRoomInfoStore();
   const { ingameRoomRes, isIngameWsError } = useIngameStore();
 
   useEffect(() => {
-    onIngameWSConnected(); // 인게임 엔드포인트 구독
-    handleConnectGame(roomId); // 해당 인게임 연결 발행
+    onIngameConnected(); // 인게임 엔드포인트 구독
+    handleConnectIngame(roomId); // 해당 인게임 연결 발행
   }, []);
 
   if (isIngameWsError || checkIsEmptyObj(ingameRoomRes)) {

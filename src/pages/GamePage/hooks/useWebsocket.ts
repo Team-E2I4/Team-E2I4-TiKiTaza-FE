@@ -103,14 +103,14 @@ const useWebsocket = (roomId: number | null) => {
     publishGameRoom(`/${roomId}/kick/${kickedId}`);
   };
 
-  const onIngameWSConnected = () => {
+  const onIngameConnected = () => {
     stompClient.current?.subscribe(
       `/from/game/${roomId}`,
       (e) => onIngameMessageReceived(e),
       connectHeaders
     );
   };
-  const handleConnectGame = (roomId: number) => {
+  const handleConnectIngame = (roomId: number) => {
     stompClient.current?.publish({
       destination: `/to/game/${roomId}/connect`,
       headers: connectHeaders,
@@ -137,8 +137,8 @@ const useWebsocket = (roomId: number | null) => {
     handlePubStartGame,
     handlePubKickUser,
     isWsError,
-    onIngameWSConnected,
-    handleConnectGame,
+    onIngameConnected,
+    handleConnectIngame,
     publishIngame,
   };
 };
