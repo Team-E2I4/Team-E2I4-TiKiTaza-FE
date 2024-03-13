@@ -1,18 +1,22 @@
 import { useNavigate } from 'react-router-dom';
-import { RankingResponse } from '@/generated';
 import useTimer from '@/hooks/useTimer';
+import { I_ConvertedRankData } from '@/pages/RankPage/types/convertedRankData';
 import useGameWaitingRoomStore from '@/store/useGameWaitingRoomStore';
 import useIngameStore from '@/store/useIngameStore';
 import RankList from '../../RankPage/RankList';
 import { I_IngameWsResponse } from '../types/websocketType';
 
-const GameFinish = ({ rankData }: { rankData: RankingResponse[] }) => {
+const GameFinish = ({
+  convertedRankData,
+}: {
+  convertedRankData: I_ConvertedRankData[];
+}) => {
   const navigate = useNavigate();
   const { setDidAdminStart } = useGameWaitingRoomStore();
   const { setIngameRoomRes } = useIngameStore();
 
   const { timeLeft } = useTimer({
-    minutes: 0,
+    minutes: 15,
     seconds: 10,
     onFinishRound: () => {
       onMoveToGameRoom();
@@ -64,7 +68,7 @@ const GameFinish = ({ rankData }: { rankData: RankingResponse[] }) => {
         </div>
 
         <div className='flex-1'>
-          <RankList rankData={rankData} />
+          <RankList convertedRankData={convertedRankData} />
         </div>
       </section>
       <section className='flex gap-10 font-[Giants-Inline]'>

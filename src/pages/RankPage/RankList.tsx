@@ -1,18 +1,18 @@
 import { useMemo } from 'react';
-import { RankingResponse } from '@/generated';
 import RankItem from './RankItem';
+import { I_ConvertedRankData } from './types/convertedRankData';
 
 export interface RankListProps {
-  rankData: RankingResponse[] | undefined;
+  convertedRankData: I_ConvertedRankData[] | undefined;
 }
 
-const RankList = ({ rankData }: RankListProps) => {
-  const sortedRankData = useMemo(() => {
-    if (!rankData) {
+const RankList = ({ convertedRankData }: RankListProps) => {
+  const sortedConvertedRankData = useMemo(() => {
+    if (!convertedRankData) {
       return [];
     }
-    return [...rankData].sort((a, b) => a.ranking - b.ranking);
-  }, [rankData]);
+    return [...convertedRankData].sort((a, b) => a.ranking - b.ranking);
+  }, [convertedRankData]);
 
   return (
     <div className='flex flex-col rounded-2xl overflow-hidden'>
@@ -21,7 +21,7 @@ const RankList = ({ rankData }: RankListProps) => {
         <span className='flex-1 text-center'>닉네임</span>
         <span className='flex-1 text-center'>점수</span>
       </div>
-      {sortedRankData.map((rank, index) => (
+      {sortedConvertedRankData.map((rank, index) => (
         <RankItem
           key={rank.ranking}
           rank={rank}

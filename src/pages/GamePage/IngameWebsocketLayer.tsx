@@ -33,16 +33,17 @@ const IngameWebsocketLayer = ({
     return <WsError />;
   }
 
-  const rankData = ingameRoomRes.allMembers
-    .map(({ nickname, score }) => ({
+  const convertedRankData = ingameRoomRes.allMembers
+    .map(({ nickname, score, memberId }) => ({
       nickname,
       score,
+      isMe: memberId === userId,
     }))
     .sort(({ score: prevScore }, { score: nextScore }) => nextScore - prevScore)
     .map((el, i) => ({ ...el, ranking: i + 1 }));
 
   if (ingameRoomRes.type === 'FINISH') {
-    return <GameFinish rankData={rankData} />;
+    return <GameFinish convertedRankData={convertedRankData} />;
   }
 
   return (
