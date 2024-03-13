@@ -14,7 +14,13 @@ const useWebsocket = (roomId: number | null) => {
 
   const connectHeaders = getToken();
 
-  const { setGameRoomRes, isWsError, setIsWsError } = useGameWaitingRoomStore();
+  const {
+    setGameRoomRes,
+    isWsError,
+    setIsWsError,
+    setDidAdminStart,
+    setAllMembers,
+  } = useGameWaitingRoomStore();
   const { setIsIngameWsError, setIngameRoomRes } = useIngameStore();
 
   useEffect(() => {
@@ -71,6 +77,17 @@ const useWebsocket = (roomId: number | null) => {
       if (checkIsEmptyObj(responsePublish)) {
         setIsWsError(true);
       }
+
+      if (responsePublish.type === 'START') {
+        setDidAdminStart(true);
+      }
+      if (
+        responsePublish.type === 'EXIT' ||
+        responsePublish.type === 'ENTER' ||
+        responsePublish.type === 'READY'
+      ) {
+        setAllMembers(responsePublish.allMembers);
+      }
     };
 
     const handleEnterGameRoom = (roomId: number) => {
@@ -123,6 +140,9 @@ const useWebsocket = (roomId: number | null) => {
     setIngameRoomRes(responsePublish);
     if (checkIsEmptyObj(responsePublish)) {
       setIsIngameWsError(true);
+    }
+    if (responsePublish.type === 'FINISH') {
+      setAllMembers(responsePublish.allMembers);
     }
   };
   const publishIngame = (destination: string, payload: PayloadType) => {
