@@ -7,4 +7,4 @@ import car6 from './car6.png';
 import car7 from './car7.png';
 import car8 from './car8.png';
 
-export { car1, car2, car3, car4, car5, car6, car7, car8 };
+export const TRACK_CARS = [car1, car2, car3, car4, car5, car6, car7, car8];
