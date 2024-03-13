@@ -1,18 +1,17 @@
 import './init.ts';
 import { Client } from '@stomp/stompjs';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { BASE_PATH } from '@/generated/base';
+import useIngameStore from '@/store/useIngameStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { getToken } from '@/utils/getToken';
-import { I_IngameWsResponse, PayloadType } from '../types/websocketType';
+import { PayloadType } from '../types/websocketType';
 
 const useIngameWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
-  const [ingameRoomRes, setIngameRoomRes] = useState({} as I_IngameWsResponse);
-  const [isWsError, setIsWsError] = useState(false);
-
   const connectHeaders = getToken();
+  const { setIsWsError, setIngameRoomRes } = useIngameStore();
 
   useEffect(() => {
     if (!roomId) {
@@ -76,11 +75,7 @@ const useIngameWebsocket = (roomId: number | null) => {
     });
   };
 
-  return {
-    ingameRoomRes,
-    publishIngame,
-    isWsError,
-  };
+  return { publishIngame };
 };
 
 export default useIngameWebsocket;
