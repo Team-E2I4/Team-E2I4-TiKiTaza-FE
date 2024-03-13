@@ -88,9 +88,9 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
         <div className='absolute'>
           <IngameRank rankInfos={rankInfoList} />
         </div>
-        <div className='flex flex-col items-center justify-center ml-80 h-[60rem] relative'>
-          <div className='absolute w-full h-full rounded-[14rem] border-2 border-black'></div>
-          <div className='absolute w-[calc(100%-5rem)] h-[calc(100%-5rem)] rounded-[14rem] border-2 border-black '></div>
+        <div className='flex flex-col items-center justify-center ml-80 h-[61rem] relative w-[110rem]'>
+          <div className='absolute w-[110rem] h-full rounded-[10rem] border-2 border-black'></div>
+          <div className='absolute w-[100rem] h-[calc(100%-10rem)] rounded-[5rem] border-2 border-black'></div>
           <CanvasTrack allMembers={ingameRoomRes.allMembers} />
           <GameFormContainer
             sentenceList={sentenceList.current}
