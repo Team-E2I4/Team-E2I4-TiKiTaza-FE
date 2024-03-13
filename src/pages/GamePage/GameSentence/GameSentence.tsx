@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import IngameHeader from '@/common/Ingame/IngameHeader';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import IngameHeader, { SECONDS_PER_MINUTE } from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
+import useTimer from '@/hooks/useTimer';
 import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
 import useGameRound from '../hooks/useGameRound';
@@ -34,6 +35,8 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
 
   const [sentenceIdx, setSentenceIdx] = useState(0);
 
+  const timeLimit = sentenceList.current.length * SECONDS_PER_SENTENCE;
+
   const handleNextRound = useCallback(() => {
     sentenceList.current = ingameRoomRes.questions!;
     setSentenceIdx(0);
@@ -45,6 +48,20 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
     onRoundFinish: (currentRound) =>
       publishIngame('/round-finish', { currentRound }),
   });
+
+  const { timeLeft, resetTimer } = useTimer({
+    minutes: Math.floor(timeLimit / SECONDS_PER_MINUTE),
+    seconds: timeLimit % SECONDS_PER_MINUTE,
+    onFinishRound: () => {
+      handleRoundFinish();
+    },
+  });
+
+  useEffect(() => {
+    if (ingameRoomRes.type === 'NEXT_ROUND_START') {
+      resetTimer();
+    }
+  }, [ingameRoomRes.type]);
 
   const rankInfoList = useMemo(
     () =>
@@ -64,13 +81,13 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
     0
   );
 
-  const scorePerTrankLength = Math.floor((1 / TotalSpacedWord) * 100);
+  const scorePerTrankLength = Math.ceil((1 / TotalSpacedWord) * 100);
 
   const handleUpdateScore: UpdateScoreType = useCallback(
     (lastUpdate: boolean = false) => {
-      const newScore = lastUpdate ? 100 : currentScore + scorePerTrankLength;
+      const newScore = currentScore + scorePerTrankLength;
       publishIngame('/info', {
-        currentScore: newScore,
+        currentScore: lastUpdate ? 100 : newScore,
       });
     },
     [currentScore, publishIngame, scorePerTrankLength]
@@ -79,10 +96,8 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
   return (
     <>
       <IngameHeader
-        handleRoundFinish={handleRoundFinish}
         currentRound={currentRound}
-        timeLimit={sentenceList.current.length * SECONDS_PER_SENTENCE}
-        isNextRound={ingameRoomRes.type === 'NEXT_ROUND_START'}
+        timeLeft={timeLeft}
       />
       <div>
         <div className='absolute'>
