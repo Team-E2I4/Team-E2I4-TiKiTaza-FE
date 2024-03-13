@@ -1,15 +1,6 @@
 /* eslint-disable no-console */
 import { useEffect, useRef } from 'react';
-import {
-  car1,
-  car2,
-  car3,
-  car4,
-  car5,
-  car6,
-  car7,
-  car8,
-} from '@/assets/canvasCars';
+import { TRACK_CARS } from '@/assets/canvasCars';
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
@@ -49,7 +40,6 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
   const carImagesRef = useRef<HTMLImageElement[] | null>(null);
   const carsRef = useRef<I_CarCoord[]>([]);
 
-  const carImgs = [car1, car2, car3, car4, car5, car6, car7, car8];
   let isArrived = 0;
 
   useEffect(() => {
@@ -61,9 +51,9 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
     }
 
     // 자동차 이미지 로드
-    if (carImgs.length) {
+    if (TRACK_CARS.length) {
       const carImagesArr = [];
-      for (const carImg of carImgs) {
+      for (const carImg of TRACK_CARS) {
         const newImg = new Image(20, 20);
         newImg.src = carImg;
         newImg.alt = '자동차';
