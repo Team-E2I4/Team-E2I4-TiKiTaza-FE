@@ -10,7 +10,7 @@ const authMap = new Map([
 
 const AuthRoute = () => {
   const { pathname } = useLocation();
-  const { error, isPending } = useAuthCheck();
+  const { data: profileData, error, isPending } = useAuthCheck();
 
   const { getItem } = storageFactory(localStorage);
 
@@ -26,6 +26,10 @@ const AuthRoute = () => {
   //로컬스토리지에 토큰이 존재할때
   if (isPending) {
     return <div>로딩중 입니다</div>;
+  }
+
+  if (profileData?.data?.data?.nickname) {
+    return <Navigate to='/nickname' />;
   }
 
   //로그인 하지 않았을 때(400, 401, 404, 409일때 로그인 안했다고 처리함)
