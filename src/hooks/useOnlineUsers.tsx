@@ -5,6 +5,7 @@ const useOnlineUsers = () => {
   return useSuspenseQuery({
     queryKey: ['onlineUsers'],
     queryFn: getOnlineMembers,
+    refetchInterval: 15000,
   });
 };
 
