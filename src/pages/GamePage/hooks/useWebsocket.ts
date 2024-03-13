@@ -4,8 +4,10 @@ import { useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { BASE_PATH } from '@/generated/base';
 import useGameWaitingRoomStore from '@/store/useGameWaitingRoomStore';
+import useIngameStore from '@/store/useIngameStore.ts';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { getToken } from '@/utils/getToken';
+import { PayloadType } from '../types/websocketType.ts';
 
 const useWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
@@ -13,6 +15,7 @@ const useWebsocket = (roomId: number | null) => {
   const connectHeaders = getToken();
 
   const { setGameRoomRes, isWsError, setIsWsError } = useGameWaitingRoomStore();
+  const { setIngameRoomRes } = useIngameStore();
 
   useEffect(() => {
     if (!roomId) {
@@ -64,7 +67,6 @@ const useWebsocket = (roomId: number | null) => {
 
     const onMessageReceived = ({ body }: { body: string }) => {
       const responsePublish = JSON.parse(body);
-
       setGameRoomRes(responsePublish);
       if (checkIsEmptyObj(responsePublish)) {
         setIsWsError(true);
@@ -94,21 +96,50 @@ const useWebsocket = (roomId: number | null) => {
   const handlePubReadyGame = () => {
     publishGameRoom(`/${roomId}/ready`);
   };
-
   const handlePubStartGame = () => {
     publishGameRoom(`/${roomId}/start`);
   };
-
   const handlePubKickUser = (kickedId: number) => {
     publishGameRoom(`/${roomId}/kick/${kickedId}`);
   };
 
+  const onIngameWSConnected = () => {
+    stompClient.current?.subscribe(
+      `/from/game/${roomId}`,
+      (e) => onIngameMessageReceived(e),
+      connectHeaders
+    );
+  };
+  const handleConnectGame = (roomId: number) => {
+    stompClient.current?.publish({
+      destination: `/to/game/${roomId}/connect`,
+      headers: connectHeaders,
+    });
+  };
+  const onIngameMessageReceived = ({ body }: { body: string }) => {
+    const responsePublish = JSON.parse(body);
+    // eslint-disable-next-line no-console
+    console.log('ingameResponsePublish-----', responsePublish);
+    setIngameRoomRes(responsePublish);
+    if (checkIsEmptyObj(responsePublish)) {
+      setIsWsError(true);
+    }
+  };
+  const publishIngame = (destination: string, payload: PayloadType) => {
+    stompClient.current?.publish({
+      destination: `/to/game/${roomId}${destination}`,
+      headers: connectHeaders,
+      body: JSON.stringify(payload),
+    });
+  };
   return {
-    // gameRoomRes,
     handlePubReadyGame,
     handlePubStartGame,
     handlePubKickUser,
     isWsError,
+    onIngameWSConnected,
+    handleConnectGame,
+    publishIngame,
   };
 };
 

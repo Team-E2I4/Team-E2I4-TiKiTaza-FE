@@ -6,15 +6,19 @@ import GameCode from './GameCode/GameCode';
 import GameFinish from './GameFinish/GameFinish';
 import GameSentence from './GameSentence/GameSentence';
 import GameWord from './GameWord/GameWord';
-import useIngameWebsocket from './hooks/useIngameWebsocket';
+import { PublishIngameType } from './types/websocketType';
 
-const IngameWebsocketLayer = ({ userId }: { userId: number }) => {
-  const { roomId, roomInfo } = useRoomInfoStore();
-  const { ingameRoomRes, isWsError } = useIngameStore();
+const IngameWebsocketLayer = ({
+  userId,
+  publishIngame,
+}: {
+  userId: number;
+  publishIngame: PublishIngameType;
+}) => {
+  const { roomInfo } = useRoomInfoStore();
+  const { ingameRoomRes, isIngameWsError } = useIngameStore();
 
-  const { publishIngame } = useIngameWebsocket(roomId);
-
-  if (isWsError || checkIsEmptyObj(ingameRoomRes)) {
+  if (isIngameWsError || checkIsEmptyObj(ingameRoomRes)) {
     return <WsError />;
   }
 
@@ -29,14 +33,6 @@ const IngameWebsocketLayer = ({ userId }: { userId: number }) => {
   if (ingameRoomRes.type === 'FINISH') {
     return <GameFinish rankData={rankData} />;
   }
-
-  /* 
-    점수까지 다 가공해서 스토어에
-  
-    GameContainer 로직가공.... => props로 전달 or 커스텀훅, GameXXX 렌더링
-    <Input/> 컴포넌트 => form로직, 오타로직, 타수로직
-    <GameXXX/> 컴포넌트 => 게임 로직
-  */
 
   return (
     <>
