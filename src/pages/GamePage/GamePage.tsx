@@ -56,13 +56,6 @@ const GamePage = () => {
     }
   }, [gameRoomRes, isKicked, isPlaying]);
 
-  useEffect(() => {
-    if (didAdminStart) {
-      onIngameWSConnected(); // 인게임 엔드포인트 구독
-      handleConnectGame(roomId); // 해당 인게임 연결 발행
-    }
-  }, [gameRoomRes]);
-
   if (!roomId || isWsError) {
     return <WsError />;
   }
@@ -101,6 +94,8 @@ const GamePage = () => {
     <IngameWebsocketLayer
       userId={userId}
       publishIngame={publishIngame}
+      onIngameWSConnected={onIngameWSConnected}
+      handleConnectGame={handleConnectGame}
     />
   );
 };
