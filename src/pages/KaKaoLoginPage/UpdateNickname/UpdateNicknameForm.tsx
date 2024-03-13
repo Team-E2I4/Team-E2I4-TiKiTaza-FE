@@ -1,4 +1,5 @@
 import * as Form from '@radix-ui/react-form';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import useUpdateNickname from '@/hooks/useUpdateNickname';
@@ -15,6 +16,7 @@ const UpdateNicknameForm = () => {
     handleSubmit,
     formState: { errors, isValid },
     getValues,
+    setError,
   } = useForm<UpdateNicknameFormType>({
     mode: 'onChange',
   });
@@ -23,6 +25,16 @@ const UpdateNicknameForm = () => {
     onSuccess: () => {
       alert('닉네임 변경 성공');
       navigate('/main');
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 409) {
+          setError('nickname', {
+            type: 'manual',
+            message: '이미 사용 중인 닉네임입니다.',
+          });
+        }
+      }
     },
   });
 

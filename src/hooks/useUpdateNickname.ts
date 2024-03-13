@@ -9,9 +9,10 @@ interface I_UseUpdateNicknameMutation {
 
 interface UseUpdateNicknameProps {
   onSuccess?: (e: AxiosResponse<ApiResponseVoid>) => void;
+  onError?: (e: Error | AxiosError) => void;
 }
 
-const useUpdateNickname = ({ onSuccess }: UseUpdateNicknameProps) => {
+const useUpdateNickname = ({ onSuccess, onError }: UseUpdateNicknameProps) => {
   return useMutation<
     AxiosResponse<ApiResponseVoid>,
     Error | AxiosError,
@@ -22,6 +23,9 @@ const useUpdateNickname = ({ onSuccess }: UseUpdateNicknameProps) => {
     mutationKey: ['updateNickname'],
     onSuccess: (e) => {
       onSuccess?.(e);
+    },
+    onError: (e) => {
+      onError?.(e);
     },
     throwOnError: true,
   });
