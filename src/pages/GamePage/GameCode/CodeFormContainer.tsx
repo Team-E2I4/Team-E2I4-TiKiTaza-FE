@@ -28,7 +28,7 @@ const CodeFormContainer = ({
   }, []);
 
   return (
-    <div className='flex flex-col items-center justify-center z-10'>
+    <div className='flex flex-col items-center justify-center z-10 w-[100rem]'>
       <div className='flex items-end gap-4'>
         <Dashboard
           type='cpm'
