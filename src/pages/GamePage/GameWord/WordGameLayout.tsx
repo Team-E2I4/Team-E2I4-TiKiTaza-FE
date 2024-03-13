@@ -1,14 +1,18 @@
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Dashboard from '@/common/Ingame/Dashboard';
+import {
+  I_IngameWsResponse,
+  PublishIngameType,
+} from '../../GamePage/types/websocketType';
 import useTypingState from '../GameSentence/useTypingState';
-import { IngameWsChildrenProps } from '../IngameWSErrorBoundary';
 import WordCell from './WordCell';
 import WordRankContainer from './WordRankContainer';
 
-interface GameWordProps extends IngameWsChildrenProps {
+interface GameWordProps {
   userId: number;
-
+  ingameRoomRes: I_IngameWsResponse;
+  publishIngame: PublishIngameType;
   handleRoundFinish: () => void;
 }
 
@@ -16,7 +20,6 @@ const WordGameLayout = ({
   ingameRoomRes,
   publishIngame,
   userId,
-
   handleRoundFinish,
 }: GameWordProps) => {
   const { register, handleSubmit, setValue, getValues } = useForm();

@@ -1,12 +1,13 @@
 import { useCallback, useMemo, useRef } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
+import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
 import useGameRound from '../hooks/useGameRound';
-import { IngameWsChildrenProps } from '../IngameWSErrorBoundary';
-import { I_Question } from '../types/websocketType';
+import { I_Question, PublishIngameType } from '../types/websocketType';
 import GameFormContainer from './GameFormContainer';
-interface GameSentenceProps extends IngameWsChildrenProps {
+interface GameSentenceProps {
+  publishIngame: PublishIngameType;
   userId: number;
 }
 
@@ -21,12 +22,9 @@ export interface I_RankInfoList {
   isMe: boolean;
 }
 
-const GameSentence = ({
-  ingameRoomRes,
-  publishIngame,
-  userId,
-}: GameSentenceProps) => {
-  //참여자중에 본인은 무조건 존재하므로 non-nullable
+const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
+  const { ingameRoomRes } = useIngameStore();
+
   const currentScore = ingameRoomRes.allMembers.find(
     ({ memberId }) => memberId === userId
   )!.score;
