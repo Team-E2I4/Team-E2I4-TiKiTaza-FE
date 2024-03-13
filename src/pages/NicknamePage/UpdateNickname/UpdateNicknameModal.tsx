@@ -1,6 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UpdateNicknameForm from './UpdateNicknameForm';
 
 interface UpdateNicknameModalProps {
@@ -10,7 +11,10 @@ interface UpdateNicknameModalProps {
 const UpdateNicknameModal = ({
   initialIsOpen = false,
 }: UpdateNicknameModalProps) => {
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(initialIsOpen);
+
   useEffect(() => {
     setIsOpen(initialIsOpen);
   }, [initialIsOpen]);
@@ -36,7 +40,8 @@ const UpdateNicknameModal = ({
           <Dialog.Close asChild>
             <button
               aria-label='Close'
-              className='hover:bg-gray-100 absolute top-[2rem] right-[2rem] rounded-[0.3rem]'>
+              className='hover:bg-gray-100 absolute top-[2rem] right-[2rem] rounded-[0.3rem]'
+              onClick={() => navigate('/main')}>
               <Cross2Icon />
             </button>
           </Dialog.Close>
