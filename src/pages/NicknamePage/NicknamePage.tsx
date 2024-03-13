@@ -11,7 +11,7 @@ interface NicknamePageProps {
 const NicknamePage = () => {
   const navigate = useNavigate();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const queryClient = useQueryClient();
 
@@ -21,9 +21,8 @@ const NicknamePage = () => {
     ]);
 
     if (profileData?.data?.data?.nickname) {
+      setIsOpen(false);
       navigate('/main');
-    } else {
-      setIsOpen(true);
     }
   }, [queryClient]);
 
