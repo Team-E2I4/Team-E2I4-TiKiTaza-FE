@@ -16,7 +16,7 @@ const GameFinish = ({
   const { setIngameRoomRes } = useIngameStore();
 
   const { timeLeft } = useTimer({
-    minutes: 15,
+    minutes: 0,
     seconds: 10,
     onFinishRound: () => {
       onMoveToGameRoom();
