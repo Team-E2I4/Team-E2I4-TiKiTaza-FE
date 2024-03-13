@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import useIngameStore from '@/store/useIngameStore';
@@ -32,8 +32,11 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
   //첫 응답에 quetions가 무조건 존재하므로 non-nullable
   const sentenceList = useRef<I_Question[]>(ingameRoomRes.questions!);
 
+  const [sentenceIdx, setSentenceIdx] = useState(0);
+
   const handleNextRound = useCallback(() => {
     sentenceList.current = ingameRoomRes.questions!;
+    setSentenceIdx(0);
   }, [ingameRoomRes.questions]);
 
   const { currentRound, handleRoundFinish } = useGameRound({
@@ -91,6 +94,8 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
           <CanvasTrack allMembers={ingameRoomRes.allMembers} />
           <GameFormContainer
             sentenceList={sentenceList.current}
+            sentenceIdx={sentenceIdx}
+            handleLineEnd={() => setSentenceIdx((prev) => prev + 1)}
             handleUpdateScore={handleUpdateScore}
             handleRoundFinish={handleRoundFinish}
           />
