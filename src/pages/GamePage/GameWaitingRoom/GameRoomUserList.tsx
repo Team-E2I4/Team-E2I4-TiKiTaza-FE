@@ -16,9 +16,10 @@ const GameRoomUserList = ({
     <>
       <main className='flex-1 grid grid-rows-2 grid-cols-4 gap-x-[4rem] gap-y-[3rem]'>
         {gameRoomUserList &&
-          gameRoomUserList.map((gameRoomUser) => (
+          gameRoomUserList.map((gameRoomUser, idx) => (
             <GameRoomUserItem
               key={gameRoomUser.memberId}
+              idx={idx}
               hostId={hostId}
               gameRoomUser={gameRoomUser}
               userId={userId}

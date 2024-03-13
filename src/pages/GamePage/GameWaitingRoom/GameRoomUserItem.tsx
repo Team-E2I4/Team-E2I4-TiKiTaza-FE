@@ -1,14 +1,16 @@
-import * as Avatar from '@radix-ui/react-avatar';
 import { useMemo } from 'react';
+import { TRACK_CARS } from '@/assets/canvasCars';
 import close from '@/assets/close.png';
 import { HandlePubKickUserType, I_AllMember } from '../types/websocketType';
 
 const GameRoomUserItem = ({
+  idx,
   hostId,
   gameRoomUser,
   userId,
   handlePubKickUser,
 }: {
+  idx: number;
   hostId: number | undefined;
   gameRoomUser: I_AllMember;
   userId: number;
@@ -42,17 +44,12 @@ const GameRoomUserItem = ({
         </button>
       </div>
       <div className='flex grow gap-[2rem]'>
-        <Avatar.Root className='w-1/2 self-center'>
-          <Avatar.Image
-            className='size-[10rem] rounded-full'
-            src={
-              'https://images.unsplash.com/photo-1534278931827-8a259344abe7?q=80?&w=128&h=128&dpr=2&q=80'
-            }
-            alt='프로필 이미지'
-          />
-          {/*임시 이미지*/}
-          <Avatar.Fallback delayMs={6000}>test</Avatar.Fallback>
-        </Avatar.Root>
+        <img
+          src={TRACK_CARS[idx]}
+          className='w-[10rem]'
+          alt='자동차'
+        />
+
         <div className='w-1/2 flex flex-col justify-evenly text-center'>
           <div className='w-[10rem] h-[3rem] py-[0.4rem] bg-green-70 rounded-[1rem]'>
             {nickname}
