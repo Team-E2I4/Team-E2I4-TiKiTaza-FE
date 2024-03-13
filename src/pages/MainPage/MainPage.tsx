@@ -1,6 +1,7 @@
-import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
+import { useAuthCheck } from '@/hooks/useAuth/useAuth';
+import useOnlineUsers from '@/hooks/useOnlineUsers';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import EnterRoomErrorFallback from './EnterRoomErrorFallback';
 import GameRoomList from './GameRoomList';
@@ -11,15 +12,24 @@ import UserList from './UserList';
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const { data: userList } = useOnlineUsers();
+  const { data: userData, isPending, error } = useAuthCheck();
+
+  if (isPending) {
+    return <div>유저 정보 불러오는중...</div>;
+  }
+
+  if (error) {
+    return <div>유저 정보 불러오는 중 에러</div>;
+  }
 
   return (
     <main className='flex pb-[4rem] gap-[3rem]'>
       <section className='flex flex-col gap-[3rem] w-[25rem]'>
-        <ErrorBoundary fallback={<div>온라인 접속자 에러</div>}>
-          <Suspense fallback={<span>온라인 접속자 로딩중</span>}>
-            <UserList />
-          </Suspense>
-        </ErrorBoundary>
+        <UserList
+          userList={[...userList.data.data!]}
+          myId={userData.data.data!.memberId}
+        />
         <article className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full cursor-pointer hover:bg-green-100 transition-all'>
           <button onClick={() => navigate('/rank')}>전체 랭킹 페이지</button>
         </article>

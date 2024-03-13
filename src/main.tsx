@@ -11,6 +11,7 @@ import Layout from './common/Layout/Layout.tsx';
 import GamePage from './pages/GamePage/GamePage.tsx';
 import KaKaoLoginPage from './pages/KaKaoLoginPage/KaKaoLoginPage.tsx';
 import LoginPage from './pages/LoginPage/LoginPage.tsx';
+import DefaultErrorFallback from './pages/MainPage/DefaultErrorFallback.tsx';
 import MainPage from './pages/MainPage/MainPage.tsx';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
 import RankPage from './pages/RankPage/RankPage.tsx';
@@ -58,7 +59,13 @@ export const router = createBrowserRouter([
           },
           {
             path: '/main',
-            element: <MainPage />,
+            element: (
+              <ErrorBoundary fallbackRender={DefaultErrorFallback}>
+                <Suspense>
+                  <MainPage />
+                </Suspense>
+              </ErrorBoundary>
+            ),
           },
           {
             path: '/game',
