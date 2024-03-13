@@ -10,8 +10,6 @@ import BodyLayout from './common/Layout/BodyLayout.tsx';
 import Layout from './common/Layout/Layout.tsx';
 import GamePage from './pages/GamePage/GamePage.tsx';
 import KaKaoLoginPage from './pages/KaKaoLoginPage/KaKaoLoginPage.tsx';
-import LoginPage from './pages/LoginPage/LoginPage.tsx';
-import DefaultErrorFallback from './pages/MainPage/DefaultErrorFallback.tsx';
 import MainPage from './pages/MainPage/MainPage.tsx';
 import NicknamePage from './pages/NicknamePage/NicknamePage.tsx';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
@@ -49,10 +47,6 @@ export const router = createBrowserRouter([
                 <StartPage />
               </ErrorBoundary>
             ),
-          },
-          {
-            path: '/login',
-            element: <LoginPage />,
           },
           {
             path: '/settings',
