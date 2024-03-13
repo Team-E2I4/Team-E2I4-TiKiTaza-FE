@@ -158,8 +158,6 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
 
   setTimeout(() => {
     isArrived = 1;
-
-    // console.log('임시 종료');
   }, 5000);
 
   return (
