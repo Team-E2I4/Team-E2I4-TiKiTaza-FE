@@ -2,47 +2,38 @@ import { useEffect, useMemo } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Loading from '@/common/Loading/Loading';
 import { useAuthCheck } from '@/hooks/useAuth';
+import useGameWaitingRoomStore from '@/store/useGameWaitingRoomStore';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
-import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import WsError from './common/WsError';
-import GameCode from './GameCode/GameCode';
-import GameFinish from './GameFinish/GameFinish';
-import GameSentence from './GameSentence/GameSentence';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
-import GameWord from './GameWord/GameWord';
 import useWebsocket from './hooks/useWebsocket';
-import { IngameWSErrorBoundary } from './IngameWSErrorBoundary';
+import IngameWebsocketLayer from './IngameWebsocketLayer';
 
 const GamePage = () => {
   // TODO: 초대로 들어온 사람이라면 url의 해시값->정제->유효검사 후 상태값) 으로 방번호 추출
+  const navigate = useNavigate();
 
   const { roomId, setRoomInfo, roomInfo } = useRoomInfoStore();
 
-  const {
-    gameRoomRes,
-    handlePubReadyGame,
-    handlePubStartGame,
-    handlePubKickUser,
-    isWsError,
-  } = useWebsocket(roomId);
+  const { handlePubReadyGame, handlePubStartGame, handlePubKickUser } =
+    useWebsocket(roomId);
 
-  const navigate = useNavigate();
+  const { gameRoomRes, isWsError } = useGameWaitingRoomStore();
 
   const isPlaying = useMemo(
-    () => gameRoomRes.roomInfo?.isPlaying,
-    [gameRoomRes.roomInfo]
-  );
-  const didAdminStart = useMemo(
-    () => gameRoomRes.type === 'START',
-    [gameRoomRes.type]
+    () => gameRoomRes?.roomInfo?.isPlaying,
+    [gameRoomRes?.roomInfo]
   );
 
+  const didAdminStart = useMemo(
+    () => gameRoomRes?.type === 'START',
+    [gameRoomRes?.type]
+  );
+
+  //Todo => useSuspenseQuery로 변경...
   const { data, isError, isPending } = useAuthCheck();
 
-  let userId = 0;
-  if (data && data.data.data) {
-    userId = data.data.data.memberId;
-  }
+  const userId = data?.data.data?.memberId;
 
   const isKicked = useMemo(
     () => gameRoomRes?.exitMemberId === userId,
@@ -50,7 +41,7 @@ const GamePage = () => {
   );
 
   useEffect(() => {
-    if (gameRoomRes.roomInfo) {
+    if (gameRoomRes?.roomInfo) {
       setRoomInfo(gameRoomRes.roomInfo);
     }
 
@@ -58,7 +49,7 @@ const GamePage = () => {
       navigate('/main', { replace: true });
       navigate(0);
     }
-  }, [data, gameRoomRes, isKicked, isPlaying, navigate, setRoomInfo, userId]);
+  }, [gameRoomRes, isKicked, isPlaying]);
 
   if (!roomId || isWsError) {
     return <WsError />;
@@ -74,8 +65,12 @@ const GamePage = () => {
     );
   }
 
-  if (isPending || checkIsEmptyObj(gameRoomRes) || !roomInfo) {
+  if (isPending || !gameRoomRes || !roomInfo) {
     return <Loading />;
+  }
+
+  if (!userId) {
+    return;
   }
 
   if (!didAdminStart) {
@@ -89,52 +84,6 @@ const GamePage = () => {
       />
     );
   }
-
-  return (
-    <>
-      <IngameWSErrorBoundary>
-        {({ ingameRoomRes, publishIngame }) => (
-          <>
-            {!checkIsEmptyObj(ingameRoomRes) &&
-              ingameRoomRes.type !== 'FINISH' &&
-              (roomInfo.gameMode === 'SENTENCE' ? (
-                <GameSentence
-                  ingameRoomRes={ingameRoomRes}
-                  publishIngame={publishIngame}
-                  userId={userId}
-                />
-              ) : roomInfo.gameMode === 'CODE' ? (
-                <GameCode
-                  ingameRoomRes={ingameRoomRes}
-                  publishIngame={publishIngame}
-                  userId={userId}
-                />
-              ) : (
-                <GameWord
-                  ingameRoomRes={ingameRoomRes}
-                  publishIngame={publishIngame}
-                  userId={userId}
-                />
-              ))}
-            {!checkIsEmptyObj(ingameRoomRes) &&
-              ingameRoomRes.type === 'FINISH' && (
-                <GameFinish
-                  rankData={ingameRoomRes.allMembers
-                    .map(({ nickname, score }) => ({
-                      nickname,
-                      score,
-                    }))
-                    .sort(
-                      ({ score: prevScore }, { score: nextScore }) =>
-                        nextScore - prevScore
-                    )
-                    .map((el, i) => ({ ...el, ranking: i + 1 }))}
-                />
-              )}
-          </>
-        )}
-      </IngameWSErrorBoundary>
-    </>
-  );
+  return <IngameWebsocketLayer userId={userId} />;
 };
 export default GamePage;

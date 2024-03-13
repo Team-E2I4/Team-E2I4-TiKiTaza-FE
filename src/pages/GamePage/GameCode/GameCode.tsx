@@ -1,19 +1,20 @@
 import { useCallback, useMemo, useRef } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
+import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
 import useGameRound from '../hooks/useGameRound';
-import { IngameWsChildrenProps } from '../IngameWSErrorBoundary';
-import { I_Question } from '../types/websocketType';
+import { I_Question, PublishIngameType } from '../types/websocketType';
 import CodeFormContainer from './CodeFormContainer';
-
-interface GameCodeProps extends IngameWsChildrenProps {
+interface GameCodeProps {
+  publishIngame: PublishIngameType;
   userId: number;
 }
 
 const SECONDS_PER_SENTENCE = 7;
 
-const GameCode = ({ ingameRoomRes, publishIngame, userId }: GameCodeProps) => {
+const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
+  const { ingameRoomRes } = useIngameStore();
   const codeList = useRef<I_Question[]>(ingameRoomRes.questions!);
 
   const convertedCodeList = codeList.current.map(({ question }) =>

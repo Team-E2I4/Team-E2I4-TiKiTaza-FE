@@ -1,10 +1,12 @@
 import IngameHeader from '@/common/Ingame/IngameHeader';
+import useIngameStore from '@/store/useIngameStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import useGameRound from '../hooks/useGameRound';
-import { IngameWsChildrenProps } from '../IngameWSErrorBoundary';
+import { PublishIngameType } from '../types/websocketType';
 import WordGameLayout from './WordGameLayout';
 
-interface GameWordProps extends IngameWsChildrenProps {
+interface GameWordProps {
+  publishIngame: PublishIngameType;
   userId: number;
 }
 
@@ -19,13 +21,14 @@ const SECONDS_FOR_ALL_WORDS = 120;
   GameXXX (공통로직 보유) => Sentence, Word, Code
 */
 
-const GameWord = ({ ingameRoomRes, publishIngame, userId }: GameWordProps) => {
+const GameWord = ({ publishIngame, userId }: GameWordProps) => {
+  const { ingameRoomRes } = useIngameStore();
+
   const { currentRound, handleRoundFinish } = useGameRound({
     isNextRound: ingameRoomRes.type === 'NEXT_ROUND_START',
     onRoundFinish: (currentRound) =>
       publishIngame('/round-finish', { currentRound }),
   });
-
   return (
     <>
       <IngameHeader
