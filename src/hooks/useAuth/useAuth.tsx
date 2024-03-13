@@ -7,6 +7,7 @@ import {
   ErrorResponse,
 } from '@/generated';
 import storageFactory from '@/utils/storageFactory';
+import { MINUTE } from './constants';
 
 export interface AuthProps {
   onSuccess?: (e: AxiosResponse<ApiResponseAuthResponse>) => void;
@@ -93,7 +94,8 @@ export const useAuthCheck = () => {
     queryFn: getMyProfileInfo,
     queryKey: ['getMyProfileInfo'],
     retryOnMount: false,
-    gcTime: 0,
+    gcTime: MINUTE * 15,
+    staleTime: MINUTE * 10,
     refetchOnWindowFocus: false,
     enabled: !!getItem('MyToken', ''),
     meta: {

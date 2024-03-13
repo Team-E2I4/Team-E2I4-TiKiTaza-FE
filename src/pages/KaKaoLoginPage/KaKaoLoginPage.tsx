@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useKaKaoLogin } from '@/hooks/useAuth';
+import { useKaKaoLogin } from '@/hooks/useAuth/useAuth';
 
 const KaKaoLoginPage = () => {
   const navigate = useNavigate();

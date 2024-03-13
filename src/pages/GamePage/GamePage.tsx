@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Loading from '@/common/Loading/Loading';
-import { useAuthCheck } from '@/hooks/useAuth';
+import { useAuthCheck } from '@/hooks/useAuth/useAuth';
 import useGameWaitingRoomStore from '@/store/useGameWaitingRoomStore';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import WsError from './common/WsError';
