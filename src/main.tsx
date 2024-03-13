@@ -13,6 +13,7 @@ import KaKaoLoginPage from './pages/KaKaoLoginPage/KaKaoLoginPage.tsx';
 import LoginPage from './pages/LoginPage/LoginPage.tsx';
 import DefaultErrorFallback from './pages/MainPage/DefaultErrorFallback.tsx';
 import MainPage from './pages/MainPage/MainPage.tsx';
+import NicknamePage from './pages/NicknamePage/NicknamePage.tsx';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
 import RankPage from './pages/RankPage/RankPage.tsx';
 import SettingPage from './pages/SettingPage/SettingPage.tsx';
@@ -83,7 +84,10 @@ export const router = createBrowserRouter([
             path: '/login/oauth2/code/kakao',
             element: <KaKaoLoginPage />,
           },
-
+          {
+            path: '/nickname',
+            element: <NicknamePage />,
+          },
           {
             path: '/*',
             element: <NotFoundPage />,
