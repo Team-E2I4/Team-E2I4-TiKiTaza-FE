@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { useEffect, useRef } from 'react';
-// eslint-disable-next-line prettier/prettier
 import {
   car1,
   car2,
@@ -11,7 +10,6 @@ import {
   car7,
   car8,
 } from '@/assets/canvasCars';
-// eslint-disable-next-line prettier/prettier
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
@@ -120,8 +118,8 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
           x += CAR_SIZE;
           y += CAR_SIZE;
         }
-      } else if (score === 100) {
-        x = START_X;
+      } else if (score > WEST_LAST_SCORE) {
+        x = START_X + MOVE_STEP_X * (score - 100);
         y = lineGap;
       }
       carsRef.current[idx] = { x, y, idx };
