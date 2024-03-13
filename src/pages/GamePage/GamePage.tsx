@@ -15,11 +15,16 @@ const GamePage = () => {
 
   const { roomId, setRoomInfo, roomInfo } = useRoomInfoStore();
 
-  const { handlePubReadyGame, handlePubStartGame, handlePubKickUser } =
-    useWebsocket(roomId);
+  const {
+    handlePubReadyGame,
+    handlePubStartGame,
+    handlePubKickUser,
+    onIngameWSConnected,
+    publishIngame,
+    handleConnectGame,
+  } = useWebsocket(roomId);
 
   const { gameRoomRes, isWsError } = useGameWaitingRoomStore();
-
   const isPlaying = useMemo(
     () => gameRoomRes?.roomInfo?.isPlaying,
     [gameRoomRes?.roomInfo]
@@ -50,6 +55,13 @@ const GamePage = () => {
       navigate(0);
     }
   }, [gameRoomRes, isKicked, isPlaying]);
+
+  useEffect(() => {
+    if (didAdminStart) {
+      onIngameWSConnected(); // 인게임 엔드포인트 구독
+      handleConnectGame(roomId); // 해당 인게임 연결 발행
+    }
+  }, [gameRoomRes]);
 
   if (!roomId || isWsError) {
     return <WsError />;
@@ -84,6 +96,12 @@ const GamePage = () => {
       />
     );
   }
-  return <IngameWebsocketLayer userId={userId} />;
+
+  return (
+    <IngameWebsocketLayer
+      userId={userId}
+      publishIngame={publishIngame}
+    />
+  );
 };
 export default GamePage;
