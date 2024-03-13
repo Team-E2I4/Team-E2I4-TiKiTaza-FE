@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import logo_big_shadow from '@/assets/logo_big_shadow.png';
-import { useGuestLogin } from '@/hooks/useAuth';
+import { useGuestLogin } from '@/hooks/useAuth/useAuth';
 import storageFactory from '@/utils/storageFactory';
 
 const StartPage = () => {

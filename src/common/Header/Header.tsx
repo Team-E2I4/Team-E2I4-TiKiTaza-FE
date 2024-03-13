@@ -11,7 +11,7 @@ import logo_car from '@/assets/logo_car.png';
 import logo_taza from '@/assets/logo_taza.png';
 import { PAUSE, PLAY } from '@/common/Header/constants/volume';
 import { exchangeVolumeState } from '@/common/Header/utils/exchangeVolumeState';
-import { useAuthCheck } from '@/hooks/useAuth';
+import { useAuthCheck } from '@/hooks/useAuth/useAuth';
 import WrappedIcon from '../WrappedIcon/WrappedIcon';
 
 export type VolumeType = 'play' | 'pause';

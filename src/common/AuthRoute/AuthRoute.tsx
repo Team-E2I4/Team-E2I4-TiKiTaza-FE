@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { useAuthCheck } from '@/hooks/useAuth';
+import { useAuthCheck } from '@/hooks/useAuth/useAuth';
 import storageFactory from '@/utils/storageFactory';
 
 const authMap = new Map([
