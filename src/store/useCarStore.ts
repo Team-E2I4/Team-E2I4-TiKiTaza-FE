@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
 interface I_useCarImgStore {
-  carImgStore: Record<number, string>;
-  setCarImgStore: (carImgStore: Record<number, string>) => void;
+  carImgStore: Record<number, number>;
+  setCarImgStore: (carImgStore: Record<number, number>) => void;
 }
 
 const useCarImgStore = create<I_useCarImgStore>((set) => ({
