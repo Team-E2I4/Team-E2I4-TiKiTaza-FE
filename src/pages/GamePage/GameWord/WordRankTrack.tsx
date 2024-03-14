@@ -16,7 +16,8 @@ const WordRankTrack = (data: WordRankProps) => {
         <div className={'flex justify-between'}>
           <div
             style={{ bottom: calculatedBottom }}
-            className='w-full absolute flex justify-center'>
+            className='w-full absolute flex flex-col items-center'>
+            <div className='text-[1.2rem] leading-[1.2rem]'>{score}</div>
             <img
               src={TRACK_CARS[track]}
               width={isMe ? '25px' : '20px'}
