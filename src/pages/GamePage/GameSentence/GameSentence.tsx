@@ -64,17 +64,14 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
     0
   );
 
-  const scorePerTrankLength = Math.floor((1 / TotalSpacedWord) * 100);
+  const scorePerTrankLength = Math.ceil((1 / TotalSpacedWord) * 100);
 
-  const handleUpdateScore: UpdateScoreType = useCallback(
-    (lastUpdate: boolean = false) => {
-      const newScore = lastUpdate ? 100 : currentScore + scorePerTrankLength;
-      publishIngame('/info', {
-        currentScore: newScore,
-      });
-    },
-    [currentScore, publishIngame, scorePerTrankLength]
-  );
+  const handleUpdateScore: UpdateScoreType = useCallback(() => {
+    const newScore = currentScore + scorePerTrankLength;
+    publishIngame('/info', {
+      currentScore: newScore,
+    });
+  }, [currentScore, publishIngame, scorePerTrankLength]);
 
   return (
     <>
