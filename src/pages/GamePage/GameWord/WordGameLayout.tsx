@@ -56,12 +56,12 @@ const WordGameLayout = ({
           );
         })}
       </div>
-      <div className='flex flex-row items-end w-10/12 h-[30rem] mt-4'>
+      <div className='flex flex-row items-center w-10/12 h-[30rem] mt-4'>
         <Dashboard
           type='cpm'
           value={cpm}
         />
-        <div className='flex flex-col grow items-center'>
+        <div className='flex flex-col grow items-center h-full'>
           <div className='grow flex relative w-full justify-center'>
             <WordRankContainer
               allMembers={ingameRoomRes.allMembers}
@@ -83,7 +83,7 @@ const WordGameLayout = ({
                 onChange: (e) =>
                   onInputChange(e.target.value.trim().length, 100, 150), // 단어게임에선 totalChar가 없습니다
               })}
-              className='w-[20rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl bg-white border-2 border-green-100 my-4 outline-0 text-gray-300 tracking-wider box-border'
+              className='w-[20rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl bg-white border-2 border-green-100 mt-4 outline-0 text-gray-300 tracking-wider box-border'
             />
           </form>
         </div>
