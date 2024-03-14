@@ -1,4 +1,3 @@
-import * as Avatar from '@radix-ui/react-avatar';
 import {
   PauseIcon,
   PlayIcon,
@@ -74,15 +73,34 @@ const Header = () => {
           className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
           <WrappedIcon IconComponent={mappedIcons.effect[volume.effect]} />
         </button>
-        {data ? (
-          <Avatar.Root className='cursor-pointer'>
+        {/* <Avatar.Root className='cursor-pointer'>
             <Avatar.Image
               className='size-[3.5rem] rounded-full'
               src='https://picsum.photos/id/237/200/300'
               alt='프로필 이미지'
             />
             <Avatar.Fallback delayMs={1000}>프로필</Avatar.Fallback>
-          </Avatar.Root>
+          </Avatar.Root> */}
+        {data ? (
+          data.data.data?.isGuest ? (
+            <button
+              onClick={() => {
+                navigate('/login');
+                navigate(0);
+              }}
+              className='hover:bg-gray-100 flex items-center justify-center'>
+              로그아웃
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                navigate('/mypage');
+                navigate(0);
+              }}
+              className='hover:bg-gray-100 flex items-center justify-center'>
+              로그아웃
+            </button>
+          )
         ) : (
           <button
             onClick={() => {
