@@ -6,12 +6,15 @@ import {
 } from '@radix-ui/react-icons';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import kakao from '@/assets/login/kakao-icon.svg';
 import logo_car from '@/assets/logo_car.png';
 import logo_taza from '@/assets/logo_taza.png';
 import { PAUSE, PLAY } from '@/common/Header/constants/volume';
 import { exchangeVolumeState } from '@/common/Header/utils/exchangeVolumeState';
 import { useAuthCheck, useLogout } from '@/hooks/useAuth/useAuth';
+import { handleKakaoLogin } from '@/utils/handleKakaoLogin';
 import WrappedIcon from '../WrappedIcon/WrappedIcon';
+import KakaoTooltip from './KakaoTooltip';
 
 export type VolumeType = 'play' | 'pause';
 
@@ -94,11 +97,14 @@ const Header = () => {
           </Avatar.Root> */}
         {data ? (
           data.data.data?.isGuest ? (
-            <button
-              onClick={handleLogout}
-              className='hover:bg-gray-100 flex items-center justify-center'>
-              로그아웃
-            </button> // 게스트 로그인
+            <KakaoTooltip>
+              <img
+                src={kakao}
+                alt='Kakao logo'
+                className='w-[3rem] cursor-pointer'
+                onClick={handleKakaoLogin}
+              />
+            </KakaoTooltip>
           ) : (
             <button
               onClick={handleLogout}
@@ -107,14 +113,7 @@ const Header = () => {
             </button> // 카카오 로그인
           )
         ) : (
-          <button
-            onClick={() => {
-              navigate('/login');
-              navigate(0);
-            }}
-            className='hover:bg-gray-100 flex items-center justify-center'>
-            로그인
-          </button>
+          <></>
         )}
       </section>
     </header>
