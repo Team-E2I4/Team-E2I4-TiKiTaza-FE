@@ -28,7 +28,7 @@ const RankItem = ({ rank, index }: RankItemProps) => {
         )}
       </span>
       <span className='flex-1 text-center'>{rank.nickname}</span>
-      <span className='flex-1 text-center'>{rank.score}</span>
+      <span className='flex-1 text-center'>{Math.floor(rank.score)}</span>
     </div>
   );
 };
