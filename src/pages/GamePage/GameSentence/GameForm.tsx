@@ -91,7 +91,7 @@ const GameForm = ({
       });
       return;
     }
-    handleUpdateScore(isLastSentence);
+    handleUpdateScore();
     if (isLastSentence) {
       handleRoundFinish();
     }
