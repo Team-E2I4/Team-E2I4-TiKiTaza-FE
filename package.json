@@ -21,6 +21,7 @@
     "@radix-ui/react-form": "^0.0.3",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@radix-ui/react-tooltip": "^1.0.7",
     "@stomp/stompjs": "^7.0.0",
     "@tanstack/react-query": "^5.18.1",
     "@types/stompjs": "^2.3.9",
