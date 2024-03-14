@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { getMyProfileInfo, guestLogin, kakaoLogin, logout } from '@/apis/api';
 import {
@@ -92,11 +92,15 @@ export const useKaKaoLogin = ({ onSuccess }: AuthProps = {}) => {
 };
 
 export const useLogout = ({ onSuccess }: LogoutProps) => {
+  const queryClient = useQueryClient();
   return useMutation<AxiosResponse<ApiResponseVoid>, Error | AxiosError>({
     mutationFn: () => logout(),
     mutationKey: ['logout'],
     onSuccess: (e) => {
       removeItem('MyToken');
+
+      queryClient.resetQueries({ queryKey: ['getMyProfileInfo'], exact: true });
+
       onSuccess?.(e);
     },
   });
