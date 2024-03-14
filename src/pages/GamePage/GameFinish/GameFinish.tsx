@@ -45,12 +45,11 @@ const GameFinish = ({
       )
       .map((data, idx) => {
         if (idx !== 0 && data.score !== allMembers[idx - 1].score) {
-          rank = idx;
+          rank = idx + 1;
         }
         return { ...data, ranking: rank };
       });
-  }, [allMembers]);
-
+  }, [allMembers, userId]);
   return (
     <div className='flex flex-col gap-[8rem] items-center'>
       <section>
