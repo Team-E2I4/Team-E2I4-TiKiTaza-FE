@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import IngameHeader, { SECONDS_PER_MINUTE } from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
+import { convertTime } from '@/common/Timer/utils/convertTime';
 import useTimer from '@/hooks/useTimer';
 import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
@@ -97,7 +98,7 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
     <>
       <IngameHeader
         currentRound={currentRound}
-        timeLeft={timeLeft}
+        timeLeft={convertTime(timeLeft)}
       />
       <div>
         <div className='absolute'>
