@@ -10,7 +10,7 @@ import logo_car from '@/assets/logo_car.png';
 import logo_taza from '@/assets/logo_taza.png';
 import { PAUSE, PLAY } from '@/common/Header/constants/volume';
 import { exchangeVolumeState } from '@/common/Header/utils/exchangeVolumeState';
-import { useAuthCheck } from '@/hooks/useAuth/useAuth';
+import { useAuthCheck, useLogout } from '@/hooks/useAuth/useAuth';
 import WrappedIcon from '../WrappedIcon/WrappedIcon';
 
 export type VolumeType = 'play' | 'pause';
@@ -38,6 +38,17 @@ const Header = () => {
   const navigate = useNavigate();
 
   const { data } = useAuthCheck();
+
+  const { mutate: mutateLogout } = useLogout({
+    onSuccess: () => {
+      navigate('/');
+      navigate(0);
+    },
+  });
+
+  const handleLogout = () => {
+    mutateLogout();
+  };
 
   return (
     <header className='bg-green-100 h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
@@ -84,22 +95,16 @@ const Header = () => {
         {data ? (
           data.data.data?.isGuest ? (
             <button
-              onClick={() => {
-                navigate('/login');
-                navigate(0);
-              }}
+              onClick={handleLogout}
               className='hover:bg-gray-100 flex items-center justify-center'>
               로그아웃
-            </button>
+            </button> // 게스트 로그인
           ) : (
             <button
-              onClick={() => {
-                navigate('/mypage');
-                navigate(0);
-              }}
+              onClick={handleLogout}
               className='hover:bg-gray-100 flex items-center justify-center'>
               로그아웃
-            </button>
+            </button> // 카카오 로그인
           )
         ) : (
           <button
