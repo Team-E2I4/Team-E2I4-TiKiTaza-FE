@@ -4,8 +4,9 @@ import {
   SpeakerLoudIcon,
   SpeakerOffIcon,
 } from '@radix-ui/react-icons';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import bgmFile from '@/assets/audio/bgm1.mp3';
 import kakao from '@/assets/login/kakao-icon.svg';
 import logo_car from '@/assets/logo_car.png';
 import logo_taza from '@/assets/logo_taza.png';
@@ -38,6 +39,8 @@ const Header = () => {
     bgm: PAUSE,
     effect: PAUSE,
   });
+  const bgmAudioRef = useRef(new Audio(bgmFile));
+
   const navigate = useNavigate();
 
   const { data } = useAuthCheck();
@@ -52,6 +55,14 @@ const Header = () => {
   const handleLogout = () => {
     mutateLogout();
   };
+
+  useEffect(() => {
+    if (volume.bgm === PLAY) {
+      bgmAudioRef.current.play();
+    } else {
+      bgmAudioRef.current.pause();
+    }
+  }, [volume.bgm]);
 
   return (
     <header className='bg-green-100 h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
