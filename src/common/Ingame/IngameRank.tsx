@@ -1,7 +1,10 @@
 import { TRACK_CARS } from '@/assets/canvasCars';
 import { I_RankInfoList } from '@/pages/GamePage/GameSentence/GameSentence';
+import useCarImgStore from '@/store/useCarStore';
 
 const IngameRank = ({ rankInfos }: { rankInfos: I_RankInfoList[] }) => {
+  const { carImgStore } = useCarImgStore();
+
   return (
     <>
       {rankInfos.map((rankInfo, i) => {
@@ -14,7 +17,7 @@ const IngameRank = ({ rankInfos }: { rankInfos: I_RankInfoList[] }) => {
             </div>
             <div className='text-[2rem]'>
               <img
-                src={TRACK_CARS[i]}
+                src={TRACK_CARS[carImgStore[rankInfo.memberId]]}
                 width={rankInfo.isMe ? '25px' : '20px'}
               />
             </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Backward from '@/common/Backward/Backward';
+import useCarImgStore from '@/store/useCarStore';
 import DisconnectModal from '../common/DisconnectModal';
 import {
   HandlePubKickUserType,
@@ -33,6 +34,7 @@ const GameWaitingRoom = ({
   const [isAlert, setIsAlert] = useState(false);
 
   const isAdmin = userId === roomInfo?.hostId;
+  const { setCarImgStore } = useCarImgStore();
 
   const handleClickBackward = () => {
     setIsAlert(true);
@@ -43,7 +45,7 @@ const GameWaitingRoom = ({
       const { memberId } = car;
       carIdxArray[memberId] = idx;
     });
-    // setCarImgStore(carIdxArray);
+    setCarImgStore(carIdxArray);
   }, [allMembers]);
   return (
     <>
