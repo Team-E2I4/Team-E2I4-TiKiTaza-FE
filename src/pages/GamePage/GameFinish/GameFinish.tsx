@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { convertTime } from '@/common/Timer/utils/convertTime';
 import useTimer from '@/hooks/useTimer';
 import { I_ConvertedRankData } from '@/pages/RankPage/types/convertedRankData';
 import useGameWaitingRoomStore from '@/store/useGameWaitingRoomStore';
@@ -33,7 +34,7 @@ const GameFinish = ({
     <div className='flex flex-col gap-[8rem] items-center'>
       <section>
         <span className='text-[3rem] font-bold font-[Giants-Inline]'>
-          {`${timeLeft}초 뒤 게임 대기방으로 이동합니다.`}
+          {`${convertTime(timeLeft)}초 뒤 게임 대기방으로 이동합니다.`}
         </span>
       </section>
       <section className='flex gap-[10rem] w-full'>
