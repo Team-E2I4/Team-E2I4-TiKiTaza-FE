@@ -3,7 +3,7 @@ import { DefaultApiFactory } from '@/generated';
 import { BASE_PATH } from '@/generated/base';
 import storageFactory from '@/utils/storageFactory';
 
-const { getItem, setItem } = storageFactory(localStorage);
+const { getItem, setItem, removeItem } = storageFactory(localStorage);
 
 async function refreshToken() {
   const response = await reIssueAccessToken();
@@ -31,15 +31,22 @@ axiosInstance.interceptors.response.use(
     const originRequest = error.config;
     const errorCode = error.response.data.errorCode;
     if (errorCode === 'sec-401/02') {
-      const accessToken = await refreshToken();
-      if (accessToken) {
-        originRequest.headers = {
-          ...originRequest.headers,
-          Authorization: `Bearer ${accessToken}`,
-        };
-        setItem('MyToken', accessToken);
-        const response = await axios.request(originRequest);
-        return response;
+      try {
+        const accessToken = await refreshToken();
+        if (accessToken) {
+          originRequest.headers = {
+            ...originRequest.headers,
+            Authorization: `Bearer ${accessToken}`,
+          };
+          setItem('MyToken', accessToken);
+          const response = await axios.request(originRequest);
+          return response;
+        }
+      } catch (e) {
+        if (e) {
+          removeItem('MyToken');
+          alert('게스트 로그인은 최대 3시간동안 유지됩니다!');
+        }
       }
     }
     return Promise.reject(error);
