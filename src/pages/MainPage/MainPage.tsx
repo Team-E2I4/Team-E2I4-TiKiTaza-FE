@@ -57,10 +57,10 @@ const MainPage = () => {
         />
       </section>
       <section className='flex-1 grid grid-cols-[3fr_1fr] grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
-        <article className='bg-white px-[2rem] rounded-[0.5rem] flex items-center justify-between border-solid border-[0.3rem] border-green-100'>
+        <article className='rounded-[0.5rem] flex items-center justify-between gap-[3rem] '>
           {gameModeList.map((el) => (
             <span
-              className={`w-[10rem] h-[3rem] flex items-center justify-center cursor-pointer rounded-[0.3rem] ${selectedGameMode === el ? 'bg-green-100' : 'bg-green-50'}`}
+              className={`flex-1 h-full font-[Giants-Inline] text-[2rem] flex items-center justify-center cursor-pointer rounded-[0.3rem] ${selectedGameMode === el ? 'bg-green-100' : 'bg-green-70'}`}
               key={el}
               onClick={() => setSelectedGameMode(el)}>
               {mappedGameModeList[el]}
@@ -68,8 +68,8 @@ const MainPage = () => {
           ))}
         </article>
         <CreateRoomModal>
-          <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1 h-full'>
-            방 만들기
+          <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1 h-full flex items-center justify-center'>
+            <span>방 만들기</span>
           </article>
         </CreateRoomModal>
         <SSEErrorBoundary fallback={(error) => <SSEFallBack error={error} />}>
