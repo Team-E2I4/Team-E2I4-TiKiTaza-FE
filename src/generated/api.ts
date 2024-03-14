@@ -1005,16 +1005,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 로그아웃
-         * @param {string} authorization 
-         * @param {string} refreshToken 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        logout: async (authorization: string, refreshToken: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('logout', 'authorization', authorization)
-            // verify required parameter 'refreshToken' is not null or undefined
-            assertParamExists('logout', 'refreshToken', refreshToken)
+        logout: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/auth/logout`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1030,10 +1024,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
 
 
     
@@ -1346,13 +1336,11 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 로그아웃
-         * @param {string} authorization 
-         * @param {string} refreshToken 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async logout(authorization: string, refreshToken: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseVoid>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.logout(authorization, refreshToken, options);
+        async logout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseVoid>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.logout(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.logout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1521,13 +1509,11 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary 로그아웃
-         * @param {string} authorization 
-         * @param {string} refreshToken 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        logout(authorization: string, refreshToken: string, options?: any): AxiosPromise<ApiResponseVoid> {
-            return localVarFp.logout(authorization, refreshToken, options).then((request) => request(axios, basePath));
+        logout(options?: any): AxiosPromise<ApiResponseVoid> {
+            return localVarFp.logout(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1701,14 +1687,12 @@ export class DefaultApi extends BaseAPI {
     /**
      * 
      * @summary 로그아웃
-     * @param {string} authorization 
-     * @param {string} refreshToken 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public logout(authorization: string, refreshToken: string, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).logout(authorization, refreshToken, options).then((request) => request(this.axios, this.basePath));
+    public logout(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).logout(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
