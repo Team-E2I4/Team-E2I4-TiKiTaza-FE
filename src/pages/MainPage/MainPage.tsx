@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth/useAuth';
@@ -10,10 +11,23 @@ import SSEFallBack from './SSEFallBack';
 import UserCard from './UserCard';
 import UserList from './UserList';
 
+export type GameModeType = 'ALL' | 'SENTENCE' | 'CODE' | 'WORD';
+
+const gameModeList: GameModeType[] = ['ALL', 'SENTENCE', 'CODE', 'WORD'];
+
+const mappedGameModeList = {
+  ALL: '전체',
+  SENTENCE: '문장',
+  CODE: '코드',
+  WORD: '단어',
+};
+
 const MainPage = () => {
   const navigate = useNavigate();
   const { data: userList } = useOnlineUsers();
   const { data: userData, isPending, error } = useAuthCheck();
+
+  const [selectedGameMode, setSelectedGameMode] = useState<GameModeType>('ALL');
 
   if (isPending) {
     return <div>유저 정보 불러오는중...</div>;
@@ -43,8 +57,15 @@ const MainPage = () => {
         />
       </section>
       <section className='flex-1 grid grid-cols-[3fr_1fr] grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
-        <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100'>
-          검색 or 서버이름
+        <article className='bg-white px-[2rem] rounded-[0.5rem] flex items-center justify-between border-solid border-[0.3rem] border-green-100'>
+          {gameModeList.map((el) => (
+            <span
+              className={`w-[10rem] h-[3rem] flex items-center justify-center cursor-pointer rounded-[0.3rem] ${selectedGameMode === el ? 'bg-green-100' : 'bg-green-50'}`}
+              key={el}
+              onClick={() => setSelectedGameMode(el)}>
+              {mappedGameModeList[el]}
+            </span>
+          ))}
         </article>
         <CreateRoomModal>
           <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1 h-full'>
@@ -54,7 +75,10 @@ const MainPage = () => {
         <SSEErrorBoundary fallback={(error) => <SSEFallBack error={error} />}>
           {(data) => (
             <ErrorBoundary fallbackRender={EnterRoomErrorFallback}>
-              <GameRoomList data={data} />
+              <GameRoomList
+                data={data}
+                selectedGameMode={selectedGameMode}
+              />
             </ErrorBoundary>
           )}
         </SSEErrorBoundary>
