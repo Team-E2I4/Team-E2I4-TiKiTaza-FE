@@ -31,7 +31,7 @@ const RankItem = ({ rank, index }: RankItemProps) => {
         {rank.nickname}
         <strong>{rank.isMe && `(나)`}</strong>
       </span>
-      <span className='flex-1 text-center'>{rank.score}</span>
+      <span className='flex-1 text-center'>{Math.floor(rank.score)}</span>
     </div>
   );
 };
