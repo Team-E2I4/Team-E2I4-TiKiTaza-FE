@@ -57,12 +57,6 @@ const IngameWebsocketLayer = ({
     return <GameFinish convertedRankData={convertedRankData} />;
   }
 
-  /* 
-  1. 'FIRST_ROUND_START', 'NEXT_ROUND_START'일때 waiting이라는 상태가 true가 됨.
-  2. waiting이 true일 시 타이머와 함께 modal 등장.
-  3. 타이머가 종료되면, waiting을 false로 만든다.
-  */
-
   return (
     <>
       <RoundWaitModal
