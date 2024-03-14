@@ -40,6 +40,7 @@ const Header = () => {
     effect: PAUSE,
   });
   const bgmAudioRef = useRef(new Audio(bgmFile));
+  const effectAudioRef = useRef(new Audio(bgmFile));
 
   const navigate = useNavigate();
 
@@ -62,7 +63,12 @@ const Header = () => {
     } else {
       bgmAudioRef.current.pause();
     }
-  }, [volume.bgm]);
+    if (volume.effect === PLAY) {
+      effectAudioRef.current.play();
+    } else {
+      effectAudioRef.current.pause();
+    }
+  }, [volume.bgm, volume.effect]);
 
   return (
     <header className='bg-green-100 h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
