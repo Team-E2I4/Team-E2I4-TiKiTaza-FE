@@ -87,14 +87,6 @@ const Header = () => {
           className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
           <WrappedIcon IconComponent={mappedIcons.effect[volume.effect]} />
         </button>
-        {/* <Avatar.Root className='cursor-pointer'>
-            <Avatar.Image
-              className='size-[3.5rem] rounded-full'
-              src='https://picsum.photos/id/237/200/300'
-              alt='프로필 이미지'
-            />
-            <Avatar.Fallback delayMs={1000}>프로필</Avatar.Fallback>
-          </Avatar.Root> */}
         {data ? (
           data.data.data?.isGuest ? (
             <KakaoTooltip>
