@@ -1,6 +1,6 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
-import { useAuthCheck } from '@/hooks/useAuth/useAuth';
+import { useAuthCheck, useLogout } from '@/hooks/useAuth/useAuth';
 import useOnlineUsers from '@/hooks/useOnlineUsers';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import EnterRoomErrorFallback from './EnterRoomErrorFallback';
@@ -14,6 +14,12 @@ const MainPage = () => {
   const navigate = useNavigate();
   const { data: userList } = useOnlineUsers();
   const { data: userData, isPending, error } = useAuthCheck();
+  const { mutate: mutateLogout } = useLogout({
+    onSuccess: () => {
+      alert('로그아웃 되었습니다.');
+      navigate('/');
+    },
+  });
 
   if (isPending) {
     return <div>유저 정보 불러오는중...</div>;
@@ -22,6 +28,10 @@ const MainPage = () => {
   if (error) {
     return <div>유저 정보 불러오는 중 에러</div>;
   }
+
+  const handleLogout = () => {
+    mutateLogout();
+  };
 
   return (
     <main className='flex pb-[4rem] gap-[3rem]'>
@@ -33,6 +43,7 @@ const MainPage = () => {
         <article className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full cursor-pointer hover:bg-green-100 transition-all'>
           <button onClick={() => navigate('/rank')}>전체 랭킹 페이지</button>
         </article>
+        <button onClick={handleLogout}>로그아웃</button>
         <UserCard
           nickname={userData.data.data!.nickname}
           isGuest={userData.data.data!.isGuest}

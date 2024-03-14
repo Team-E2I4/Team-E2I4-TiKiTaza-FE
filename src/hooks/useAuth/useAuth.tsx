@@ -1,9 +1,10 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { getMyProfileInfo, guestLogin, kakaoLogin } from '@/apis/api';
+import { getMyProfileInfo, guestLogin, kakaoLogin, logout } from '@/apis/api';
 import {
   ApiResponseAccountGetResponse,
   ApiResponseAuthResponse,
+  ApiResponseVoid,
   ErrorResponse,
 } from '@/generated';
 import storageFactory from '@/utils/storageFactory';
@@ -14,7 +15,11 @@ export interface AuthProps {
   onError?: (e: AxiosError) => void;
 }
 
-const { setItem, getItem } = storageFactory(localStorage);
+interface LogoutProps {
+  onSuccess?: (e: AxiosResponse<ApiResponseVoid>) => void;
+}
+
+const { setItem, getItem, removeItem } = storageFactory(localStorage);
 
 export const useGuestLogin = ({ onSuccess }: AuthProps = {}) => {
   return useMutation<
@@ -82,6 +87,17 @@ export const useKaKaoLogin = ({ onSuccess }: AuthProps = {}) => {
         return false;
       }
       return true;
+    },
+  });
+};
+
+export const useLogout = ({ onSuccess }: LogoutProps) => {
+  return useMutation<AxiosResponse<ApiResponseVoid>, Error | AxiosError>({
+    mutationFn: () => logout(),
+    mutationKey: ['logout'],
+    onSuccess: (e) => {
+      removeItem('MyToken');
+      onSuccess?.(e);
     },
   });
 };
