@@ -19,7 +19,7 @@ const useIngameStore = create<I_useIngameStore>((set) => ({
   isIngameWsError: false,
   setIsIngameWsError: (isIngameWsError) => set({ isIngameWsError }),
 
-  isRoundWaiting: false,
+  isRoundWaiting: true,
   setIsRoundWaiting: (isRoundWaiting) => set({ isRoundWaiting }),
 }));
 
