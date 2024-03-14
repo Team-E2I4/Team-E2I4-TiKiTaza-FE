@@ -4,13 +4,13 @@ export const SECOND = 1000;
 export const MIN_SECOND = 60 * SECOND;
 
 interface TimerProps {
-  minutes: number;
+  minutes?: number;
   seconds: number;
-  onFinishRound: () => void;
+  onTimeFinish?: () => void;
 }
 
 // 커스텀 훅 useTimer 정의
-const useTimer = ({ minutes = 0, seconds = 0, onFinishRound }: TimerProps) => {
+const useTimer = ({ minutes = 0, seconds = 0, onTimeFinish }: TimerProps) => {
   const [timeLeft, setTimeLeft] = useState<number>(
     minutes * MIN_SECOND + seconds * SECOND
   );
@@ -19,7 +19,7 @@ const useTimer = ({ minutes = 0, seconds = 0, onFinishRound }: TimerProps) => {
   useEffect(() => {
     if (timeLeft <= 0) {
       clearInterval(timerRef.current!);
-      onFinishRound();
+      onTimeFinish?.();
       // 여기서는 시간이 0이 되었을 때의 로직만 처리합니다.
     }
   }, [timeLeft]);

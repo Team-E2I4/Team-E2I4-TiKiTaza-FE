@@ -18,7 +18,7 @@ const GameFinish = ({
   const { timeLeft } = useTimer({
     minutes: 0,
     seconds: 10,
-    onFinishRound: () => {
+    onTimeFinish: () => {
       onMoveToGameRoom();
     },
   });

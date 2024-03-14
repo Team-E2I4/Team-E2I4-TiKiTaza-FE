@@ -25,7 +25,7 @@ const GameFormContainer = ({
 
   return (
     <>
-      <div className='flex flex-col items-center justify-center z-10'>
+      <div className='flex flex-col items-center justify-center'>
         <GameForm
           key={sentenceList[sentenceIdx]?.question ?? ''}
           sample={sentenceList[sentenceIdx]?.question ?? ''}
