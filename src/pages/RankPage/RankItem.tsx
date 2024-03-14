@@ -17,7 +17,7 @@ const RankItem = ({ rank, index }: RankItemProps) => {
   return (
     <div className='flex gap-2 justify-center items-center font-bold text-4xl py-6 px-4 border-b border-gray-100'>
       <span className='flex flex-1 justify-center items-center'>
-        {rank.ranking < 3 ? (
+        {rank.ranking <= 3 ? (
           <img
             src={mappedRank[rank.ranking - 1]}
             alt={mappedRank[index]}
