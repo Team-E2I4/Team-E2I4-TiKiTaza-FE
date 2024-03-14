@@ -13,7 +13,6 @@ const WordRankContainer = ({
   return (
     <>
       {allMembers.map((member, i) => {
-        const { memberId, score } = member;
         return (
           <Fragment key={i}>
             <div className={'h-[24rem] flex justify-between'}>
@@ -31,8 +30,8 @@ const WordRankContainer = ({
               <WordRankTrack
                 key={i}
                 track={i}
-                isMe={userId === Number(memberId)}
-                score={score}
+                userId={userId}
+                member={member}
               />
               {i === allMembers.length - 1 && (
                 <Divider
