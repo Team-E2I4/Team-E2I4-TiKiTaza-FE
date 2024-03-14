@@ -12,15 +12,6 @@ interface GameWordProps {
 
 const SECONDS_FOR_ALL_WORDS = 120;
 
-/* 
-  1. 인게임헤더
-  2. 트랙
-  3. 대시보드
-  4. 공통로직
-  
-  GameXXX (공통로직 보유) => Sentence, Word, Code
-*/
-
 const GameWord = ({ publishIngame, userId }: GameWordProps) => {
   const { ingameRoomRes } = useIngameStore();
 
