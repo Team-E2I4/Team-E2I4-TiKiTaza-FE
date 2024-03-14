@@ -12,7 +12,7 @@ interface CodeFormProps {
   isLastSentence: boolean;
   isRoundFinish: boolean;
   codeItem: string[];
-  handleUpdateScore: (_isAllSubmitted: boolean) => void;
+  handleUpdateScore: () => void;
   onInputChange: (
     _totalCharCompleted: number,
     _totalChar: number,
@@ -88,7 +88,7 @@ const CodeForm = ({
 
       if (isLastWord === false && isPublished === false && isSameCodeWord) {
         currentPublishIndex.current += 1;
-        handleUpdateScore(false);
+        handleUpdateScore();
       }
     },
     [divideBySpace, handleUpdateScore]
@@ -160,7 +160,7 @@ const CodeForm = ({
     const isLastSentenceOfLastProblem =
       isLastSentence && currentIndex === codeItem.length - 1;
 
-    handleUpdateScore(isLastSentenceOfLastProblem);
+    handleUpdateScore();
     if (currentIndex === codeItem.length - 1) {
       handleUpdateProblem();
       setCurrentIndex(0);

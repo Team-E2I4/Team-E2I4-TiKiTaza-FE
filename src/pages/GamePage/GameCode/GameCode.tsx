@@ -63,17 +63,14 @@ const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
   );
 
   const scorePerSubmit = useMemo(
-    () => Math.floor((1 / totalSpacedWord) * 100),
+    () => Math.ceil((1 / totalSpacedWord) * 100),
     [totalSpacedWord]
   );
 
-  const handleUpdateScore = useCallback(
-    (_isAllSubmitted: boolean) => {
-      const newScore = _isAllSubmitted ? 100 : currentScore + scorePerSubmit;
-      publishIngame('/info', { currentScore: newScore });
-    },
-    [currentScore, publishIngame, scorePerSubmit]
-  );
+  const handleUpdateScore = useCallback(() => {
+    const newScore = currentScore + scorePerSubmit;
+    publishIngame('/info', { currentScore: newScore });
+  }, [currentScore, publishIngame, scorePerSubmit]);
 
   return (
     <>

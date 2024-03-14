@@ -8,7 +8,7 @@ import CodeForm from './CodeForm';
 interface CodeFormContainerProps {
   codeList: I_Question[];
   convertedCodeList: string[][];
-  handleUpdateScore: (_isAllSubmitted: boolean) => void;
+  handleUpdateScore: () => void;
   handleRoundFinish: () => void;
 }
 
