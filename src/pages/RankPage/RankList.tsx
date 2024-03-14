@@ -23,7 +23,7 @@ const RankList = ({ convertedRankData }: RankListProps) => {
       </div>
       {sortedConvertedRankData.map((rank, index) => (
         <RankItem
-          key={rank.ranking}
+          key={index}
           rank={rank}
           index={index}
         />
