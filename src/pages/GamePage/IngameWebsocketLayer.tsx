@@ -44,17 +44,13 @@ const IngameWebsocketLayer = ({
     return <WsError />;
   }
 
-  const convertedRankData = ingameRoomRes.allMembers
-    .map(({ nickname, score, memberId }) => ({
-      nickname,
-      score,
-      isMe: memberId === userId,
-    }))
-    .sort(({ score: prevScore }, { score: nextScore }) => nextScore - prevScore)
-    .map((el, i) => ({ ...el, ranking: i + 1 }));
-
   if (ingameRoomRes.type === 'FINISH') {
-    return <GameFinish convertedRankData={convertedRankData} />;
+    return (
+      <GameFinish
+        allMembers={ingameRoomRes.allMembers}
+        userId={userId}
+      />
+    );
   }
 
   return (

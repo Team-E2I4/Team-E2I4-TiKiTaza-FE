@@ -19,7 +19,7 @@ const RankItem = ({ rank, index }: RankItemProps) => {
       <span className='flex flex-1 justify-center items-center'>
         {rank.ranking < 3 ? (
           <img
-            src={mappedRank[index]}
+            src={mappedRank[rank.ranking - 1]}
             alt={mappedRank[index]}
             className='h-10'
           />

@@ -1,16 +1,18 @@
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { convertTime } from '@/common/Timer/utils/convertTime';
 import useTimer from '@/hooks/useTimer';
-import { I_ConvertedRankData } from '@/pages/RankPage/types/convertedRankData';
 import useGameWaitingRoomStore from '@/store/useGameWaitingRoomStore';
 import useIngameStore from '@/store/useIngameStore';
 import RankList from '../../RankPage/RankList';
-import { I_IngameWsResponse } from '../types/websocketType';
+import { I_AllMember, I_IngameWsResponse } from '../types/websocketType';
 
 const GameFinish = ({
-  convertedRankData,
+  allMembers,
+  userId,
 }: {
-  convertedRankData: I_ConvertedRankData[];
+  allMembers: I_AllMember[];
+  userId: number;
 }) => {
   const navigate = useNavigate();
   const { setDidAdminStart } = useGameWaitingRoomStore();
@@ -29,6 +31,25 @@ const GameFinish = ({
     setIngameRoomRes({} as I_IngameWsResponse);
     navigate('/game', { replace: true });
   };
+
+  const convertedRankData = useMemo(() => {
+    let rank = 1;
+    return allMembers
+      .map(({ nickname, score, memberId }) => ({
+        nickname,
+        score,
+        isMe: memberId === userId,
+      }))
+      .sort(
+        ({ score: prevScore }, { score: nextScore }) => nextScore - prevScore
+      )
+      .map((data, idx) => {
+        if (idx !== 0 && data.score !== allMembers[idx - 1].score) {
+          rank = idx;
+        }
+        return { ...data, ranking: rank };
+      });
+  }, [allMembers]);
 
   return (
     <div className='flex flex-col gap-[8rem] items-center'>
