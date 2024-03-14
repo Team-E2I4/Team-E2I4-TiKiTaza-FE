@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Backward from '@/common/Backward/Backward';
 import DisconnectModal from '../common/DisconnectModal';
 import {
@@ -37,6 +37,14 @@ const GameWaitingRoom = ({
   const handleClickBackward = () => {
     setIsAlert(true);
   };
+  useEffect(() => {
+    const carIdxArray: { [key: string]: number } = {};
+    allMembers.forEach((car, idx) => {
+      const { memberId } = car;
+      carIdxArray[memberId] = idx;
+    });
+    // setCarImgStore(carIdxArray);
+  }, [allMembers]);
   return (
     <>
       <DisconnectModal
