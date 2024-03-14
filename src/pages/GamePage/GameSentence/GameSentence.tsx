@@ -13,7 +13,7 @@ interface GameSentenceProps {
 
 const SECONDS_PER_SENTENCE = 7;
 
-export type UpdateScoreType = (lastUpdate?: boolean) => void;
+export type UpdateScoreType = () => void;
 
 export interface I_RankInfoList {
   memberId: number;
