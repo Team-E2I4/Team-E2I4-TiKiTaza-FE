@@ -4,7 +4,7 @@ const Timer = () => {
   const { timeLeft } = useTimer({
     minutes: 0,
     seconds: 10,
-    onFinishRound: () => {
+    onTimeFinish: () => {
       alert('시간이 종료되었습니다.');
     },
   });
