@@ -99,7 +99,7 @@ export const useLogout = ({ onSuccess }: LogoutProps) => {
     onSuccess: (e) => {
       removeItem('MyToken');
 
-      queryClient.resetQueries({ queryKey: ['getMyProfileInfo'], exact: true });
+      queryClient.invalidateQueries({ queryKey: ['getMyProfileInfo'] });
 
       onSuccess?.(e);
     },
