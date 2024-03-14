@@ -25,7 +25,7 @@ const IngameHeader = ({
   const { timeLeft, resetTimer } = useTimer({
     minutes: Math.floor(timeLimit / SECONDS_PER_MINUTE),
     seconds: timeLimit % SECONDS_PER_MINUTE,
-    onFinishRound: () => {
+    onTimeFinish: () => {
       handleRoundFinish();
     },
   });
