@@ -38,11 +38,7 @@ const useWebsocket = (roomId: number | null) => {
           handleEnterGameRoom(roomId);
         }
       },
-      onDisconnect: () => {
-        if (roomId) {
-          onDisconnected(roomId);
-        }
-      },
+
       onStompError: (err) => {
         // eslint-disable-next-line no-console
         console.log(err);
@@ -62,13 +58,6 @@ const useWebsocket = (roomId: number | null) => {
         (e) => console.log('----subscribe error----', e),
         connectHeaders
       );
-    };
-
-    const onDisconnected = (roomId: number) => {
-      client.publish({
-        destination: `/to/game-room/${roomId}`,
-        headers: connectHeaders,
-      });
     };
 
     const onMessageReceived = ({ body }: { body: string }) => {

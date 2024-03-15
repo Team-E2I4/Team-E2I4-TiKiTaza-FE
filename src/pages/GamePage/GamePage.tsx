@@ -25,10 +25,6 @@ const GamePage = () => {
 
   const { gameRoomRes, isWsError, didAdminStart, allMembers } =
     useGameWaitingRoomStore();
-  const isPlaying = useMemo(
-    () => gameRoomRes?.roomInfo?.isPlaying,
-    [gameRoomRes?.roomInfo]
-  );
 
   //Todo => useSuspenseQuery로 변경...
   const { data, isError, isPending } = useAuthCheck();
@@ -45,11 +41,11 @@ const GamePage = () => {
       setRoomInfo(gameRoomRes.roomInfo);
     }
 
-    if (isKicked || isPlaying) {
+    if (isKicked) {
       navigate('/main', { replace: true });
       navigate(0);
     }
-  }, [gameRoomRes, isKicked, isPlaying]);
+  }, [gameRoomRes, isKicked]);
 
   if (!roomId || isWsError) {
     return <WsError />;
