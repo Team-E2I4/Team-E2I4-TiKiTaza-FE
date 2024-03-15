@@ -37,7 +37,6 @@ const IngameHeader = ({
 
   useEffect(() => {
     isNextRound && resetTimer();
-    return () => resetTimer();
   }, [isNextRound]);
 
   useEffect(() => {
