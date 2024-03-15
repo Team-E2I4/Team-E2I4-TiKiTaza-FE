@@ -15,6 +15,7 @@ import { exchangeVolumeState } from '@/common/Header/utils/exchangeVolumeState';
 import { useAuthCheck, useLogout } from '@/hooks/useAuth/useAuth';
 import { handleKakaoLogin } from '@/utils/handleKakaoLogin';
 import WrappedIcon from '../WrappedIcon/WrappedIcon';
+import AudioPopover from './AudioPopover';
 import KakaoTooltip from './KakaoTooltip';
 
 export type VolumeType = 'play' | 'pause';
@@ -31,7 +32,7 @@ const mappedIcons = {
 };
 interface I_VolumeState {
   bgm: VolumeType;
-  effect: VolumeType;
+  effect: number;
 }
 
 const VOLUME_STATE_KEY = 'volumeState';
@@ -39,12 +40,12 @@ const VOLUME_STATE_KEY = 'volumeState';
 const Header = () => {
   const initializeVolumeState = () => {
     const savedState = sessionStorage.getItem(VOLUME_STATE_KEY);
-    return savedState ? JSON.parse(savedState) : { bgm: PAUSE, effect: PAUSE };
+    return savedState ? JSON.parse(savedState) : { bgm: PLAY, effect: 50 };
   };
 
   const [volume, setVolume] = useState<I_VolumeState>(initializeVolumeState());
-  const bgmAudioRef = useRef(new Audio(bgmFile));
-  const effectAudioRef = useRef(new Audio(bgmFile));
+
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const navigate = useNavigate();
 
@@ -66,17 +67,10 @@ const Header = () => {
   }, [volume]);
 
   useEffect(() => {
-    if (volume.bgm === PLAY) {
-      bgmAudioRef.current.play();
-    } else {
-      bgmAudioRef.current.pause();
+    if (audioRef.current) {
+      audioRef.current.volume = volume.effect / 100;
     }
-    if (volume.effect === PLAY) {
-      effectAudioRef.current.play();
-    } else {
-      effectAudioRef.current.pause();
-    }
-  }, [volume.bgm, volume.effect]);
+  }, [volume.effect]);
 
   return (
     <header className='bg-green-100 h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
@@ -85,7 +79,7 @@ const Header = () => {
           navigate('./main');
           navigate(0);
         }}
-        className='h-full flex items-center cursor-pointer'>
+        className='h-full flex cursor-pointer'>
         <img
           src={logo_car}
           className='h-[70%]'
@@ -105,13 +99,17 @@ const Header = () => {
           className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
           <WrappedIcon IconComponent={mappedIcons.bgm[volume.bgm]} />
         </button>
-        <button
-          onClick={() =>
-            setVolume({ ...volume, effect: exchangeVolumeState(volume.effect) })
-          }
-          className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
-          <WrappedIcon IconComponent={mappedIcons.effect[volume.effect]} />
-        </button>
+        <AudioPopover
+          value={volume.effect}
+          onChange={(value) => setVolume({ ...volume, effect: value })}>
+          <button className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
+            <WrappedIcon
+              IconComponent={
+                mappedIcons.effect[volume.effect > 0 ? PLAY : PAUSE]
+              }
+            />
+          </button>
+        </AudioPopover>
         {data ? (
           data.data.data?.isGuest ? (
             <KakaoTooltip>
@@ -132,6 +130,16 @@ const Header = () => {
         ) : (
           <></>
         )}
+        <div style={{ display: 'none' }}>
+          {volume.bgm === PLAY ? (
+            <audio
+              ref={audioRef}
+              src={bgmFile}
+              autoPlay
+              loop
+            />
+          ) : null}
+        </div>
       </section>
     </header>
   );
