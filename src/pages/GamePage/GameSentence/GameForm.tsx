@@ -121,7 +121,8 @@ const GameForm = ({
     const currentIndex = inputText.length - 1;
 
     //현재 글자 + 바로 이전글자의 오타 boolean
-    let isLeastCharTypo = false;
+    let isCurrentCharTypo = false;
+    let isPrevCharTypo = false;
 
     //현재 글자 오타검출
     const isTypoAtTypingChar = getTypo(
@@ -129,7 +130,7 @@ const GameForm = ({
       inputText[currentIndex]
     );
 
-    isLeastCharTypo = isTypoAtTypingChar;
+    isCurrentCharTypo = isTypoAtTypingChar;
 
     handleTypoMark(isTypoAtTypingChar, currentIndex);
 
@@ -141,7 +142,7 @@ const GameForm = ({
         true
       );
 
-      isLeastCharTypo = isTypoPrevChar;
+      isPrevCharTypo = isTypoPrevChar;
 
       handleTypoMark(isTypoPrevChar, currentIndex - 1);
     }
@@ -159,7 +160,12 @@ const GameForm = ({
     }
 
     //현재+바로이전글자 오타 or 지금까지 최소한번의 오타 or 이전글자가 공백이 아니면 return
-    if (isLeastCharTypo || isTypoAtLeastOnce || inputText.at(-1) !== ' ') {
+    if (
+      isPrevCharTypo ||
+      isCurrentCharTypo ||
+      isTypoAtLeastOnce ||
+      inputText.at(-1) !== ' '
+    ) {
       return;
     }
 
