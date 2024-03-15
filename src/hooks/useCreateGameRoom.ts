@@ -1,17 +1,17 @@
-import { useMutation } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { createGameRoom } from '@/apis/api';
 import {
   ApiResponseGameRoomCreateResponse,
   GameRoomCreateRequest,
 } from '@/generated';
+import { useDebouncedMutation } from './useDebouncedMutation';
 
 export interface UseCreateGameRoomProps {
   onSuccess?: (e: AxiosResponse<ApiResponseGameRoomCreateResponse>) => void;
 }
 
 const useCreateGameRoom = ({ onSuccess }: UseCreateGameRoomProps) => {
-  return useMutation<
+  return useDebouncedMutation<
     AxiosResponse<ApiResponseGameRoomCreateResponse>,
     Error | AxiosError,
     GameRoomCreateRequest,

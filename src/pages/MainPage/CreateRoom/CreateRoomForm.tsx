@@ -69,7 +69,7 @@ const CreateRoomForm = ({
     },
   });
 
-  const { mutate: mutateCreateGameRoom } = useCreateGameRoom({
+  const { debouncedMutate: mutateCreateGameRoom } = useCreateGameRoom({
     onSuccess: (e) => {
       if (!e.data.data) {
         return;
