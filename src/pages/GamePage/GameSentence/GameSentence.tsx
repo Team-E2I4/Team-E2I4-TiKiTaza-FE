@@ -71,7 +71,7 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
     publishIngame('/info', {
       currentScore: newScore,
     });
-  }, [currentScore, publishIngame, scorePerTrankLength]);
+  }, [currentScore, scorePerTrankLength]);
 
   return (
     <>
