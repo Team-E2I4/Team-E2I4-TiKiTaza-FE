@@ -9,6 +9,7 @@ import { GameRoomCreateRequest } from '@/generated';
 import useCreateGameRoom from '@/hooks/useCreateGameRoom';
 import useUpdateGameRoom from '@/hooks/useUpdateGameRoom';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
+import { GameModeType } from '@/types/gameMode';
 import getRandomItem from '@/utils/getRandomItem';
 import {
   CREATE_ROOM_INPUT_LIST,
@@ -87,7 +88,9 @@ const CreateRoomForm = ({
     },
   });
 
-  const [selectedMode, setSelectedMode] = useState('SENTENCE');
+  const [selectedMode, setSelectedMode] = useState<GameModeType>(
+    () => roomInfo?.gameMode ?? 'SENTENCE'
+  );
 
   const randomTitle = useRef(getRandomItem({ items: DEFAULT_TITLES }));
 
