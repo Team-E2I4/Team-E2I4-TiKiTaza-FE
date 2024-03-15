@@ -1,6 +1,6 @@
 import google from '@/assets/login/g-logo.png';
 import kakao from '@/assets/login/k-logo.png';
-import logo from '@/assets/logo_big.png';
+import logo from '@/assets/logo/logo_big.png';
 import { KAKAO_AUTH_URL } from './OAuth';
 
 const LoginPage = () => {
