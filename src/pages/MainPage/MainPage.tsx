@@ -3,6 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth/useAuth';
 import useOnlineUsers from '@/hooks/useOnlineUsers';
+import { GameModeType } from '@/types/gameMode';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import EnterRoomErrorFallback from './EnterRoomErrorFallback';
 import GameRoomList from './GameRoomList';
@@ -11,9 +12,14 @@ import SSEFallBack from './SSEFallBack';
 import UserCard from './UserCard';
 import UserList from './UserList';
 
-export type GameModeType = 'ALL' | 'SENTENCE' | 'CODE' | 'WORD';
+export type SelectedGameModeType = GameModeType | 'ALL';
 
-const gameModeList: GameModeType[] = ['ALL', 'SENTENCE', 'CODE', 'WORD'];
+const gameModeList: SelectedGameModeType[] = [
+  'ALL',
+  'SENTENCE',
+  'CODE',
+  'WORD',
+];
 
 const mappedGameModeList = {
   ALL: '전체',
@@ -27,7 +33,8 @@ const MainPage = () => {
   const { data: userList } = useOnlineUsers();
   const { data: userData, isPending, error } = useAuthCheck();
 
-  const [selectedGameMode, setSelectedGameMode] = useState<GameModeType>('ALL');
+  const [selectedGameMode, setSelectedGameMode] =
+    useState<SelectedGameModeType>('ALL');
 
   if (isPending) {
     return <div>유저 정보 불러오는중...</div>;
