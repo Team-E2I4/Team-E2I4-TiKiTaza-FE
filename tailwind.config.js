@@ -18,6 +18,8 @@ export default {
         'gray-300': '#585858',
         black: '#1f1f1f',
         white: '#fefeff',
+        layoutBgColor: '#d9d9d9', // 추후 그림?
+        bodyLayoutBgColor: '#f7f5f0',
       },
       width: {
         'layout-w': '136.6rem',

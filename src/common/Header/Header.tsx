@@ -78,7 +78,7 @@ const Header = () => {
   }, [volume.volumeSize, volume.bgm]);
 
   return (
-    <header className='bg-green-100 h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
+    <header className='h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
       <section
         onClick={() => {
           navigate('./main');

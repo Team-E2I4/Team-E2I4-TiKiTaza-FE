@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 const BodyLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className='flex-1 w-layout-w px-[2rem] pt-[3rem] flex flex-col'>
+    <div className='w-layout-w px-[2rem] py-[2rem] mt-[1rem] flex flex-col bg-bodyLayoutBgColor rounded-[1rem]'>
       {children}
     </div>
   );
