@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Backward from '@/common/Backward/Backward';
 import useCarImgStore from '@/store/useCarStore';
 import DisconnectModal from '../common/DisconnectModal';
@@ -36,9 +36,13 @@ const GameWaitingRoom = ({
   const isAdmin = userId === roomInfo?.hostId;
   const { setCarImgStore } = useCarImgStore();
 
-  const handleClickBackward = () => {
+  const handleClickBackward = useCallback(() => {
     setIsAlert(true);
-  };
+  }, []);
+
+  const handleClickCancel = useCallback(() => {
+    setIsAlert(false);
+  }, []);
 
   useEffect(() => {
     const carIdxArray: { [key: string]: number } = {};
@@ -53,9 +57,7 @@ const GameWaitingRoom = ({
     <>
       <DisconnectModal
         isOpen={isAlert}
-        handleClickCancel={() => {
-          setIsAlert(false);
-        }}
+        handleClickCancel={handleClickCancel}
       />
       <div className='w-full flex flex-col justify-center items-center gap-[3rem] select-none'>
         <header className='flex gap-[5rem]'>

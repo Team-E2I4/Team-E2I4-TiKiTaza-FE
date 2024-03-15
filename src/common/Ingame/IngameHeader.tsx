@@ -35,6 +35,14 @@ const IngameHeader = ({
     autoStart: false,
   });
 
+  const handleClickBackward = useCallback(() => {
+    setIsAlert(true);
+  }, []);
+
+  const handleClickCancel = useCallback(() => {
+    setIsAlert(false);
+  }, []);
+
   useEffect(() => {
     isNextRound && resetTimer();
     return () => resetTimer();
@@ -45,17 +53,11 @@ const IngameHeader = ({
     return () => resetTimer();
   }, [isRoundWaiting]);
 
-  const handleClickBackward = () => {
-    setIsAlert(true);
-  };
-
   return (
     <>
       <DisconnectModal
         isOpen={isAlert}
-        handleClickCancel={useCallback(() => {
-          setIsAlert(false);
-        }, [])}
+        handleClickCancel={handleClickCancel}
       />
       <div className='flex flex-row items-center gap-20 pb-8 font-[Giants-Inline] select-none'>
         <Backward handleClickBackward={handleClickBackward} />
