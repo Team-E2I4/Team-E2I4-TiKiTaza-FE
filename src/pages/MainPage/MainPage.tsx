@@ -45,7 +45,7 @@ const MainPage = () => {
   }
 
   return (
-    <main className='flex pb-[4rem] gap-[3rem]'>
+    <main className='flex gap-[3rem]'>
       <section className='flex flex-col gap-[3rem] w-[25rem]'>
         <UserList
           userList={[...userList.data.data!]}
