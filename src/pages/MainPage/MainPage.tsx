@@ -12,9 +12,9 @@ import SSEFallBack from './SSEFallBack';
 import UserCard from './UserCard';
 import UserList from './UserList';
 
-export type SelectedGameModeType = GameModeType | 'ALL';
+export type FilteredGameModeType = GameModeType | 'ALL';
 
-const gameModeList: SelectedGameModeType[] = [
+const gameModeList: FilteredGameModeType[] = [
   'ALL',
   'SENTENCE',
   'CODE',
@@ -34,7 +34,7 @@ const MainPage = () => {
   const { data: userData, isPending, error } = useAuthCheck();
 
   const [selectedGameMode, setSelectedGameMode] =
-    useState<SelectedGameModeType>('ALL');
+    useState<FilteredGameModeType>('ALL');
 
   if (isPending) {
     return <div>유저 정보 불러오는중...</div>;
