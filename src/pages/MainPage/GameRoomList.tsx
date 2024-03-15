@@ -15,13 +15,11 @@ interface GameRoomListProps {
 const GameRoomList = ({ data, selectedGameMode }: GameRoomListProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const waitingRoomList = data.filter(({ isPlaying }) => !isPlaying);
   const filteredRoomList =
     selectedGameMode !== 'ALL'
-      ? data.filter(
-          ({ isPlaying, gameMode }) =>
-            !isPlaying && gameMode === selectedGameMode
-        )
-      : data;
+      ? waitingRoomList.filter(({ gameMode }) => gameMode === selectedGameMode)
+      : waitingRoomList;
 
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
