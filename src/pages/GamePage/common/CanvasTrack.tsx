@@ -39,7 +39,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
   const prevData = useRef<I_AllMember[]>(allMembers);
   const carImagesRef = useRef<HTMLImageElement[] | null>(null);
   const carsRef = useRef<I_CarCoord[]>([]);
-
+  carsRef.current = [];
   let isArrived = 0;
 
   useEffect(() => {
@@ -61,9 +61,10 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
       }
       carImagesRef.current = carImagesArr;
     }
-
+    console.log(prevData.current, allMembers);
     // allMembers 유저수 만큼 좌표 지정
     allMembers.forEach((member, idx) => {
+      console.log('<<', member);
       const { score } = member;
       const lineGap = (idx % 4) * 10;
 
@@ -113,6 +114,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
         y = lineGap;
       }
       carsRef.current[idx] = { x, y, idx };
+      console.log(carsRef);
       prevData.current[idx].score = member.score;
     });
 
