@@ -69,8 +69,13 @@ const Header = () => {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume.effect / 100;
+      if (volume.bgm === PLAY) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
     }
-  }, [volume.effect]);
+  }, [volume.effect, volume.bgm]);
 
   return (
     <header className='bg-green-100 h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
