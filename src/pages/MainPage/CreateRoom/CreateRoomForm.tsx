@@ -69,17 +69,18 @@ const CreateRoomForm = ({
     },
   });
 
-  const { debouncedMutate: mutateCreateGameRoom } = useCreateGameRoom({
-    onSuccess: (e) => {
-      if (!e.data.data) {
-        return;
-      }
-      alert('방 생성 성공');
-      setRoomId(e.data.data.roomId);
-      setIsOpen(false);
-      navigate('/game');
-    },
-  });
+  const { debouncedMutate: mutateCreateGameRoom, isPending } =
+    useCreateGameRoom({
+      onSuccess: (e) => {
+        if (!e.data.data) {
+          return;
+        }
+        alert('방 생성 성공');
+        setRoomId(e.data.data.roomId);
+        setIsOpen(false);
+        navigate('/game');
+      },
+    });
 
   const { mutate: mutateUpdateGameRoom } = useUpdateGameRoom({
     onSuccess: () => {
@@ -209,7 +210,7 @@ const CreateRoomForm = ({
           <button
             type='submit'
             className='w-[8rem] p-[0.5rem] rounded-[0.8rem] absolute bottom-[2rem] right-[2rem] bg-coral-100 disabled:cursor-not-allowed disabled:opacity-50 transition-all'
-            disabled={!isValid}>
+            disabled={!isValid || isPending}>
             {settingMode === 'Create' ? '방 생성' : '수정'}
           </button>
         </Form.Submit>
