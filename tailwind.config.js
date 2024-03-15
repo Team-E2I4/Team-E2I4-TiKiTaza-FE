@@ -38,6 +38,12 @@ export default {
         'gradient-radial':
           'radial-gradient(rgba(200,0,0,0.40) 0%,rgba(255,0,255,0.00) 100%)',
       },
+      boxShadow: {
+        default:
+          '0 1px 3px 1px rgba(252, 252, 252, 1), -1px 6px 8px rgba(214, 215, 217, 1), 0 -2px 4px rgba(206, 207, 210, 1), 0 -6px 4px rgba(244, 245, 246, 1), inset 0 0 3px 0 rgba(206, 207, 209, 1)',
+        hover:
+          '0 1px 3px 1px rgba(252, 252, 252, 1), -1px 6px 8px rgba(214, 215, 217, 1), 0 -2px 4px rgba(206, 207, 210, 1), 0 -6px 4px rgba(244, 245, 246, 1), inset 0 0 3px 3px rgba(206, 207, 209, 1)',
+      },
     },
   },
   plugins: [scrollbarHide],

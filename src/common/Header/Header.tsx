@@ -101,13 +101,14 @@ const Header = () => {
           onClick={() =>
             setVolume({ ...volume, bgm: exchangeVolumeState(volume.bgm) })
           }
-          className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
+          className={`bg-beige-10 hover:shadow-hover flex items-center justify-center p-[1.2rem] rounded-[1rem] transition-all duration-300 ${volume.bgm === 'play' ? 'shadow-default' : 'shadow-hover'}`}>
           <WrappedIcon IconComponent={mappedIcons.bgm[volume.bgm]} />
         </button>
         <AudioPopover
           value={volume.volumeSize}
           onChange={(value) => setVolume({ ...volume, volumeSize: value })}>
-          <button className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
+          <button
+            className={`bg-beige-10 hover:shadow-hover flex items-center justify-center p-[1.2rem] rounded-[1rem] transition-all duration-300`}>
             <WrappedIcon
               IconComponent={
                 mappedIcons.volumeSize[volume.volumeSize > 0 ? PLAY : PAUSE]
@@ -115,6 +116,7 @@ const Header = () => {
             />
           </button>
         </AudioPopover>
+
         {data ? (
           data.data.data?.isGuest ? (
             <KakaoTooltip>
