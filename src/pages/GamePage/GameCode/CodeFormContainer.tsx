@@ -1,18 +1,19 @@
-import { useCallback, useState } from 'react';
+import { ReactNode, useCallback, useState } from 'react';
 import Dashboard from '@/common/Ingame/Dashboard';
 import useTypingState from '../GameSentence/useTypingState';
 import { I_Question } from '../types/websocketType';
-import CodeContainer from './CodeContainer';
 import CodeForm from './CodeForm';
 
 interface CodeFormContainerProps {
+  children: ReactNode;
   codeList: I_Question[];
-  convertedCodeList: string[][];
+  convertedCodeList: string[];
   handleUpdateScore: () => void;
   handleRoundFinish: () => void;
 }
 
 const CodeFormContainer = ({
+  children,
   codeList,
   convertedCodeList,
   handleUpdateScore,
@@ -22,10 +23,15 @@ const CodeFormContainer = ({
     useTypingState();
 
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
+  const [currentCodeItemIndex, setCurrentCodeItemIndex] = useState(0);
 
   const handleUpdateProblem = useCallback(() => {
     setCurrentProblemIndex((prev) => prev + 1);
   }, []);
+
+  const handleUpdateCodeItem = useCallback(() => {
+    setCurrentCodeItemIndex((prev) => (prev + 1) % convertedCodeList.length);
+  }, [convertedCodeList.length]);
 
   return (
     <div className='flex flex-col items-center justify-center z-10 w-[100rem]'>
@@ -34,31 +40,24 @@ const CodeFormContainer = ({
           type='cpm'
           value={cpm}
         />
-
-        <CodeContainer
-          codeItem={
-            currentProblemIndex === convertedCodeList.length
-              ? codeList[currentProblemIndex - 1].question
-              : codeList[currentProblemIndex].question
-          }
-        />
-
+        {children}
         <Dashboard
           type='accuracy'
           value={accurate}
         />
       </div>
       <CodeForm
-        key={`${codeList[0].question}${currentProblemIndex}`}
-        isLastSentence={currentProblemIndex === convertedCodeList.length - 1}
-        isRoundFinish={currentProblemIndex === convertedCodeList.length}
-        codeItem={convertedCodeList?.[currentProblemIndex] ?? []}
+        key={`${codeList[0].question}${currentCodeItemIndex}`}
+        isLastSentence={currentCodeItemIndex === convertedCodeList.length - 1}
+        isRoundFinish={currentProblemIndex === codeList.length}
+        codeItem={convertedCodeList?.[currentCodeItemIndex] ?? ''}
         handleUpdateScore={handleUpdateScore}
         onInputChange={onInputChange}
         onKeyDown={onKeyDown}
         initializeTyping={initializeTyping}
         handleUpdateProblem={handleUpdateProblem}
         handleRoundFinish={handleRoundFinish}
+        handleUpdateCodeItem={handleUpdateCodeItem}
       />
     </div>
   );

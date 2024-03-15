@@ -1,17 +1,10 @@
-import {
-  ChangeEvent,
-  KeyboardEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface CodeFormProps {
   isLastSentence: boolean;
   isRoundFinish: boolean;
-  codeItem: string[];
+  codeItem: string;
   handleUpdateScore: () => void;
   onInputChange: (
     _totalCharCompleted: number,
@@ -23,6 +16,7 @@ interface CodeFormProps {
 
   handleUpdateProblem: () => void;
   handleRoundFinish: () => void;
+  handleUpdateCodeItem: () => void;
 }
 
 const CHAR_STATE = {
@@ -42,109 +36,81 @@ const CodeForm = ({
 
   handleUpdateProblem,
   handleRoundFinish,
+  handleUpdateCodeItem,
 }: CodeFormProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const { register, handleSubmit, setValue, getValues } = useForm<{
     ['code']: string;
   }>();
 
   const currentPublishIndex = useRef(0);
-  const divideBySpace = codeItem?.[currentIndex]?.split(' ') ?? null;
 
   const [checkedCorrectAndTypo, setCheckedCorrectAndTypo] = useState(
-    Array.from(
-      { length: codeItem[currentIndex]?.length ?? 0 },
-      () => CHAR_STATE.PENDING
-    )
+    Array.from({ length: codeItem?.length ?? 0 }, () => CHAR_STATE.PENDING)
   );
 
-  const initializeCheckedCorrectAndTypo = () => {
-    setCheckedCorrectAndTypo(
-      Array.from(
-        { length: codeItem[currentIndex]?.length ?? 0 },
-        () => CHAR_STATE.PENDING
-      )
+  const handlePublishBySpaceKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (codeItem === '') {
+      return;
+    }
+    const divideBySpace = codeItem.split(' ');
+
+    const currentTypingInput = e.currentTarget.value;
+
+    const splittedTypingInput = currentTypingInput.split(' ');
+    const numberOfSpaceKey = splittedTypingInput.length;
+
+    const isLastWord = currentTypingInput.includes(
+      divideBySpace[divideBySpace.length - 1]
+    );
+    const isPublished = numberOfSpaceKey <= currentPublishIndex.current;
+    const isSameCodeWord =
+      divideBySpace[currentPublishIndex.current] ===
+      splittedTypingInput[numberOfSpaceKey - 1];
+
+    if (isLastWord === false && isPublished === false && isSameCodeWord) {
+      currentPublishIndex.current += 1;
+      handleUpdateScore();
+    }
+  };
+
+  const handleCheckCorrectAndTypo = (currentTypingInput: string) => {
+    const currentCharIndex = currentTypingInput.length;
+
+    const slicedCurrentCode = codeItem.slice(0, currentCharIndex);
+
+    let isTypoExist = false;
+
+    setCheckedCorrectAndTypo((prevState) =>
+      prevState.map((_, idx) => {
+        if (idx >= currentCharIndex) {
+          return CHAR_STATE.PENDING;
+        }
+
+        if (
+          isTypoExist === false &&
+          currentTypingInput[idx] === slicedCurrentCode[idx]
+        ) {
+          return CHAR_STATE.CORRECT;
+        }
+
+        isTypoExist = true;
+        return CHAR_STATE.TYPO;
+      })
     );
   };
 
-  const handlePublishBySpaceKey = useCallback(
-    (e: KeyboardEvent<HTMLInputElement>) => {
-      if (divideBySpace === null) {
-        return;
-      }
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const currentTypingInput = e.target.value;
 
-      const currentTypingInput = e.currentTarget.value;
+    setValue('code', currentTypingInput);
+    handleCheckCorrectAndTypo(currentTypingInput);
+  };
 
-      const splittedTypingInput = currentTypingInput.split(' ');
-      const numberOfSpaceKey = splittedTypingInput.length;
+  const handleCheckInputCorrect = (currentInput: string) => {
+    return currentInput === codeItem;
+  };
 
-      const isLastWord = currentTypingInput.includes(
-        divideBySpace[divideBySpace.length - 1]
-      );
-      const isPublished = numberOfSpaceKey <= currentPublishIndex.current;
-      const isSameCodeWord =
-        divideBySpace[currentPublishIndex.current] ===
-        splittedTypingInput[numberOfSpaceKey - 1];
-
-      if (isLastWord === false && isPublished === false && isSameCodeWord) {
-        currentPublishIndex.current += 1;
-        handleUpdateScore();
-      }
-    },
-    [divideBySpace, handleUpdateScore]
-  );
-
-  const handleCheckCorrectAndTypo = useCallback(
-    (currentTypingInput: string) => {
-      const currentCharIndex = currentTypingInput.length;
-
-      const slicedCurrentCode = codeItem[currentIndex].slice(
-        0,
-        currentCharIndex
-      );
-
-      let isTypoExist = false;
-
-      setCheckedCorrectAndTypo((prevState) =>
-        prevState.map((_, idx) => {
-          if (idx >= currentCharIndex) {
-            return CHAR_STATE.PENDING;
-          }
-
-          if (
-            isTypoExist === false &&
-            currentTypingInput[idx] === slicedCurrentCode[idx]
-          ) {
-            return CHAR_STATE.CORRECT;
-          }
-
-          isTypoExist = true;
-          return CHAR_STATE.TYPO;
-        })
-      );
-    },
-
-    [codeItem, currentIndex]
-  );
-
-  const handleInputChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const currentTypingInput = e.target.value;
-
-      setValue('code', currentTypingInput);
-      handleCheckCorrectAndTypo(currentTypingInput);
-    },
-    [handleCheckCorrectAndTypo, setValue]
-  );
-
-  const handleCheckInputCorrect = useCallback(
-    (currentInput: string) => {
-      return currentInput === codeItem[currentIndex];
-    },
-    [codeItem, currentIndex]
-  );
-
-  const handleActiveEnter = useCallback(() => {
+  const handleActiveEnter = () => {
     const isCorrectInput = handleCheckInputCorrect(getValues('code'));
 
     if (isCorrectInput === false) {
@@ -153,40 +119,17 @@ const CodeForm = ({
 
     setValue('code', '');
     initializeTyping();
-
-    setCurrentIndex((prev) => (prev < codeItem.length ? prev + 1 : prev));
+    handleUpdateCodeItem();
     currentPublishIndex.current = 0;
 
-    const isLastSentenceOfLastProblem =
-      isLastSentence && currentIndex === codeItem.length - 1;
-
     handleUpdateScore();
-    if (currentIndex === codeItem.length - 1) {
+    if (isLastSentence) {
       handleUpdateProblem();
-      setCurrentIndex(0);
+      handleRoundFinish();
     }
-    isLastSentenceOfLastProblem && handleRoundFinish();
 
     // TODO: enter키 누르면 실시간 점수 publish
-  }, [
-    codeItem.length,
-    currentIndex,
-    getValues,
-    handleCheckInputCorrect,
-    handleRoundFinish,
-    handleUpdateProblem,
-    handleUpdateScore,
-    initializeTyping,
-    isLastSentence,
-    setValue,
-  ]);
-
-  useEffect(() => {
-    if (isRoundFinish) {
-      return;
-    }
-    initializeCheckedCorrectAndTypo();
-  }, [currentIndex]);
+  };
 
   useEffect(() => {
     if (isRoundFinish) {
@@ -208,10 +151,11 @@ const CodeForm = ({
         outline-0 text-gray-300 tracking-wider box-border'>
           {isRoundFinish === false ? (
             <>
-              {[...codeItem[currentIndex]].map((char, idx) => (
+              {[...codeItem].map((char, idx) => (
                 <span
-                  className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-black font-bold' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-500 font-bold' : 'text-white'}`}
-                  key={`${checkedCorrectAndTypo[idx]}${idx}`}>
+                  className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-black font-bold' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-500 font-bold' : 'text-white'} 
+                  ${char === ' ' ? (checkedCorrectAndTypo[idx] === 'typo' ? 'bg-red-500 w-[0.5rem] h-[2rem]' : 'w-[0.5rem] h-[2rem]') : ''}`}
+                  key={`${char}${idx}`}>
                   {char === ' ' ? '\u00A0' : char}
                 </span>
               ))}
@@ -227,10 +171,8 @@ const CodeForm = ({
           className={`w-[60rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl
         bg-white border-2 border-green-100 
         outline-0 text-gray-300 tracking-wider box-border`}
-          placeholder={
-            isRoundFinish ? '라운드가 끝났습니다!' : codeItem[currentIndex]
-          }
-          maxLength={isRoundFinish ? 0 : codeItem[currentIndex].length}
+          placeholder={isRoundFinish ? '라운드가 끝났습니다!' : codeItem}
+          maxLength={isRoundFinish ? 0 : codeItem.length}
           disabled={isRoundFinish ? true : false}
           {...register('code', {
             onChange: (e) => handleInputChange(e),
