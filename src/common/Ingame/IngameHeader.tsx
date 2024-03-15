@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import useTimer from '@/hooks/useTimer';
 import DisconnectModal from '@/pages/GamePage/common/DisconnectModal';
 import useIngameStore from '@/store/useIngameStore';
@@ -53,9 +53,9 @@ const IngameHeader = ({
     <>
       <DisconnectModal
         isOpen={isAlert}
-        handleClickCancel={() => {
+        handleClickCancel={useCallback(() => {
           setIsAlert(false);
-        }}
+        }, [])}
       />
       <div className='flex flex-row items-center gap-20 pb-8 font-[Giants-Inline] select-none'>
         <Backward handleClickBackward={handleClickBackward} />
