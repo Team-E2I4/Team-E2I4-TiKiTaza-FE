@@ -13,8 +13,8 @@ const AudioPopover = ({ children, value, onChange }: AudioPopoverProps) => {
       <Popover.Trigger asChild>{children}</Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
-          className='PopoverContent'
-          sideOffset={5}>
+          className='rounded-[1rem] border-green-70 border-[0.3rem] flex flex-col items-start justify-start p-2 bg-white '
+          sideOffset={8}>
           <AudioSlider
             value={value}
             onChange={onChange}

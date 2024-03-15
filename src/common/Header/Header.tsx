@@ -79,7 +79,7 @@ const Header = () => {
           navigate('./main');
           navigate(0);
         }}
-        className='h-full flex cursor-pointer'>
+        className='flex cursor-pointer items-center'>
         <img
           src={logo_car}
           className='h-[70%]'
@@ -91,7 +91,7 @@ const Header = () => {
           alt='티키타자'
         />
       </section>
-      <section className='h-full flex items-center justify-around w-[15rem]'>
+      <section className='h-full flex items-center justify-around w-[20rem]'>
         <button
           onClick={() =>
             setVolume({ ...volume, bgm: exchangeVolumeState(volume.bgm) })
