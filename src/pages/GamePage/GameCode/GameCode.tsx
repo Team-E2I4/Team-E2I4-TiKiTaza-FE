@@ -5,6 +5,7 @@ import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
 import useGameRound from '../hooks/useGameRound';
 import { I_Question, PublishIngameType } from '../types/websocketType';
+import CodeContainer from './CodeContainer';
 import CodeFormContainer from './CodeFormContainer';
 interface GameCodeProps {
   publishIngame: PublishIngameType;
@@ -70,12 +71,11 @@ const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
   const handleUpdateScore = useCallback(() => {
     const newScore = currentScore + scorePerSubmit;
     publishIngame('/info', { currentScore: newScore });
-  }, [currentScore, publishIngame, scorePerSubmit]);
+  }, [currentScore, scorePerSubmit]);
 
   return (
     <>
       <IngameHeader
-        key={codeList.current[0].question}
         handleRoundFinish={handleRoundFinish}
         currentRound={currentRound}
         timeLimit={
@@ -95,10 +95,11 @@ const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
           <CodeFormContainer
             key={codeList.current[0].question}
             codeList={codeList.current}
-            convertedCodeList={convertedCodeList}
+            convertedCodeList={convertedCodeList[0] ?? []}
             handleUpdateScore={handleUpdateScore}
-            handleRoundFinish={handleRoundFinish}
-          />
+            handleRoundFinish={handleRoundFinish}>
+            <CodeContainer codeItem={codeList.current[0].question} />
+          </CodeFormContainer>
         </div>
       </div>
     </>
