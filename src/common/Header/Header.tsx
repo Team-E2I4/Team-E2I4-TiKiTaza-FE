@@ -22,17 +22,17 @@ export type VolumeType = 'play' | 'pause';
 
 const mappedIcons = {
   bgm: {
-    [PLAY]: PlayIcon,
-    [PAUSE]: PauseIcon,
+    [PLAY]: PauseIcon,
+    [PAUSE]: PlayIcon,
   },
-  effect: {
+  volumeSize: {
     [PLAY]: SpeakerLoudIcon,
     [PAUSE]: SpeakerOffIcon,
   },
 };
 interface I_VolumeState {
   bgm: VolumeType;
-  effect: number;
+  volumeSize: number;
 }
 
 const VOLUME_STATE_KEY = 'volumeState';
@@ -40,7 +40,7 @@ const VOLUME_STATE_KEY = 'volumeState';
 const Header = () => {
   const initializeVolumeState = () => {
     const savedState = sessionStorage.getItem(VOLUME_STATE_KEY);
-    return savedState ? JSON.parse(savedState) : { bgm: PLAY, effect: 50 };
+    return savedState ? JSON.parse(savedState) : { bgm: PLAY, volumeSize: 50 };
   };
 
   const [volume, setVolume] = useState<I_VolumeState>(initializeVolumeState());
@@ -68,14 +68,14 @@ const Header = () => {
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = volume.effect / 100;
+      audioRef.current.volume = volume.volumeSize / 100;
       if (volume.bgm === PLAY) {
         audioRef.current.play();
       } else {
         audioRef.current.pause();
       }
     }
-  }, [volume.effect, volume.bgm]);
+  }, [volume.volumeSize, volume.bgm]);
 
   return (
     <header className='bg-green-100 h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
@@ -105,12 +105,12 @@ const Header = () => {
           <WrappedIcon IconComponent={mappedIcons.bgm[volume.bgm]} />
         </button>
         <AudioPopover
-          value={volume.effect}
-          onChange={(value) => setVolume({ ...volume, effect: value })}>
+          value={volume.volumeSize}
+          onChange={(value) => setVolume({ ...volume, volumeSize: value })}>
           <button className='hover:bg-gray-100 size-[2rem] flex items-center justify-center'>
             <WrappedIcon
               IconComponent={
-                mappedIcons.effect[volume.effect > 0 ? PLAY : PAUSE]
+                mappedIcons.volumeSize[volume.volumeSize > 0 ? PLAY : PAUSE]
               }
             />
           </button>
