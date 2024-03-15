@@ -1,4 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog';
+import { useEffect } from 'react';
 import { convertTime } from '@/common/Timer/utils/convertTime';
 import useTimer from '@/hooks/useTimer';
 
@@ -8,13 +9,18 @@ interface RoundWaitModalProps {
 }
 
 const RoundWaitModal = ({ isOpen, onTimeFinish }: RoundWaitModalProps) => {
-  const { timeLeft, resetTimer } = useTimer({
+  const { timeLeft, resetTimer, startTimer } = useTimer({
     seconds: 3,
     onTimeFinish: () => {
       onTimeFinish();
       resetTimer();
     },
+    autoStart: false,
   });
+
+  useEffect(() => {
+    isOpen && startTimer();
+  }, [isOpen]);
 
   return (
     <Dialog.Root open={isOpen}>
