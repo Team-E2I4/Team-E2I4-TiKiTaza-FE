@@ -1,10 +1,12 @@
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface DisconnectModalProps {
   isOpen: boolean;
   handleClickCancel: () => void;
 }
+// eslint-disable-next-line react-refresh/only-export-components
 const DisconnectModal = ({
   isOpen,
   handleClickCancel,
@@ -48,4 +50,5 @@ const DisconnectModal = ({
   );
 };
 
-export default DisconnectModal;
+// eslint-disable-next-line react-refresh/only-export-components
+export default React.memo(DisconnectModal);
