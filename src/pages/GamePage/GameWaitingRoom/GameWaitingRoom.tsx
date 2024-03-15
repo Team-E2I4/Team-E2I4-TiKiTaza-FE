@@ -39,6 +39,7 @@ const GameWaitingRoom = ({
   const handleClickBackward = () => {
     setIsAlert(true);
   };
+
   useEffect(() => {
     const carIdxArray: { [key: string]: number } = {};
     allMembers.forEach((car, idx) => {
@@ -47,6 +48,7 @@ const GameWaitingRoom = ({
     });
     setCarImgStore(carIdxArray);
   }, [allMembers]);
+
   return (
     <>
       <DisconnectModal

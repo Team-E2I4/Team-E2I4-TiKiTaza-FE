@@ -28,7 +28,8 @@ const GameRoomUserItem = ({
   const isMe = useMemo(() => memberId === userId, [memberId, userId]); // 각 유저가 본인인지 -> 방장이자 본인일떄 강퇴식별용
 
   return (
-    <div className='w-[25.8rem] h-[21.2rem] p-[1.6rem] pb-[4rem] relative flex flex-col bg-white shadow-md shadow-black/50 rounded-[2.5rem]'>
+    <div
+      className={`w-[25.8rem] h-[21.2rem] p-[1.6rem] pb-[4rem] relative flex flex-col shadow-md shadow-black/50 rounded-[2.5rem] ${isMe ? 'bg-beige-100' : 'bg-white'}`}>
       <div className='h-[3rem] self-end'>
         <button
           onClick={() => {
@@ -49,10 +50,11 @@ const GameRoomUserItem = ({
           className='w-[10rem]'
           alt='자동차'
         />
-
         <div className='w-1/2 flex flex-col justify-evenly text-center'>
-          <div className='w-[10rem] h-[3rem] py-[0.4rem] bg-green-70 rounded-[1rem]'>
+          <div
+            className={`w-[10rem] ${isMe ? 'h-[5rem]' : 'h-[3rem]'} py-[0.4rem] bg-green-70 rounded-[1rem]`}>
             {nickname}
+            {isMe && ' (본인)'}
           </div>
           <div className='w-[10rem] h-[3rem] py-[0.4rem] bg-green-70 rounded-[1rem] text-[1.4rem]'>
             {ranking === -1
