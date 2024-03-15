@@ -34,11 +34,15 @@ interface I_VolumeState {
   effect: VolumeType;
 }
 
+const VOLUME_STATE_KEY = 'volumeState';
+
 const Header = () => {
-  const [volume, setVolume] = useState<I_VolumeState>({
-    bgm: PAUSE,
-    effect: PAUSE,
-  });
+  const initializeVolumeState = () => {
+    const savedState = sessionStorage.getItem(VOLUME_STATE_KEY);
+    return savedState ? JSON.parse(savedState) : { bgm: PAUSE, effect: PAUSE };
+  };
+
+  const [volume, setVolume] = useState<I_VolumeState>(initializeVolumeState());
   const bgmAudioRef = useRef(new Audio(bgmFile));
   const effectAudioRef = useRef(new Audio(bgmFile));
 
@@ -56,6 +60,10 @@ const Header = () => {
   const handleLogout = () => {
     mutateLogout();
   };
+
+  useEffect(() => {
+    sessionStorage.setItem(VOLUME_STATE_KEY, JSON.stringify(volume));
+  }, [volume]);
 
   useEffect(() => {
     if (volume.bgm === PLAY) {
