@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useFocusInput from './useFocusInput';
+import useFocusInput from '../hooks/useFocusInput';
 
 interface CodeFormProps {
   isLastSentence: boolean;

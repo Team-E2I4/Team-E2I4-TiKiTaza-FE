@@ -5,8 +5,8 @@ import {
   I_IngameWsResponse,
   PublishIngameType,
 } from '../../GamePage/types/websocketType';
-import useFocusInput from '../GameCode/useFocusInput';
 import useTypingState from '../GameSentence/useTypingState';
+import useFocusInput from '../hooks/useFocusInput';
 import WordCell from './WordCell';
 import WordRankContainer from './WordRankContainer';
 
