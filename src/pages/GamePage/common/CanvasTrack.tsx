@@ -38,7 +38,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
   });
   const { carImgStore } = useCarImgStore();
 
-  const prevData = useRef<I_AllMember[]>(allMembers);
+  const prevData = useRef<{ [key: string]: number }>({});
   const carImagesRef = useRef<HTMLImageElement[] | null>(null);
   const carsRef = useRef<I_CarCoord[]>([]);
   carsRef.current = [];
@@ -63,18 +63,17 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
       });
       carImagesRef.current = carImagesArr;
     }
-    console.log(prevData.current, allMembers);
+
     // allMembers 유저수 만큼 좌표 지정
     allMembers.forEach((member, idx) => {
-      console.log('<<', member);
       const { score } = member;
       const lineGap = (idx % 4) * 10;
 
       let x = 0;
       let y = 0;
 
-      // 변화 없는 유저 얼리리턴
-      if (prevData.current[idx].score === member.score) {
+      // // 변화 없는 유저 얼리리턴
+      if (prevData.current[idx] === member.score) {
         if (score === 0) {
           x = START_X + Math.floor(idx / 4) * 20;
           y = lineGap;
@@ -116,8 +115,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
         y = lineGap;
       }
       carsRef.current[idx] = { x, y, idx };
-      console.log(carsRef);
-      prevData.current[idx].score = member.score;
+      prevData.current[member.memberId] = member.score;
     });
 
     //자동차를 화면에 그린다
