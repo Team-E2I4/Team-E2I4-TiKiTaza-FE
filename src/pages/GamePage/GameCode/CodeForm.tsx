@@ -1,5 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import useIngameStore from '@/store/useIngameStore';
 
 interface CodeFormProps {
   isLastSentence: boolean;
@@ -41,6 +42,11 @@ const CodeForm = ({
   const { register, handleSubmit, setValue, getValues } = useForm<{
     ['code']: string;
   }>();
+  const { ref } = register('code');
+
+  const focusInput = useRef<HTMLInputElement | null>(null);
+
+  const { isRoundWaiting } = useIngameStore();
 
   const currentPublishIndex = useRef(0);
 
@@ -142,6 +148,16 @@ const CodeForm = ({
     );
   }, [checkedCorrectAndTypo]);
 
+  useEffect(() => {
+    if (isRoundWaiting || !focusInput.current) {
+      return;
+    }
+    focusInput.current.focus();
+    return () => {
+      focusInput.current = null;
+    };
+  }, [isRoundWaiting]);
+
   return (
     <>
       {
@@ -154,7 +170,7 @@ const CodeForm = ({
               {[...codeItem].map((char, idx) => (
                 <span
                   className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-black font-bold' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-500 font-bold' : 'text-white'} 
-                  ${char === ' ' && checkedCorrectAndTypo[idx] === 'typo' && 'w-[0.5rem] h-[2rem] bg-red-500'}`}
+                ${char === ' ' && checkedCorrectAndTypo[idx] === 'typo' && 'w-[0.5rem] h-[2rem] bg-red-500'}`}
                   key={`${char}${idx}`}>
                   {char === ' ' ? '\u00A0' : char}
                 </span>
@@ -165,7 +181,6 @@ const CodeForm = ({
       }
       <form onSubmit={handleSubmit(handleActiveEnter)}>
         <input
-          autoFocus
           autoComplete='off'
           type='text'
           className={`w-[60rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl
@@ -174,9 +189,6 @@ const CodeForm = ({
           placeholder={isRoundFinish ? '라운드가 끝났습니다!' : codeItem}
           maxLength={isRoundFinish ? 0 : codeItem.length}
           disabled={isRoundFinish ? true : false}
-          {...register('code', {
-            onChange: (e) => handleInputChange(e),
-          })}
           onPaste={(e) => e.preventDefault()}
           onCopy={(e) => e.preventDefault()}
           onKeyDown={(e) => {
@@ -184,6 +196,13 @@ const CodeForm = ({
             if (e.code === 'Space') {
               handlePublishBySpaceKey(e);
             }
+          }}
+          {...register('code', {
+            onChange: (e) => handleInputChange(e),
+          })}
+          ref={(e) => {
+            ref(e);
+            focusInput.current = e;
           }}
         />
       </form>

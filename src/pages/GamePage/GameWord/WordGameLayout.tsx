@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Dashboard from '@/common/Ingame/Dashboard';
+import useIngameStore from '@/store/useIngameStore';
 import {
   I_IngameWsResponse,
   PublishIngameType,
@@ -22,8 +23,16 @@ const WordGameLayout = ({
   userId,
   handleRoundFinish,
 }: GameWordProps) => {
-  const { register, handleSubmit, setValue, getValues } = useForm();
+  const { register, handleSubmit, setValue, getValues } = useForm<{
+    ['wordInput']: string;
+  }>();
   const { cpm, onInputChange, initializeTyping } = useTypingState();
+
+  const { ref } = register('wordInput');
+
+  const focusInput = useRef<HTMLInputElement | null>(null);
+
+  const { isRoundWaiting } = useIngameStore();
 
   const submitCount = useRef(0);
   const currentScore =
@@ -40,6 +49,17 @@ const WordGameLayout = ({
   useEffect(() => {
     onInputChange(0, 100, 150); //동기화..
   }, [ingameRoomRes]);
+
+  useEffect(() => {
+    if (isRoundWaiting || !focusInput.current) {
+      return;
+    }
+    focusInput.current.focus();
+
+    return () => {
+      focusInput.current = null;
+    };
+  }, [isRoundWaiting]);
 
   return (
     <>
@@ -83,6 +103,10 @@ const WordGameLayout = ({
                 onChange: (e) =>
                   onInputChange(e.target.value.trim().length, 100, 150), // 단어게임에선 totalChar가 없습니다
               })}
+              ref={(e) => {
+                ref(e);
+                focusInput.current = e;
+              }}
               className='w-[20rem] h-[4rem] flex items-center pl-[1.75rem] rounded-2xl bg-white border-2 border-green-100 mt-4 outline-0 text-gray-300 tracking-wider box-border'
             />
           </form>
