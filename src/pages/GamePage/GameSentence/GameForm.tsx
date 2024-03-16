@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '@/common/Input/Input';
+import useIngameStore from '@/store/useIngameStore';
 import { UpdateScoreType } from './GameSentence';
 import { decomposeKrChar } from './utils/decomposeKrChar';
 import getTypo from './utils/getTypo';
@@ -40,6 +41,12 @@ const GameForm = ({
   } = useForm<{
     ['sentence']: string;
   }>();
+
+  const { ref } = register('sentence');
+
+  const focusInput = useRef<HTMLInputElement | null>(null);
+
+  const { isRoundWaiting } = useIngameStore();
 
   const [typoMarkList, setTypoMarkList] = useState<TypoMarkListType[]>(
     Array(sample.length).fill('')
@@ -173,6 +180,17 @@ const GameForm = ({
     maxSpacingIndex.current = currentIndex;
   };
 
+  useEffect(() => {
+    if (isRoundWaiting || !focusInput.current) {
+      return;
+    }
+    focusInput.current.focus();
+
+    return () => {
+      focusInput.current = null;
+    };
+  }, [isRoundWaiting]);
+
   return (
     <>
       <div className='w-[70rem] h-[4.5rem] flex items-center pl-8 rounded-2xl bg-green-100 tracking-wider'>
@@ -202,6 +220,10 @@ const GameForm = ({
           {...register('sentence', {
             onChange: (e) => handleInputChange(e),
           })}
+          ref={(e) => {
+            ref(e);
+            focusInput.current = e;
+          }}
         />
       </form>
     </>
