@@ -18,6 +18,7 @@ import {
   WEST_START_Y,
 } from '@/common/Ingame/ingameConstants';
 import useCanvas from '@/hooks/useCanvas';
+import useCarImgStore from '@/store/useCarStore';
 import { I_AllMember } from '../types/websocketType';
 
 interface I_CarCoord {
@@ -35,6 +36,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
       canvas.height = CANVAS_HEIGHT;
     },
   });
+  const { carImgStore } = useCarImgStore();
 
   const prevData = useRef<I_AllMember[]>(allMembers);
   const carImagesRef = useRef<HTMLImageElement[] | null>(null);
@@ -51,14 +53,14 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
     }
 
     // 자동차 이미지 로드
-    if (TRACK_CARS.length) {
-      const carImagesArr = [];
-      for (const carImg of TRACK_CARS) {
+    if (allMembers.length) {
+      const carImagesArr: HTMLImageElement[] | null = [];
+      allMembers.forEach(({ memberId }) => {
         const newImg = new Image(20, 20);
-        newImg.src = carImg;
+        newImg.src = TRACK_CARS[carImgStore[memberId]];
         newImg.alt = '자동차';
         carImagesArr.push(newImg);
-      }
+      });
       carImagesRef.current = carImagesArr;
     }
     console.log(prevData.current, allMembers);
