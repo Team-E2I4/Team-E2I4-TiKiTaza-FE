@@ -1,11 +1,10 @@
 import { create } from 'zustand';
 import { I_IngameWsResponse } from '@/pages/GamePage/types/websocketType';
 
-type SetByNewOneType = (ingameRoomRes: I_IngameWsResponse) => void;
-type SetByExitType = (exitmemberId: number) => void;
+type IngameRoomResSetterType = number | I_IngameWsResponse;
 interface I_useIngameStore {
   ingameRoomRes: I_IngameWsResponse;
-  setIngameRoomRes: SetByNewOneType | SetByExitType;
+  setIngameRoomRes: <T extends IngameRoomResSetterType>(props: T) => void;
 
   isIngameWsError: boolean;
   setIsIngameWsError: (isIngameWsError: boolean) => void;
@@ -16,7 +15,7 @@ interface I_useIngameStore {
 
 const useIngameStore = create<I_useIngameStore>((set) => ({
   ingameRoomRes: {} as I_IngameWsResponse,
-  setIngameRoomRes: (props: number | I_IngameWsResponse) => {
+  setIngameRoomRes: <T extends IngameRoomResSetterType>(props: T) => {
     if (typeof props === 'number') {
       set((prev) => ({
         ingameRoomRes: {
