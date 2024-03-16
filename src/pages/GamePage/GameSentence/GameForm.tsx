@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '@/common/Input/Input';
-import useFocusInput from '../GameCode/useFocusInput';
+import useFocusInput from '../hooks/useFocusInput';
 import { UpdateScoreType } from './GameSentence';
 import { decomposeKrChar } from './utils/decomposeKrChar';
 import getTypo from './utils/getTypo';
