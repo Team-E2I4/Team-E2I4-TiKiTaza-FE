@@ -1,10 +1,11 @@
 import { create } from 'zustand';
 import { I_IngameWsResponse } from '@/pages/GamePage/types/websocketType';
 
+type SetByNewOneType = (ingameRoomRes: I_IngameWsResponse) => void;
+type SetByExitType = (exitmemberId: number) => void;
 interface I_useIngameStore {
   ingameRoomRes: I_IngameWsResponse;
-  setIngameRoomRes: (ingameRoomRes: I_IngameWsResponse) => void;
-  setIngameRoomRes2: (exitmemberId: number) => void;
+  setIngameRoomRes: SetByNewOneType | SetByExitType;
 
   isIngameWsError: boolean;
   setIsIngameWsError: (isIngameWsError: boolean) => void;
@@ -15,18 +16,19 @@ interface I_useIngameStore {
 
 const useIngameStore = create<I_useIngameStore>((set) => ({
   ingameRoomRes: {} as I_IngameWsResponse,
-  setIngameRoomRes: (ingameRoomRes) => {
-    set({ ingameRoomRes });
-  },
-  setIngameRoomRes2: (exitmemberId) => {
-    set((prev) => ({
-      ingameRoomRes: {
-        type: prev.ingameRoomRes.type,
-        allMembers: prev.ingameRoomRes.allMembers.filter(
-          ({ memberId }) => memberId !== exitmemberId
-        ),
-      },
-    }));
+  setIngameRoomRes: (props: number | I_IngameWsResponse) => {
+    if (typeof props === 'number') {
+      set((prev) => ({
+        ingameRoomRes: {
+          type: prev.ingameRoomRes.type,
+          allMembers: prev.ingameRoomRes.allMembers.filter(
+            ({ memberId }) => memberId !== props
+          ),
+        },
+      }));
+    } else {
+      set({ ingameRoomRes: props });
+    }
   },
 
   isIngameWsError: false,
