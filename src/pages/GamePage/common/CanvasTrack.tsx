@@ -42,7 +42,6 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
   const carImagesRef = useRef<HTMLImageElement[] | null>(null);
   const carsRef = useRef<I_CarCoord[]>([]);
   carsRef.current = [];
-  let isArrived = 0;
 
   useEffect(() => {
     // 캔버스 세팅
@@ -133,22 +132,14 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
           }
         });
       }
-
-      // 도착전까지만 animate를 실행한다. (임시)
-      if (!isArrived) {
-        rafTimer = requestAnimationFrame(animate);
-      }
+      rafTimer = requestAnimationFrame(animate);
     };
 
-    rafTimer = requestAnimationFrame(animate); //////////////실행
+    rafTimer = requestAnimationFrame(animate);
     return () => {
       rafTimer && cancelAnimationFrame(rafTimer);
     };
   }, [allMembers]);
-
-  setTimeout(() => {
-    isArrived = 1;
-  }, 5000);
 
   return (
     <canvas
