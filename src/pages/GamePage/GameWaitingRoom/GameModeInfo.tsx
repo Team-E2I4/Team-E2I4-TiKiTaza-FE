@@ -18,7 +18,7 @@ const GAME_MODE_INFO = {
 const GameModeInfo = ({ children, gameMode }: GameModeInfoProps) => {
   return (
     <div className='w-[69.3rem] h-[10rem] flex bg-beige-100 shadow-md shadow-black/50 rounded-[2.5rem]'>
-      <p className='w-[80%] my-[2.5rem] ml-[2rem] overflow-y-scroll text-left'>
+      <p className='w-[80%] my-[2.5rem] ml-[2rem] overflow-y-auto text-left'>
         <strong>{GAME_MODE[gameMode]} 모드입니다. </strong>
         {GAME_MODE_INFO[gameMode]}
       </p>
