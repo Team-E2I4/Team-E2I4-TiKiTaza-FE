@@ -10,9 +10,9 @@ const GAME_MODE = {
   WORD: '단어',
 };
 const GAME_MODE_INFO = {
-  SENTENCE: `주어진 문장을 맞게 입력하면 됩니다.`,
-  CODE: `주어진 코드를 맞게 입력하면 됩니다. 아무것도 입력할 것이 안 보인다면 줄 넘김이라 엔터키를 입력하면 됩니다!`,
-  WORD: '주어진 단어를 맞게 입력하며 됩니다.',
+  SENTENCE: `문장을 신속하고 정확하게 입력하여 경주에서 승리하세요!`,
+  CODE: `코드를 신속하고 정확하게 입력하여 경주에서 승리하세요! 아무것도 입력할 것이 안 보인다면 줄 넘김이라 엔터키를 입력하면 됩니다!`,
+  WORD: '단어를 신속하고 정확하게 입력하여 경주에서 승리하세요!',
 };
 
 const GameModeInfo = ({ children, gameMode }: GameModeInfoProps) => {
