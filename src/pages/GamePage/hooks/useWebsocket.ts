@@ -73,7 +73,8 @@ const useWebsocket = (roomId: number | null) => {
       if (
         responsePublish.type === 'EXIT' ||
         responsePublish.type === 'ENTER' ||
-        responsePublish.type === 'READY'
+        responsePublish.type === 'READY' ||
+        responsePublish.type === 'MODIFIED'
       ) {
         setAllMembers(responsePublish.allMembers);
       }
