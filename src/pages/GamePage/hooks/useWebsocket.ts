@@ -21,7 +21,8 @@ const useWebsocket = (roomId: number | null) => {
     setDidAdminStart,
     setAllMembers,
   } = useGameWaitingRoomStore();
-  const { setIsIngameWsError, setIngameRoomRes } = useIngameStore();
+  const { setIsIngameWsError, setIngameRoomRes, setIngameRoomRes2 } =
+    useIngameStore();
 
   useEffect(() => {
     if (!roomId) {
@@ -62,6 +63,13 @@ const useWebsocket = (roomId: number | null) => {
 
     const onMessageReceived = ({ body }: { body: string }) => {
       const responsePublish = JSON.parse(body);
+      if (responsePublish.type === 'EXIT') {
+        if (responsePublish.roomInfo.isPlaying) {
+          setIngameRoomRes2(responsePublish.exitMemberId);
+        } else {
+          setAllMembers(responsePublish.allMembers);
+        }
+      }
       setGameRoomRes(responsePublish);
       if (checkIsEmptyObj(responsePublish)) {
         setIsWsError(true);
@@ -71,7 +79,6 @@ const useWebsocket = (roomId: number | null) => {
         setDidAdminStart(true);
       }
       if (
-        responsePublish.type === 'EXIT' ||
         responsePublish.type === 'ENTER' ||
         responsePublish.type === 'READY' ||
         responsePublish.type === 'MODIFIED'
