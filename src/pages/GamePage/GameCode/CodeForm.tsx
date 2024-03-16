@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useIngameStore from '@/store/useIngameStore';
+import useFocusInput from './useFocusInput';
 
 interface CodeFormProps {
   isLastSentence: boolean;
@@ -44,9 +44,7 @@ const CodeForm = ({
   }>();
   const { ref } = register('code');
 
-  const focusInput = useRef<HTMLInputElement | null>(null);
-
-  const { isRoundWaiting } = useIngameStore();
+  const { focusInput } = useFocusInput();
 
   const currentPublishIndex = useRef(0);
 
@@ -147,16 +145,6 @@ const CodeForm = ({
       70
     );
   }, [checkedCorrectAndTypo]);
-
-  useEffect(() => {
-    if (isRoundWaiting || !focusInput.current) {
-      return;
-    }
-    focusInput.current.focus();
-    return () => {
-      focusInput.current = null;
-    };
-  }, [isRoundWaiting]);
 
   return (
     <>
