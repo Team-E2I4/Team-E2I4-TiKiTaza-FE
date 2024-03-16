@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Dashboard from '@/common/Ingame/Dashboard';
-import useIngameStore from '@/store/useIngameStore';
 import {
   I_IngameWsResponse,
   PublishIngameType,
 } from '../../GamePage/types/websocketType';
+import useFocusInput from '../GameCode/useFocusInput';
 import useTypingState from '../GameSentence/useTypingState';
 import WordCell from './WordCell';
 import WordRankContainer from './WordRankContainer';
@@ -30,9 +30,7 @@ const WordGameLayout = ({
 
   const { ref } = register('wordInput');
 
-  const focusInput = useRef<HTMLInputElement | null>(null);
-
-  const { isRoundWaiting } = useIngameStore();
+  const { focusInput } = useFocusInput();
 
   const submitCount = useRef(0);
   const currentScore =
@@ -49,17 +47,6 @@ const WordGameLayout = ({
   useEffect(() => {
     onInputChange(0, 100, 150); //동기화..
   }, [ingameRoomRes]);
-
-  useEffect(() => {
-    if (isRoundWaiting || !focusInput.current) {
-      return;
-    }
-    focusInput.current.focus();
-
-    return () => {
-      focusInput.current = null;
-    };
-  }, [isRoundWaiting]);
 
   return (
     <>
