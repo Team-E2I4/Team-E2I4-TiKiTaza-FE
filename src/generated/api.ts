@@ -206,6 +206,31 @@ export interface ApiResponseGameRoomInviteCodeResponse {
 /**
  * 
  * @export
+ * @interface ApiResponseGuestResponse
+ */
+export interface ApiResponseGuestResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseGuestResponse
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiResponseGuestResponse
+     */
+    'message': string;
+    /**
+     * 
+     * @type {GuestResponse}
+     * @memberof ApiResponseGuestResponse
+     */
+    'data'?: GuestResponse;
+}
+/**
+ * 
+ * @export
  * @interface ApiResponseListRankingResponse
  */
 export interface ApiResponseListRankingResponse {
@@ -472,6 +497,19 @@ export interface GameRoomUpdateRequest {
      * @memberof GameRoomUpdateRequest
      */
     'gameType': string;
+}
+/**
+ * 
+ * @export
+ * @interface GuestResponse
+ */
+export interface GuestResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof GuestResponse
+     */
+    'accessToken': string;
 }
 /**
  * 
@@ -1038,6 +1076,40 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary 게스트 로그아웃
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        logout1: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/auth/logout/guest`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary 토큰 재발급
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1301,7 +1373,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async guestLogin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseAuthResponse>> {
+        async guestLogin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseGuestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.guestLogin(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.guestLogin']?.[localVarOperationServerIndex]?.url;
@@ -1343,6 +1415,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.logout(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.logout']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary 게스트 로그아웃
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async logout1(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseVoid>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.logout1(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.logout1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1483,7 +1567,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        guestLogin(options?: any): AxiosPromise<ApiResponseAuthResponse> {
+        guestLogin(options?: any): AxiosPromise<ApiResponseGuestResponse> {
             return localVarFp.guestLogin(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1514,6 +1598,15 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         logout(options?: any): AxiosPromise<ApiResponseVoid> {
             return localVarFp.logout(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 게스트 로그아웃
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        logout1(options?: any): AxiosPromise<ApiResponseVoid> {
+            return localVarFp.logout1(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1693,6 +1786,17 @@ export class DefaultApi extends BaseAPI {
      */
     public logout(options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).logout(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 게스트 로그아웃
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public logout1(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).logout1(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
