@@ -63,7 +63,8 @@ const IngameHeader = ({
         <div className='w-[40rem] truncate text-[4rem]'>{roomInfo?.title}</div>
         <div className='grow'>참여 {roomInfo?.currentPlayer}명</div>
         <div>
-          <span className='font-bold font-[Giants-Inline] text-[3.2rem]'>
+          <span
+            className={`font-bold font-[Giants-Inline] text-[3.2rem] ${timeLeft <= 5000 && 'animate-blinkTimer'}`}>
             남은 시간 : {convertTime(timeLeft)}
           </span>
         </div>
