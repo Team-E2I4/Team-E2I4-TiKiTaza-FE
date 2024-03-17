@@ -67,7 +67,7 @@ const MainPage = () => {
         <article className='rounded-[0.5rem] flex items-center justify-between gap-[3rem] '>
           {gameModeList.map((el) => (
             <span
-              className={`flex-1 h-full font-[Giants-Inline] text-[2rem] flex items-center justify-center cursor-pointer rounded-[0.3rem] ${selectedGameMode === el ? 'bg-green-100' : 'bg-green-70'}`}
+              className={`flex-1 h-full font-[Giants-Inline] text-[2rem] flex items-center justify-center cursor-pointer rounded-[0.3rem] ${selectedGameMode === el ? 'bg-green-100' : 'bg-green-70'} hover:bg-green-100 hover:scale-110 transition-all`}
               key={el}
               onClick={() => setSelectedGameMode(el)}>
               {mappedGameModeList[el]}
