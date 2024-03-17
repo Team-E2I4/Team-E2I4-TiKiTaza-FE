@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Backward from '@/common/Backward/Backward';
 import useCarImgStore from '@/store/useCarStore';
 import DisconnectModal from '../common/DisconnectModal';
+import { CarImgType } from '../types/ingameTypes';
 import {
   HandlePubKickUserType,
   HandlePubReadyGameType,
@@ -45,7 +46,7 @@ const GameWaitingRoom = ({
   }, []);
 
   useEffect(() => {
-    const carIdxArray: { [key: string]: number } = {};
+    const carIdxArray: CarImgType = {};
     allMembers.forEach((car, idx) => {
       const { memberId } = car;
       carIdxArray[memberId] = idx;

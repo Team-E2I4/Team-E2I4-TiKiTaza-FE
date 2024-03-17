@@ -1,8 +1,9 @@
 import { create } from 'zustand';
+import { CarImgType } from '@/pages/GamePage/types/ingameTypes';
 
 interface I_useCarImgStore {
-  carImgStore: Record<number, number>;
-  setCarImgStore: (carImgStore: Record<number, number>) => void;
+  carImgStore: CarImgType;
+  setCarImgStore: (carImgStore: CarImgType) => void;
 }
 
 const useCarImgStore = create<I_useCarImgStore>((set) => ({
