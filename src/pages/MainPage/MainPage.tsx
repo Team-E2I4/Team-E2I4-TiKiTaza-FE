@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth/useAuth';
 import useOnlineUsers from '@/hooks/useOnlineUsers';
+import useRoomInfoStore from '@/store/useRoomInfoStore';
 import { GameModeType } from '@/types/gameMode';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import EnterRoomErrorFallback from './EnterRoomErrorFallback';
@@ -32,10 +33,14 @@ const MainPage = () => {
   const navigate = useNavigate();
   const { data: userList } = useOnlineUsers();
   const { data: userData, isPending, error } = useAuthCheck();
+  const { roomInfo, setRoomInfo } = useRoomInfoStore();
 
   const [selectedGameMode, setSelectedGameMode] =
     useState<FilteredGameModeType>('ALL');
 
+  useEffect(() => {
+    roomInfo && setRoomInfo(null);
+  }, []);
   if (isPending) {
     return <div>유저 정보 불러오는중...</div>;
   }

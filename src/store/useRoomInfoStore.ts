@@ -5,14 +5,14 @@ interface I_useRoomState {
   roomId: number;
   roomInfo: I_RoomInfo | null;
   setRoomId: (roomId: number) => void;
-  setRoomInfo: (roomInfo: I_RoomInfo) => void;
+  setRoomInfo: (roomInfo: I_RoomInfo | null) => void;
 }
 
 const useRoomInfoStore = create<I_useRoomState>((set) => ({
   roomId: 0,
   roomInfo: null,
   setRoomId: (roomId: number) => set({ roomId }),
-  setRoomInfo: (roomInfo: I_RoomInfo) => set({ roomInfo }),
+  setRoomInfo: (roomInfo: I_RoomInfo | null) => set({ roomInfo }),
 }));
 
 export default useRoomInfoStore;
