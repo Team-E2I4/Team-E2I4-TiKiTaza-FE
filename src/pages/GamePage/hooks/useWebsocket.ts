@@ -73,14 +73,16 @@ const useWebsocket = (roomId: number | null) => {
       if (
         responsePublish.type === 'ENTER' ||
         responsePublish.type === 'READY' ||
-        responsePublish.type === 'MODIFIED'
+        responsePublish.type === 'MODIFIED' ||
+        responsePublish.type === 'EXIT'
       ) {
         setAllMembers(responsePublish.allMembers);
       }
-      if (responsePublish.type === 'EXIT') {
+      if (
+        responsePublish.type === 'EXIT' &&
         responsePublish.roomInfo.isPlaying
-          ? setIngameRoomRes(responsePublish.exitMemberId)
-          : setAllMembers(responsePublish.allMembers);
+      ) {
+        setIngameRoomRes(responsePublish.exitMemberId);
       }
     };
 
