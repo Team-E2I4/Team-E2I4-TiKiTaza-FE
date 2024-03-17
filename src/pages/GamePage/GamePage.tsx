@@ -37,6 +37,29 @@ const GamePage = () => {
   );
 
   useEffect(() => {
+    const preventKeyboardRefresh = (event: KeyboardEvent) => {
+      if (
+        event.key === 'F5' ||
+        (event.metaKey && event.key === 'r') ||
+        (event.ctrlKey && event.key === 'r')
+      ) {
+        event.preventDefault();
+      }
+    };
+    const preventMouseRefresh = (event: MouseEvent) => {
+      event.preventDefault();
+    };
+
+    window.addEventListener('keydown', preventKeyboardRefresh);
+    window.addEventListener('contextmenu', preventMouseRefresh);
+
+    return () => {
+      window.removeEventListener('keydown', preventKeyboardRefresh);
+      window.removeEventListener('contextmenu', preventMouseRefresh);
+    };
+  }, []);
+
+  useEffect(() => {
     if (gameRoomRes?.roomInfo) {
       setRoomInfo(gameRoomRes.roomInfo);
     }
