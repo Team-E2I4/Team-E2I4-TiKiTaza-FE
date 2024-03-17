@@ -62,13 +62,6 @@ const useWebsocket = (roomId: number | null) => {
 
     const onMessageReceived = ({ body }: { body: string }) => {
       const responsePublish = JSON.parse(body);
-      if (responsePublish.type === 'EXIT') {
-        if (responsePublish.roomInfo.isPlaying) {
-          setIngameRoomRes(responsePublish.exitMemberId);
-        } else {
-          setAllMembers(responsePublish.allMembers);
-        }
-      }
       setGameRoomRes(responsePublish);
       if (checkIsEmptyObj(responsePublish)) {
         setIsWsError(true);
@@ -83,6 +76,11 @@ const useWebsocket = (roomId: number | null) => {
         responsePublish.type === 'MODIFIED'
       ) {
         setAllMembers(responsePublish.allMembers);
+      }
+      if (responsePublish.type === 'EXIT') {
+        responsePublish.roomInfo.isPlaying
+          ? setIngameRoomRes(responsePublish.exitMemberId)
+          : setAllMembers(responsePublish.allMembers);
       }
     };
 
