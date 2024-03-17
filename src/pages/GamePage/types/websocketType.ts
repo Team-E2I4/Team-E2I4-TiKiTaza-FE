@@ -58,10 +58,6 @@ export type IngameMessageType =
   | 'WORD_DENIED'
   | 'FINISH';
 
-export type GameScoreType = {
-  [key: string]: number;
-};
-
 export type PayloadType =
   | { currentScore: number }
   | { word: string }

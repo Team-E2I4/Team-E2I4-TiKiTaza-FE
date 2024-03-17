@@ -19,6 +19,7 @@ import {
 } from '@/common/Ingame/ingameConstants';
 import useCanvas from '@/hooks/useCanvas';
 import useCarImgStore from '@/store/useCarStore';
+import { CarImgType } from '../types/ingameTypes';
 import { I_AllMember } from '../types/websocketType';
 
 interface I_CarCoord {
@@ -38,7 +39,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
   });
   const { carImgStore } = useCarImgStore();
 
-  const prevData = useRef<{ [key: string]: number }>({});
+  const prevData = useRef<CarImgType>({});
   const carImagesRef = useRef<HTMLImageElement[] | null>(null);
   const carsRef = useRef<I_CarCoord[]>([]);
   carsRef.current = [];
