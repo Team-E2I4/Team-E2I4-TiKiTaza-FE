@@ -62,7 +62,9 @@ const GameRoomList = ({ data, selectedGameMode }: GameRoomListProps) => {
           </ul>
           {!filteredRoomList.length && (
             <span className='text-[2rem] font-bold w-full text-center block'>
-              선택하신 모드의 방 목록이 없습니다!
+              {selectedGameMode === 'ALL'
+                ? '현재 생성된 게임이 없습니다!'
+                : '선택하신 모드의 방 목록이 없습니다!'}
             </span>
           )}
         </li>
