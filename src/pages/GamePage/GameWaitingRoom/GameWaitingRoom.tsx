@@ -9,7 +9,7 @@ import {
   I_AllMember,
   I_RoomInfo,
 } from '../types/websocketType';
-import GameModeInfo from './GameModeInfo';
+import GameModeDescription from './GameModeDescription';
 import GameReadyAndStart from './GameReadyAndStart';
 import GameRoomInfo from './GameRoomInfo';
 import GameRoomLinkInvitation from './GameRoomLinkInvitation';
@@ -76,9 +76,9 @@ const GameWaitingRoom = ({
           />
         )}
         <footer className='w-[114.8rem] flex gap-[5rem]'>
-          <GameModeInfo gameMode={roomInfo?.gameMode ?? 'SENTENCE'}>
+          <GameModeDescription gameMode={roomInfo?.gameMode ?? 'SENTENCE'}>
             {isAdmin && <GameRoomSetting />}
-          </GameModeInfo>
+          </GameModeDescription>
           <GameRoomLinkInvitation />
           <GameReadyAndStart
             isAdmin={isAdmin}
