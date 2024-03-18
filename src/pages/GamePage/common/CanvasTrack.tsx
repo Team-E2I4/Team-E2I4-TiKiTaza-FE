@@ -67,7 +67,8 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
     allMembers.forEach((member, idx) => {
       const { score } = member;
       const lineGap = idx % 4;
-
+      const verticalLineGap = (idx % 4) * 12 - 2;
+      const horizontalLineGap = (idx % 4) * 10 + 2;
       let x = 0;
       let y = 0;
 
@@ -83,13 +84,13 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
 
       if (score <= NORTH_LAST_SCORE) {
         x = START_X + MOVE_STEP_X * score;
-        y = lineGap * 12 - 2;
+        y = verticalLineGap;
         if (score === NORTH_LAST_SCORE) {
           x -= CAR_SIZE;
           y += CAR_SIZE;
         }
       } else if (score <= EAST_LAST_SCORE) {
-        x = CANVAS_WIDTH - lineGap * 10 - CAR_SIZE + 2;
+        x = CANVAS_WIDTH - horizontalLineGap - CAR_SIZE;
         y = EAST_START_Y + MOVE_STEP_Y * (score - (NORTH_LAST_SCORE + 1));
         if (score === EAST_LAST_SCORE) {
           x -= CAR_SIZE;
@@ -97,16 +98,16 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
         }
       } else if (score <= SOUTH_LAST_SCORE) {
         x = SOUTH_START_X - MOVE_STEP_X * (score - (EAST_LAST_SCORE + 1));
-        y = CANVAS_HEIGHT - lineGap * 12 - CAR_SIZE + 5;
+        y = CANVAS_HEIGHT - verticalLineGap - CAR_SIZE + 3;
       } else if (score <= WEST_LAST_SCORE) {
-        x = lineGap * 10;
+        x = horizontalLineGap;
         y = WEST_START_Y - MOVE_STEP_Y * (score - (SOUTH_LAST_SCORE + 1));
         if (score === WEST_LAST_SCORE) {
           y += CAR_SIZE;
         }
       } else if (score > WEST_LAST_SCORE) {
         x = START_X + MOVE_STEP_X * (score - 100);
-        y = lineGap * 12 - 2;
+        y = verticalLineGap;
       }
       carsRef.current[idx] = { x, y, idx };
       prevData.current[member.memberId] = member.score;
