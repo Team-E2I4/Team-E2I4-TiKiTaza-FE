@@ -66,7 +66,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
     // allMembers 유저수 만큼 좌표 지정
     allMembers.forEach((member, idx) => {
       const { score } = member;
-      const lineGap = (idx % 4) * 10;
+      const lineGap = idx % 4;
 
       let x = 0;
       let y = 0;
@@ -83,13 +83,13 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
 
       if (score <= NORTH_LAST_SCORE) {
         x = START_X + MOVE_STEP_X * score;
-        y = lineGap;
+        y = lineGap * 12 - 2;
         if (score === NORTH_LAST_SCORE) {
           x -= CAR_SIZE;
           y += CAR_SIZE;
         }
       } else if (score <= EAST_LAST_SCORE) {
-        x = CANVAS_WIDTH - lineGap - CAR_SIZE;
+        x = CANVAS_WIDTH - lineGap * 10 - CAR_SIZE + 2;
         y = EAST_START_Y + MOVE_STEP_Y * (score - (NORTH_LAST_SCORE + 1));
         if (score === EAST_LAST_SCORE) {
           x -= CAR_SIZE;
@@ -97,21 +97,16 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
         }
       } else if (score <= SOUTH_LAST_SCORE) {
         x = SOUTH_START_X - MOVE_STEP_X * (score - (EAST_LAST_SCORE + 1));
-        y = CANVAS_HEIGHT - lineGap - CAR_SIZE;
-        if (score === SOUTH_LAST_SCORE) {
-          x += CAR_SIZE;
-          y -= CAR_SIZE;
-        }
+        y = CANVAS_HEIGHT - lineGap * 12 - CAR_SIZE + 5;
       } else if (score <= WEST_LAST_SCORE) {
-        x = lineGap;
+        x = lineGap * 10;
         y = WEST_START_Y - MOVE_STEP_Y * (score - (SOUTH_LAST_SCORE + 1));
         if (score === WEST_LAST_SCORE) {
-          x += CAR_SIZE;
           y += CAR_SIZE;
         }
       } else if (score > WEST_LAST_SCORE) {
         x = START_X + MOVE_STEP_X * (score - 100);
-        y = lineGap;
+        y = lineGap * 12 - 2;
       }
       carsRef.current[idx] = { x, y, idx };
       prevData.current[member.memberId] = member.score;
