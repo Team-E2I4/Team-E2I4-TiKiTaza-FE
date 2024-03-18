@@ -3,6 +3,7 @@ import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
+import TrackLine from '../common/TrackLine';
 import useGameRound from '../hooks/useGameRound';
 import { I_Question, PublishIngameType } from '../types/websocketType';
 import CodeContainer from './CodeContainer';
@@ -89,8 +90,7 @@ const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
           <IngameRank rankInfos={rankInfoList} />
         </div>
         <div className='flex flex-col items-center justify-center ml-80 h-[61rem] relative w-[110rem]'>
-          <div className='absolute w-[110rem] h-full rounded-[10rem] border-2 border-black'></div>
-          <div className='absolute w-[100rem] h-[calc(100%-10rem)] rounded-[5rem] border-2 border-black'></div>
+          <TrackLine />
           <CanvasTrack allMembers={ingameRoomRes.allMembers} />
           <CodeFormContainer
             key={codeList.current[0].question}
