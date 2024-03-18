@@ -186,7 +186,7 @@ const GameForm = ({
             className={`
             text-[2rem]
             ${typoMarkList[i] === 'typo' ? 'text-red-500' : typoMarkList[i] === 'correct' ? 'text-black font-bold' : 'text-white'}
-            ${char === ' ' ? (typoMarkList[i] === 'typo' ? 'bg-red-500 w-[0.5rem] h-[2rem]' : 'w-[0.5rem] h-[2rem]') : ''}
+            ${char === ' ' ? (typoMarkList[i] === 'typo' ? 'bg-red-500 w-[1rem] h-[2rem]' : 'w-[1rem] h-[2rem]') : ''}
             `}
             key={`${char}${i}`}>
             {char}
@@ -197,6 +197,7 @@ const GameForm = ({
         className='flex flex-col items-center'
         onSubmit={handleSubmit(onSubmit)}>
         <Input
+          className='text-[2rem]'
           isError={!!errors['sentence']?.message}
           autoFocus
           autoComplete='off'
