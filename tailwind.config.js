@@ -36,9 +36,45 @@ export default {
         blinkTimer: {
           '50%': { color: 'red' },
         },
+        neonTop: {
+          '0%': {
+            left: '-100%',
+          },
+          '50%, 100%': {
+            left: '100%',
+          },
+        },
+        neonRight: {
+          '0%': {
+            top: '-100%',
+          },
+          '50%, 100%': {
+            top: '100%',
+          },
+        },
+        neonBottom: {
+          '0%': {
+            right: '-100%',
+          },
+          '50%, 100%': {
+            right: '100%',
+          },
+        },
+        neonLeft: {
+          '0%': {
+            bottom: '-100%',
+          },
+          '50%, 100%': {
+            bottom: '100%',
+          },
+        },
       },
       animation: {
         blinkTimer: 'blinkTimer 1s ease-in-out infinite',
+        neonTop: 'neonTop 1s linear infinite 0s',
+        neonRight: 'neonRight 1s linear infinite 0.25s',
+        neonBottom: 'neonBottom 1s linear infinite 0.5s',
+        neonLeft: 'neonLeft 1s linear infinite 0.75s',
       },
       backgroundImage: {
         'gradient-radial':
