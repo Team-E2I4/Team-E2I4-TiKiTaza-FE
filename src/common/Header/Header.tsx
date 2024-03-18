@@ -13,7 +13,6 @@ import logo_taza from '@/assets/logo/logo_taza.png';
 import { PAUSE, PLAY } from '@/common/Header/constants/volume';
 import { exchangeVolumeState } from '@/common/Header/utils/exchangeVolumeState';
 import { useAuthCheck, useLogout } from '@/hooks/useAuth/useAuth';
-import DisconnectModal from '@/pages/GamePage/common/DisconnectModal';
 import { handleKakaoLogin } from '@/utils/handleKakaoLogin';
 import WrappedIcon from '../WrappedIcon/WrappedIcon';
 import AudioPopover from './AudioPopover';
@@ -45,7 +44,6 @@ const Header = () => {
   };
 
   const [volume, setVolume] = useState<I_VolumeState>(initializeVolumeState());
-  const [isAlert, setIsAlert] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -67,18 +65,13 @@ const Header = () => {
     mutateLogout();
   };
 
-  const handleClickLogo = useCallback(() => {
-    setIsAlert(true);
-  }, []);
-
-  const handleClickCancel = useCallback(() => {
-    setIsAlert(false);
-  }, []);
-
   const onNavigateToMain = useCallback(() => {
+    if (isGameRoute) {
+      return;
+    }
     navigate('/main', { replace: true });
     navigate(0);
-  }, []);
+  }, [isGameRoute]);
 
   useEffect(() => {
     sessionStorage.setItem(VOLUME_STATE_KEY, JSON.stringify(volume));
@@ -96,80 +89,74 @@ const Header = () => {
   }, [volume.volumeSize, volume.bgm]);
 
   return (
-    <>
-      <DisconnectModal
-        isOpen={isAlert}
-        handleClickCancel={handleClickCancel}
-      />
-      <header className='h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
-        <section
-          onClick={isGameRoute ? handleClickLogo : onNavigateToMain}
-          className='flex cursor-pointer items-center'>
-          <img
-            src={logo_car}
-            className='h-[70%]'
-            alt='차량 로고이미지'
-          />
-          <img
-            src={logo_taza}
-            className='h-4/6'
-            alt='티키타자'
-          />
-        </section>
-        <section className='h-full flex items-center justify-around w-[20rem]'>
+    <header className='h-[4.5rem] w-[100%] shrink-0 flex justify-between px-[4rem]'>
+      <section
+        onClick={onNavigateToMain}
+        className='flex cursor-pointer items-center'>
+        <img
+          src={logo_car}
+          className='h-[70%]'
+          alt='차량 로고이미지'
+        />
+        <img
+          src={logo_taza}
+          className='h-4/6'
+          alt='티키타자'
+        />
+      </section>
+      <section className='h-full flex items-center justify-around w-[20rem]'>
+        <button
+          onClick={() =>
+            setVolume({ ...volume, bgm: exchangeVolumeState(volume.bgm) })
+          }
+          className={`bg-beige-10 hover:shadow-hover flex items-center justify-center p-[1.2rem] rounded-[1rem] transition-all duration-300 ${volume.bgm === 'play' ? 'shadow-default' : 'shadow-hover'}`}>
+          <WrappedIcon IconComponent={mappedIcons.bgm[volume.bgm]} />
+        </button>
+        <AudioPopover
+          value={volume.volumeSize}
+          onChange={(value) => setVolume({ ...volume, volumeSize: value })}>
           <button
-            onClick={() =>
-              setVolume({ ...volume, bgm: exchangeVolumeState(volume.bgm) })
-            }
-            className={`bg-beige-10 hover:shadow-hover flex items-center justify-center p-[1.2rem] rounded-[1rem] transition-all duration-300 ${volume.bgm === 'play' ? 'shadow-default' : 'shadow-hover'}`}>
-            <WrappedIcon IconComponent={mappedIcons.bgm[volume.bgm]} />
+            className={`bg-beige-10 hover:shadow-hover flex items-center justify-center p-[1.2rem] rounded-[1rem] transition-all duration-300`}>
+            <WrappedIcon
+              IconComponent={
+                mappedIcons.volumeSize[volume.volumeSize > 0 ? PLAY : PAUSE]
+              }
+            />
           </button>
-          <AudioPopover
-            value={volume.volumeSize}
-            onChange={(value) => setVolume({ ...volume, volumeSize: value })}>
-            <button
-              className={`bg-beige-10 hover:shadow-hover flex items-center justify-center p-[1.2rem] rounded-[1rem] transition-all duration-300`}>
-              <WrappedIcon
-                IconComponent={
-                  mappedIcons.volumeSize[volume.volumeSize > 0 ? PLAY : PAUSE]
-                }
-              />
-            </button>
-          </AudioPopover>
+        </AudioPopover>
 
-          {data ? (
-            data.data.data?.isGuest ? (
-              <KakaoTooltip>
-                <img
-                  src={kakao}
-                  alt='Kakao logo'
-                  className='w-[3rem] cursor-pointer'
-                  onClick={handleKakaoLogin}
-                />
-              </KakaoTooltip>
-            ) : (
-              <button
-                onClick={handleLogout}
-                className='hover:bg-gray-100 flex items-center justify-center'>
-                로그아웃
-              </button> // 카카오 로그인
-            )
-          ) : (
-            <></>
-          )}
-          <div style={{ display: 'none' }}>
-            {volume.bgm === PLAY ? (
-              <audio
-                ref={audioRef}
-                src={bgmFile}
-                autoPlay
-                loop
+        {data ? (
+          data.data.data?.isGuest ? (
+            <KakaoTooltip>
+              <img
+                src={kakao}
+                alt='Kakao logo'
+                className='w-[3rem] cursor-pointer'
+                onClick={handleKakaoLogin}
               />
-            ) : null}
-          </div>
-        </section>
-      </header>
-    </>
+            </KakaoTooltip>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className='hover:bg-gray-100 flex items-center justify-center'>
+              로그아웃
+            </button> // 카카오 로그인
+          )
+        ) : (
+          <></>
+        )}
+        <div style={{ display: 'none' }}>
+          {volume.bgm === PLAY ? (
+            <audio
+              ref={audioRef}
+              src={bgmFile}
+              autoPlay
+              loop
+            />
+          ) : null}
+        </div>
+      </section>
+    </header>
   );
 };
 
