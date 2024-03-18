@@ -13,7 +13,6 @@ import {
   SOUTH_LAST_SCORE,
   SOUTH_START_X,
   START_X,
-  TRACK_WIDHT,
   WEST_LAST_SCORE,
   WEST_START_Y,
 } from '@/common/Ingame/ingameConstants';
@@ -104,7 +103,7 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
           y -= CAR_SIZE;
         }
       } else if (score <= WEST_LAST_SCORE) {
-        x = TRACK_WIDHT - lineGap - CAR_SIZE;
+        x = lineGap;
         y = WEST_START_Y - MOVE_STEP_Y * (score - (SOUTH_LAST_SCORE + 1));
         if (score === WEST_LAST_SCORE) {
           x += CAR_SIZE;
