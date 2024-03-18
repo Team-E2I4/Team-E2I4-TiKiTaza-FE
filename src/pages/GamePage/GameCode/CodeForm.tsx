@@ -157,8 +157,8 @@ const CodeForm = ({
             <>
               {[...codeItem].map((char, idx) => (
                 <span
-                  className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-black font-bold' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-500 font-bold' : 'text-white'} 
-                ${char === ' ' && checkedCorrectAndTypo[idx] === 'typo' && 'w-[0.5rem] h-[2rem] bg-red-500'}`}
+                  className={`${checkedCorrectAndTypo[idx] === CHAR_STATE.CORRECT ? 'text-black' : checkedCorrectAndTypo[idx] === CHAR_STATE.TYPO ? 'text-red-700' : 'text-white'} 
+                ${char === ' ' && checkedCorrectAndTypo[idx] === 'typo' && 'w-[0.5rem] h-[2rem] bg-red-700'}`}
                   key={`${char}${idx}`}>
                   {char === ' ' ? '\u00A0' : char}
                 </span>
