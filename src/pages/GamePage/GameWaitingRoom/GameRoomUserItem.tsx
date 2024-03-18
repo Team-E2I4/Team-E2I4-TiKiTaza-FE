@@ -29,7 +29,7 @@ const GameRoomUserItem = ({
 
   return (
     <div
-      className={`w-[25.8rem] h-[21.2rem] p-[1.6rem] pb-[4rem] relative flex flex-col shadow-md shadow-black/50 rounded-[2.5rem] ${isMe ? 'bg-beige-100' : 'bg-white'}`}>
+      className={`w-[25.8rem] h-[21.2rem] p-[1.6rem] pb-[4rem] relative flex flex-col shadow-lg shadow-black/50 rounded-[2.5rem] bg-white outline ${isMe ? 'border-4 border-green-100 outline-black' : 'outline-gray-100'} `}>
       <div className='h-[3rem] self-end'>
         <button
           onClick={() => {
@@ -52,9 +52,8 @@ const GameRoomUserItem = ({
         />
         <div className='w-1/2 flex flex-col justify-evenly text-center'>
           <div
-            className={`w-[10rem] ${isMe ? 'h-[5rem]' : 'h-[3rem]'} py-[0.4rem] bg-green-70 rounded-[1rem]`}>
+            className={`w-[10rem] h-[3rem] py-[0.4rem] bg-green-70 rounded-[1rem]`}>
             {nickname}
-            {isMe && ' (본인)'}
           </div>
           <div className='w-[10rem] h-[3rem] py-[0.4rem] bg-green-70 rounded-[1rem] text-[1.4rem]'>
             {ranking === -1
@@ -66,7 +65,8 @@ const GameRoomUserItem = ({
         </div>
       </div>
       {((isAdminMe && isMe) || isReady) && (
-        <div className='absolute w-[13rem] h-[4rem] rounded-[2rem_0_2.5rem] right-0 bottom-0 text-center leading-[4rem] font-[Giants-Inline] bg-green-100'>
+        <div
+          className={`absolute w-[13rem] h-[4rem] rounded-[2rem_0_2.5rem] ${isMe ? 'right-[-2px] bottom-[-2px]' : 'right-[-1px] bottom-[-1px]'}  text-center leading-[4rem] font-[Giants-Inline] bg-green-100`}>
           {isAdmin ? '방장' : isReady && '준비'}
         </div>
       )}
