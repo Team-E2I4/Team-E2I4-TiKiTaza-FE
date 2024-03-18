@@ -1,8 +1,7 @@
 import { ForwardedRef, forwardRef } from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  whSize?: string;
-  isError: boolean;
+  isError?: boolean;
 }
 const Input = forwardRef(
   (
