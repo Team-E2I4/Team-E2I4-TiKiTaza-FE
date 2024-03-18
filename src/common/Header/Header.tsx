@@ -101,7 +101,7 @@ const Header = () => {
           onClick={() =>
             setVolume({ ...volume, bgm: exchangeVolumeState(volume.bgm) })
           }
-          className={`bg-beige-10 hover:shadow-hover flex items-center justify-center p-[1.2rem] rounded-[1rem] transition-all duration-300 ${volume.bgm === 'play' ? 'shadow-default' : 'shadow-hover'}`}>
+          className={`bg-beige-10 hover:shadow-hover flex items-center justify-center p-[1.2rem] rounded-[1rem] transition-all duration-300 ${volume.bgm === 'pause' ? 'shadow-default' : 'shadow-hover'}`}>
           <WrappedIcon IconComponent={mappedIcons.bgm[volume.bgm]} />
         </button>
         <AudioPopover
