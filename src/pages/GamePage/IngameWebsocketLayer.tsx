@@ -38,7 +38,7 @@ const IngameWebsocketLayer = ({
     ) {
       setIsRoundWaiting(true);
     }
-  }, [ingameRoomRes.type]);
+  }, [ingameRoomRes]);
 
   if (isIngameWsError || checkIsEmptyObj(ingameRoomRes)) {
     return <WsError />;
