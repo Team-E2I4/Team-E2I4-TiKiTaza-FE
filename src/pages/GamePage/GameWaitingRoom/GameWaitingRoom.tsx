@@ -83,6 +83,7 @@ const GameWaitingRoom = ({
           <GameRoomLinkInvitation />
           <GameReadyAndStart
             isAdmin={isAdmin}
+            userId={userId}
             allMembers={allMembers}
             handlePubReadyGame={handlePubReadyGame}
             handlePubStartGame={handlePubStartGame}
