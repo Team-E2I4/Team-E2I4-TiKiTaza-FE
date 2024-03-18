@@ -36,14 +36,7 @@ export interface I_VolumeState {
   volumeSize: number;
 }
 
-// const VOLUME_STATE_KEY = 'volumeState';
-
 const Header = () => {
-  // const initializeVolumeState = () => {
-  //   const savedState = sessionStorage.getItem(VOLUME_STATE_KEY);
-  //   return savedState ? JSON.parse(savedState) : { bgm: PAUSE, volumeSize: 50 };
-  // };
-
   const { volume, setVolume } = useVolumeStore();
 
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -65,10 +58,6 @@ const Header = () => {
   const handleLogout = () => {
     mutateLogout();
   };
-
-  // useEffect(() => {
-  //   sessionStorage.setItem(VOLUME_STATE_KEY, JSON.stringify(volume));
-  // }, [volume]);
 
   useEffect(() => {
     if (audioRef.current) {
