@@ -65,7 +65,7 @@ const CreateRoomForm = ({
       title: roomInfo?.title ?? '',
       password: roomInfo?.password ?? '',
       round: roomInfo?.maxRound ?? 2,
-      maxPlayer: roomInfo?.maxPlayer ?? 2,
+      maxPlayer: roomInfo?.maxPlayer ?? 8,
     },
   });
 
