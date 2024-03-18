@@ -4,8 +4,8 @@ import {
   SpeakerLoudIcon,
   SpeakerOffIcon,
 } from '@radix-ui/react-icons';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import bgmFile from '@/assets/audio/bgm1.mp3';
 import kakao from '@/assets/login/kakao-icon.svg';
 import logo_car from '@/assets/logo/logo_car.png';
@@ -13,8 +13,8 @@ import logo_taza from '@/assets/logo/logo_taza.png';
 import { PAUSE, PLAY } from '@/common/Header/constants/volume';
 import { exchangeVolumeState } from '@/common/Header/utils/exchangeVolumeState';
 import { useAuthCheck, useLogout } from '@/hooks/useAuth/useAuth';
+import useVolumeStore from '@/store/useVolumeStore';
 import { handleKakaoLogin } from '@/utils/handleKakaoLogin';
-import storageFactory from '@/utils/storageFactory';
 import WrappedIcon from '../WrappedIcon/WrappedIcon';
 import AudioPopover from './AudioPopover';
 import KakaoTooltip from './KakaoTooltip';
@@ -31,21 +31,20 @@ const mappedIcons = {
     [PAUSE]: SpeakerOffIcon,
   },
 };
-interface I_VolumeState {
+export interface I_VolumeState {
   bgm: VolumeType;
   volumeSize: number;
 }
 
-const VOLUME_STATE_KEY = 'volumeState';
+// const VOLUME_STATE_KEY = 'volumeState';
 
 const Header = () => {
-  const { setItem, getItem } = storageFactory(sessionStorage);
-  const initializeVolumeState = () => {
-    const savedState = getItem(VOLUME_STATE_KEY, '');
-    return savedState ? savedState : { bgm: PLAY, volumeSize: 50 };
-  };
+  // const initializeVolumeState = () => {
+  //   const savedState = sessionStorage.getItem(VOLUME_STATE_KEY);
+  //   return savedState ? JSON.parse(savedState) : { bgm: PAUSE, volumeSize: 50 };
+  // };
 
-  const [volume, setVolume] = useState<I_VolumeState>(initializeVolumeState());
+  const { volume, setVolume } = useVolumeStore();
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -67,17 +66,9 @@ const Header = () => {
     mutateLogout();
   };
 
-  const onNavigateToMain = useCallback(() => {
-    if (isGameRoute) {
-      return;
-    }
-    navigate('/main', { replace: true });
-    navigate(0);
-  }, [isGameRoute]);
-
-  useEffect(() => {
-    setItem(VOLUME_STATE_KEY, JSON.stringify(volume));
-  }, [volume]);
+  // useEffect(() => {
+  //   sessionStorage.setItem(VOLUME_STATE_KEY, JSON.stringify(volume));
+  // }, [volume]);
 
   useEffect(() => {
     if (audioRef.current) {
