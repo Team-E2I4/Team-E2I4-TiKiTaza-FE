@@ -82,7 +82,7 @@ const useWebsocket = (roomId: number | null) => {
         responsePublish.type === 'EXIT' &&
         responsePublish.roomInfo.isPlaying
       ) {
-        setIngameRoomRes(responsePublish.exitMemberId);
+        setIngameRoomRes(responsePublish);
       }
     };
 
