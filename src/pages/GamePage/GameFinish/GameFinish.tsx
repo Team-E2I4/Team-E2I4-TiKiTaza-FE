@@ -98,14 +98,14 @@ const GameFinish = ({
             navigate('/main', { replace: true });
             navigate(0);
           }}
-          className='bg-coral-100 px-6 py-6 rounded-[1rem] text-[3rem] font-bold'>
+          className='bg-coral-100 px-6 py-6 rounded-[1rem] text-[2rem] font-bold'>
           로비로 나가기
         </button>
         <button
           onClick={() => {
             onMoveToGameRoom();
           }}
-          className='bg-coral-100 px-6 py-6 rounded-[1rem] text-[3rem] font-bold'>
+          className='bg-coral-100 px-6 py-6 rounded-[1rem] text-[2rem] font-bold'>
           다시하기
         </button>
       </section>
