@@ -14,6 +14,7 @@ import { PAUSE, PLAY } from '@/common/Header/constants/volume';
 import { exchangeVolumeState } from '@/common/Header/utils/exchangeVolumeState';
 import { useAuthCheck, useLogout } from '@/hooks/useAuth/useAuth';
 import { handleKakaoLogin } from '@/utils/handleKakaoLogin';
+import storageFactory from '@/utils/storageFactory';
 import WrappedIcon from '../WrappedIcon/WrappedIcon';
 import AudioPopover from './AudioPopover';
 import KakaoTooltip from './KakaoTooltip';
@@ -38,9 +39,10 @@ interface I_VolumeState {
 const VOLUME_STATE_KEY = 'volumeState';
 
 const Header = () => {
+  const { setItem, getItem } = storageFactory(sessionStorage);
   const initializeVolumeState = () => {
-    const savedState = sessionStorage.getItem(VOLUME_STATE_KEY);
-    return savedState ? JSON.parse(savedState) : { bgm: PLAY, volumeSize: 50 };
+    const savedState = getItem(VOLUME_STATE_KEY, '');
+    return savedState ? savedState : { bgm: PLAY, volumeSize: 50 };
   };
 
   const [volume, setVolume] = useState<I_VolumeState>(initializeVolumeState());
@@ -74,7 +76,7 @@ const Header = () => {
   }, [isGameRoute]);
 
   useEffect(() => {
-    sessionStorage.setItem(VOLUME_STATE_KEY, JSON.stringify(volume));
+    setItem(VOLUME_STATE_KEY, JSON.stringify(volume));
   }, [volume]);
 
   useEffect(() => {
