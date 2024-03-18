@@ -6,6 +6,7 @@ import {
 
 interface GameReadyAndStartProps {
   isAdmin: boolean;
+
   allMembers: I_AllMember[] | undefined;
   handlePubReadyGame: HandlePubReadyGameType;
   handlePubStartGame: HandlePubStartGameType;
@@ -13,6 +14,7 @@ interface GameReadyAndStartProps {
 
 const GameReadyAndStart = ({
   isAdmin,
+
   allMembers,
   handlePubReadyGame,
   handlePubStartGame,
@@ -49,7 +51,16 @@ bg-coral-50
       onClick={() => {
         handlePubReadyGame();
       }}
-      className={`w-[24.1rem] h-[10rem] flex justify-center items-center text-[2rem] bg-coral-50 hover:bg-coral-100 transition-all duration-300 shadow-md shadow-black/50 rounded-[2.5rem]`}>
+      className={`group w-[24.1rem] h-[10rem] flex justify-center items-center text-[2rem] bg-coral-50
+        relative overflow-hidden
+        shadow-md shadow-black/50 z-[0] 
+        `}>
+      <span
+        className='absolute box-border transition-all ease-in-out duration-500 z-[-1] w-0 h-0 border-0 border-solid rotate-[360deg] 
+            bottom-0 left-0 border-t-transparent border-r-transparent border-b-transparent border-l-coral-100 group-hover:border-y-[10rem] group-hover:border-x-[calc(25.3rem*1.05)]'></span>
+      <span
+        className='absolute box-border transition-all ease-in-out duration-500 z-[-1] w-0 h-0 border-0 border-solid rotate-[360deg] 
+      top-0 right-0 border-t-transparent border-r-coral-100 border-b-transparent border-l-transparent group-hover:border-y-[10rem] group-hover:border-x-[calc(25.3rem*1.05)]'></span>
       준비
     </button>
   );
