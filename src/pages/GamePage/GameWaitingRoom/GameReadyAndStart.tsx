@@ -6,7 +6,7 @@ import {
 
 interface GameReadyAndStartProps {
   isAdmin: boolean;
-
+  userId: number;
   allMembers: I_AllMember[] | undefined;
   handlePubReadyGame: HandlePubReadyGameType;
   handlePubStartGame: HandlePubStartGameType;
@@ -14,7 +14,7 @@ interface GameReadyAndStartProps {
 
 const GameReadyAndStart = ({
   isAdmin,
-
+  userId,
   allMembers,
   handlePubReadyGame,
   handlePubStartGame,
@@ -22,6 +22,10 @@ const GameReadyAndStart = ({
   const isAllUserReady =
     allMembers?.every((user) => user.readyStatus === true) &&
     allMembers?.length !== 1;
+
+  const isUserReady = allMembers?.find(
+    ({ memberId }) => memberId === userId
+  )?.readyStatus;
 
   if (isAdmin) {
     return (
@@ -51,7 +55,7 @@ bg-coral-50
       onClick={() => {
         handlePubReadyGame();
       }}
-      className={`group w-[24.1rem] h-[10rem] flex justify-center items-center text-[2rem] bg-coral-50
+      className={`group w-[24.1rem] h-[10rem] flex justify-center items-center text-[2rem] ${isUserReady ? 'bg-coral-100' : 'bg-coral-50'}
         relative overflow-hidden
         shadow-md shadow-black/50 z-[0] 
         `}>
