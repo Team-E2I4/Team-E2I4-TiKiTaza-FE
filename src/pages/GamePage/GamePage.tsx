@@ -4,7 +4,6 @@ import Loading from '@/common/Loading/Loading';
 import { useAuthCheck } from '@/hooks/useAuth/useAuth';
 import useGameWaitingRoomStore from '@/store/useGameWaitingRoomStore';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
-import WsError from './common/WsError';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
 import useWebsocket from './hooks/useWebsocket';
 import IngameWebsocketLayer from './IngameWebsocketLayer';
@@ -71,7 +70,8 @@ const GamePage = () => {
   }, [gameRoomRes, isKicked]);
 
   if (!roomId || isWsError) {
-    return <WsError />;
+    navigate('/main', { replace: true });
+    navigate(0);
   }
 
   if (isError) {
