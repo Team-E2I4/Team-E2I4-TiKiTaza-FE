@@ -28,6 +28,7 @@ const useIngameStore = create<I_useIngameStore>((set) => ({
               ({ memberId: newMemberId }) => newMemberId === memberId
             )
           ),
+          type: props.type === 'EXIT' ? 'EXIT' : prev.ingameRoomRes.type,
         },
       }));
     } else {

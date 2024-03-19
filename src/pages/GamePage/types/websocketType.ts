@@ -52,6 +52,7 @@ export interface I_Question {
   question: string;
 }
 export type IngameMessageType =
+  | 'EXIT'
   | 'FIRST_ROUND_START'
   | 'NEXT_ROUND_START'
   | 'INFO'
