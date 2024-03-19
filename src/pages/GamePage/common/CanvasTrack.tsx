@@ -18,14 +18,11 @@ import {
 } from '@/common/Ingame/ingameConstants';
 import useCanvas from '@/hooks/useCanvas';
 import useCarImgStore from '@/store/useCarStore';
-import { NumberIndexSignitureType } from '../types/ingameTypes';
 import { I_AllMember } from '../types/websocketType';
 
 interface I_CarCoord {
   x: number;
   y: number;
-  userId?: string; // 인덱스번호 처럼 쓸 userId/ 0~3(g1), 4~7(g2)
-  idx?: number; // 인덱스 번호 -> 트랙 라인 식별용
 }
 
 const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
@@ -38,11 +35,15 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
   });
   const { carImgStore } = useCarImgStore();
 
-  // console.log('IINI', initialValue.current);
-  const prevData = useRef<NumberIndexSignitureType>({});
+  const idScore = useRef<{ [key: number]: number }>(
+    allMembers.reduce((object: { [key: number]: number }, value) => {
+      object[value.memberId] = value.score;
+      return object;
+    }, {})
+  );
+  const originUsers = useRef(allMembers.map(({ memberId }) => memberId));
   const carImagesRef = useRef<HTMLImageElement[] | null>(null);
-  const carsRef = useRef<I_CarCoord[]>([]);
-  carsRef.current = [];
+  const carsRef = useRef<{ [key: number]: I_CarCoord }>({});
 
   useEffect(() => {
     // 캔버스 세팅
@@ -53,9 +54,9 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
     }
 
     // 자동차 이미지 로드
-    if (allMembers.length) {
+    if (originUsers.current.length) {
       const carImagesArr: HTMLImageElement[] | null = [];
-      allMembers.forEach(({ memberId }) => {
+      originUsers.current.forEach((memberId) => {
         const newImg = new Image(20, 20);
         newImg.src = TRACK_CARS[carImgStore[memberId]];
         newImg.alt = '자동차';
@@ -64,21 +65,19 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
       carImagesRef.current = carImagesArr;
     }
 
-    // allMembers 유저수 만큼 좌표 지정
-    allMembers.forEach((member, idx) => {
-      const { score } = member;
-      const lineGap = idx % 4;
+    allMembers.forEach(({ memberId, score }) => {
+      const idx = originUsers.current.indexOf(memberId);
       const verticalLineGap = (idx % 4) * 12 - 2;
       const horizontalLineGap = (idx % 4) * 10 + 2;
       let x = 0;
-      let y = 0;
+      let y = verticalLineGap;
 
       // // 변화 없는 유저 얼리리턴
-      if (prevData.current[idx] === member.score) {
+      if (idScore.current[memberId] === score) {
         if (score === 0) {
           x = START_X + Math.floor(idx / 4) * 20;
-          y = lineGap;
-          carsRef.current[idx] = { x, y, idx };
+          y = verticalLineGap;
+          carsRef.current[memberId] = { x, y };
         }
         return;
       }
@@ -110,8 +109,8 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
         x = START_X + MOVE_STEP_X * (score - 100);
         y = verticalLineGap;
       }
-      carsRef.current[idx] = { x, y, idx };
-      prevData.current[member.memberId] = member.score;
+      carsRef.current[memberId] = { x, y };
+      idScore.current[memberId] = score;
     });
 
     //자동차를 화면에 그린다
@@ -121,11 +120,17 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
       ctx?.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); // 이전 값 삭제
       const imgrefcurrent = carImagesRef.current;
       if (imgrefcurrent) {
-        coordCars.forEach((eachCarCoord, idx) => {
-          const carImg = imgrefcurrent[idx];
+        allMembers.forEach(({ memberId }) => {
+          const carImg = imgrefcurrent[originUsers.current.indexOf(memberId)];
           //이미지 로드 이후 drawImage에 전달 가능
           if (carImg) {
-            ctx.drawImage(carImg, eachCarCoord.x, eachCarCoord.y, 20, 20);
+            ctx.drawImage(
+              carImg,
+              coordCars[memberId].x,
+              coordCars[memberId].y,
+              20,
+              20
+            );
           }
         });
       }
