@@ -7,7 +7,7 @@ import {
 interface GameReadyAndStartProps {
   isAdmin: boolean;
   userId: number;
-  allMembers: I_AllMember[] | undefined;
+  allMembers: I_AllMember[];
   handlePubReadyGame: HandlePubReadyGameType;
   handlePubStartGame: HandlePubStartGameType;
 }
@@ -20,10 +20,10 @@ const GameReadyAndStart = ({
   handlePubStartGame,
 }: GameReadyAndStartProps) => {
   const isAllUserReady =
-    allMembers?.every((user) => user.readyStatus === true) &&
-    allMembers?.length !== 1;
+    allMembers.every((user) => user.readyStatus === true) &&
+    allMembers.length !== 1;
 
-  const isUserReady = allMembers?.find(
+  const isUserReady = allMembers.find(
     ({ memberId }) => memberId === userId
   )?.readyStatus;
 
