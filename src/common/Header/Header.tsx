@@ -19,8 +19,6 @@ import WrappedIcon from '../WrappedIcon/WrappedIcon';
 import AudioPopover from './AudioPopover';
 import KakaoTooltip from './KakaoTooltip';
 
-export type VolumeType = 'play' | 'pause';
-
 const mappedIcons = {
   bgm: {
     [PLAY]: PauseIcon,
@@ -31,10 +29,6 @@ const mappedIcons = {
     [PAUSE]: SpeakerOffIcon,
   },
 };
-export interface I_VolumeState {
-  bgm: VolumeType;
-  volumeSize: number;
-}
 
 const Header = () => {
   const { volume, setVolume } = useVolumeStore();
