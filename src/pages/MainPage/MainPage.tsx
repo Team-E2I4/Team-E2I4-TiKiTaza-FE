@@ -56,9 +56,11 @@ const MainPage = () => {
           userList={[...userList.data.data!]}
           myId={userData.data.data!.memberId}
         />
-        <article className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full cursor-pointer hover:bg-green-100 transition-all'>
-          <button onClick={() => navigate('/rank')}>전체 랭킹 페이지</button>
-        </article>
+        <button
+          className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full cursor-pointer hover:bg-green-100 transition-all'
+          onClick={() => navigate('/rank')}>
+          전체 랭킹 페이지
+        </button>
         <UserCard
           nickname={userData.data.data!.nickname}
           isGuest={userData.data.data!.isGuest}
