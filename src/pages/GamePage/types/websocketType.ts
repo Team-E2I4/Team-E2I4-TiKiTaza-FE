@@ -61,7 +61,7 @@ export type IngameMessageType =
 export type PayloadType =
   | { currentScore: number }
   | { word: string }
-  | { currentRound: number };
+  | { currentRound: number; cpm: number; accuracy: number };
 
 export type PublishIngameType = (
   destination: string,

@@ -12,6 +12,15 @@ const useTypingState = () => {
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [accurate, setAccurate] = useState(0);
   const [cpm, setCpm] = useState(0);
+  const [totalCpm, setTotalCpm] = useState<number[]>([0]);
+  const [totalAccurate, setTotalAccurate] = useState<number[]>([0]);
+
+  const averageCpm =
+    totalCpm.reduce((acc, cur) => acc + cur, 0) / totalCpm.length;
+
+  const averageAccurate =
+    totalAccurate.reduce((acc, cur) => acc + cur, 0) / totalAccurate.length;
+
   const startTyping = () => {
     setStartTime(new Date());
   };
@@ -40,6 +49,16 @@ const useTypingState = () => {
 
       setCpm(calculatedTypingSpeed);
       setAccurate(calculatedAccuracy);
+
+      if (
+        calculatedAccuracy > 0 &&
+        calculatedTypingSpeed > 0 &&
+        !Number.isNaN(calculatedTypingSpeed) &&
+        !Number.isNaN(calculatedAccuracy)
+      ) {
+        setTotalAccurate((prev) => [...prev, calculatedAccuracy]);
+        setTotalCpm((prev) => [...prev, calculatedTypingSpeed]);
+      }
     },
     [startTime]
   );
@@ -57,17 +76,27 @@ const useTypingState = () => {
   );
 
   const initializeTyping = useCallback(() => {
-    setStartTime(null);
     setCpm(0);
     setAccurate(0);
+    setStartTime(null);
+  }, []);
+
+  const initializeAverage = useCallback(() => {
+    setTotalCpm([0]);
+    setTotalAccurate([0]);
   }, []);
 
   return {
     initializeTyping,
+    initializeAverage,
     onInputChange,
     cpm,
     accurate,
     onKeyDown,
+    averageCpm: isFinite(averageCpm) ? +averageCpm.toFixed(1) : 0,
+    averageAccurate: isFinite(averageAccurate)
+      ? +averageAccurate.toFixed(1)
+      : 0,
   };
 };
 
