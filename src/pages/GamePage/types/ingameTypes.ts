@@ -1,1 +1,1 @@
-export type CarImgType = { [key: number]: number };
+export type NumberIndexSignitureType = { [key: number]: number };
