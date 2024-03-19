@@ -27,12 +27,6 @@ const KaKaoLoginPage = () => {
     mutateKaKaoLogin(AUTHORIZATION_CODE);
   }, [AUTHORIZATION_CODE, mutateKaKaoLogin, navigate]);
 
-  return (
-    <div>
-      <p>로그인 중입니다.</p>
-      <p>잠시만 기다려주세요.</p>
-      {error && <p>{error.message}</p>}
-    </div>
-  );
+  return <div>{error && <p>{error.message}</p>}</div>;
 };
 export default KaKaoLoginPage;

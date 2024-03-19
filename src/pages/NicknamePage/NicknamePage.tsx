@@ -19,12 +19,12 @@ const NicknamePage = () => {
     const profileData = queryClient.getQueryData<NicknamePageProps>([
       'getMyProfileInfo',
     ]);
-    setIsOpen(true);
 
     if (profileData?.data?.data?.nickname) {
       setIsOpen(false);
       navigate('/main');
     }
+    setIsOpen(true);
   }, [queryClient]);
 
   return (
