@@ -24,7 +24,7 @@ const GameRoomList = ({ data, selectedGameMode }: GameRoomListProps) => {
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
       <ul className='flex flex-col items-center px-[1.5rem]'>
-        <li className='flex w-full h-[5rem]  py-[1rem]'>
+        <li className='flex w-full h-[5rem] py-[1rem] items-center'>
           {GAME_ROOM_LIST_CATEGORY.map((category, i) => (
             <Fragment key={i}>
               <span
