@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import kakao from '@/assets/login/kakao-icon.svg';
 import logo_big_shadow from '@/assets/logo/logo_big_shadow.png';
 import { useGuestLogin } from '@/hooks/useAuth/useAuth';
+import useVolumeStore from '@/store/useVolumeStore';
 import storageFactory from '@/utils/storageFactory';
 import { KAKAO_AUTH_URL } from './OAuth';
 
@@ -10,10 +11,13 @@ const StartPage = () => {
 
   const { removeItem } = storageFactory(localStorage);
 
+  const { setVolume } = useVolumeStore();
+
   const { mutate: guestLoginMutate } = useGuestLogin({
     onSuccess: () => {
       alert('로그인 성공!');
       navigate('/main');
+      setVolume({ bgm: 'play', volumeSize: 30 });
     },
   });
 
