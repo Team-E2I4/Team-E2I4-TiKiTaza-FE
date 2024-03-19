@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-import { NumberIndexSignitureType } from '@/pages/GamePage/types/ingameTypes';
+import { NumberIndexSignatureType } from '@/pages/GamePage/types/ingameTypes';
 
 interface I_useCarImgStore {
-  carImgStore: NumberIndexSignitureType;
-  setCarImgStore: (carImgStore: NumberIndexSignitureType) => void;
+  carImgStore: NumberIndexSignatureType;
+  setCarImgStore: (carImgStore: NumberIndexSignatureType) => void;
 }
 
 const useCarImgStore = create<I_useCarImgStore>((set) => ({

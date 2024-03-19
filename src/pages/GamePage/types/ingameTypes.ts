@@ -1,1 +1,1 @@
-export type NumberIndexSignitureType = { [key: number]: number };
+export type NumberIndexSignatureType = { [key: number]: number };
