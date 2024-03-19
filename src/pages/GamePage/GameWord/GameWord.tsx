@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import useIngameStore from '@/store/useIngameStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
+import useTypingState from '../GameSentence/useTypingState';
 import useGameRound from '../hooks/useGameRound';
 import { PublishIngameType } from '../types/websocketType';
 import WordGameLayout from './WordGameLayout';
@@ -14,12 +16,29 @@ const SECONDS_FOR_ALL_WORDS = 120;
 
 const GameWord = ({ publishIngame, userId }: GameWordProps) => {
   const { ingameRoomRes } = useIngameStore();
+  const {
+    cpm,
+    averageCpm,
+    onInputChange,
+    initializeTyping,
+    initializeAverage,
+  } = useTypingState();
+
+  const [averageAccurate, setAverageAccurate] = useState(0);
 
   const { currentRound, handleRoundFinish } = useGameRound({
     isNextRound: ingameRoomRes.type === 'NEXT_ROUND_START',
-    onRoundFinish: (currentRound) =>
-      publishIngame('/round-finish', { currentRound }),
+    onRoundFinish: (currentRound) => {
+      publishIngame('/round-finish', {
+        currentRound,
+        cpm: averageCpm,
+        accuracy: averageAccurate,
+      });
+      initializeTyping();
+      initializeAverage();
+    },
   });
+
   return (
     <>
       <IngameHeader
@@ -39,6 +58,10 @@ const GameWord = ({ publishIngame, userId }: GameWordProps) => {
               publishIngame={publishIngame}
               userId={userId}
               handleRoundFinish={handleRoundFinish}
+              onInputChange={onInputChange}
+              initializeTyping={initializeTyping}
+              cpm={cpm}
+              setAverageAccurate={setAverageAccurate}
             />
           )}
         </div>
