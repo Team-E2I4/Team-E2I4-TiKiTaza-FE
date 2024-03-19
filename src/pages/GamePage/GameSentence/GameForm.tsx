@@ -12,7 +12,6 @@ interface GameFormProps {
   sample: string;
   onInputChange: (_totalCharCompleted: number, _totalChar: number) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
-  initializeTyping: () => void;
   handleUpdateScore: UpdateScoreType;
   handleLineEnd: () => void;
   handleRoundFinish: () => void;
@@ -25,7 +24,6 @@ const GameForm = ({
   sample,
   onInputChange,
   onKeyDown,
-  initializeTyping,
   handleLineEnd,
   handleUpdateScore,
   handleRoundFinish,
@@ -104,7 +102,6 @@ const GameForm = ({
     oneLineDone.current = false;
     maxSpacingIndex.current = -1;
     initializeTypoMakrList();
-    initializeTyping();
     setValue('sentence', '');
   };
 

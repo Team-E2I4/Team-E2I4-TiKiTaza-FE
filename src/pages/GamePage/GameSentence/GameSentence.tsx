@@ -1,12 +1,15 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
+import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
+import { SentenceNext } from '@/common/Ingame/SentenceBlocks';
 import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
 import TrackLine from '../common/TrackLine';
 import useGameRound from '../hooks/useGameRound';
 import { I_Question, PublishIngameType } from '../types/websocketType';
-import GameFormContainer from './GameFormContainer';
+import GameForm from './GameForm';
+import useTypingState from './useTypingState';
 interface GameSentenceProps {
   publishIngame: PublishIngameType;
   userId: number;
@@ -40,11 +43,30 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
     setSentenceIdx(0);
   }, [ingameRoomRes.questions]);
 
+  const {
+    cpm,
+    accurate,
+    averageCpm,
+    averageAccurate,
+    onInputChange,
+    onKeyDown,
+    initializeTyping,
+    initializeAverage,
+  } = useTypingState();
+
   const { currentRound, handleRoundFinish } = useGameRound({
     isNextRound: ingameRoomRes.type === 'NEXT_ROUND_START',
     onNextRound: handleNextRound,
-    onRoundFinish: (currentRound) =>
-      publishIngame('/round-finish', { currentRound }),
+    onRoundFinish: (currentRound) => {
+      publishIngame('/round-finish', {
+        currentRound,
+        cpm: averageCpm,
+        accuracy: averageAccurate,
+      });
+
+      initializeTyping();
+      initializeAverage();
+    },
   });
 
   const rankInfoList = useMemo(
@@ -89,13 +111,37 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
         <div className='flex flex-col items-center justify-center ml-80 h-[61rem] relative w-[110rem]'>
           <TrackLine />
           <CanvasTrack allMembers={ingameRoomRes.allMembers} />
-          <GameFormContainer
-            sentenceList={sentenceList.current}
-            sentenceIdx={sentenceIdx}
-            handleLineEnd={() => setSentenceIdx((prev) => prev + 1)}
-            handleUpdateScore={handleUpdateScore}
-            handleRoundFinish={handleRoundFinish}
-          />
+          <div className='flex flex-col items-center justify-center z-10'>
+            <GameForm
+              key={sentenceList.current[sentenceIdx]?.question ?? ''}
+              sample={sentenceList.current[sentenceIdx]?.question ?? ''}
+              onInputChange={onInputChange}
+              onKeyDown={onKeyDown}
+              handleUpdateScore={handleUpdateScore}
+              handleLineEnd={() => {
+                initializeTyping();
+                setSentenceIdx((prev) => prev + 1);
+              }}
+              isLastSentence={sentenceList.current.length - 1 === sentenceIdx}
+              handleRoundFinish={handleRoundFinish}
+            />
+            <SentenceNext
+              text={sentenceList.current[sentenceIdx + 1]?.question ?? ''}
+            />
+            <SentenceNext
+              text={sentenceList.current[sentenceIdx + 2]?.question ?? ''}
+            />
+          </div>
+          <div className='w-full flex justify-evenly mt-20'>
+            <Dashboard
+              type='cpm'
+              value={cpm}
+            />
+            <Dashboard
+              type='accuracy'
+              value={accurate}
+            />
+          </div>
         </div>
       </div>
     </>
