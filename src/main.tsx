@@ -5,6 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
 import AuthRoute from './common/AuthRoute/AuthRoute.tsx';
+import ErrorBoundaryFallback from './common/Error/ErrorBoundaryFallback.tsx';
 import Header from './common/Header/Header.tsx';
 import BodyLayout from './common/Layout/BodyLayout.tsx';
 import Layout from './common/Layout/Layout.tsx';
@@ -28,7 +29,7 @@ export const router = createBrowserRouter([
           <Layout>
             <Header />
             <BodyLayout>
-              <ErrorBoundary fallback={<div>연유를 모르는 에러</div>}>
+              <ErrorBoundary fallback={<ErrorBoundaryFallback />}>
                 <AuthRoute />
               </ErrorBoundary>
             </BodyLayout>
