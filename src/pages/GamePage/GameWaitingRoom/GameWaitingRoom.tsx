@@ -77,7 +77,9 @@ const GameWaitingRoom = ({
           />
         )}
         <footer className='w-[114.8rem] flex gap-[5rem]'>
-          <GameModeDescription gameMode={roomInfo?.gameMode ?? 'SENTENCE'}>
+          <GameModeDescription
+            gameMode={roomInfo?.gameMode ?? 'SENTENCE'}
+            isAdmin={isAdmin}>
             {isAdmin && <GameRoomSetting />}
           </GameModeDescription>
           <GameRoomLinkInvitation />
