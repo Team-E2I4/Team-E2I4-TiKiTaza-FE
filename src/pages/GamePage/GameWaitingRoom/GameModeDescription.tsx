@@ -7,9 +7,9 @@ interface GameModeDescriptionProps {
 }
 
 const GAME_MODE_SHORT_DESCRIPTION = {
-  SENTENCE: `문장을 신속하고 정확하게 입력하여 경주에서 승리하세요!`,
-  CODE: `알고리즘 공부가 되는 게임이 있다?!?`,
-  WORD: '100개 단어 선착순 맞추기 시-작!',
+  SENTENCE: `문장을 신속하고 정확하게 입력하여 경주에서 승리하세요!\n`,
+  CODE: `알고리즘 공부가 되는 게임이 있다?!?\n`,
+  WORD: '100개 단어 선착순 맞추기 시-작!\n',
 };
 
 const GAME_MODE_DESCRIPTION = {
@@ -27,11 +27,11 @@ const GameModeDescription = ({
 
   return (
     <div
-      className={`relative w-[69.3rem] transition-all delay-100 ${isHovered ? 'h-[28rem] duration-300 ease-in overflow-hidden -translate-y-[18rem]' : 'h-[10rem] truncate duration-200 ease-out'} flex items-center justify-end bg-beige-100 shadow-md shadow-black/50 rounded-[2.5rem]`}>
+      className={`relative w-[69.3rem] transition-all delay-100 ${isHovered ? 'h-[30rem] duration-300 ease-in overflow-hidden -translate-y-[20rem]' : 'h-[10rem] truncate duration-200 ease-out'} flex items-center justify-end bg-beige-100 shadow-md shadow-black/50 rounded-[2.5rem]`}>
       <p
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`absolute top-0 left-0 ${isAdmin ? 'w-[75%]' : 'w-[85%]'} ${isHovered ? 'h-[28rem]' : 'h-[10rem]'}  whitespace-pre-line ml-[2rem] py-[2rem] text-left text-[2rem]`}>
+        className={`absolute top-0 left-0 ${isAdmin ? 'w-[75%]' : 'w-[85%]'} ${isHovered ? 'h-[30rem]' : 'h-[10rem]'}  whitespace-pre-line ml-[2rem] py-[2rem] text-left text-[2rem]`}>
         <strong> {GAME_MODE_SHORT_DESCRIPTION[gameMode]} </strong>
         {GAME_MODE_DESCRIPTION[gameMode]}
       </p>
