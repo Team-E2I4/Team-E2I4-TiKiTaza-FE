@@ -5,7 +5,6 @@ import {
   I_IngameWsResponse,
   PublishIngameType,
 } from '../../GamePage/types/websocketType';
-import useTypingState from '../GameSentence/useTypingState';
 import useFocusInput from '../hooks/useFocusInput';
 import WordCell from './WordCell';
 import WordRankContainer from './WordRankContainer';
@@ -15,6 +14,14 @@ interface GameWordProps {
   ingameRoomRes: I_IngameWsResponse;
   publishIngame: PublishIngameType;
   handleRoundFinish: () => void;
+  onInputChange: (
+    totalCharCompleted: number,
+    totalChar: number,
+    TYPING_CONSTANT?: number
+  ) => void;
+  initializeTyping: () => void;
+  cpm: number;
+  setAverageAccurate: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const WordGameLayout = ({
@@ -22,11 +29,14 @@ const WordGameLayout = ({
   publishIngame,
   userId,
   handleRoundFinish,
+  onInputChange,
+  initializeTyping,
+  cpm,
+  setAverageAccurate,
 }: GameWordProps) => {
   const { register, handleSubmit, setValue, getValues } = useForm<{
     ['wordInput']: string;
   }>();
-  const { cpm, onInputChange, initializeTyping } = useTypingState();
 
   const { ref } = register('wordInput');
 
@@ -36,6 +46,12 @@ const WordGameLayout = ({
   const currentScore =
     ingameRoomRes.allMembers.find(({ memberId }) => memberId === userId)
       ?.score ?? 0;
+
+  const currentAccuracy =
+    Math.floor((currentScore / submitCount.current) * 100) || 0;
+  useEffect(() => {
+    setAverageAccurate(currentAccuracy);
+  }, [currentAccuracy]);
 
   const submittedQuestions = ingameRoomRes.questions?.filter((question) =>
     question.question.startsWith('#')
