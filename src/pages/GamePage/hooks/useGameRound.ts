@@ -20,7 +20,7 @@ const useGameRound = ({
     }
     onRoundFinish(currentRound);
     didRoundFinishSubmitted.current = true;
-  }, [currentRound]);
+  }, [currentRound, onRoundFinish]);
 
   useEffect(() => {
     if (!isNextRound) {
