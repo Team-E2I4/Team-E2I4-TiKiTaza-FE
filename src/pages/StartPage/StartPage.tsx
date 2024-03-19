@@ -33,8 +33,12 @@ const StartPage = () => {
         src={logo_big_shadow}
         className='object-cover h-[55rem]'
       />
-      <div className='flex flex-col items-center gap-6'>
-        <span className='font-bold font-[Giants-Inline]'>간편 로그인</span>
+      <div className='flex items-center gap-6'>
+        <button
+          onClick={handleGuestLogin}
+          className='w-[28rem] h-[6rem] font-[Giants-Inline] text-[2.2rem] shadow-md shadow-black/50 bg-green-100 hover:bg-green-200 transition-all rounded-full'>
+          게스트로 시작하기
+        </button>
         <button onClick={handleKakaoLogin}>
           <img
             src={kakao}
@@ -43,11 +47,6 @@ const StartPage = () => {
           />
         </button>
       </div>
-      <button
-        onClick={handleGuestLogin}
-        className='w-[28rem] h-[6rem] font-[Giants-Inline] text-[2.2rem] shadow-md shadow-black/50 bg-green-100 hover:bg-green-200 transition-all rounded-full'>
-        게스트로 시작하기
-      </button>
       <span className='font-bold font-[Giants-Inline] text-[3rem]'>
         당신의 손가락이 빠르고 정확한지 확인해보세요!
       </span>
