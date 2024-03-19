@@ -7,7 +7,7 @@ import PrivateRoomModal from './PrivateRoomModal';
 
 const GAME_ROOM_LIST_CATEGORY = ['방 번호', '방 제목', '게임 모드', '인원수'];
 
-interface GameRoomListProps {
+interface GameRoomListProps extends React.HTMLAttributes<HTMLDivElement> {
   data: I_ChangeGameRoomData[];
   selectedGameMode: FilteredGameModeType;
 }
