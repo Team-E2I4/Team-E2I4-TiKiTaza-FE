@@ -23,7 +23,7 @@ const GameModeDescription = ({
   gameMode,
   isAdmin,
 }: GameModeDescriptionProps) => {
-  const [isHovered, setIsHovered] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
