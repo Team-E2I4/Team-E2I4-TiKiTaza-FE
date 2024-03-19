@@ -82,6 +82,9 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
         return;
       }
 
+      if (score > WEST_LAST_SCORE) {
+        score -= WEST_LAST_SCORE + 1;
+      }
       if (score <= NORTH_LAST_SCORE) {
         x = START_X + MOVE_STEP_X * score;
         y = verticalLineGap;
@@ -105,10 +108,11 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
         if (score === WEST_LAST_SCORE) {
           y += CAR_SIZE;
         }
-      } else if (score > WEST_LAST_SCORE) {
-        x = START_X + MOVE_STEP_X * (score - 100);
-        y = verticalLineGap;
       }
+      // else if (score > WEST_LAST_SCORE) {
+      //   x = START_X + MOVE_STEP_X * (score - 100);
+      //   y = verticalLineGap;
+      // }
       carsRef.current[memberId] = { x, y };
       idScore.current[memberId] = score;
     });
