@@ -14,7 +14,7 @@ interface UserCardProps {
 const UserCard = ({
   //테스트용으로 기본값 추가해두었습니다.
   nickname,
-  userImage = 'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80',
+  userImage = 'https://cdn.pixabay.com/photo/2019/10/24/19/51/dino-4575130_1280.png',
   userImageFallbackDelay = 6000,
   rank,
   isGuest,
