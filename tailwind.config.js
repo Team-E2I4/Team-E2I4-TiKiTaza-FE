@@ -33,6 +33,14 @@ export default {
             opacity: 1,
           },
         },
+        gameRoomList: {
+          '0%': {
+            backgroundPosition: '100% 50%',
+          },
+          '100%': {
+            backgroundPosition: '0 50%',
+          },
+        },
         blinkTimer: {
           '50%': { color: 'red' },
         },
@@ -75,6 +83,7 @@ export default {
         neonRight: 'neonRight 1s linear infinite 0.25s',
         neonBottom: 'neonBottom 1s linear infinite 0.5s',
         neonLeft: 'neonLeft 1s linear infinite 0.75s',
+        gameRoomList: 'gameRoomList ease-in 0.5s forwards',
       },
       backgroundImage: {
         'gradient-radial':

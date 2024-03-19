@@ -19,4 +19,10 @@
   font-weight: normal;
   font-style: normal;
 }
- 
+
+@layer utilities{
+  .bg-myGradient {
+    background: linear-gradient(45deg,  #96d8bf 0 30%, #D4EBE2 0 100% );
+    background-size: 400% 400%;
+  }
+}
