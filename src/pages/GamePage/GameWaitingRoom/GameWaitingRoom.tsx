@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Backward from '@/common/Backward/Backward';
 import useCarImgStore from '@/store/useCarStore';
 import DisconnectModal from '../common/DisconnectModal';
-import { NumberIndexSignitureType } from '../types/ingameTypes';
+import { NumberIndexSignatureType } from '../types/ingameTypes';
 import {
   HandlePubKickUserType,
   HandlePubReadyGameType,
@@ -46,7 +46,7 @@ const GameWaitingRoom = ({
   }, []);
 
   useEffect(() => {
-    const carIdxArray: NumberIndexSignitureType = {};
+    const carIdxArray: NumberIndexSignatureType = {};
     allMembers.forEach((car, idx) => {
       const { memberId } = car;
       carIdxArray[memberId] = idx;

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useRef } from 'react';
 import { TRACK_CARS } from '@/assets/canvasCars';
 import {
@@ -18,6 +17,7 @@ import {
 } from '@/common/Ingame/ingameConstants';
 import useCanvas from '@/hooks/useCanvas';
 import useCarImgStore from '@/store/useCarStore';
+import { NumberIndexSignatureType } from '../types/ingameTypes';
 import { I_AllMember } from '../types/websocketType';
 
 interface I_CarCoord {
@@ -35,8 +35,8 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
   });
   const { carImgStore } = useCarImgStore();
 
-  const idScore = useRef<{ [key: number]: number }>(
-    allMembers.reduce((object: { [key: number]: number }, value) => {
+  const idScore = useRef<NumberIndexSignatureType>(
+    allMembers.reduce((object: NumberIndexSignatureType, value) => {
       object[value.memberId] = value.score;
       return object;
     }, {})
