@@ -4,8 +4,8 @@ import {
   SpeakerLoudIcon,
   SpeakerOffIcon,
 } from '@radix-ui/react-icons';
-import { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import bgmFile from '@/assets/audio/bgm1.mp3';
 import kakao from '@/assets/login/kakao-icon.svg';
 import logo_car from '@/assets/logo/logo_car.png';
@@ -52,6 +52,14 @@ const Header = () => {
   const handleLogout = () => {
     mutateLogout();
   };
+
+  const onNavigateToMain = useCallback(() => {
+    if (isGameRoute) {
+      return;
+    }
+    navigate('/main', { replace: true });
+    navigate(0);
+  }, [isGameRoute]);
 
   useEffect(() => {
     if (audioRef.current) {
