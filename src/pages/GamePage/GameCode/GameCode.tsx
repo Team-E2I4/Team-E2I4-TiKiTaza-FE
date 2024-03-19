@@ -4,6 +4,7 @@ import IngameRank from '@/common/Ingame/IngameRank';
 import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
 import TrackLine from '../common/TrackLine';
+import useTypingState from '../GameSentence/useTypingState';
 import useGameRound from '../hooks/useGameRound';
 import { I_Question, PublishIngameType } from '../types/websocketType';
 import CodeContainer from './CodeContainer';
@@ -27,11 +28,30 @@ const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
     codeList.current = ingameRoomRes.questions!;
   }, [ingameRoomRes.questions]);
 
+  const {
+    cpm,
+    accurate,
+    averageCpm,
+    averageAccurate,
+    onInputChange,
+    onKeyDown,
+    initializeTyping,
+    initializeAverage,
+  } = useTypingState();
+
   const { currentRound, handleRoundFinish } = useGameRound({
     isNextRound: ingameRoomRes.type === 'NEXT_ROUND_START',
     onNextRound: handleNextRound,
-    onRoundFinish: (currentRound: number) =>
-      publishIngame('/round-finish', { currentRound }),
+    onRoundFinish: (currentRound: number) => {
+      publishIngame('/round-finish', {
+        currentRound,
+        cpm: averageCpm,
+        accuracy: averageAccurate,
+      });
+
+      initializeTyping();
+      initializeAverage();
+    },
   });
 
   const rankInfoList = useMemo(
@@ -97,7 +117,12 @@ const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
             codeList={codeList.current}
             convertedCodeList={convertedCodeList[0] ?? []}
             handleUpdateScore={handleUpdateScore}
-            handleRoundFinish={handleRoundFinish}>
+            handleRoundFinish={handleRoundFinish}
+            cpm={cpm}
+            accurate={accurate}
+            onInputChange={onInputChange}
+            onKeyDown={onKeyDown}
+            initializeTyping={initializeTyping}>
             <CodeContainer codeItem={codeList.current[0].question} />
           </CodeFormContainer>
         </div>

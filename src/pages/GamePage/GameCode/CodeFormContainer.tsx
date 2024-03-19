@@ -1,6 +1,5 @@
-import { ReactNode, useCallback, useState } from 'react';
+import { KeyboardEvent, ReactNode, useCallback, useState } from 'react';
 import Dashboard from '@/common/Ingame/Dashboard';
-import useTypingState from '../GameSentence/useTypingState';
 import { I_Question } from '../types/websocketType';
 import CodeForm from './CodeForm';
 
@@ -10,6 +9,15 @@ interface CodeFormContainerProps {
   convertedCodeList: string[];
   handleUpdateScore: () => void;
   handleRoundFinish: () => void;
+  cpm: number;
+  accurate: number;
+  onInputChange: (
+    _totalCharCompleted: number,
+    _totalChar: number,
+    TYPING_CONSTANT?: number
+  ) => void;
+  onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
+  initializeTyping: () => void;
 }
 
 const CodeFormContainer = ({
@@ -18,10 +26,12 @@ const CodeFormContainer = ({
   convertedCodeList,
   handleUpdateScore,
   handleRoundFinish,
+  cpm,
+  accurate,
+  onInputChange,
+  onKeyDown,
+  initializeTyping,
 }: CodeFormContainerProps) => {
-  const { cpm, accurate, onInputChange, onKeyDown, initializeTyping } =
-    useTypingState();
-
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
   const [currentCodeItemIndex, setCurrentCodeItemIndex] = useState(0);
 
