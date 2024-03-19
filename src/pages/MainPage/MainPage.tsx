@@ -51,7 +51,7 @@ const MainPage = () => {
 
   return (
     <main className='flex gap-[3rem]'>
-      <section className='flex flex-col gap-[3rem] w-[25rem]'>
+      <section className='flex flex-col gap-[3rem] w-[25rem] [&>article]:shadow-xl'>
         <UserList
           userList={[...userList.data.data!]}
           myId={userData.data.data!.memberId}
@@ -70,7 +70,7 @@ const MainPage = () => {
           averageAccuracy={userData.data.data!.averageAccuracy}
         />
       </section>
-      <section className='flex-1 grid grid-cols-[3fr_1fr] grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
+      <section className='flex-1 grid grid-cols-[3fr_1fr] grid-rows-[5rem_auto] grid-flow-col gap-[3rem] [&>article]:shadow-xl'>
         <article className='rounded-[0.5rem] flex items-center justify-between gap-[3rem] '>
           {gameModeList.map((el) => (
             <span
@@ -82,7 +82,7 @@ const MainPage = () => {
           ))}
         </article>
         <CreateRoomModal>
-          <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1 h-full flex items-center justify-center'>
+          <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1 h-full flex items-center justify-center shadow-xl'>
             <span>방 만들기</span>
           </article>
         </CreateRoomModal>
