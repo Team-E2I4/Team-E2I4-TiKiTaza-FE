@@ -23,7 +23,7 @@ const NicknamePage = () => {
       'getMyProfileInfo',
     ]);
 
-    if (profileData?.data?.data?.nickname !== '백준원') {
+    if (profileData?.data?.data?.nickname !== '') {
       setVolume({ bgm: 'play', volumeSize: 30 });
       navigate('/main');
     } else {
