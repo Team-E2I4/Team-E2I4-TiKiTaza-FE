@@ -22,7 +22,7 @@ const GameRoomInfo = ({
       <div className='flex justify-center items-center w-[15%] h-[70%] border-r border-solid border-black'>
         {roomInfo && roomInfo.maxRound} 라운드
       </div>
-      <div className='flex justify-center items-center w-[15%] h-[70%]'>{`${allMembers.length} 명 / ${roomInfo.maxPlayer} 명`}</div>
+      <div className='flex justify-center items-center w-[15%] h-[70%]'>{`${allMembers.length} / ${roomInfo.maxPlayer} 명`}</div>
     </div>
   );
 };
