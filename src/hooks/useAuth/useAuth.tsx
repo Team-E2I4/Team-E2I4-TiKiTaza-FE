@@ -1,6 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { getMyProfileInfo, guestLogin, kakaoLogin, logout } from '@/apis/api';
+import {
+  getMyProfileInfo,
+  guestLogin,
+  kakaoLogin,
+  logout,
+  logout1,
+} from '@/apis/api';
 import {
   ApiResponseAccountGetResponse,
   ApiResponseAuthResponse,
@@ -95,6 +101,21 @@ export const useLogout = ({ onSuccess }: LogoutProps) => {
   const queryClient = useQueryClient();
   return useMutation<AxiosResponse<ApiResponseVoid>, Error | AxiosError>({
     mutationFn: () => logout(),
+    mutationKey: ['logout'],
+    onSuccess: (e) => {
+      removeItem('MyToken');
+
+      queryClient.invalidateQueries({ queryKey: ['getMyProfileInfo'] });
+
+      onSuccess?.(e);
+    },
+  });
+};
+
+export const useGuestLogout = ({ onSuccess }: LogoutProps) => {
+  const queryClient = useQueryClient();
+  return useMutation<AxiosResponse<ApiResponseVoid>, Error | AxiosError>({
+    mutationFn: () => logout1(),
     mutationKey: ['logout'],
     onSuccess: (e) => {
       removeItem('MyToken');

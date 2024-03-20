@@ -62,6 +62,7 @@ export const {
   kakaoLogin,
   login,
   logout,
+  logout1,
   reIssueAccessToken,
   signUp,
   getRanking,
