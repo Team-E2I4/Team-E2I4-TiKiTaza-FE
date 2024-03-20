@@ -13,16 +13,16 @@ const GameRoomInfo = ({
       <div className='flex justify-center items-center w-[20%] h-[70%] border-r border-solid border-black'>
         No.{roomInfo.id}
       </div>
-      <div className='flex justify-center items-center w-[25%] h-[70%] border-r border-solid border-black'>
+      <div className='flex justify-center items-center w-[35%] h-[70%] border-r border-solid border-black'>
         {roomInfo.title}
       </div>
       <div className='flex justify-center items-center w-[15%] h-[70%] border-r border-solid border-black'>
         {roomInfo && GAME_TYPE.get(roomInfo.gameMode)}
       </div>
-      <div className='flex justify-center items-center w-[20%] h-[70%] border-r border-solid border-black'>
+      <div className='flex justify-center items-center w-[15%] h-[70%] border-r border-solid border-black'>
         {roomInfo && roomInfo.maxRound} 라운드
       </div>
-      <div className='flex justify-center items-center w-[20%] h-[70%]'>{`${allMembers.length} 명 / ${roomInfo.maxPlayer} 명`}</div>
+      <div className='flex justify-center items-center w-[15%] h-[70%]'>{`${allMembers.length} 명 / ${roomInfo.maxPlayer} 명`}</div>
     </div>
   );
 };
