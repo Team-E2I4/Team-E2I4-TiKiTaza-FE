@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import UpdateNicknameForm from './UpdateNicknameForm';
 
 interface UpdateNicknameModalProps {
-  initialIsOpen: boolean;
+  initialIsOpen?: boolean;
+  children?: React.ReactNode;
 }
 
 const UpdateNicknameModal = ({
   initialIsOpen = false,
+  children,
 }: UpdateNicknameModalProps) => {
   const navigate = useNavigate();
 
@@ -19,6 +21,7 @@ const UpdateNicknameModal = ({
     <Dialog.Root
       open={isOpen}
       onOpenChange={setIsOpen}>
+      {children ? <Dialog.Trigger asChild>{children}</Dialog.Trigger> : null}
       <Dialog.Portal>
         <Dialog.Overlay
           className={
@@ -32,7 +35,7 @@ const UpdateNicknameModal = ({
           <Dialog.Title className='font-bold font-[Giants-Inline] text-[2rem]'>
             닉네임 설정
           </Dialog.Title>
-          <UpdateNicknameForm />
+          <UpdateNicknameForm onClose={() => setIsOpen(false)} />
           <Dialog.Close asChild>
             <button
               aria-label='Close'
