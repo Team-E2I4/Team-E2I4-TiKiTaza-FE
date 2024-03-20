@@ -5,7 +5,7 @@ import { ApiResponseAccountGetResponse } from '@/generated';
 import useVolumeStore from '@/store/useVolumeStore';
 import UpdateNicknameModal from './UpdateNickname/UpdateNicknameModal';
 
-interface NicknamePageProps {
+export interface NicknamePageProps {
   data: ApiResponseAccountGetResponse;
 }
 
