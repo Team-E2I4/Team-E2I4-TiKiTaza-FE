@@ -27,7 +27,7 @@ const GameModeDescription = ({
 
   return (
     <div
-      className={`relative w-[75%] transition-all delay-100 origin-bottom ${isHovered ? 'h-[22rem] duration-300 ease-in overflow-hidden -translate-y-[12rem]' : 'h-[10rem] truncate duration-200 ease-out'} flex items-center justify-end bg-beige-100 shadow-md shadow-black/50 rounded-[2.5rem]`}>
+      className={`relative w-[75%] transition-all delay-100 origin-bottom ${isHovered ? 'h-[22rem] duration-300 ease-in overflow-auto -translate-y-[12rem]' : 'h-[10rem] truncate duration-200 ease-out'} flex items-center justify-end bg-beige-100 shadow-md shadow-black/50 rounded-[2.5rem]`}>
       <p
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
