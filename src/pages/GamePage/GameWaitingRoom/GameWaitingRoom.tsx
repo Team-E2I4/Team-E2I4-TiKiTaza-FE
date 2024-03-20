@@ -13,7 +13,6 @@ import {
 import GameModeDescription from './GameModeDescription';
 import GameReadyAndStart from './GameReadyAndStart';
 import GameRoomInfo from './GameRoomInfo';
-import GameRoomLinkInvitation from './GameRoomLinkInvitation';
 import GameRoomSetting from './GameRoomSetting';
 import GameRoomUserList from './GameRoomUserList';
 
@@ -76,13 +75,13 @@ const GameWaitingRoom = ({
             handlePubKickUser={handlePubKickUser}
           />
         )}
-        <footer className='w-[114.8rem] flex gap-[5rem]'>
+        <footer className='w-[114.8rem] h-[10rem] flex gap-[5rem]'>
           <GameModeDescription
             gameMode={roomInfo?.gameMode ?? 'SENTENCE'}
             isAdmin={isAdmin}>
             {isAdmin && <GameRoomSetting />}
           </GameModeDescription>
-          <GameRoomLinkInvitation />
+          {/* <GameRoomLinkInvitation /> */}
           <GameReadyAndStart
             isAdmin={isAdmin}
             userId={userId}
