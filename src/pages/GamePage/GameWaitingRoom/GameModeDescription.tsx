@@ -31,7 +31,7 @@ const GameModeDescription = ({
       <p
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`absolute top-0 left-0 ${isAdmin ? 'w-[85%]' : 'w-[100%]'} ${isHovered ? 'h-[22rem]' : 'h-[10rem]'}  whitespace-pre-line pl-[2rem] py-[2rem] text-left text-[2rem]`}>
+        className={`absolute top-0 left-0 ${isAdmin ? 'w-[85%]' : 'w-[100%]'} ${isHovered ? 'h-[22rem]' : 'h-[10rem]'}  whitespace-pre-line pl-[2rem] py-[2rem] text-left text-[1.6rem]`}>
         <strong> {GAME_MODE_SHORT_DESCRIPTION[gameMode]} </strong>
         {GAME_MODE_DESCRIPTION[gameMode]}
       </p>
