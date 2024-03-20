@@ -66,7 +66,7 @@ const GameRoomUserItem = ({
       </div>
       {((isAdminMe && isMe) || isReady) && (
         <div
-          className={`absolute w-[13rem] h-[4rem] rounded-[2rem_0_2.5rem] ${isMe ? 'right-[-2px] bottom-[-2px]' : 'right-[-1px] bottom-[-1px]'}  text-center leading-[4rem] font-[Giants-Inline] bg-green-100`}>
+          className={`absolute w-[13rem] h-[4rem] rounded-[2rem_0_2.5rem] ${isMe ? 'right-[-2px] bottom-[-2px]' : 'right-[-1px] bottom-[-1px]'} font-[Giants-Inline] text-center leading-[4rem] bg-green-100`}>
           {isAdmin ? '방장' : isReady && '준비'}
         </div>
       )}
