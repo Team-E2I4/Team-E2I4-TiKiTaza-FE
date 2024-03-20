@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ApiResponseAccountGetResponse } from '@/generated';
 import useVolumeStore from '@/store/useVolumeStore';
@@ -12,7 +12,6 @@ interface NicknamePageProps {
 const NicknamePage = () => {
   const navigate = useNavigate();
 
-  const [isOpen, setIsOpen] = useState(true);
   const { setVolume } = useVolumeStore();
 
   const queryClient = useQueryClient();
@@ -22,17 +21,15 @@ const NicknamePage = () => {
       'getMyProfileInfo',
     ]);
 
-    if (profileData?.data?.data?.nickname) {
-      setIsOpen(false);
-      navigate('/main');
+    if (profileData?.data?.data?.nickname !== '') {
       setVolume({ bgm: 'play', volumeSize: 30 });
+      navigate('/main');
     }
-    setIsOpen(true);
   }, [queryClient]);
 
   return (
     <div>
-      <UpdateNicknameModal initialIsOpen={isOpen} />
+      <UpdateNicknameModal initialIsOpen={true} />
     </div>
   );
 };

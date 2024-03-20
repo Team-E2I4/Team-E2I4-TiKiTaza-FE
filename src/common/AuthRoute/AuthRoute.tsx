@@ -27,7 +27,7 @@ const AuthRoute = () => {
     return <div>로딩중 입니다</div>;
   }
 
-  if (!profileData?.data?.data?.nickname && pathname !== '/nickname') {
+  if (profileData?.data?.data?.nickname === '' && pathname !== '/nickname') {
     // Todo: 토스트 메시지 추가
     return <Navigate to='/nickname' />;
   }

@@ -1,6 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UpdateNicknameForm from './UpdateNicknameForm';
 
@@ -14,10 +14,6 @@ const UpdateNicknameModal = ({
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(initialIsOpen);
-
-  useEffect(() => {
-    setIsOpen(initialIsOpen);
-  }, [initialIsOpen]);
 
   return (
     <Dialog.Root
