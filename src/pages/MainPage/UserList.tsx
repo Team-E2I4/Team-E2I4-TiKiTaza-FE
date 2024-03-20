@@ -10,14 +10,13 @@ const UserList = ({ userList, myId }: UserListProps) => {
   return (
     <article className='flex flex-col gap-[1rem] p-[2rem] bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[40rem] w-full'>
       <h3>현재 접속자</h3>
-      <ul className='flex-1 rounded-[0.5rem] bg-green-50 p-[2rem] overflow-y-auto'>
+      <ul className='flex-1 rounded-[0.5rem] bg-green-70 p-[2rem] overflow-y-auto'>
         {userList ? (
           userList.map(({ nickname, memberId }) => (
             <UserListItem
               key={memberId}
-              username={
-                memberId === myId ? `${nickname} (본인)` : `${nickname}`
-              }
+              isMe={memberId === myId}
+              username={nickname}
             />
           ))
         ) : (
