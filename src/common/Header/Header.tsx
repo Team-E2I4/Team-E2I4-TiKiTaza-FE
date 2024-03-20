@@ -88,13 +88,6 @@ const Header = () => {
         />
       </section>
       <section className='h-full flex items-center justify-around w-[20rem]'>
-        {/* <button
-          onClick={() =>
-            setVolume({ ...volume, bgm: exchangeVolumeState(volume.bgm) })
-          }
-          className={`bg-beige-10 hover:shadow-hover flex items-center justify-center p-[1.2rem] rounded-[1rem] transition-all duration-300 ${volume.bgm === 'pause' ? 'shadow-default' : 'shadow-hover'}`}>
-          <WrappedIcon IconComponent={mappedIcons.bgm[volume.bgm]} />
-        </button> */}
         <AudioPopover
           value={volume.volumeSize}
           onChange={(value) => setVolume({ ...volume, volumeSize: value })}>
