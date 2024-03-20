@@ -109,10 +109,6 @@ const CanvasTrack = ({ allMembers }: { allMembers: I_AllMember[] }) => {
           y += CAR_SIZE;
         }
       }
-      // else if (score > WEST_LAST_SCORE) {
-      //   x = START_X + MOVE_STEP_X * (score - 100);
-      //   y = verticalLineGap;
-      // }
       carsRef.current[memberId] = { x, y };
       idScore.current[memberId] = score;
     });
