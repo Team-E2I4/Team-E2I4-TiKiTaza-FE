@@ -11,7 +11,11 @@ type UpdateNicknameFormType = {
   nickname: string;
 };
 
-const UpdateNicknameForm = () => {
+interface UpdataeNicknameFormProps {
+  onClose: () => void;
+}
+
+const UpdateNicknameForm = ({ onClose }: UpdataeNicknameFormProps) => {
   const navigate = useNavigate();
   const { setVolume } = useVolumeStore();
   const queryClient = useQueryClient();
@@ -36,6 +40,7 @@ const UpdateNicknameForm = () => {
   const { mutate: mutateUpdateNickname } = useUpdateNickname({
     onSuccess: () => {
       alert('닉네임 변경 성공');
+      onClose();
       navigate('/main');
       setVolume({ bgm: 'play', volumeSize: 30 });
     },
