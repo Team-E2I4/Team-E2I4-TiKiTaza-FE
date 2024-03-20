@@ -44,6 +44,7 @@ const MainPage = () => {
       setRoomInfo(null);
     }
   }, []);
+
   if (isPending) {
     return <div>유저 정보 불러오는중...</div>;
   }
