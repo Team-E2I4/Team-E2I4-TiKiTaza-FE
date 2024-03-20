@@ -23,8 +23,8 @@ const useUpdateNickname = ({ onSuccess, onError }: UseUpdateNicknameProps) => {
     mutationFn: ({ nicknameUpdateRequest }) =>
       updateMemberNickname(nicknameUpdateRequest),
     mutationKey: ['updateNickname'],
-    onSuccess: (e) => {
-      queryClient.invalidateQueries({ queryKey: ['getMyProfileInfo'] });
+    onSuccess: async (e) => {
+      await queryClient.invalidateQueries({ queryKey: ['getMyProfileInfo'] });
       onSuccess?.(e);
     },
     onError: (e) => {
