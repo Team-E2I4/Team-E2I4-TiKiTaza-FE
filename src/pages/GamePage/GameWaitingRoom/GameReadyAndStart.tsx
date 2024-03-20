@@ -33,7 +33,7 @@ const GameReadyAndStart = ({
         onClick={() => {
           isAllUserReady && handlePubStartGame();
         }}
-        className={`font-[Giants-Inline] w-[24.1rem] h-[10rem] flex justify-center items-center text-[3rem] transition-all duration-300 shadow-md shadow-black/50 relative
+        className={`font-[Giants-Inline] w-[25%] h-[10rem] flex justify-center items-center text-[3rem] transition-all duration-300 shadow-md shadow-black/50 relative
 overflow-hidden
 bg-coral-50
         ${isAllUserReady ? ` hover:bg-coral-100` : `opacity-[0.5] cursor-not-allowed`}
