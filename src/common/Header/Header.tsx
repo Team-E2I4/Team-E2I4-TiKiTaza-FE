@@ -11,9 +11,13 @@ import kakao from '@/assets/login/kakao-icon.svg';
 import logo_car from '@/assets/logo/logo_car.png';
 import logo_taza from '@/assets/logo/logo_taza.png';
 import { PAUSE, PLAY } from '@/common/Header/constants/volume';
-import { useAuthCheck, useLogout } from '@/hooks/useAuth/useAuth';
+import {
+  useAuthCheck,
+  useGuestLogout,
+  useLogout,
+} from '@/hooks/useAuth/useAuth';
+import { KAKAO_AUTH_URL } from '@/pages/StartPage/OAuth';
 import useVolumeStore from '@/store/useVolumeStore';
-import { handleKakaoLogin } from '@/utils/handleKakaoLogin';
 import WrappedIcon from '../WrappedIcon/WrappedIcon';
 import AudioPopover from './AudioPopover';
 import KakaoTooltip from './KakaoTooltip';
@@ -49,8 +53,18 @@ const Header = () => {
     },
   });
 
+  const { mutate: mutateGuestLogout } = useGuestLogout({
+    onSuccess: () => {
+      window.location.replace(KAKAO_AUTH_URL);
+    },
+  });
+
   const handleLogout = () => {
     mutateLogout();
+  };
+
+  const handleKakaoLogin = () => {
+    mutateGuestLogout();
   };
 
   const onNavigateToMain = useCallback(() => {

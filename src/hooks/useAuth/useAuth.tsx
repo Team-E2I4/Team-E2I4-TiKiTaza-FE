@@ -113,14 +113,11 @@ export const useLogout = ({ onSuccess }: LogoutProps) => {
 };
 
 export const useGuestLogout = ({ onSuccess }: LogoutProps) => {
-  const queryClient = useQueryClient();
   return useMutation<AxiosResponse<ApiResponseVoid>, Error | AxiosError>({
     mutationFn: () => logout1(),
     mutationKey: ['logout'],
     onSuccess: (e) => {
       removeItem('MyToken');
-
-      queryClient.invalidateQueries({ queryKey: ['getMyProfileInfo'] });
 
       onSuccess?.(e);
     },
