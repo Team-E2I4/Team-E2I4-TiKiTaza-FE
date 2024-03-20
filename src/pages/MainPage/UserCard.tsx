@@ -23,12 +23,19 @@ const UserCard = ({
   averageAccuracy = 0,
 }: UserCardProps) => {
   return (
-    <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[18rem] w-full p-[1.2rem]'>
+    <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[18rem] w-full p-[1.2rem] group relative'>
+      {isGuest && (
+        <div className='w-0 h-full z-[50] overflow-hidden p-[3rem] bg-green-100 invisible absolute top-0 left-0 transition-all group-hover:w-full  group-hover:visible group-hover:cursor-pointer'>
+          <span className='text-[3rem] text-white font-bold whitespace-nowrap'>
+            로그인
+          </span>
+          <span className='text-[2rem] whitespace-nowrap'>하여 기록하기!</span>
+        </div>
+      )}
       <div className='flex justify-between'>
-        <span className='truncate flex-1'>{nickname}</span>
-        {!isGuest && (
-          <button className='w-[6rem] h-[2.5rem] bg-red-100'>수정</button>
-        )}
+        <span className='bg-green-100 rounded-[0.5rem] truncate px-[1rem] hover:text-white hover:text-[1.8rem] transition-all h-[2.5rem] flex items-center justify-center cursor-pointer'>
+          {nickname}
+        </span>
       </div>
       <div className='pb-[2.2rem] flex'>
         <Avatar.Root className='w-1/2 pt-[2.2rem]'>
@@ -44,7 +51,7 @@ const UserCard = ({
 
         {/* Todo: 각 정보 눌렀을때 랭크페이지 이동? */}
         <div className='flex flex-col-reverse  mx-[1.2rem] gap-[1rem] text-[1.4rem]'>
-          <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`${!isGuest ? `${rank}위` : '순위 없음'}`}</span>
+          <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`${isGuest || rank === -1 ? '순위 없음' : `${rank}위`}`}</span>
           <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`플레이 ${gameCount}회`}</span>
           <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`평균 ${averageCpm}타`}</span>
           <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`완벽함 ${averageAccuracy}%`}</span>
