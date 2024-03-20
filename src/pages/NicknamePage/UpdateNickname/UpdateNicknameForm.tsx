@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import useUpdateNickname from '@/hooks/useUpdateNickname';
+import useVolumeStore from '@/store/useVolumeStore';
 
 type UpdateNicknameFormType = {
   nickname: string;
@@ -10,6 +11,7 @@ type UpdateNicknameFormType = {
 
 const UpdateNicknameForm = () => {
   const navigate = useNavigate();
+  const { setVolume } = useVolumeStore();
 
   const {
     register,
@@ -25,6 +27,7 @@ const UpdateNicknameForm = () => {
     onSuccess: () => {
       alert('닉네임 변경 성공');
       navigate('/main');
+      setVolume({ bgm: 'play', volumeSize: 30 });
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {

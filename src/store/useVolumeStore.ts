@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-type VolumeType = 'play' | 'pause';
+export type VolumeType = 'play' | 'pause';
 
-interface I_VolumeStore {
+export interface I_VolumeStore {
   volume: { bgm: VolumeType; volumeSize: number };
   setVolume: (newVolume: { bgm: VolumeType; volumeSize: number }) => void;
 }
