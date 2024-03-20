@@ -24,8 +24,8 @@ const useUpdateNickname = ({ onSuccess, onError }: UseUpdateNicknameProps) => {
       updateMemberNickname(nicknameUpdateRequest),
     mutationKey: ['updateNickname'],
     onSuccess: (e) => {
-      onSuccess?.(e);
       queryClient.invalidateQueries({ queryKey: ['getMyProfileInfo'] });
+      onSuccess?.(e);
     },
     onError: (e) => {
       onError?.(e);
