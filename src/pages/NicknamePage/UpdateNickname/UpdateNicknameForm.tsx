@@ -1,9 +1,11 @@
 import * as Form from '@radix-ui/react-form';
+import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import useUpdateNickname from '@/hooks/useUpdateNickname';
 import useVolumeStore from '@/store/useVolumeStore';
+import { NicknamePageProps } from '../NicknamePage';
 
 type UpdateNicknameFormType = {
   nickname: string;
@@ -12,6 +14,11 @@ type UpdateNicknameFormType = {
 const UpdateNicknameForm = () => {
   const navigate = useNavigate();
   const { setVolume } = useVolumeStore();
+  const queryClient = useQueryClient();
+
+  const profileData = queryClient.getQueryData<NicknamePageProps>([
+    'getMyProfileInfo',
+  ]);
 
   const {
     register,
@@ -21,6 +28,9 @@ const UpdateNicknameForm = () => {
     setError,
   } = useForm<UpdateNicknameFormType>({
     mode: 'onChange',
+    defaultValues: {
+      nickname: profileData?.data?.data?.nickname || '',
+    },
   });
 
   const { mutate: mutateUpdateNickname } = useUpdateNickname({
