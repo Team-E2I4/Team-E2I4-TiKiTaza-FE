@@ -11,7 +11,6 @@ import kakao from '@/assets/login/kakao-icon.svg';
 import logo_car from '@/assets/logo/logo_car.png';
 import logo_taza from '@/assets/logo/logo_taza.png';
 import { PAUSE, PLAY } from '@/common/Header/constants/volume';
-import { exchangeVolumeState } from '@/common/Header/utils/exchangeVolumeState';
 import { useAuthCheck, useLogout } from '@/hooks/useAuth/useAuth';
 import useVolumeStore from '@/store/useVolumeStore';
 import { handleKakaoLogin } from '@/utils/handleKakaoLogin';
@@ -89,13 +88,13 @@ const Header = () => {
         />
       </section>
       <section className='h-full flex items-center justify-around w-[20rem]'>
-        <button
+        {/* <button
           onClick={() =>
             setVolume({ ...volume, bgm: exchangeVolumeState(volume.bgm) })
           }
           className={`bg-beige-10 hover:shadow-hover flex items-center justify-center p-[1.2rem] rounded-[1rem] transition-all duration-300 ${volume.bgm === 'pause' ? 'shadow-default' : 'shadow-hover'}`}>
           <WrappedIcon IconComponent={mappedIcons.bgm[volume.bgm]} />
-        </button>
+        </button> */}
         <AudioPopover
           value={volume.volumeSize}
           onChange={(value) => setVolume({ ...volume, volumeSize: value })}>
