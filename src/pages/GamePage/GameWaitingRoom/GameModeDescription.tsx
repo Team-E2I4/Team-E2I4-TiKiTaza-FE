@@ -27,11 +27,11 @@ const GameModeDescription = ({
 
   return (
     <div
-      className={`relative w-[69.3rem] transition-all delay-100 ${isHovered ? 'h-[30rem] duration-300 ease-in overflow-hidden -translate-y-[20rem]' : 'h-[10rem] truncate duration-200 ease-out'} flex items-center justify-end bg-beige-100 shadow-md shadow-black/50 rounded-[2.5rem]`}>
+      className={`relative w-[69.3rem] transition-all delay-100 ${isHovered ? 'h-[32rem] duration-300 ease-in overflow-hidden -translate-y-[22rem]' : 'h-[10rem] truncate duration-200 ease-out'} flex items-center justify-end bg-beige-100 shadow-md shadow-black/50 rounded-[2.5rem]`}>
       <p
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`absolute top-0 left-0 ${isAdmin ? 'w-[75%]' : 'w-[85%]'} ${isHovered ? 'h-[30rem]' : 'h-[10rem]'}  whitespace-pre-line ml-[2rem] py-[2rem] text-left text-[2rem]`}>
+        className={`absolute top-0 left-0 ${isAdmin ? 'w-[75%]' : 'w-[85%]'} ${isHovered ? 'h-[32rem]' : 'h-[10rem]'}  whitespace-pre-line ml-[2rem] py-[2rem] text-left text-[2rem]`}>
         <strong> {GAME_MODE_SHORT_DESCRIPTION[gameMode]} </strong>
         {GAME_MODE_DESCRIPTION[gameMode]}
       </p>
