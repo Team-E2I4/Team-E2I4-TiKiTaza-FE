@@ -27,9 +27,9 @@ const RankItem = ({ rank, index }: RankItemProps) => {
           rank.ranking
         )}
       </span>
-      <span className='flex-1 text-center'>
+      <span
+        className={`${rank.isMe && 'font-bold text-green-100'} flex-1 text-center`}>
         {rank.nickname}
-        <strong>{rank.isMe && `(나)`}</strong>
       </span>
       <span className='flex-1 text-center'>{Math.floor(rank.score)}</span>
     </div>
