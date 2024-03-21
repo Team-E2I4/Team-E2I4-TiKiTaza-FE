@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,6 +29,7 @@ export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={true} />
+      <ToastContainer />
       <Outlet />
     </QueryClientProvider>
   );
