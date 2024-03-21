@@ -4,6 +4,7 @@ import Loading from '@/common/Loading/Loading';
 import { useAuthCheck } from '@/hooks/useAuth/useAuth';
 import useGameWaitingRoomStore from '@/store/useGameWaitingRoomStore';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
+import { Toast } from '@/utils/toast';
 import GameWaitingRoom from './GameWaitingRoom/GameWaitingRoom';
 import useWebsocket from './hooks/useWebsocket';
 import IngameWebsocketLayer from './IngameWebsocketLayer';
@@ -59,15 +60,22 @@ const GamePage = () => {
   }, []);
 
   useEffect(() => {
-    if (gameRoomRes?.roomInfo) {
-      setRoomInfo(gameRoomRes.roomInfo);
-    }
-
     if (isKicked) {
       navigate('/main', { replace: true });
       navigate(0);
     }
-  }, [gameRoomRes, isKicked]);
+  }, [isKicked]);
+
+  useEffect(() => {
+    if (gameRoomRes?.roomInfo) {
+      setRoomInfo(gameRoomRes.roomInfo);
+    }
+
+    if (gameRoomRes?.type === 'MODIFIED') {
+      gameRoomRes.roomInfo?.hostId !== userId &&
+        Toast.info('게임 정보가 수정되었습니다!');
+    }
+  }, [gameRoomRes]);
 
   if (!roomId || isWsError) {
     navigate('/main', { replace: true });
