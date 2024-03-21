@@ -15,7 +15,7 @@ const RankItem = ({ rank, index }: RankItemProps) => {
     2: third,
   };
   return (
-    <div className='flex gap-2 justify-center items-center font-bold text-4xl py-6 px-4 border-b border-gray-100'>
+    <div className='flex gap-2 justify-center items-center text-4xl py-6 px-4 border-b border-gray-100'>
       <span className='flex flex-1 justify-center items-center'>
         {rank.ranking <= 3 ? (
           <img
