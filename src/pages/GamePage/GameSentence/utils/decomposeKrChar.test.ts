@@ -6,7 +6,7 @@ test('decompose korean charactor', () => {
 });
 
 test('decompose korean charactor', () => {
-  expect(decomposeKrChar('슭')).toEqual(['ㅅ', ['ㅡ'], 'ㄺ']);
+  expect(decomposeKrChar('슭')).toEqual(['ㅅ', ['ㅡ'], ['ㄹ', 'ㄱ']]);
 });
 
 const temp = '슭기로운 생활';
@@ -15,12 +15,12 @@ test('decompose korean charactor', () => {
   expect(
     [...temp].map((el) => (el !== ' ' ? decomposeKrChar(el) : [el]))
   ).toEqual([
-    ['ㅅ', ['ㅡ'], 'ㄺ'],
-    ['ㄱ', ['ㅣ'], ''],
-    ['ㄹ', ['ㅗ'], ''],
-    ['ㅇ', ['ㅜ'], 'ㄴ'],
+    ['ㅅ', ['ㅡ'], ['ㄹ', 'ㄱ']],
+    ['ㄱ', ['ㅣ'], ['']],
+    ['ㄹ', ['ㅗ'], ['']],
+    ['ㅇ', ['ㅜ'], ['ㄴ']],
     [' '],
-    ['ㅅ', ['ㅐ'], 'ㅇ'],
-    ['ㅎ', ['ㅗ', 'ㅏ'], 'ㄹ'],
+    ['ㅅ', ['ㅐ'], ['ㅇ']],
+    ['ㅎ', ['ㅗ', 'ㅏ'], ['ㄹ']],
   ]);
 });
