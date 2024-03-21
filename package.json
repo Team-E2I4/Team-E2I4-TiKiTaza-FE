@@ -36,7 +36,7 @@
     "react-highlight": "^0.15.0",
     "react-hook-form": "^7.50.1",
     "react-router-dom": "^6.22.0",
-    "react-toastify": "^10.0.5",
+    "react-toastify": "^10.0.2",
     "sockjs-client": "^1.6.1",
     "storybook": "^7.6.13",
     "tailwind-scrollbar-hide": "^1.1.7",

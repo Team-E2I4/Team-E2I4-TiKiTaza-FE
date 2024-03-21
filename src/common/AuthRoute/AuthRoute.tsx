@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth/useAuth';
 import storageFactory from '@/utils/storageFactory';
+import { Toast } from '@/utils/toast';
 
 const authMap = new Map([
   ['/', 1],
@@ -18,7 +19,7 @@ const AuthRoute = () => {
     if (authMap.get(pathname)) {
       return <Outlet />;
     }
-    alert('로그인이 필요한 페이지 입니다');
+    Toast.info('로그인이 필요한 페이지 입니다');
     return <Navigate to='/' />;
   }
 
@@ -40,13 +41,13 @@ const AuthRoute = () => {
     }
 
     //로그인이 필요한 페이지라면 스타트 페이지로
-    alert('로그인이 필요한 페이지 입니다');
+    Toast.info('로그인이 필요한 페이지 입니다');
     return <Navigate to='/' />;
   }
 
   //로그인 했을때, 로그인 관련 페이지는 접근 불가
   if (authMap.get(pathname)) {
-    alert('로그인 한 유저는 접근할 수 없는 페이지 입니다');
+    Toast.info('로그인이 필요한 페이지 입니다');
     return <Navigate to='/main' />;
   }
 

@@ -11,6 +11,7 @@ import useUpdateGameRoom from '@/hooks/useUpdateGameRoom';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import { GameModeType } from '@/types/gameMode';
 import getRandomItem from '@/utils/getRandomItem';
+import { Toast } from '@/utils/toast';
 import {
   CREATE_ROOM_INPUT_LIST,
   CREATE_ROOM_SELECT_LIST,
@@ -75,7 +76,7 @@ const CreateRoomForm = ({
         if (!e.data.data) {
           return;
         }
-        alert('방 생성 성공');
+        Toast.success('방 생성 성공');
         setRoomId(e.data.data.roomId);
         setIsOpen(false);
         navigate('/game');
@@ -84,7 +85,7 @@ const CreateRoomForm = ({
 
   const { mutate: mutateUpdateGameRoom } = useUpdateGameRoom({
     onSuccess: () => {
-      alert('방 수정 성공');
+      Toast.success('방 수정 성공');
       setIsOpen(false);
     },
   });
