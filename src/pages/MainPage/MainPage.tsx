@@ -90,7 +90,7 @@ const MainPage = () => {
             <span>방 만들기</span>
           </article>
         </CreateRoomModal>
-        <SSEErrorBoundary fallback={(error) => <SSEFallBack error={error} />}>
+        <SSEErrorBoundary fallback={() => <SSEFallBack />}>
           {(data) => (
             <ErrorBoundary fallbackRender={EnterRoomErrorFallback}>
               <GameRoomList
