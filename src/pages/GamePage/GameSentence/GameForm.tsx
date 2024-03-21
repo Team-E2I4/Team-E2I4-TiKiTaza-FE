@@ -194,7 +194,7 @@ const GameForm = ({
         className='flex flex-col items-center'
         onSubmit={handleSubmit(onSubmit)}>
         <Input
-          placeholder={sample === '' ? '남은 문장이 없습니다.' : ''}
+          placeholder={sample || '남은 문장이 없습니다.'}
           className='text-[2rem]'
           isError={!!errors['sentence']?.message}
           autoFocus
