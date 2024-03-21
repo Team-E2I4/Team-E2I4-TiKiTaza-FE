@@ -73,7 +73,7 @@ const GamePage = () => {
 
     if (gameRoomRes?.type === 'MODIFIED') {
       gameRoomRes.roomInfo?.hostId !== userId &&
-        Toast.info('게임 정보가 수정되었습니다!');
+        Toast.info('게임 대기실의 설정이 변경되었습니다!');
     }
   }, [gameRoomRes]);
 
