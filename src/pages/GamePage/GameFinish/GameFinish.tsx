@@ -69,7 +69,7 @@ const GameFinish = ({
             navigate(0);
           }}
           className='bg-coral-100 px-6 py-6 rounded-[1rem] text-[2rem] font-bold'>
-          로비로 나가기
+          메인으로 나가기
         </button>
         <button
           onClick={() => {

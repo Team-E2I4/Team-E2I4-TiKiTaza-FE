@@ -11,9 +11,9 @@ const RankPage = () => {
 
   const tabData = [
     { value: '', text: '전체' },
-    { value: 'WORD', text: '단어' },
     { value: 'SENTENCE', text: '문장' },
     { value: 'CODE', text: '코드' },
+    { value: 'WORD', text: '단어' },
   ];
 
   const navigate = useNavigate();

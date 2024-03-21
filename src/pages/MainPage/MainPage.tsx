@@ -63,7 +63,7 @@ const MainPage = () => {
         <article
           className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full cursor-pointer hover:bg-green-100 hover:text-white hover:text-[1.8rem] transition-all'
           onClick={() => navigate('/rank')}>
-          <button>전체 랭킹 페이지</button>
+          <button>전체 랭킹</button>
         </article>
         <UserCard
           nickname={userData.data.data!.nickname}
