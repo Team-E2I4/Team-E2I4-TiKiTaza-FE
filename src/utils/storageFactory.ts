@@ -1,4 +1,5 @@
 import { checkIsJson } from './checkIsJson';
+import { Toast } from './toast';
 
 const storageFactory = (storage: Storage) => {
   const getItem = <D>(key: string, defaultValue: D | unknown) => {
@@ -10,7 +11,7 @@ const storageFactory = (storage: Storage) => {
       return defaultValue;
     } catch (e) {
       if (e instanceof Error) {
-        alert(`${storage}에서 아이템 꺼내는 도중 오류 발생 ${e.message}`);
+        Toast.error(`${storage}에서 아이템 꺼내는 도중 오류 발생 ${e.message}`);
       }
     }
   };
@@ -23,7 +24,7 @@ const storageFactory = (storage: Storage) => {
       );
     } catch (e) {
       if (e instanceof Error) {
-        alert(`${storage}에 아이템 넣는중 도중 오류 발생 ${e.message}`);
+        Toast.error(`${storage}에 아이템 넣는중 도중 오류 발생 ${e.message}`);
       }
     }
   };

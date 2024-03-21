@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import useUpdateNickname from '@/hooks/useUpdateNickname';
 import useVolumeStore from '@/store/useVolumeStore';
+import { Toast } from '@/utils/toast';
 import { NicknamePageProps } from '../NicknamePage';
 
 type UpdateNicknameFormType = {
@@ -39,7 +40,7 @@ const UpdateNicknameForm = ({ onClose }: UpdataeNicknameFormProps) => {
 
   const { mutate: mutateUpdateNickname } = useUpdateNickname({
     onSuccess: () => {
-      alert('닉네임 변경 성공');
+      Toast.success('닉네임 변경 성공');
       onClose();
       navigate('/main');
       setVolume({ bgm: 'play', volumeSize: 30 });

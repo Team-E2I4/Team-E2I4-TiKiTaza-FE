@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useKaKaoLogin } from '@/hooks/useAuth/useAuth';
+import { Toast } from '@/utils/toast';
 
 const KaKaoLoginPage = () => {
   const navigate = useNavigate();
@@ -10,11 +11,11 @@ const KaKaoLoginPage = () => {
 
   const { mutate: mutateKaKaoLogin, error } = useKaKaoLogin({
     onSuccess: () => {
-      alert('로그인 성공');
+      Toast.success('카카오 로그인 성공');
       navigate('/nickname');
     },
-    onError: (error) => {
-      alert(error.message);
+    onError: () => {
+      Toast.success('카카오 로그인 실패');
     },
   });
 

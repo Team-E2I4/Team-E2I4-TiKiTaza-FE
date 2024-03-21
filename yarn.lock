@@ -9492,7 +9492,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-toastify@npm:^10.0.5":
+"react-toastify@npm:^10.0.2":
   version: 10.0.5
   resolution: "react-toastify@npm:10.0.5"
   dependencies:
@@ -10682,7 +10682,7 @@ __metadata:
     react-highlight: "npm:^0.15.0"
     react-hook-form: "npm:^7.50.1"
     react-router-dom: "npm:^6.22.0"
-    react-toastify: "npm:^10.0.5"
+    react-toastify: "npm:^10.0.2"
     sockjs-client: "npm:^1.6.1"
     storybook: "npm:^7.6.13"
     tailwind-scrollbar-hide: "npm:^1.1.7"
