@@ -1,6 +1,6 @@
-import first from '@/assets/rank/first_rank.png';
-import second from '@/assets/rank/second_rank.png';
-import third from '@/assets/rank/third_rank.png';
+import first from '@/assets/rank/first_rank.webp';
+import second from '@/assets/rank/second_rank.webp';
+import third from '@/assets/rank/third_rank.webp';
 import { I_ConvertedRankData } from './types/convertedRankData';
 
 interface RankItemProps {

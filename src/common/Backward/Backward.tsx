@@ -1,4 +1,4 @@
-import backward from '@/assets/backward.png';
+import backward from '@/assets/backward.webp';
 
 const Backward = ({
   handleClickBackward,
