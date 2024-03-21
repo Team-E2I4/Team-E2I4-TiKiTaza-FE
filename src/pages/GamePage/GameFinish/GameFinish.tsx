@@ -58,7 +58,7 @@ const GameFinish = ({
         </span>
       </section>
       <section className='flex gap-[10rem] w-full'>
-        <div className='flex flex-grow justify-center'>
+        <div className='flex grow justify-center'>
           <RankList convertedRankData={convertedRankData} />
         </div>
       </section>
