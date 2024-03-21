@@ -35,16 +35,16 @@ const UserCard = ({
         </div>
       )}
       <div className='flex justify-between'>
-        {!isGuest ? (
+        {isGuest ? (
+          <span className='bg-green-100 rounded-[0.5rem] truncate px-[1rem] hover:text-white hover:text-[1.8rem] transition-all h-[2.5rem] flex items-center justify-center cursor-pointer'>
+            {nickname}
+          </span>
+        ) : (
           <UpdateNicknameModal>
             <span className='bg-green-100 rounded-[0.5rem] truncate px-[1rem] hover:text-white hover:text-[1.8rem] transition-all h-[2.5rem] flex items-center justify-center cursor-pointer'>
               {nickname}
             </span>
           </UpdateNicknameModal>
-        ) : (
-          <span className='bg-green-100 rounded-[0.5rem] truncate px-[1rem] hover:text-white hover:text-[1.8rem] transition-all h-[2.5rem] flex items-center justify-center cursor-pointer'>
-            {nickname}
-          </span>
         )}
       </div>
       <div className='pb-[2.2rem] flex'>
@@ -60,9 +60,9 @@ const UserCard = ({
         </Avatar.Root>
 
         {/* Todo: 각 정보 눌렀을때 랭크페이지 이동? */}
-        <div className='flex flex-col-reverse  mx-[1.2rem] gap-[1rem] text-[1.4rem]'>
+        <div className='flex flex-col  mx-[1.2rem] gap-[1rem] text-[1.4rem]'>
           <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`${isGuest || rank === -1 ? '순위 없음' : `${rank}위`}`}</span>
-          <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`플레이 ${formatNumber(gameCount)}회`}</span>
+          <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`플레이 ${gameCount}회`}</span>
           <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`평균 ${formatNumber(averageCpm)}타`}</span>
           <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`완벽함 ${formatNumber(averageAccuracy)}%`}</span>
         </div>
