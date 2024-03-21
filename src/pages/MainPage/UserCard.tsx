@@ -1,4 +1,5 @@
 import * as Avatar from '@radix-ui/react-avatar';
+import defaultProfile from '@/assets/profile/defaultGuestProile.webp';
 import formatNumber from '../GamePage/GameSentence/utils/formatNumber';
 import UpdateNicknameModal from '../NicknamePage/UpdateNickname/UpdateNicknameModal';
 
@@ -16,7 +17,7 @@ interface UserCardProps {
 const UserCard = ({
   //테스트용으로 기본값 추가해두었습니다.
   nickname,
-  userImage = 'https://cdn.pixabay.com/photo/2019/10/24/19/51/dino-4575130_1280.png',
+  userImage = defaultProfile,
   userImageFallbackDelay = 6000,
   rank,
   isGuest,
