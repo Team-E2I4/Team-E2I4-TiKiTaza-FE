@@ -6,6 +6,7 @@ import { SentenceNext } from '@/common/Ingame/SentenceBlocks';
 import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
 import TrackLine from '../common/TrackLine';
+import { SECONDS_PER_SENTENCE } from '../constants';
 import useGameRound from '../hooks/useGameRound';
 import { I_Question, PublishIngameType } from '../types/websocketType';
 import GameForm from './GameForm';
@@ -14,8 +15,6 @@ interface GameSentenceProps {
   publishIngame: PublishIngameType;
   userId: number;
 }
-
-const SECONDS_PER_SENTENCE = 7;
 
 export type UpdateScoreType = () => void;
 
