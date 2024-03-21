@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { TRACK_CARS } from '@/assets/canvasCars';
-import close from '@/assets/close.png';
+import close from '@/assets/close.webp';
 import { HandlePubKickUserType, I_AllMember } from '../types/websocketType';
 
 const GameRoomUserItem = ({

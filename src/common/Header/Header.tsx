@@ -8,8 +8,8 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import bgmFile from '@/assets/audio/bgm1.mp3';
 import kakao from '@/assets/login/kakao-icon.svg';
-import logo_car from '@/assets/logo/logo_car.png';
-import logo_taza from '@/assets/logo/logo_taza.png';
+import logo_car from '@/assets/logo/logo_car.webp';
+import logo_taza from '@/assets/logo/logo_taza.webp';
 import { PAUSE, PLAY } from '@/common/Header/constants/volume';
 import {
   useAuthCheck,

@@ -1,5 +1,5 @@
 import './dashborad.css';
-import needle from '@/assets/ingame/needle.png';
+import needle from '@/assets/ingame/needle.webp';
 
 interface DashboardProps {
   type: 'cpm' | 'accuracy';
