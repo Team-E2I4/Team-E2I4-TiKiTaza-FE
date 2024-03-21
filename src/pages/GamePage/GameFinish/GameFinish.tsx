@@ -43,8 +43,8 @@ const GameFinish = ({
       .sort(
         ({ score: prevScore }, { score: nextScore }) => nextScore - prevScore
       )
-      .map((data, idx) => {
-        if (idx !== 0 && data.score !== allMembers[idx - 1].score) {
+      .map((data, idx, sortedData) => {
+        if (idx !== 0 && data.score !== sortedData[idx - 1].score) {
           rank = idx + 1;
         }
         return { ...data, ranking: rank };
