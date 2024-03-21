@@ -1,4 +1,5 @@
 import * as Avatar from '@radix-ui/react-avatar';
+import UpdateNicknameModal from '../NicknamePage/UpdateNickname/UpdateNicknameModal';
 
 interface UserCardProps {
   nickname: string;
@@ -33,9 +34,17 @@ const UserCard = ({
         </div>
       )}
       <div className='flex justify-between'>
-        <span className='bg-green-100 rounded-[0.5rem] truncate px-[1rem] hover:text-white hover:text-[1.8rem] transition-all h-[2.5rem] flex items-center justify-center cursor-pointer'>
-          {nickname}
-        </span>
+        {!isGuest ? (
+          <UpdateNicknameModal>
+            <span className='bg-green-100 rounded-[0.5rem] truncate px-[1rem] hover:text-white hover:text-[1.8rem] transition-all h-[2.5rem] flex items-center justify-center cursor-pointer'>
+              {nickname}
+            </span>
+          </UpdateNicknameModal>
+        ) : (
+          <span className='bg-green-100 rounded-[0.5rem] truncate px-[1rem] hover:text-white hover:text-[1.8rem] transition-all h-[2.5rem] flex items-center justify-center cursor-pointer'>
+            {nickname}
+          </span>
+        )}
       </div>
       <div className='pb-[2.2rem] flex'>
         <Avatar.Root className='w-1/2 pt-[2.2rem]'>
@@ -52,9 +61,9 @@ const UserCard = ({
         {/* Todo: 각 정보 눌렀을때 랭크페이지 이동? */}
         <div className='flex flex-col-reverse  mx-[1.2rem] gap-[1rem] text-[1.4rem]'>
           <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`${isGuest || rank === -1 ? '순위 없음' : `${rank}위`}`}</span>
-          <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`플레이 ${gameCount}회`}</span>
-          <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`평균 ${averageCpm}타`}</span>
-          <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`완벽함 ${averageAccuracy}%`}</span>
+          <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`플레이 ${gameCount.toFixed(1)}회`}</span>
+          <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`평균 ${averageCpm.toFixed(1)}타`}</span>
+          <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`완벽함 ${averageAccuracy.toFixed(1)}%`}</span>
         </div>
       </div>
     </article>
