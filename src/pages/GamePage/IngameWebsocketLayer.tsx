@@ -64,7 +64,7 @@ const IngameWebsocketLayer = ({
         isOpen={isRoundWaiting}
         onTimeFinish={() => setIsRoundWaiting(false)}
       />
-      <Suspense>
+      <Suspense fallback={<Spinner />}>
         {roomInfo?.gameMode === 'SENTENCE' && (
           <GameSentence
             publishIngame={publishIngame}
