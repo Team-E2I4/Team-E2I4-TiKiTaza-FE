@@ -9,7 +9,7 @@ const Spinner = ({ wrapperClass, svgClass }: SpinnerProps) => {
   return (
     <div
       role='status'
-      className={wrapperClass}>
+      className={`absolute top-1/2 left-1/2 ${wrapperClass}`}>
       <svg
         aria-hidden='true'
         className={`size-[6rem] text-gray-100 animate-spin dark:text-gray-600 fill-green-500 ${svgClass}`}
