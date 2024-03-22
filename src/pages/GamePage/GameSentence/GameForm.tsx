@@ -5,6 +5,7 @@ import useFocusInput from '../hooks/useFocusInput';
 import { UpdateScoreType } from './GameSentence';
 import { decomposeKrChar } from './utils/decomposeKrChar';
 import getTypo from './utils/getTypo';
+import isKorean from './utils/isKorean';
 
 //예시 글자와 입력중인 글자에 대해 오타 검출
 
@@ -150,15 +151,19 @@ const GameForm = ({
     }
 
     if (inputText.length === sample.length) {
-      oneLineDone.current =
-        decomposeKrChar(sample).reduce(
-          (acc, cur) => acc + [...cur].flat(3).filter((el) => !!el).length,
-          0
-        ) ===
-        decomposeKrChar(inputText).reduce(
-          (acc, cur) => acc + [...cur].flat(3).filter((el) => !!el).length,
-          0
-        );
+      if (isKorean(sample)) {
+        oneLineDone.current =
+          decomposeKrChar(sample).reduce(
+            (acc, cur) => acc + [...cur].flat(3).filter((el) => !!el).length,
+            0
+          ) ===
+          decomposeKrChar(inputText).reduce(
+            (acc, cur) => acc + [...cur].flat(3).filter((el) => !!el).length,
+            0
+          );
+      } else {
+        oneLineDone.current = sample.length === inputText.length;
+      }
     }
 
     //현재+바로이전글자 오타 or 지금까지 최소한번의 오타 or 이전글자가 공백이 아니면 return
