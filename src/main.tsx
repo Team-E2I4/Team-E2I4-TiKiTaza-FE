@@ -9,6 +9,7 @@ import ErrorBoundaryFallback from './common/Error/ErrorBoundaryFallback.tsx';
 import Header from './common/Header/Header.tsx';
 import BodyLayout from './common/Layout/BodyLayout.tsx';
 import Layout from './common/Layout/Layout.tsx';
+import Spinner from './common/Spinner/Spinner.tsx';
 import KaKaoLoginPage from './pages/KaKaoLoginPage/KaKaoLoginPage.tsx';
 import DefaultErrorFallback from './pages/MainPage/DefaultErrorFallback.tsx';
 import MainPage from './pages/MainPage/MainPage.tsx';
@@ -67,12 +68,16 @@ export const router = createBrowserRouter([
           },
           {
             path: '/game',
-            element: <GamePage />,
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <GamePage />
+              </Suspense>
+            ),
           },
           {
             path: '/rank',
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <RankPage />
               </Suspense>
             ),
