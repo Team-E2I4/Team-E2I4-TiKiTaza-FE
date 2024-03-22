@@ -1,13 +1,10 @@
-import { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
+import Spinner from '@/common/Spinner/Spinner';
 import useIngameStore from '@/store/useIngameStore';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import RoundWaitModal from './common/RoundWaitModal';
 import WsError from './common/WsError';
-import GameCode from './GameCode/GameCode';
-import GameFinish from './GameFinish/GameFinish';
-import GameSentence from './GameSentence/GameSentence';
-import GameWord from './GameWord/GameWord';
 import { PublishIngameType } from './types/websocketType';
 
 interface IngameWebsocketLayerProps {
@@ -16,6 +13,12 @@ interface IngameWebsocketLayerProps {
   onIngameConnected: () => void;
   handleConnectIngame: (roomId: number) => void;
 }
+
+const GameCode = React.lazy(() => import('./GameCode/GameCode'));
+const GameFinish = React.lazy(() => import('./GameFinish/GameFinish'));
+const GameWord = React.lazy(() => import('./GameWord/GameWord'));
+const GameSentence = React.lazy(() => import('./GameSentence/GameSentence'));
+
 const IngameWebsocketLayer = ({
   userId,
   publishIngame,
@@ -46,10 +49,12 @@ const IngameWebsocketLayer = ({
 
   if (ingameRoomRes.type === 'FINISH') {
     return (
-      <GameFinish
-        allMembers={ingameRoomRes.allMembers}
-        userId={userId}
-      />
+      <Suspense fallback={<Spinner />}>
+        <GameFinish
+          allMembers={ingameRoomRes.allMembers}
+          userId={userId}
+        />
+      </Suspense>
     );
   }
 
@@ -60,22 +65,28 @@ const IngameWebsocketLayer = ({
         onTimeFinish={() => setIsRoundWaiting(false)}
       />
       {roomInfo?.gameMode === 'SENTENCE' && (
-        <GameSentence
-          publishIngame={publishIngame}
-          userId={userId}
-        />
+        <Suspense fallback={<Spinner />}>
+          <GameSentence
+            publishIngame={publishIngame}
+            userId={userId}
+          />
+        </Suspense>
       )}
       {roomInfo?.gameMode === 'CODE' && (
-        <GameCode
-          publishIngame={publishIngame}
-          userId={userId}
-        />
+        <Suspense fallback={<Spinner />}>
+          <GameCode
+            publishIngame={publishIngame}
+            userId={userId}
+          />
+        </Suspense>
       )}
       {roomInfo?.gameMode === 'WORD' && (
-        <GameWord
-          publishIngame={publishIngame}
-          userId={userId}
-        />
+        <Suspense fallback={<Spinner />}>
+          <GameWord
+            publishIngame={publishIngame}
+            userId={userId}
+          />
+        </Suspense>
       )}
     </>
   );
