@@ -14,11 +14,11 @@ import DefaultErrorFallback from './pages/MainPage/DefaultErrorFallback.tsx';
 import MainPage from './pages/MainPage/MainPage.tsx';
 import NicknamePage from './pages/NicknamePage/NicknamePage.tsx';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
-import RankPage from './pages/RankPage/RankPage.tsx';
 import SettingPage from './pages/SettingPage/SettingPage.tsx';
 import StartPage from './pages/StartPage/StartPage.tsx';
 
 const GamePage = React.lazy(() => import('./pages/GamePage/GamePage.tsx'));
+const RankPage = React.lazy(() => import('./pages/RankPage/RankPage.tsx'));
 
 export const router = createBrowserRouter([
   {
