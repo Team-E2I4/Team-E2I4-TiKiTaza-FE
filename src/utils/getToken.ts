@@ -1,7 +1,7 @@
-import storageFactory from '@/utils/storageFactory';
+import { getTokenStorage } from '@/apis/tokenStorage';
 
 export const getToken = () => {
-  const { getItem } = storageFactory(localStorage);
+  const { getItem } = getTokenStorage();
   const token = getItem('MyToken', '');
   const connectHeaders = {
     Authorization: `Bearer ${token}`,
