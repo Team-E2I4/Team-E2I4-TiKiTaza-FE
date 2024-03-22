@@ -1,7 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuthCheck } from '@/hooks/useAuth/useAuth';
 import storageFactory from '@/utils/storageFactory';
-import { Toast } from '@/utils/toast';
 
 const authMap = new Map([
   ['/', 1],
@@ -12,14 +11,14 @@ const AuthRoute = () => {
   const { pathname } = useLocation();
   const { data: profileData, error, isPending } = useAuthCheck();
 
-  const { getItem } = storageFactory(localStorage);
+  const { getItem: sessionGetItem } = storageFactory(sessionStorage);
+  const { getItem: localGetItem } = storageFactory(localStorage);
 
   //로컬스토리지에 토큰이 없을때
-  if (!getItem('MyToken', '')) {
+  if (!localGetItem('MyToken', '') && !sessionGetItem('MyToken', '')) {
     if (authMap.get(pathname)) {
       return <Outlet />;
     }
-    Toast.info('로그인이 필요한 페이지 입니다');
     return <Navigate to='/' />;
   }
 
@@ -41,13 +40,11 @@ const AuthRoute = () => {
     }
 
     //로그인이 필요한 페이지라면 스타트 페이지로
-    Toast.info('로그인이 필요한 페이지 입니다');
     return <Navigate to='/' />;
   }
 
   //로그인 했을때, 로그인 관련 페이지는 접근 불가
   if (authMap.get(pathname)) {
-    Toast.info('로그인이 필요한 페이지 입니다');
     return <Navigate to='/main' />;
   }
 
