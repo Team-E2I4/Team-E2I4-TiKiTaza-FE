@@ -42,7 +42,7 @@ const GameRoomList = ({ data, selectedGameMode }: GameRoomListProps) => {
         </li>
         <Divider className='border-gray-200' />
         <li className='w-full'>
-          <ul className='w-full flex flex-col gap-[1.2rem] max-h-[60rem] overflow-y-auto scrollbar-hide py-[1rem]'>
+          <ul className='w-full flex flex-col gap-[1.2rem] max-h-[50rem] overflow-y-auto py-[1rem]'>
             {filteredRoomList.map((roomData) => (
               <Fragment key={roomData.id}>
                 <GameRoomListItem
