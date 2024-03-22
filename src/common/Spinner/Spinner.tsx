@@ -1,13 +1,18 @@
 import React from 'react';
 
-interface SpinnerProps extends React.SVGProps<SVGElement> {}
+interface SpinnerProps {
+  wrapperClass?: React.HTMLAttributes<HTMLDivElement>['className'];
+  svgClass?: React.SVGProps<SVGElement>['className'];
+}
 
-const Spinner = ({ className }: SpinnerProps) => {
+const Spinner = ({ wrapperClass, svgClass }: SpinnerProps) => {
   return (
-    <div role='status'>
+    <div
+      role='status'
+      className={wrapperClass}>
       <svg
         aria-hidden='true'
-        className={`size-[6rem] text-gray-100 animate-spin dark:text-gray-600 fill-green-500 ${className}`}
+        className={`size-[6rem] text-gray-100 animate-spin dark:text-gray-600 fill-green-500 ${svgClass}`}
         viewBox='0 0 100 101'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'>
