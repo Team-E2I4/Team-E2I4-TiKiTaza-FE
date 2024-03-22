@@ -1,5 +1,5 @@
 import './index.css';
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -9,7 +9,6 @@ import ErrorBoundaryFallback from './common/Error/ErrorBoundaryFallback.tsx';
 import Header from './common/Header/Header.tsx';
 import BodyLayout from './common/Layout/BodyLayout.tsx';
 import Layout from './common/Layout/Layout.tsx';
-import GamePage from './pages/GamePage/GamePage.tsx';
 import KaKaoLoginPage from './pages/KaKaoLoginPage/KaKaoLoginPage.tsx';
 import DefaultErrorFallback from './pages/MainPage/DefaultErrorFallback.tsx';
 import MainPage from './pages/MainPage/MainPage.tsx';
@@ -18,6 +17,8 @@ import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
 import RankPage from './pages/RankPage/RankPage.tsx';
 import SettingPage from './pages/SettingPage/SettingPage.tsx';
 import StartPage from './pages/StartPage/StartPage.tsx';
+
+const GamePage = React.lazy(() => import('./pages/GamePage/GamePage.tsx'));
 
 export const router = createBrowserRouter([
   {
