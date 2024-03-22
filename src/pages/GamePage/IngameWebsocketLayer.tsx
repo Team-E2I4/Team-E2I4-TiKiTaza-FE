@@ -64,30 +64,26 @@ const IngameWebsocketLayer = ({
         isOpen={isRoundWaiting}
         onTimeFinish={() => setIsRoundWaiting(false)}
       />
-      {roomInfo?.gameMode === 'SENTENCE' && (
-        <Suspense fallback={<Spinner />}>
+      <Suspense>
+        {roomInfo?.gameMode === 'SENTENCE' && (
           <GameSentence
             publishIngame={publishIngame}
             userId={userId}
           />
-        </Suspense>
-      )}
-      {roomInfo?.gameMode === 'CODE' && (
-        <Suspense fallback={<Spinner />}>
+        )}
+        {roomInfo?.gameMode === 'CODE' && (
           <GameCode
             publishIngame={publishIngame}
             userId={userId}
           />
-        </Suspense>
-      )}
-      {roomInfo?.gameMode === 'WORD' && (
-        <Suspense fallback={<Spinner />}>
+        )}
+        {roomInfo?.gameMode === 'WORD' && (
           <GameWord
             publishIngame={publishIngame}
             userId={userId}
           />
-        </Suspense>
-      )}
+        )}
+      </Suspense>
     </>
   );
 };
