@@ -7,6 +7,7 @@ const Backward = ({
 }) => {
   return (
     <button
+      className='w-[5rem]'
       type='button'
       onClick={handleClickBackward}>
       <img
