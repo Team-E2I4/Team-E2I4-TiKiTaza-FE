@@ -25,7 +25,16 @@ interface LogoutProps {
   onSuccess?: (e: AxiosResponse<ApiResponseVoid>) => void;
 }
 
-const { setItem, getItem, removeItem } = storageFactory(localStorage);
+const {
+  setItem: localSetItem,
+  getItem: localGetItem,
+  removeItem: localRemoveItem,
+} = storageFactory(localStorage);
+const {
+  setItem: sessionSetItem,
+  getItem: sessionGetItem,
+  removeItem: sessionRemoveItem,
+} = storageFactory(sessionStorage);
 
 export const useGuestLogin = ({ onSuccess }: AuthProps = {}) => {
   return useMutation<
@@ -38,7 +47,7 @@ export const useGuestLogin = ({ onSuccess }: AuthProps = {}) => {
       const token = e.data.data?.accessToken;
 
       if (token) {
-        setItem('MyToken', token);
+        sessionSetItem('MyToken', token);
       }
 
       onSuccess?.(e);
@@ -72,7 +81,7 @@ export const useKaKaoLogin = ({ onSuccess }: AuthProps = {}) => {
       const token = e.data.data?.accessToken;
 
       if (token) {
-        setItem('MyToken', token);
+        localSetItem('MyToken', token);
       }
 
       onSuccess?.(e);
@@ -103,7 +112,7 @@ export const useLogout = ({ onSuccess }: LogoutProps) => {
     mutationFn: () => logout(),
     mutationKey: ['logout'],
     onSuccess: (e) => {
-      removeItem('MyToken');
+      localRemoveItem('MyToken');
 
       queryClient.invalidateQueries({ queryKey: ['getMyProfileInfo'] });
 
@@ -117,7 +126,7 @@ export const useGuestLogout = ({ onSuccess }: LogoutProps) => {
     mutationFn: () => logout1(),
     mutationKey: ['logout'],
     onSuccess: (e) => {
-      removeItem('MyToken');
+      sessionRemoveItem('MyToken');
 
       onSuccess?.(e);
     },
@@ -135,7 +144,7 @@ export const useAuthCheck = () => {
     gcTime: MINUTE * 15,
     staleTime: MINUTE * 10,
     refetchOnWindowFocus: false,
-    enabled: !!getItem('MyToken', ''),
+    enabled: !!sessionGetItem('MyToken', '') || !!localGetItem('MyToken', ''),
     meta: {
       errorMessage: 'failed to fetch getMyProfile',
     },
