@@ -4,5 +4,6 @@
       "source": "/(.*)",
       "destination": "/"
     }
-  ]
+  ],
+  "installCommand": "yarn install"
 }
