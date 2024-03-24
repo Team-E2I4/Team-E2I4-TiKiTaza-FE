@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import Divider from '@/common/Divider/Divider';
-import { I_ChangeGameRoomData } from '@/hooks/useSse';
+import { I_ChangeGameRoomData } from '@/hooks/useSse/useSse';
 import GameRoomListItem from './GameRoonListItem';
 import { FilteredGameModeType } from './MainPage';
 import PrivateRoomModal from './PrivateRoomModal';

@@ -4,7 +4,6 @@ import {
   EventSourcePolyfillInit,
   MessageEvent,
 } from 'event-source-polyfill';
-
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 interface UseSseProps<K> {
