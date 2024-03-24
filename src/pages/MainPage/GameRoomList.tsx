@@ -1,9 +1,9 @@
 import { Fragment, useState } from 'react';
 import Divider from '@/common/Divider/Divider';
-import { I_ChangeGameRoomData } from '@/hooks/useSse/useSse';
 import GameRoomListItem from './GameRoonListItem';
 import { FilteredGameModeType } from './MainPage';
 import PrivateRoomModal from './PrivateRoomModal';
+import { I_ChangeGameRoomData } from './SseFetcher';
 
 const GAME_ROOM_LIST_CATEGORY = ['방 번호', '방 제목', '게임 모드', '인원수'];
 
