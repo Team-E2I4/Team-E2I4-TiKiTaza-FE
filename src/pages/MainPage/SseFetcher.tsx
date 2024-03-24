@@ -1,7 +1,7 @@
 import { Component, FunctionComponent, ReactElement, ReactNode } from 'react';
 import { BASE_PATH } from '@/generated/base';
-import useServerSentEvents, { SseErrorType } from '@/hooks/useSse';
 import { SSE_CHANGE_GAME_ROOM, SSE_CONNECT } from '@/hooks/useSse/constants';
+import useServerSentEvents, { SseErrorType } from '@/hooks/useSse/useSse';
 import storageFactory from '@/utils/storageFactory';
 export interface I_ChangeGameRoomData {
   id: number;
