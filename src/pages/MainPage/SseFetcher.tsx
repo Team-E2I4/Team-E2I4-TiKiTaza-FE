@@ -1,7 +1,7 @@
 import { Component, FunctionComponent, ReactElement, ReactNode } from 'react';
 import { BASE_PATH } from '@/generated/base';
 import { SSE_CHANGE_GAME_ROOM, SSE_CONNECT } from '@/hooks/useSse/constants';
-import useServerSentEvents, { SseErrorType } from '@/hooks/useSse/useSse';
+import useSse, { SseErrorType } from '@/hooks/useSse/useSse';
 import storageFactory from '@/utils/storageFactory';
 export interface I_ChangeGameRoomData {
   id: number;
@@ -29,7 +29,7 @@ const SSE_TIME_OUT_LIMIT = 1000 * 60; // 60 seconds
 
 const SseFetcher = ({ fallback, children }: SseFetcherProps) => {
   const { getItem } = storageFactory(localStorage);
-  const { data, error } = useServerSentEvents<
+  const { data, error } = useSse<
     'changeGameRoom' | 'connect',
     I_ChangeGameRoomData[]
   >({
