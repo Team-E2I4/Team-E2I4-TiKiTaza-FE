@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { enterGameRoom } from '@/apis/api';
 import { ApiResponseGameRoomEnterResponse, ErrorResponse } from '@/generated';
+import { Toast } from '@/utils/toast';
 
 interface UseEnterGameRoomProps {
   onSuccess?: (e: AxiosResponse<ApiResponseGameRoomEnterResponse>) => void;
@@ -15,7 +15,6 @@ export interface I_UseEnterGameRoomMutation {
 }
 
 const useEnterGameRoom = ({ onSuccess, onError }: UseEnterGameRoomProps) => {
-  const navigate = useNavigate();
   return useMutation<
     AxiosResponse<ApiResponseGameRoomEnterResponse>,
     Error | AxiosError<ErrorResponse>,
@@ -29,8 +28,7 @@ const useEnterGameRoom = ({ onSuccess, onError }: UseEnterGameRoomProps) => {
     },
     onError: (e) => {
       if (e instanceof AxiosError) {
-        alert(e.response?.data.errorMessage);
-        navigate(0);
+        Toast.info(`${e.response?.data.errorMessage}`);
         onError?.(e);
       }
     },
