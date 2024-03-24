@@ -9,8 +9,8 @@ import { GameModeType } from '@/types/gameMode';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import EnterRoomErrorFallback from './EnterRoomErrorFallback';
 import GameRoomList from './GameRoomList';
-import SSEErrorBoundary from './SSEErrorBoundary';
-import SSEFallBack from './SSEFallBack';
+import SseFallback from './SseFallback';
+import SseFetcher from './SseFetcher';
 import UserCard from './UserCard';
 import UserList from './UserList';
 
@@ -90,7 +90,7 @@ const MainPage = () => {
             <span>방 만들기</span>
           </article>
         </CreateRoomModal>
-        <SSEErrorBoundary fallback={() => <SSEFallBack />}>
+        <SseFetcher fallback={() => <SseFallback />}>
           {(data) => (
             <ErrorBoundary fallbackRender={EnterRoomErrorFallback}>
               <GameRoomList
@@ -100,7 +100,7 @@ const MainPage = () => {
               />
             </ErrorBoundary>
           )}
-        </SSEErrorBoundary>
+        </SseFetcher>
       </section>
     </main>
   );

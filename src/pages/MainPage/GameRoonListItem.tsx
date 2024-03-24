@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Divider from '@/common/Divider/Divider';
 import useEnterGameRoom from '@/hooks/useEnterGameRoom';
-import { I_ChangeGameRoomData } from '@/hooks/useSSE';
+import { I_ChangeGameRoomData } from '@/hooks/useSse';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 
 const MODE_TYPE = {
