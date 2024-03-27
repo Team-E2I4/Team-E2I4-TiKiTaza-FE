@@ -45,9 +45,8 @@ const GameRoomListItem = ({
             ? () => setIsOpen(true)
             : () => mutateEnterGameRoom({ roomId: id })
         }
-        className={`${isPlaying ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'} h-[5rem] flex items-center shrink-0 w-full py-[1rem] bg-gray-10 
-      [clip-path:polygon(97%_0%,100%_50%,97%_100%,0%_100%,0%_0%)]
-      hover:bg-myGradient hover:animate-gameRoomList`}>
+        className={`${isPlaying ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer hover:bg-myGradient hover:animate-gameRoomList'} 
+        h-[5rem] flex items-center shrink-0 w-full py-[1rem] bg-gray-10 [clip-path:polygon(97%_0%,100%_50%,97%_100%,0%_100%,0%_0%)]`}>
         <span className='text-center truncate flex-1'>{`No.${id}`}</span>
         <Divider
           orientation='vertical'
