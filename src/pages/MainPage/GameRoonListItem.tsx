@@ -58,7 +58,7 @@ const GameRoomListItem = ({
             {title}
           </span>
           <span
-            className={`text-white font-semibold rounded-[0.5rem] px-[0.4rem] ${isPlaying ? 'bg-red-500' : 'bg-green-100'}`}>
+            className={`text-white font-semibold rounded-[0.5rem] px-[0.4rem] ${isPlaying ? 'bg-red-500' : 'bg-green-500'}`}>
             {isPlaying ? '게임 중' : '대기 중'}
           </span>
         </div>
