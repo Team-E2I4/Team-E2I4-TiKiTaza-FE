@@ -18,6 +18,7 @@ interface CodeFormProps {
   handleUpdateProblem: () => void;
   handleRoundFinish: () => void;
   handleUpdateCodeItem: () => void;
+  isRoundWaiting: boolean;
 }
 
 const CHAR_STATE = {
@@ -38,13 +39,14 @@ const CodeForm = ({
   handleUpdateProblem,
   handleRoundFinish,
   handleUpdateCodeItem,
+  isRoundWaiting,
 }: CodeFormProps) => {
   const { register, handleSubmit, setValue, getValues } = useForm<{
     ['code']: string;
   }>();
   const { ref } = register('code');
 
-  const { focusInput } = useFocusInput();
+  const { focusInput } = useFocusInput(isRoundWaiting);
 
   const currentPublishIndex = useRef(0);
 

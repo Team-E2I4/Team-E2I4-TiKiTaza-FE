@@ -1,20 +1,17 @@
 import { useEffect, useRef } from 'react';
-import useIngameStore from '@/store/useIngameStore';
 
-const useFocusInput = () => {
+const useFocusInput = (isFocus: boolean) => {
   const focusInput = useRef<HTMLInputElement | null>(null);
 
-  const { isRoundWaiting } = useIngameStore();
-
   useEffect(() => {
-    if (isRoundWaiting || !focusInput.current) {
+    if (isFocus || !focusInput.current) {
       return;
     }
     focusInput.current.focus();
     return () => {
       focusInput.current = null;
     };
-  }, [isRoundWaiting]);
+  }, [isFocus]);
 
   return { focusInput };
 };
