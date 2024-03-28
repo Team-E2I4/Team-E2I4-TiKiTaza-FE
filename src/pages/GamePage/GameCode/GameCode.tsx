@@ -16,7 +16,7 @@ interface GameCodeProps {
 }
 
 const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
-  const { ingameRoomRes } = useIngameStore();
+  const { ingameRoomRes, isRoundWaiting } = useIngameStore();
   const codeList = useRef<I_Question[]>(ingameRoomRes.questions!);
 
   const convertedCodeList = codeList.current.map(({ question }) =>
@@ -121,7 +121,8 @@ const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
             accurate={accurate}
             onInputChange={onInputChange}
             onKeyDown={onKeyDown}
-            initializeTyping={initializeTyping}>
+            initializeTyping={initializeTyping}
+            isRoundWaiting={isRoundWaiting}>
             <CodeContainer codeItem={codeList.current[0].question} />
           </CodeFormContainer>
         </div>

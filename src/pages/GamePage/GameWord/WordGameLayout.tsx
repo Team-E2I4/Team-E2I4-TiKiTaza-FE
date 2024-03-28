@@ -22,6 +22,7 @@ interface GameWordProps {
   initializeTyping: () => void;
   cpm: number;
   setAverageAccurate: React.Dispatch<React.SetStateAction<number>>;
+  isRoundWaiting: boolean;
 }
 
 const WordGameLayout = ({
@@ -33,6 +34,7 @@ const WordGameLayout = ({
   initializeTyping,
   cpm,
   setAverageAccurate,
+  isRoundWaiting,
 }: GameWordProps) => {
   const { register, handleSubmit, setValue, getValues } = useForm<{
     ['wordInput']: string;
@@ -40,7 +42,7 @@ const WordGameLayout = ({
 
   const { ref } = register('wordInput');
 
-  const { focusInput } = useFocusInput();
+  const { focusInput } = useFocusInput(isRoundWaiting);
 
   const submitCount = useRef(0);
   const currentScore =

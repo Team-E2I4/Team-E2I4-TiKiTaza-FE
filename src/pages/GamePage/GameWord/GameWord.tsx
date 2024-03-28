@@ -15,7 +15,7 @@ interface GameWordProps {
 const SECONDS_FOR_ALL_WORDS = 120;
 
 const GameWord = ({ publishIngame, userId }: GameWordProps) => {
-  const { ingameRoomRes } = useIngameStore();
+  const { ingameRoomRes, isRoundWaiting } = useIngameStore();
   const {
     cpm,
     averageCpm,
@@ -62,6 +62,7 @@ const GameWord = ({ publishIngame, userId }: GameWordProps) => {
               initializeTyping={initializeTyping}
               cpm={cpm}
               setAverageAccurate={setAverageAccurate}
+              isRoundWaiting={isRoundWaiting}
             />
           )}
         </div>

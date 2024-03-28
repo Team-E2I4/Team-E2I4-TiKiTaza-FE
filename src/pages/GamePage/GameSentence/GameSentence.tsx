@@ -26,7 +26,7 @@ export interface I_RankInfoList {
 }
 
 const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
-  const { ingameRoomRes } = useIngameStore();
+  const { ingameRoomRes, isRoundWaiting } = useIngameStore();
 
   const currentScore = ingameRoomRes.allMembers.find(
     ({ memberId }) => memberId === userId
@@ -123,6 +123,7 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
               }}
               isLastSentence={sentenceList.current.length - 1 === sentenceIdx}
               handleRoundFinish={handleRoundFinish}
+              isRoundWaiting={isRoundWaiting}
             />
             <SentenceNext
               text={sentenceList.current[sentenceIdx + 1]?.question ?? ''}

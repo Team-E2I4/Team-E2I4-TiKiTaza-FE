@@ -18,6 +18,7 @@ interface CodeFormContainerProps {
   ) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
   initializeTyping: () => void;
+  isRoundWaiting: boolean;
 }
 
 const CodeFormContainer = ({
@@ -31,6 +32,7 @@ const CodeFormContainer = ({
   onInputChange,
   onKeyDown,
   initializeTyping,
+  isRoundWaiting,
 }: CodeFormContainerProps) => {
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
   const [currentCodeItemIndex, setCurrentCodeItemIndex] = useState(0);
@@ -68,6 +70,7 @@ const CodeFormContainer = ({
         handleUpdateProblem={handleUpdateProblem}
         handleRoundFinish={handleRoundFinish}
         handleUpdateCodeItem={handleUpdateCodeItem}
+        isRoundWaiting={isRoundWaiting}
       />
     </div>
   );

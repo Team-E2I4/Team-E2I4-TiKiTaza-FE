@@ -17,6 +17,7 @@ interface GameFormProps {
   handleLineEnd: () => void;
   handleRoundFinish: () => void;
   isLastSentence: boolean;
+  isRoundWaiting: boolean;
 }
 
 type TypoMarkListType = '' | 'typo' | 'correct';
@@ -29,6 +30,7 @@ const GameForm = ({
   handleUpdateScore,
   handleRoundFinish,
   isLastSentence,
+  isRoundWaiting,
 }: GameFormProps) => {
   const {
     register,
@@ -43,7 +45,7 @@ const GameForm = ({
 
   const { ref } = register('sentence');
 
-  const { focusInput } = useFocusInput();
+  const { focusInput } = useFocusInput(isRoundWaiting);
 
   const [typoMarkList, setTypoMarkList] = useState<TypoMarkListType[]>(
     Array(sample.length).fill('')
