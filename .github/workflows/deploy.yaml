@@ -1,0 +1,51 @@
+name: Tikitaza frontend continuous developments
+
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Set Yarn Version
+        run: |
+          yarn set version 4.1.0
+
+      - name: Build with yarn
+        run: yarn run build
+        env:
+          VITE_CLIENT_SECRET: ${{ secrets.VITE_CLIENT_SECRET }}
+          VITE_KAKAO_CLIENT_ID: ${{ secrets.VITE_KAKAO_CLIENT_ID }}
+          VITE_KAKAO_REDIRECT_URI: ${{ secrets.VITE_KAKAO_REDIRECT_URI }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Deploy to AWS S3
+        env:
+          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+        run: |
+          aws s3 rm s3://$BUCKET_NAME/assets/ --recursive
+          aws s3 sync ./dist s3://$BUCKET_NAME
+
+      - name: CloudFront Invalidation
+        env:
+          CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID }}
+        run: aws cloudfront create-invalidation --distribution-id $CLOUD_FRONT_ID --paths /*
