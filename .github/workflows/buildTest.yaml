@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Test utility functions
+        run: yarn run test
+
       - name: Build with yarn
         run: yarn run build
         env:
