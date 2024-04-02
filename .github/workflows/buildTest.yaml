@@ -24,9 +24,6 @@ jobs:
         run: |
           yarn set version 4.1.0
 
-      - name: Install dependencies
-        run: yarn install
-
       - name: Test utility functions
         run: yarn run test
 
