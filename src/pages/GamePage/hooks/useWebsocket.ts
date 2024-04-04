@@ -1,5 +1,5 @@
 import './init.ts';
-import { Client } from '@stomp/stompjs';
+import { Client, StompSubscription } from '@stomp/stompjs';
 import { useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { BASE_PATH } from '@/generated/base';
@@ -11,6 +11,7 @@ import { PayloadType } from '../types/websocketType.ts';
 
 const useWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
+  const ingameSubscription = useRef<StompSubscription>();
 
   const connectHeaders = getToken();
 
@@ -117,12 +118,18 @@ const useWebsocket = (roomId: number | null) => {
   };
 
   const onIngameConnected = () => {
-    stompClient.current?.subscribe(
+    ingameSubscription.current = stompClient.current?.subscribe(
       `/from/game/${roomId}`,
       (e) => onIngameMessageReceived(e),
       connectHeaders
     );
   };
+  const onIngameDisconnected = () => {
+    if (ingameSubscription.current) {
+      ingameSubscription.current.unsubscribe();
+    }
+  };
+
   const handleConnectIngame = (roomId: number) => {
     stompClient.current?.publish({
       destination: `/to/game/${roomId}/connect`,
@@ -138,6 +145,7 @@ const useWebsocket = (roomId: number | null) => {
       setIsIngameWsError(true);
     }
     if (responsePublish.type === 'FINISH') {
+      onIngameDisconnected();
       setAllMembers(responsePublish.allMembers);
     }
   };
