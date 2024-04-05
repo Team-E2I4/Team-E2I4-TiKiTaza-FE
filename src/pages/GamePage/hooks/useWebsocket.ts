@@ -125,9 +125,7 @@ const useWebsocket = (roomId: number | null) => {
     );
   };
   const onIngameDisconnected = () => {
-    if (ingameSubscription.current) {
-      ingameSubscription.current.unsubscribe();
-    }
+    ingameSubscription.current?.unsubscribe();
   };
 
   const handleConnectIngame = (roomId: number) => {
