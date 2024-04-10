@@ -7,7 +7,6 @@ import useGameWaitingRoomStore from '@/store/useGameWaitingRoomStore';
 import useIngameStore from '@/store/useIngameStore.ts';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import { getToken } from '@/utils/getToken';
-import { PayloadType } from '../types/websocketType.ts';
 
 const useWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
@@ -17,7 +16,7 @@ const useWebsocket = (roomId: number | null) => {
 
   const { setGameRoomRes, setIsRoomWsError, setDidAdminStart, setAllMembers } =
     useGameWaitingRoomStore();
-  const { setIsIngameWsError, setIngameRoomRes } = useIngameStore();
+  const { setIngameRoomRes } = useIngameStore();
 
   useEffect(() => {
     const client = new Client({
@@ -99,48 +98,10 @@ const useWebsocket = (roomId: number | null) => {
     });
   };
 
-  const onIngameConnected = () => {
-    ingameSubscription.current = stompClient.current?.subscribe(
-      `/from/game/${roomId}`,
-      (e) => onIngameMessageReceived(e),
-      connectHeaders
-    );
-  };
-  const disconnectIngameWs = () => {
-    ingameSubscription.current?.unsubscribe();
-  };
-
-  const handleConnectIngame = (roomId: number) => {
-    stompClient.current?.publish({
-      destination: `/to/game/${roomId}/connect`,
-      headers: connectHeaders,
-    });
-  };
-  const onIngameMessageReceived = ({ body }: { body: string }) => {
-    const responsePublish = JSON.parse(body);
-    // eslint-disable-next-line no-console
-    console.log('ingameResponsePublish-----', responsePublish);
-    setIngameRoomRes(responsePublish);
-    if (checkIsEmptyObj(responsePublish)) {
-      setIsIngameWsError(true);
-    }
-    if (responsePublish.type === 'FINISH') {
-      disconnectIngameWs();
-      setAllMembers(responsePublish.allMembers);
-    }
-  };
-  const publishIngame = (destination: string, payload: PayloadType) => {
-    stompClient.current?.publish({
-      destination: `/to/game/${roomId}${destination}`,
-      headers: connectHeaders,
-      body: JSON.stringify(payload),
-    });
-  };
   return {
     publishGameRoom,
-    onIngameConnected,
-    handleConnectIngame,
-    publishIngame,
+    stompClient,
+    ingameSubscription,
   };
 };
 

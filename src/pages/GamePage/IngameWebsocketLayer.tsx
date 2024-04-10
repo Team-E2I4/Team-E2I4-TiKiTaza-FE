@@ -1,17 +1,20 @@
-import React, { Suspense, useEffect } from 'react';
+import { Client, StompSubscription } from '@stomp/stompjs';
+import React, { MutableRefObject, Suspense, useEffect } from 'react';
 import Spinner from '@/common/Spinner/Spinner';
 import useIngameStore from '@/store/useIngameStore';
 import useRoomInfoStore from '@/store/useRoomInfoStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
 import RoundWaitModal from './common/RoundWaitModal';
 import WsError from './common/WsError';
-import { PublishIngameType } from './types/websocketType';
+import useIngameWebsocket from './hooks/useIngameWebsocket';
 
 interface IngameWebsocketLayerProps {
   userId: number;
-  publishIngame: PublishIngameType;
-  onIngameConnected: () => void;
-  handleConnectIngame: (roomId: number) => void;
+  // publishIngame: PublishIngameType;
+  // onIngameConnected: () => void;
+  // handleConnectIngame: (roomId: number) => void;
+  stompClient: MutableRefObject<Client | undefined>;
+  ingameSubscription: MutableRefObject<StompSubscription | undefined>;
 }
 
 const GameCode = React.lazy(() => import('./GameCode/GameCode'));
@@ -21,14 +24,15 @@ const GameSentence = React.lazy(() => import('./GameSentence/GameSentence'));
 
 const IngameWebsocketLayer = ({
   userId,
-  publishIngame,
-  onIngameConnected,
-  handleConnectIngame,
+  stompClient,
+  ingameSubscription,
 }: IngameWebsocketLayerProps) => {
   const { roomId, roomInfo } = useRoomInfoStore();
   const { ingameRoomRes, isIngameWsError, isRoundWaiting, setIsRoundWaiting } =
     useIngameStore();
 
+  const { onIngameConnected, handleConnectIngame, publishIngame } =
+    useIngameWebsocket({ roomId, stompClient, ingameSubscription });
   useEffect(() => {
     onIngameConnected(); // 인게임 엔드포인트 구독
     handleConnectIngame(roomId); // 해당 인게임 연결 발행
