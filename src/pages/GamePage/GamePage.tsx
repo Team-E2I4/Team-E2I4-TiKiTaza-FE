@@ -16,9 +16,11 @@ const GamePage = () => {
   const { roomId, setRoomInfo, roomInfo } = useRoomInfoStore();
   const {
     publishGameRoom,
-    onIngameConnected,
-    publishIngame,
-    handleConnectIngame,
+    // onIngameConnected,
+    // publishIngame,
+    // handleConnectIngame,
+    stompClient,
+    ingameSubscription,
   } = useWebsocket(roomId);
 
   const { gameRoomRes, isRoomWsError, didAdminStart, allMembers } =
@@ -112,10 +114,21 @@ const GamePage = () => {
   return (
     <IngameWebsocketLayer
       userId={userId}
-      publishIngame={publishIngame}
-      onIngameConnected={onIngameConnected}
-      handleConnectIngame={handleConnectIngame}
+      stompClient={stompClient}
+      ingameSubscription={ingameSubscription}
     />
   );
 };
 export default GamePage;
+
+/*
+useWebsocket 분리..
+처음 GamePage 들어오면 useWebsocket 연결하면서 게임대기룸 웹소켓 연결함
+인게임 시작되면 인게임 웹소켓도 연결해야함. 교체아님 쌓여야함
+인게임 종료되면 인게임 웹소켓 끊어야함!!! <- 쌓이지 않게
+인게임 웹소켓을 분리하고 싶다..
+
+구상1
+usWebsocekt에서 ingameSubscription를 반환한다.
+이걸로 인게임 unsubscribe 해야해서 ..
+*/
