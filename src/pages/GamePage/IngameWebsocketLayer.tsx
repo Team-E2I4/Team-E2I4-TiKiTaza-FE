@@ -10,9 +10,6 @@ import useIngameWebsocket from './hooks/useIngameWebsocket';
 
 interface IngameWebsocketLayerProps {
   userId: number;
-  // publishIngame: PublishIngameType;
-  // onIngameConnected: () => void;
-  // handleConnectIngame: (roomId: number) => void;
   stompClient: MutableRefObject<Client | undefined>;
   ingameSubscription: MutableRefObject<StompSubscription | undefined>;
 }
