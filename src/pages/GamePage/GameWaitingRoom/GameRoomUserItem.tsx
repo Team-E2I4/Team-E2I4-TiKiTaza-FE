@@ -1,20 +1,20 @@
 import { useMemo } from 'react';
 import { TRACK_CARS } from '@/assets/canvasCars';
 import close from '@/assets/close.webp';
-import { HandlePubKickUserType, I_AllMember } from '../types/websocketType';
+import { I_AllMember, PublishGameRoomType } from '../types/websocketType';
 
 const GameRoomUserItem = ({
   idx,
   hostId,
   gameRoomUser,
   userId,
-  handlePubKickUser,
+  publishGameRoom,
 }: {
   idx: number;
   hostId: number | undefined;
   gameRoomUser: I_AllMember;
   userId: number;
-  handlePubKickUser: HandlePubKickUserType;
+  publishGameRoom: PublishGameRoomType;
 }) => {
   const {
     memberId,
@@ -33,7 +33,8 @@ const GameRoomUserItem = ({
       <div className='h-[3rem] self-end'>
         <button
           onClick={() => {
-            handlePubKickUser(memberId);
+            publishGameRoom(`/kick/${memberId}`);
+            // handlePubKickUser(memberId);
           }}>
           {isAdminMe && !isMe && (
             <img

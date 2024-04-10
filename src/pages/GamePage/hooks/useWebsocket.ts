@@ -94,18 +94,9 @@ const useWebsocket = (roomId: number | null) => {
 
   const publishGameRoom = (destination: string) => {
     stompClient.current?.publish({
-      destination: `/to/game-room${destination}`,
+      destination: `/to/game-room/${roomId}${destination}`,
       headers: connectHeaders,
     });
-  };
-  const handlePubReadyGame = () => {
-    publishGameRoom(`/${roomId}/ready`);
-  };
-  const handlePubStartGame = () => {
-    publishGameRoom(`/${roomId}/start`);
-  };
-  const handlePubKickUser = (kickedId: number) => {
-    publishGameRoom(`/${roomId}/kick/${kickedId}`);
   };
 
   const onIngameConnected = () => {
@@ -146,9 +137,7 @@ const useWebsocket = (roomId: number | null) => {
     });
   };
   return {
-    handlePubReadyGame,
-    handlePubStartGame,
-    handlePubKickUser,
+    publishGameRoom,
     onIngameConnected,
     handleConnectIngame,
     publishIngame,

@@ -15,9 +15,7 @@ const GamePage = () => {
 
   const { roomId, setRoomInfo, roomInfo } = useRoomInfoStore();
   const {
-    handlePubReadyGame,
-    handlePubStartGame,
-    handlePubKickUser,
+    publishGameRoom,
     onIngameConnected,
     publishIngame,
     handleConnectIngame,
@@ -105,9 +103,7 @@ const GamePage = () => {
       <GameWaitingRoom
         allMembers={allMembers}
         roomInfo={roomInfo}
-        handlePubReadyGame={handlePubReadyGame}
-        handlePubStartGame={handlePubStartGame}
-        handlePubKickUser={handlePubKickUser}
+        publishGameRoom={publishGameRoom}
         userId={userId}
       />
     );

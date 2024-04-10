@@ -36,10 +36,6 @@ export interface I_AllMember {
   score: number;
 }
 
-export type HandlePubReadyGameType = () => void;
-export type HandlePubStartGameType = () => void;
-export type HandlePubKickUserType = (kickedId: number) => void;
-
 /// 인게임 웹소켓 ----
 export interface I_IngameWsResponse {
   type: IngameMessageType;
@@ -58,6 +54,8 @@ export type IngameMessageType =
   | 'INFO'
   | 'WORD_DENIED'
   | 'FINISH';
+
+export type PublishGameRoomType = (destination: string) => void;
 
 export type PayloadType =
   | { currentScore: number }

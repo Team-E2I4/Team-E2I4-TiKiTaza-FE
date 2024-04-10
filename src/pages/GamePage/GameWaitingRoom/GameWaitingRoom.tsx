@@ -4,11 +4,9 @@ import useCarImgStore from '@/store/useCarStore';
 import DisconnectModal from '../common/DisconnectModal';
 import { NumberIndexSignatureType } from '../types/ingameTypes';
 import {
-  HandlePubKickUserType,
-  HandlePubReadyGameType,
-  HandlePubStartGameType,
   I_AllMember,
   I_RoomInfo,
+  PublishGameRoomType,
 } from '../types/websocketType';
 import GameModeDescription from './GameModeDescription';
 import GameReadyAndStart from './GameReadyAndStart';
@@ -19,16 +17,12 @@ import GameRoomUserList from './GameRoomUserList';
 const GameWaitingRoom = ({
   allMembers,
   roomInfo,
-  handlePubReadyGame,
-  handlePubStartGame,
-  handlePubKickUser,
+  publishGameRoom,
   userId,
 }: {
   allMembers: I_AllMember[];
   roomInfo: I_RoomInfo;
-  handlePubReadyGame: HandlePubReadyGameType;
-  handlePubStartGame: HandlePubStartGameType;
-  handlePubKickUser: HandlePubKickUserType;
+  publishGameRoom: PublishGameRoomType;
   userId: number;
 }) => {
   const [isAlert, setIsAlert] = useState(false);
@@ -72,7 +66,7 @@ const GameWaitingRoom = ({
             gameRoomUserList={allMembers}
             hostId={roomInfo?.hostId}
             userId={userId}
-            handlePubKickUser={handlePubKickUser}
+            publishGameRoom={publishGameRoom}
           />
         )}
         <footer className='w-[114.8rem] h-[10rem] flex gap-[5rem]'>
@@ -86,8 +80,7 @@ const GameWaitingRoom = ({
             isAdmin={isAdmin}
             userId={userId}
             allMembers={allMembers}
-            handlePubReadyGame={handlePubReadyGame}
-            handlePubStartGame={handlePubStartGame}
+            publishGameRoom={publishGameRoom}
           />
         </footer>
       </div>

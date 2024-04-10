@@ -1,23 +1,17 @@
-import {
-  HandlePubReadyGameType,
-  HandlePubStartGameType,
-  I_AllMember,
-} from '../types/websocketType';
+import { I_AllMember, PublishGameRoomType } from '../types/websocketType';
 
 interface GameReadyAndStartProps {
   isAdmin: boolean;
   userId: number;
   allMembers: I_AllMember[];
-  handlePubReadyGame: HandlePubReadyGameType;
-  handlePubStartGame: HandlePubStartGameType;
+  publishGameRoom: PublishGameRoomType;
 }
 
 const GameReadyAndStart = ({
   isAdmin,
   userId,
   allMembers,
-  handlePubReadyGame,
-  handlePubStartGame,
+  publishGameRoom,
 }: GameReadyAndStartProps) => {
   const isAllUserReady =
     allMembers.every((user) => user.readyStatus === true) &&
@@ -31,7 +25,7 @@ const GameReadyAndStart = ({
     return (
       <button
         onClick={() => {
-          isAllUserReady && handlePubStartGame();
+          isAllUserReady && publishGameRoom('/start');
         }}
         className={`font-[Giants-Inline] w-[25%] h-[10rem] flex justify-center items-center text-[3rem] transition-all duration-300 shadow-md shadow-black/50 relative
 overflow-hidden
@@ -53,7 +47,7 @@ bg-coral-50
   return (
     <button
       onClick={() => {
-        handlePubReadyGame();
+        publishGameRoom('/ready');
       }}
       className={`font-[Giants-Inline] group w-[24.1rem] h-[10rem] flex justify-center items-center text-[3rem] ${isUserReady ? 'bg-coral-100' : 'bg-coral-50'}
         relative overflow-hidden
