@@ -7,8 +7,9 @@ import {
 interface I_UseGameWaitingRoom {
   gameRoomRes: I_GameRoomResponse | null;
   setGameRoomRes: (gameRoomRes: I_GameRoomResponse) => void;
-  isWsError: boolean;
-  setIsWsError: (isWsError: boolean) => void;
+
+  isRoomWsError: boolean;
+  setIsRoomWsError: (isRoomWsError: boolean) => void;
 
   didAdminStart: boolean;
   setDidAdminStart: (didAdminStart: boolean) => void;
@@ -20,8 +21,9 @@ interface I_UseGameWaitingRoom {
 const useGameWaitingRoomStore = create<I_UseGameWaitingRoom>((set) => ({
   gameRoomRes: null,
   setGameRoomRes: (gameRoomRes) => set({ gameRoomRes }),
-  isWsError: false,
-  setIsWsError: (isWsError) => set({ isWsError }),
+
+  isRoomWsError: false,
+  setIsRoomWsError: (isRoomWsError) => set({ isRoomWsError }),
 
   didAdminStart: false,
   setDidAdminStart: (didAdminStart) => set({ didAdminStart }),
