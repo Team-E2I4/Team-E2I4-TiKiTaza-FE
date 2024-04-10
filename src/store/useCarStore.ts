@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { NumberIndexSignatureType } from '@/pages/GamePage/types/ingameTypes';
+import { NumberIndexSignatureType } from '@/types/indexSignatureType';
 
 interface I_useCarImgStore {
   carImgStore: NumberIndexSignatureType;

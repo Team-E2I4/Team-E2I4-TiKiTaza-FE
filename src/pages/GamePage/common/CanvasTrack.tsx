@@ -17,7 +17,7 @@ import {
 } from '@/common/Ingame/ingameConstants';
 import useCanvas from '@/hooks/useCanvas';
 import useCarImgStore from '@/store/useCarStore';
-import { NumberIndexSignatureType } from '../types/ingameTypes';
+import { NumberIndexSignatureType } from '../../../types/indexSignatureType';
 import { I_AllMember } from '../types/websocketType';
 
 interface I_CarCoord {
