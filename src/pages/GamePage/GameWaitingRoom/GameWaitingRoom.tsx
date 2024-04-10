@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import Backward from '@/common/Backward/Backward';
 import useCarImgStore from '@/store/useCarStore';
+import { NumberIndexSignatureType } from '../../../types/indexSignatureType';
 import DisconnectModal from '../common/DisconnectModal';
-import { NumberIndexSignatureType } from '../types/ingameTypes';
 import {
   I_AllMember,
   I_RoomInfo,
