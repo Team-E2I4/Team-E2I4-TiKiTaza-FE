@@ -15,20 +15,11 @@ const useWebsocket = (roomId: number | null) => {
 
   const connectHeaders = getToken();
 
-  const {
-    setGameRoomRes,
-    isWsError,
-    setIsWsError,
-    setDidAdminStart,
-    setAllMembers,
-  } = useGameWaitingRoomStore();
+  const { setGameRoomRes, setIsRoomWsError, setDidAdminStart, setAllMembers } =
+    useGameWaitingRoomStore();
   const { setIsIngameWsError, setIngameRoomRes } = useIngameStore();
 
   useEffect(() => {
-    if (!roomId) {
-      setIsWsError(true);
-      return;
-    }
     const client = new Client({
       webSocketFactory: () => new SockJS(`${BASE_PATH}/ws`),
       connectHeaders: connectHeaders,
@@ -43,7 +34,7 @@ const useWebsocket = (roomId: number | null) => {
       onStompError: (err) => {
         // eslint-disable-next-line no-console
         console.log(err);
-        setIsWsError(true);
+        setIsRoomWsError(true);
       },
     });
 
@@ -65,7 +56,7 @@ const useWebsocket = (roomId: number | null) => {
       const responsePublish = JSON.parse(body);
       setGameRoomRes(responsePublish);
       if (checkIsEmptyObj(responsePublish)) {
-        setIsWsError(true);
+        setIsRoomWsError(true);
       }
 
       if (responsePublish.type === 'START') {
@@ -124,7 +115,7 @@ const useWebsocket = (roomId: number | null) => {
       connectHeaders
     );
   };
-  const onIngameDisconnected = () => {
+  const disconnectIngameWs = () => {
     ingameSubscription.current?.unsubscribe();
   };
 
@@ -143,7 +134,7 @@ const useWebsocket = (roomId: number | null) => {
       setIsIngameWsError(true);
     }
     if (responsePublish.type === 'FINISH') {
-      onIngameDisconnected();
+      disconnectIngameWs();
       setAllMembers(responsePublish.allMembers);
     }
   };
@@ -158,7 +149,6 @@ const useWebsocket = (roomId: number | null) => {
     handlePubReadyGame,
     handlePubStartGame,
     handlePubKickUser,
-    isWsError,
     onIngameConnected,
     handleConnectIngame,
     publishIngame,

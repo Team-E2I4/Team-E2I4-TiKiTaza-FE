@@ -23,7 +23,7 @@ const GamePage = () => {
     handleConnectIngame,
   } = useWebsocket(roomId);
 
-  const { gameRoomRes, isWsError, didAdminStart, allMembers } =
+  const { gameRoomRes, isRoomWsError, didAdminStart, allMembers } =
     useGameWaitingRoomStore();
 
   //Todo => useSuspenseQuery로 변경...
@@ -77,7 +77,7 @@ const GamePage = () => {
     }
   }, [gameRoomRes]);
 
-  if (!roomId || isWsError) {
+  if (!roomId || isRoomWsError) {
     navigate('/main', { replace: true });
     navigate(0);
   }
