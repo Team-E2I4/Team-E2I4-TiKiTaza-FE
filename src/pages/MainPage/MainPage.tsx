@@ -93,7 +93,7 @@ const MainPage = () => {
           />
         </article>
         <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1 h-full flex items-center justify-center shadow-xl hover:bg-green-100 transition-all hover:text-white hover:text-[1.8rem]'>
-          <button>연습모드!</button>
+          <button onClick={() => alert('연습모드 클릭됨!')}>연습모드!</button>
         </article>
         <CreateRoomModal>
           <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1 h-full flex items-center justify-center shadow-xl hover:bg-green-100 transition-all hover:text-white hover:text-[1.8rem]'>
