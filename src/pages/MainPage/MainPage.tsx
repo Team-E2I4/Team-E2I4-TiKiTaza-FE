@@ -38,15 +38,17 @@ const MainPage = () => {
   const { data: userList } = useOnlineUsers();
   const { data: userData, isPending, error } = useAuthCheck();
   const { roomInfo, setRoomInfo } = useRoomInfoStore();
-  const [selectedGameMode, setSelectedGameMode] =
-    useState<FilteredGameModeType>('ALL');
 
   const [checkedGameMode, setCheckedGameMode] = useState<TestType>({
     ALL: true,
-    SENTENCE: false,
-    CODE: false,
-    WORD: false,
+    SENTENCE: true,
+    CODE: true,
+    WORD: true,
   });
+
+  const checkedGameModeList = Object.entries(checkedGameMode)
+    .filter(([mode, state]) => mode !== 'ALL' && state)
+    .map(([mode]) => mode);
 
   const { setDidAdminStart } = useGameWaitingRoomStore();
   useEffect(() => {
@@ -91,14 +93,6 @@ const MainPage = () => {
             checkedGameMode={checkedGameMode}
             setCheckedGameMode={setCheckedGameMode}
           />
-          {gameModeList.map((el) => (
-            <span
-              className={`shadow-xl flex-1 h-full font-[Giants-Inline] text-[2rem] flex items-center justify-center cursor-pointer rounded-[0.3rem] ${selectedGameMode === el ? 'bg-green-100' : 'bg-green-70'} hover:bg-green-100 hover:scale-110 transition-all`}
-              key={el}
-              onClick={() => setSelectedGameMode(el)}>
-              {mappedGameModeList[el]}
-            </span>
-          ))}
         </article>
         <CreateRoomModal>
           <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1 h-full flex items-center justify-center shadow-xl hover:bg-green-100 transition-all hover:text-white hover:text-[1.8rem]'>
@@ -110,7 +104,9 @@ const MainPage = () => {
             <ErrorBoundary fallbackRender={EnterRoomErrorFallback}>
               <GameRoomList
                 data={data}
-                selectedGameMode={selectedGameMode}
+                checkedGameModeList={
+                  checkedGameModeList as (GameModeType | undefined)[]
+                }
                 className='shadow-xl'
               />
             </ErrorBoundary>

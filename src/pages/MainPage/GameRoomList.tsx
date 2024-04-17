@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 import Divider from '@/common/Divider/Divider';
+import { GameModeType } from '@/types/gameMode';
 import GameRoomListItem from './GameRoonListItem';
-import { FilteredGameModeType } from './MainPage';
 import PrivateRoomModal from './PrivateRoomModal';
 import { I_ChangeGameRoomData } from './SseFetcher';
 
@@ -9,16 +9,15 @@ const GAME_ROOM_LIST_CATEGORY = ['방 번호', '방 제목', '게임 모드', '�
 
 interface GameRoomListProps extends React.HTMLAttributes<HTMLDivElement> {
   data: I_ChangeGameRoomData[];
-  selectedGameMode: FilteredGameModeType;
+  checkedGameModeList: (GameModeType | undefined)[];
 }
 
-const GameRoomList = ({ data, selectedGameMode }: GameRoomListProps) => {
+const GameRoomList = ({ data, checkedGameModeList }: GameRoomListProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const filteredRoomList =
-    selectedGameMode !== 'ALL'
-      ? data.filter(({ gameMode }) => gameMode === selectedGameMode)
-      : data;
+  const filteredRoomList = checkedGameModeList
+    .map((mode) => data.filter(({ gameMode }) => gameMode === mode))
+    .flat(1);
 
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
@@ -61,9 +60,7 @@ const GameRoomList = ({ data, selectedGameMode }: GameRoomListProps) => {
           </ul>
           {!filteredRoomList.length && (
             <span className='text-[2rem] font-bold w-full text-center block'>
-              {selectedGameMode === 'ALL'
-                ? '현재 생성된 게임이 없습니다!'
-                : '선택하신 모드의 방 목록이 없습니다!'}
+              방 목록이 존재하지 않아요 😫
             </span>
           )}
         </li>

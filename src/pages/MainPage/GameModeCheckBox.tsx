@@ -13,11 +13,20 @@ const GameModeCheckBox = ({
   setCheckedGameMode,
 }: GameModeCheckBoxProps) => {
   return (
-    <form className='flex'>
+    <form className='flex gap-[2rem]'>
       {gameModeList.map((mode, i) => {
+        //매 렌더링시 생성되므로 map 바깥으로 뺀다?
         const onCheckedChange = () => {
           setCheckedGameMode((prevState) => {
             const isNewMode = !prevState[mode];
+            if (mode === 'ALL') {
+              const newState = { ...prevState };
+              let checkGameModeState: keyof TestType;
+              for (checkGameModeState in prevState) {
+                newState[checkGameModeState] = isNewMode;
+              }
+              return newState;
+            }
             return { ...prevState, [mode]: isNewMode };
           });
         };
