@@ -8,6 +8,7 @@ import useRoomInfoStore from '@/store/useRoomInfoStore';
 import { GameModeType } from '@/types/gameMode';
 import CreateRoomModal from './CreateRoom/CreateRoomModal';
 import EnterRoomErrorFallback from './EnterRoomErrorFallback';
+import GameModeCheckBox from './GameModeCheckBox';
 import GameRoomList from './GameRoomList';
 import SseFallback from './SseFallback';
 import SseFetcher from './SseFetcher';
@@ -15,15 +16,17 @@ import UserCard from './UserCard';
 import UserList from './UserList';
 
 export type FilteredGameModeType = GameModeType | 'ALL';
-
-const gameModeList: FilteredGameModeType[] = [
+export type TestType = {
+  [key in FilteredGameModeType]: boolean;
+};
+export const gameModeList: FilteredGameModeType[] = [
   'ALL',
   'SENTENCE',
   'CODE',
   'WORD',
 ];
 
-const mappedGameModeList = {
+export const mappedGameModeList = {
   ALL: '전체',
   SENTENCE: '문장',
   CODE: '코드',
@@ -37,6 +40,14 @@ const MainPage = () => {
   const { roomInfo, setRoomInfo } = useRoomInfoStore();
   const [selectedGameMode, setSelectedGameMode] =
     useState<FilteredGameModeType>('ALL');
+
+  const [checkedGameMode, setCheckedGameMode] = useState<TestType>({
+    ALL: true,
+    SENTENCE: false,
+    CODE: false,
+    WORD: false,
+  });
+
   const { setDidAdminStart } = useGameWaitingRoomStore();
   useEffect(() => {
     setDidAdminStart(false);
@@ -76,6 +87,10 @@ const MainPage = () => {
       </section>
       <section className='flex-1 grid grid-cols-[3fr_1fr] grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
         <article className='rounded-[0.5rem] flex items-center justify-between gap-[3rem]'>
+          <GameModeCheckBox
+            checkedGameMode={checkedGameMode}
+            setCheckedGameMode={setCheckedGameMode}
+          />
           {gameModeList.map((el) => (
             <span
               className={`shadow-xl flex-1 h-full font-[Giants-Inline] text-[2rem] flex items-center justify-center cursor-pointer rounded-[0.3rem] ${selectedGameMode === el ? 'bg-green-100' : 'bg-green-70'} hover:bg-green-100 hover:scale-110 transition-all`}
