@@ -16,9 +16,11 @@ import UserCard from './UserCard';
 import UserList from './UserList';
 
 export type FilteredGameModeType = GameModeType | 'ALL';
+
 export type TestType = {
   [key in FilteredGameModeType]: boolean;
 };
+
 export const gameModeList: FilteredGameModeType[] = [
   'ALL',
   'SENTENCE',
@@ -33,6 +35,10 @@ export const mappedGameModeList = {
   WORD: '단어',
 };
 
+export type EntriesType<T> = {
+  [K in keyof T]: [K, T[K]];
+}[keyof T][];
+
 const MainPage = () => {
   const navigate = useNavigate();
   const { data: userList } = useOnlineUsers();
@@ -46,9 +52,11 @@ const MainPage = () => {
     WORD: true,
   });
 
-  const checkedGameModeList = Object.entries(checkedGameMode)
+  const checkedGameModeList = (
+    Object.entries(checkedGameMode) as EntriesType<TestType>
+  )
     .filter(([mode, state]) => mode !== 'ALL' && state)
-    .map(([mode]) => mode);
+    .map(([mode]) => mode) as Exclude<keyof TestType, 'ALL'>[];
 
   const { setDidAdminStart } = useGameWaitingRoomStore();
   useEffect(() => {
@@ -104,9 +112,7 @@ const MainPage = () => {
             <ErrorBoundary fallbackRender={EnterRoomErrorFallback}>
               <GameRoomList
                 data={data}
-                checkedGameModeList={
-                  checkedGameModeList as (GameModeType | undefined)[]
-                }
+                checkedGameModeList={checkedGameModeList}
                 className='shadow-xl'
               />
             </ErrorBoundary>
