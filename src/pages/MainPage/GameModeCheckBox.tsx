@@ -13,7 +13,7 @@ const GameModeCheckBox = ({
   setCheckedGameMode,
 }: GameModeCheckBoxProps) => {
   return (
-    <form className='flex gap-[2rem]'>
+    <form className='flex gap-[3rem]'>
       {gameModeList.map((mode, i) => {
         //매 렌더링시 생성되므로 map 바깥으로 뺀다?
         const onCheckedChange = () => {
@@ -32,19 +32,19 @@ const GameModeCheckBox = ({
         };
         return (
           <div
-            className='flex items-center'
+            className='flex items-center gap-[0.5em]'
             key={mode}>
             <Checkbox.Root
               checked={checkedGameMode[mode]}
               onClick={onCheckedChange}
-              className='bg-white w-[2.5rem] h-[2.5rem] rounded-md flex items-center justify-center shadow-md hover:bg-gray-100/50'
+              className='bg-white w-[3rem] h-[3rem] rounded-md flex items-center justify-center shadow-md hover:bg-gray-100/50'
               id={`c${i}`}>
-              <Checkbox.Indicator className='CheckboxIndicator'>
-                <CheckIcon />
+              <Checkbox.Indicator className=''>
+                <CheckIcon className='size-[3rem]' />
               </Checkbox.Indicator>
             </Checkbox.Root>
             <label
-              className='cursor-pointer'
+              className='cursor-pointer text-[2rem] font-bold'
               htmlFor={`c${i}`}>
               {mappedGameModeList[mode]}
             </label>
