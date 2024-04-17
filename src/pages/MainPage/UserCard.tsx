@@ -26,7 +26,7 @@ const UserCard = ({
   averageAccuracy = 0,
 }: UserCardProps) => {
   return (
-    <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[18rem] w-full p-[1.2rem] group relative'>
+    <>
       {isGuest && (
         <div className='w-0 h-full z-[50] overflow-hidden p-[3rem] bg-green-100 invisible absolute top-0 left-0 transition-all group-hover:w-full  group-hover:visible group-hover:cursor-pointer'>
           <span className='text-[3rem] text-white font-bold whitespace-nowrap'>
@@ -68,7 +68,7 @@ const UserCard = ({
           <span className='bg-coral-50 w-[10rem] text-center rounded-[0.5rem] h-[2.2rem] hover:bg-coral-100'>{`완벽함 ${formatNumber(averageAccuracy)}%`}</span>
         </div>
       </div>
-    </article>
+    </>
   );
 };
 

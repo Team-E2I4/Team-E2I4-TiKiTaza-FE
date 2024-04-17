@@ -21,20 +21,6 @@ export type TestType = {
   [key in FilteredGameModeType]: boolean;
 };
 
-export const gameModeList: FilteredGameModeType[] = [
-  'ALL',
-  'SENTENCE',
-  'CODE',
-  'WORD',
-];
-
-export const mappedGameModeList = {
-  ALL: '전체',
-  SENTENCE: '문장',
-  CODE: '코드',
-  WORD: '단어',
-};
-
 export type EntriesType<T> = {
   [K in keyof T]: [K, T[K]];
 }[keyof T][];
@@ -77,44 +63,53 @@ const MainPage = () => {
   return (
     <main className='flex gap-[3rem]'>
       <section className='flex flex-col gap-[3rem] w-[25rem] [&>article]:shadow-xl'>
-        <UserList
-          userList={[...userList.data.data!]}
-          myId={userData.data.data!.memberId}
-        />
+        <article className='flex flex-col gap-[1rem] p-[2rem] bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[40rem] w-full'>
+          <UserList
+            userList={[...userList.data.data!]}
+            myId={userData.data.data!.memberId}
+          />
+        </article>
         <article
           className='flex items-center justify-center bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[4.5rem] w-full cursor-pointer hover:bg-green-100 hover:text-white hover:text-[1.8rem] transition-all'
           onClick={() => navigate('/rank')}>
           <button>전체 랭킹</button>
         </article>
-        <UserCard
-          nickname={userData.data.data!.nickname}
-          isGuest={userData.data.data!.isGuest}
-          rank={userData.data.data!.rank}
-          gameCount={userData.data.data!.gameCount}
-          averageCpm={userData.data.data!.averageCpm}
-          averageAccuracy={userData.data.data!.averageAccuracy}
-        />
+        <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 h-[18rem] w-full p-[1.2rem] group relative'>
+          <UserCard
+            nickname={userData.data.data!.nickname}
+            isGuest={userData.data.data!.isGuest}
+            rank={userData.data.data!.rank}
+            gameCount={userData.data.data!.gameCount}
+            averageCpm={userData.data.data!.averageCpm}
+            averageAccuracy={userData.data.data!.averageAccuracy}
+          />
+        </article>
       </section>
-      <section className='flex-1 grid grid-cols-[3fr_1fr] grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
+      <section className='flex-1 grid grid-cols-[3fr_1fr_1fr] grid-rows-[5rem_auto] grid-flow-col gap-[3rem]'>
         <article className='rounded-[0.5rem] flex items-center justify-between gap-[3rem]'>
           <GameModeCheckBox
             checkedGameMode={checkedGameMode}
             setCheckedGameMode={setCheckedGameMode}
           />
         </article>
+        <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1 h-full flex items-center justify-center shadow-xl hover:bg-green-100 transition-all hover:text-white hover:text-[1.8rem]'>
+          <button>연습모드!</button>
+        </article>
         <CreateRoomModal>
           <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-1 h-full flex items-center justify-center shadow-xl hover:bg-green-100 transition-all hover:text-white hover:text-[1.8rem]'>
-            <span>방 만들기</span>
+            <button>방 만들기</button>
           </article>
         </CreateRoomModal>
         <SseFetcher fallback={() => <SseFallback />}>
           {(data) => (
             <ErrorBoundary fallbackRender={EnterRoomErrorFallback}>
-              <GameRoomList
-                data={data}
-                checkedGameModeList={checkedGameModeList}
-                className='shadow-xl'
-              />
+              <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-3'>
+                <GameRoomList
+                  data={data}
+                  checkedGameModeList={checkedGameModeList}
+                  className='shadow-xl'
+                />
+              </article>
             </ErrorBoundary>
           )}
         </SseFetcher>
