@@ -17,7 +17,7 @@ import UserList from './UserList';
 
 export type FilteredGameModeType = GameModeType | 'ALL';
 
-export type TestType = {
+export type CheckedGameModeType = {
   [key in FilteredGameModeType]: boolean;
 };
 
@@ -31,7 +31,7 @@ const MainPage = () => {
   const { data: userData, isPending, error } = useAuthCheck();
   const { roomInfo, setRoomInfo } = useRoomInfoStore();
 
-  const [checkedGameMode, setCheckedGameMode] = useState<TestType>({
+  const [checkedGameMode, setCheckedGameMode] = useState<CheckedGameModeType>({
     ALL: true,
     SENTENCE: true,
     CODE: true,
@@ -39,10 +39,10 @@ const MainPage = () => {
   });
 
   const checkedGameModeList = (
-    Object.entries(checkedGameMode) as EntriesType<TestType>
+    Object.entries(checkedGameMode) as EntriesType<CheckedGameModeType>
   )
     .filter(([mode, state]) => mode !== 'ALL' && state)
-    .map(([mode]) => mode) as Exclude<keyof TestType, 'ALL'>[];
+    .map(([mode]) => mode) as Exclude<keyof CheckedGameModeType, 'ALL'>[];
 
   const { setDidAdminStart } = useGameWaitingRoomStore();
   useEffect(() => {

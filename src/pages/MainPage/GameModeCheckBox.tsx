@@ -1,11 +1,12 @@
 import * as Checkbox from '@radix-ui/react-checkbox';
 import { CheckIcon } from '@radix-ui/react-icons';
 import { Dispatch, SetStateAction } from 'react';
-import { gameModeList, mappedGameModeList, TestType } from './MainPage';
+import { GAME_MODE_LIST, MAPPED_GAME_MODE_LIST } from './constants/gameMode';
+import { CheckedGameModeType } from './MainPage';
 
 interface GameModeCheckBoxProps {
-  setCheckedGameMode: Dispatch<SetStateAction<TestType>>;
-  checkedGameMode: TestType;
+  setCheckedGameMode: Dispatch<SetStateAction<CheckedGameModeType>>;
+  checkedGameMode: CheckedGameModeType;
 }
 
 const GameModeCheckBox = ({
@@ -14,14 +15,14 @@ const GameModeCheckBox = ({
 }: GameModeCheckBoxProps) => {
   return (
     <form className='flex gap-[3rem]'>
-      {gameModeList.map((mode, i) => {
+      {GAME_MODE_LIST.map((mode, i) => {
         //매 렌더링시 생성되므로 map 바깥으로 뺀다?
         const onCheckedChange = () => {
           setCheckedGameMode((prevState) => {
             const isNewMode = !prevState[mode];
             if (mode === 'ALL') {
               const newState = { ...prevState };
-              let checkGameModeState: keyof TestType;
+              let checkGameModeState: keyof CheckedGameModeType;
               for (checkGameModeState in prevState) {
                 newState[checkGameModeState] = isNewMode;
               }
@@ -46,7 +47,7 @@ const GameModeCheckBox = ({
             <label
               className='cursor-pointer text-[2rem] font-bold'
               htmlFor={`c${i}`}>
-              {mappedGameModeList[mode]}
+              {MAPPED_GAME_MODE_LIST[mode]}
             </label>
           </div>
         );
