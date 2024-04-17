@@ -9,15 +9,15 @@ const GAME_ROOM_LIST_CATEGORY = ['방 번호', '방 제목', '게임 모드', '�
 
 interface GameRoomListProps extends React.HTMLAttributes<HTMLDivElement> {
   data: I_ChangeGameRoomData[];
-  checkedGameModeList: (GameModeType | undefined)[];
+  checkedGameModeList: GameModeType[];
 }
 
 const GameRoomList = ({ data, checkedGameModeList }: GameRoomListProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const filteredRoomList = checkedGameModeList
-    .map((mode) => data.filter(({ gameMode }) => gameMode === mode))
-    .flat(1);
+  const filteredRoomList = checkedGameModeList.flatMap((mode) =>
+    data.filter(({ gameMode }) => gameMode === mode)
+  );
 
   return (
     <article className='bg-white rounded-[0.5rem] border-solid border-[0.3rem] border-green-100 row-start-2 col-start-1 col-span-2'>
