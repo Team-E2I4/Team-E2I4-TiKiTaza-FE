@@ -1,4 +1,5 @@
 import { GameModeType } from '@/types/gameMode';
+import { MAPPED_GAME_MODE_LIST } from '../../constants/gameMode';
 import { I_CreateRoomInput, I_CreateRoomSelect } from '../types';
 
 export const CREATE_ROOM_INPUT_LIST: I_CreateRoomInput[] = [
@@ -64,8 +65,8 @@ interface I_GameModeList {
   mode: GameModeType;
 }
 
-export const GAME_MODE_LIST: I_GameModeList[] = [
-  { value: '문장 모드', mode: 'SENTENCE' },
+export const CREATE_ROOM_GAME_MODE_LIST: I_GameModeList[] = [
+  { value: `${MAPPED_GAME_MODE_LIST[this.mode]} 모드`, mode: 'SENTENCE' },
   { value: '코딩 모드', mode: 'CODE' },
   { value: '단어 모드', mode: 'WORD' },
 ];
