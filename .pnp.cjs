@@ -78,6 +78,7 @@ const RAW_RUNTIME_STATE =
           ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.3"],\
           ["typescript", "patch:typescript@npm%3A5.4.3#optional!builtin<compat/typescript>::version=5.4.3&hash=5adc0c"],\
+          ["use-sound", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:4.0.1"],\
           ["vite", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.2.7"],\
           ["vite-plugin-mkcert", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:1.17.5"],\
           ["vitest", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:1.4.0"],\
@@ -9373,6 +9374,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["howler", [\
+      ["npm:2.2.4", {\
+        "packageLocation": "./.yarn/cache/howler-npm-2.2.4-689ccf19b1-74a295f56f.zip/node_modules/howler/",\
+        "packageDependencies": [\
+          ["howler", "npm:2.2.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["http-cache-semantics", [\
       ["npm:4.1.1", {\
         "packageLocation": "./.yarn/cache/http-cache-semantics-npm-4.1.1-1120131375-ce1319b8a3.zip/node_modules/http-cache-semantics/",\
@@ -13587,6 +13597,7 @@ const RAW_RUNTIME_STATE =
           ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.3"],\
           ["typescript", "patch:typescript@npm%3A5.4.3#optional!builtin<compat/typescript>::version=5.4.3&hash=5adc0c"],\
+          ["use-sound", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:4.0.1"],\
           ["vite", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.2.7"],\
           ["vite-plugin-mkcert", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:1.17.5"],\
           ["vitest", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:1.4.0"],\
@@ -14234,6 +14245,29 @@ const RAW_RUNTIME_STATE =
           ["detect-node-es", "npm:1.1.0"],\
           ["react", "npm:18.2.0"],\
           ["tslib", "npm:2.6.2"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["use-sound", [\
+      ["npm:4.0.1", {\
+        "packageLocation": "./.yarn/cache/use-sound-npm-4.0.1-8398156d38-a38119eec9.zip/node_modules/use-sound/",\
+        "packageDependencies": [\
+          ["use-sound", "npm:4.0.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:4.0.1", {\
+        "packageLocation": "./.yarn/__virtual__/use-sound-virtual-6b6d53b6e5/0/cache/use-sound-npm-4.0.1-8398156d38-a38119eec9.zip/node_modules/use-sound/",\
+        "packageDependencies": [\
+          ["use-sound", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:4.0.1"],\
+          ["@types/react", "npm:18.2.73"],\
+          ["howler", "npm:2.2.4"],\
+          ["react", "npm:18.2.0"]\
         ],\
         "packagePeers": [\
           "@types/react",\
