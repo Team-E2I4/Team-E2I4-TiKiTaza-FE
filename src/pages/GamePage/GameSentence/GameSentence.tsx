@@ -27,6 +27,8 @@ export interface I_RankInfoList {
 }
 
 const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
+  const sound = playSoundEffect('SCORE');
+
   const { ingameRoomRes, isRoundWaiting } = useIngameStore();
 
   const currentScore = ingameRoomRes.allMembers.find(
@@ -41,6 +43,7 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
   const handleNextRound = useCallback(() => {
     sentenceList.current = ingameRoomRes.questions!;
     setSentenceIdx(0);
+    sound.play();
   }, [ingameRoomRes.questions]);
 
   const {
@@ -93,7 +96,6 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
     publishIngame('/info', {
       currentScore: newScore,
     });
-    const sound = playSoundEffect();
     sound.play();
   }, [currentScore, scorePerTrankLength]);
 

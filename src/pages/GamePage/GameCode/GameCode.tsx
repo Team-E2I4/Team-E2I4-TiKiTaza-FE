@@ -92,7 +92,7 @@ const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
   const handleUpdateScore = useCallback(() => {
     const newScore = currentScore + scorePerSubmit;
     publishIngame('/info', { currentScore: newScore });
-    const sound = playSoundEffect();
+    const sound = playSoundEffect('SCORE');
     sound.play();
   }, [currentScore, scorePerSubmit]);
 

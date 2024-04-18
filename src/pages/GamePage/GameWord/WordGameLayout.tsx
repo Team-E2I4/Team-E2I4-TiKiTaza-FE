@@ -5,6 +5,7 @@ import {
   I_IngameWsResponse,
   PublishIngameType,
 } from '../../GamePage/types/websocketType';
+import playSoundEffect from '../common/playSoundEffect';
 import useFocusInput from '../hooks/useFocusInput';
 import WordCell from './WordCell';
 import WordRankContainer from './WordRankContainer';
@@ -65,6 +66,7 @@ const WordGameLayout = ({
   useEffect(() => {
     onInputChange(0, 100, 150); //동기화..
   }, [ingameRoomRes]);
+  const sound = playSoundEffect('SCORE');
 
   return (
     <>
@@ -99,6 +101,7 @@ const WordGameLayout = ({
               setValue('wordInput', '');
               initializeTyping();
               submitCount.current += 1;
+              sound.play();
             })}>
             <input
               autoFocus
