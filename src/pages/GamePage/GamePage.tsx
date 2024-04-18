@@ -14,8 +14,7 @@ const GamePage = () => {
   const navigate = useNavigate();
 
   const { roomId, setRoomInfo, roomInfo } = useRoomInfoStore();
-  const { publishGameRoom, stompClient, ingameSubscription } =
-    useWebsocket(roomId);
+  const { publishGameRoom, stompClient } = useWebsocket(roomId);
 
   const { gameRoomRes, isRoomWsError, didAdminStart, allMembers } =
     useGameWaitingRoomStore();
@@ -109,7 +108,6 @@ const GamePage = () => {
     <IngameWebsocketLayer
       userId={userId}
       stompClient={stompClient}
-      ingameSubscription={ingameSubscription}
     />
   );
 };
