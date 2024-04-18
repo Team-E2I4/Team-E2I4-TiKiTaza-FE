@@ -1,8 +1,7 @@
-import { Howl } from 'howler';
 import { useCallback, useMemo, useRef } from 'react';
-import soundEffect from '@/assets/audio/soundEffect.mp3';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
+import playSoundEffect from '@/pages/GamePage/common/playSoundEffect';
 import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
 import TrackLine from '../common/TrackLine';
@@ -91,11 +90,9 @@ const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
   );
 
   const handleUpdateScore = useCallback(() => {
-    const sound = new Howl({
-      src: [soundEffect],
-    });
     const newScore = currentScore + scorePerSubmit;
     publishIngame('/info', { currentScore: newScore });
+    const sound = playSoundEffect();
     sound.play();
   }, [currentScore, scorePerSubmit]);
 
