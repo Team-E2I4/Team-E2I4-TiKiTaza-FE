@@ -41,6 +41,7 @@ const RAW_RUNTIME_STATE =
           ["@tanstack/react-query", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.28.9"],\
           ["@tanstack/react-query-devtools", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.28.10"],\
           ["@types/event-source-polyfill", "npm:1.0.5"],\
+          ["@types/howler", "npm:2.2.11"],\
           ["@types/node", "npm:20.12.2"],\
           ["@types/react", "npm:18.2.73"],\
           ["@types/react-dom", "npm:18.2.23"],\
@@ -61,6 +62,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-simple-import-sort", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:10.0.0"],\
           ["eslint-plugin-unused-imports", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:3.1.0"],\
           ["event-source-polyfill", "npm:1.0.31"],\
+          ["howler", "npm:2.2.4"],\
           ["husky", "npm:9.0.11"],\
           ["lint-staged", "npm:15.2.2"],\
           ["lottie-react", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:2.4.0"],\
@@ -78,7 +80,6 @@ const RAW_RUNTIME_STATE =
           ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.3"],\
           ["typescript", "patch:typescript@npm%3A5.4.3#optional!builtin<compat/typescript>::version=5.4.3&hash=5adc0c"],\
-          ["use-sound", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:4.0.1"],\
           ["vite", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.2.7"],\
           ["vite-plugin-mkcert", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:1.17.5"],\
           ["vitest", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:1.4.0"],\
@@ -5409,6 +5410,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@types-find-cache-dir-npm-3.2.1-07fd2b6e78-68059aec88.zip/node_modules/@types/find-cache-dir/",\
         "packageDependencies": [\
           ["@types/find-cache-dir", "npm:3.2.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/howler", [\
+      ["npm:2.2.11", {\
+        "packageLocation": "./.yarn/cache/@types-howler-npm-2.2.11-dd9e5eb3f8-0a6b6d3585.zip/node_modules/@types/howler/",\
+        "packageDependencies": [\
+          ["@types/howler", "npm:2.2.11"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -13560,6 +13570,7 @@ const RAW_RUNTIME_STATE =
           ["@tanstack/react-query", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.28.9"],\
           ["@tanstack/react-query-devtools", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.28.10"],\
           ["@types/event-source-polyfill", "npm:1.0.5"],\
+          ["@types/howler", "npm:2.2.11"],\
           ["@types/node", "npm:20.12.2"],\
           ["@types/react", "npm:18.2.73"],\
           ["@types/react-dom", "npm:18.2.23"],\
@@ -13580,6 +13591,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-simple-import-sort", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:10.0.0"],\
           ["eslint-plugin-unused-imports", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:3.1.0"],\
           ["event-source-polyfill", "npm:1.0.31"],\
+          ["howler", "npm:2.2.4"],\
           ["husky", "npm:9.0.11"],\
           ["lint-staged", "npm:15.2.2"],\
           ["lottie-react", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:2.4.0"],\
@@ -13597,7 +13609,6 @@ const RAW_RUNTIME_STATE =
           ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.3"],\
           ["typescript", "patch:typescript@npm%3A5.4.3#optional!builtin<compat/typescript>::version=5.4.3&hash=5adc0c"],\
-          ["use-sound", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:4.0.1"],\
           ["vite", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.2.7"],\
           ["vite-plugin-mkcert", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:1.17.5"],\
           ["vitest", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:1.4.0"],\
@@ -14245,29 +14256,6 @@ const RAW_RUNTIME_STATE =
           ["detect-node-es", "npm:1.1.0"],\
           ["react", "npm:18.2.0"],\
           ["tslib", "npm:2.6.2"]\
-        ],\
-        "packagePeers": [\
-          "@types/react",\
-          "react"\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["use-sound", [\
-      ["npm:4.0.1", {\
-        "packageLocation": "./.yarn/cache/use-sound-npm-4.0.1-8398156d38-a38119eec9.zip/node_modules/use-sound/",\
-        "packageDependencies": [\
-          ["use-sound", "npm:4.0.1"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
-      ["virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:4.0.1", {\
-        "packageLocation": "./.yarn/__virtual__/use-sound-virtual-6b6d53b6e5/0/cache/use-sound-npm-4.0.1-8398156d38-a38119eec9.zip/node_modules/use-sound/",\
-        "packageDependencies": [\
-          ["use-sound", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:4.0.1"],\
-          ["@types/react", "npm:18.2.73"],\
-          ["howler", "npm:2.2.4"],\
-          ["react", "npm:18.2.0"]\
         ],\
         "packagePeers": [\
           "@types/react",\
