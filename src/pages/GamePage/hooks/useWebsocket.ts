@@ -1,5 +1,5 @@
 import './init.ts';
-import { Client, StompSubscription } from '@stomp/stompjs';
+import { Client } from '@stomp/stompjs';
 import { useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { BASE_PATH } from '@/generated/base';
@@ -10,7 +10,6 @@ import { getToken } from '@/utils/getToken';
 
 const useWebsocket = (roomId: number | null) => {
   const stompClient = useRef<Client>();
-  const ingameSubscription = useRef<StompSubscription>();
 
   const connectHeaders = getToken();
 
@@ -101,7 +100,6 @@ const useWebsocket = (roomId: number | null) => {
   return {
     publishGameRoom,
     stompClient,
-    ingameSubscription,
   };
 };
 

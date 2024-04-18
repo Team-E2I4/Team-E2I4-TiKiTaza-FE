@@ -1,4 +1,4 @@
-import { Client, StompSubscription } from '@stomp/stompjs';
+import { Client } from '@stomp/stompjs';
 import React, { MutableRefObject, Suspense, useEffect } from 'react';
 import Spinner from '@/common/Spinner/Spinner';
 import useIngameStore from '@/store/useIngameStore';
@@ -11,7 +11,6 @@ import useIngameWebsocket from './hooks/useIngameWebsocket';
 interface IngameWebsocketLayerProps {
   userId: number;
   stompClient: MutableRefObject<Client | undefined>;
-  ingameSubscription: MutableRefObject<StompSubscription | undefined>;
 }
 
 const GameCode = React.lazy(() => import('./GameCode/GameCode'));
@@ -22,14 +21,13 @@ const GameSentence = React.lazy(() => import('./GameSentence/GameSentence'));
 const IngameWebsocketLayer = ({
   userId,
   stompClient,
-  ingameSubscription,
 }: IngameWebsocketLayerProps) => {
   const { roomId, roomInfo } = useRoomInfoStore();
   const { ingameRoomRes, isIngameWsError, isRoundWaiting, setIsRoundWaiting } =
     useIngameStore();
 
   const { onIngameConnected, handleConnectIngame, publishIngame } =
-    useIngameWebsocket({ roomId, stompClient, ingameSubscription });
+    useIngameWebsocket({ roomId, stompClient });
   useEffect(() => {
     onIngameConnected(); // 인게임 엔드포인트 구독
     handleConnectIngame(roomId); // 해당 인게임 연결 발행

@@ -1,5 +1,5 @@
 import { Client, StompSubscription } from '@stomp/stompjs';
-import { MutableRefObject } from 'react';
+import { MutableRefObject, useRef } from 'react';
 import useGameWaitingRoomStore from '@/store/useGameWaitingRoomStore';
 import useIngameStore from '@/store/useIngameStore';
 import { checkIsEmptyObj } from '@/utils/checkIsEmptyObj';
@@ -9,13 +9,10 @@ import { PayloadType } from '../types/websocketType';
 interface I_useIngame {
   roomId: number;
   stompClient: MutableRefObject<Client | undefined>;
-  ingameSubscription: MutableRefObject<StompSubscription | undefined>;
 }
-const useIngameWebsocket = ({
-  roomId,
-  stompClient,
-  ingameSubscription,
-}: I_useIngame) => {
+const useIngameWebsocket = ({ roomId, stompClient }: I_useIngame) => {
+  const ingameSubscription = useRef<StompSubscription>();
+
   const connectHeaders = getToken();
   const { setIsIngameWsError, setIngameRoomRes } = useIngameStore();
   const { setAllMembers } = useGameWaitingRoomStore();
