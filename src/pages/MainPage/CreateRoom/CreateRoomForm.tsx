@@ -13,9 +13,9 @@ import { GameModeType } from '@/types/gameMode';
 import getRandomItem from '@/utils/getRandomItem';
 import { Toast } from '@/utils/toast';
 import {
+  CREATE_ROOM_GAME_MODE_LIST,
   CREATE_ROOM_INPUT_LIST,
   CREATE_ROOM_SELECT_LIST,
-  GAME_MODE_LIST,
 } from './constants/createRoom';
 import { DEFAULT_TITLES } from './constants/defaultTitles';
 import { SettingModeType } from './CreateRoomModal';
@@ -185,7 +185,7 @@ const CreateRoomForm = ({
         </div>
         {/* 모드 설정 버튼 */}
         <article className='flex flex-col gap-[2rem] pt-[4rem]'>
-          {GAME_MODE_LIST.map(({ value, mode }) => (
+          {CREATE_ROOM_GAME_MODE_LIST.map(({ value, mode }) => (
             <button
               type='button'
               onClick={() => {
