@@ -1,4 +1,6 @@
+import { Howl } from 'howler';
 import { useCallback, useMemo, useRef, useState } from 'react';
+import soundEffect from '@/assets/audio/soundEffect.mp3';
 import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
@@ -89,10 +91,14 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
   const scorePerTrankLength = Math.ceil((1 / TotalSpacedWord) * 100);
 
   const handleUpdateScore: UpdateScoreType = useCallback(() => {
+    const sound = new Howl({
+      src: [soundEffect],
+    });
     const newScore = currentScore + scorePerTrankLength;
     publishIngame('/info', {
       currentScore: newScore,
     });
+    sound.play();
   }, [currentScore, scorePerTrankLength]);
 
   return (
