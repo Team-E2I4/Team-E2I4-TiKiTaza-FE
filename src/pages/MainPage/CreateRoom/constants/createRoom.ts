@@ -66,7 +66,7 @@ interface I_GameModeList {
 }
 
 export const CREATE_ROOM_GAME_MODE_LIST: I_GameModeList[] = [
-  { value: `${MAPPED_GAME_MODE_LIST[this.mode]} 모드`, mode: 'SENTENCE' },
-  { value: '코딩 모드', mode: 'CODE' },
-  { value: '단어 모드', mode: 'WORD' },
+  { value: `${MAPPED_GAME_MODE_LIST['SENTENCE']} 모드`, mode: 'SENTENCE' },
+  { value: `${MAPPED_GAME_MODE_LIST['CODE']} 모드`, mode: 'CODE' },
+  { value: `${MAPPED_GAME_MODE_LIST['WORD']} 모드`, mode: 'WORD' },
 ];
