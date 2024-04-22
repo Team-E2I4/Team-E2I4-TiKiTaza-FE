@@ -41,7 +41,6 @@ const RAW_RUNTIME_STATE =
           ["@tanstack/react-query", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.28.9"],\
           ["@tanstack/react-query-devtools", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.28.10"],\
           ["@types/event-source-polyfill", "npm:1.0.5"],\
-          ["@types/howler", "npm:2.2.11"],\
           ["@types/node", "npm:20.12.2"],\
           ["@types/react", "npm:18.2.73"],\
           ["@types/react-dom", "npm:18.2.23"],\
@@ -62,7 +61,6 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-simple-import-sort", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:10.0.0"],\
           ["eslint-plugin-unused-imports", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:3.1.0"],\
           ["event-source-polyfill", "npm:1.0.31"],\
-          ["howler", "npm:2.2.4"],\
           ["husky", "npm:9.0.11"],\
           ["lint-staged", "npm:15.2.2"],\
           ["lottie-react", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:2.4.0"],\
@@ -5414,15 +5412,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["@types/howler", [\
-      ["npm:2.2.11", {\
-        "packageLocation": "./.yarn/cache/@types-howler-npm-2.2.11-dd9e5eb3f8-0a6b6d3585.zip/node_modules/@types/howler/",\
-        "packageDependencies": [\
-          ["@types/howler", "npm:2.2.11"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["@types/http-errors", [\
       ["npm:2.0.4", {\
         "packageLocation": "./.yarn/cache/@types-http-errors-npm-2.0.4-8b39ca5d7c-494670a57a.zip/node_modules/@types/http-errors/",\
@@ -9380,15 +9369,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/hosted-git-info-npm-2.8.9-62c44fa93f-317cbc6b1b.zip/node_modules/hosted-git-info/",\
         "packageDependencies": [\
           ["hosted-git-info", "npm:2.8.9"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["howler", [\
-      ["npm:2.2.4", {\
-        "packageLocation": "./.yarn/cache/howler-npm-2.2.4-689ccf19b1-74a295f56f.zip/node_modules/howler/",\
-        "packageDependencies": [\
-          ["howler", "npm:2.2.4"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -13570,7 +13550,6 @@ const RAW_RUNTIME_STATE =
           ["@tanstack/react-query", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.28.9"],\
           ["@tanstack/react-query-devtools", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:5.28.10"],\
           ["@types/event-source-polyfill", "npm:1.0.5"],\
-          ["@types/howler", "npm:2.2.11"],\
           ["@types/node", "npm:20.12.2"],\
           ["@types/react", "npm:18.2.73"],\
           ["@types/react-dom", "npm:18.2.23"],\
@@ -13591,7 +13570,6 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-simple-import-sort", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:10.0.0"],\
           ["eslint-plugin-unused-imports", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:3.1.0"],\
           ["event-source-polyfill", "npm:1.0.31"],\
-          ["howler", "npm:2.2.4"],\
           ["husky", "npm:9.0.11"],\
           ["lint-staged", "npm:15.2.2"],\
           ["lottie-react", "virtual:bc08f557c3848fd9a25d29fb9c539eda3c4057e5669cea847177bc7c1434287280eb689db18230d98ea61ce78cf48a1c75574b2bd256f908e118253be39fcf3a#npm:2.4.0"],\
