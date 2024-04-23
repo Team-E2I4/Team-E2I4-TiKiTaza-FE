@@ -2,7 +2,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useEffect } from 'react';
 import { convertTime } from '@/common/Timer/utils/convertTime';
 import useTimer from '@/hooks/useTimer';
-import playSoundEffect from './playSoundEffect';
+import playSoundEffect, { SOUND_COUNTDOWN } from './playSoundEffect';
 
 interface RoundWaitModalProps {
   isOpen: boolean;
@@ -18,11 +18,11 @@ const RoundWaitModal = ({ isOpen, onTimeFinish }: RoundWaitModalProps) => {
     },
     autoStart: false,
   });
-  const sound = playSoundEffect('COUNTDOWN');
+  const sound = playSoundEffect(SOUND_COUNTDOWN);
   useEffect(() => {
     if (isOpen) {
       startTimer();
-      sound.play();
+      sound.then((audio) => audio.play());
     }
   }, [isOpen]);
 

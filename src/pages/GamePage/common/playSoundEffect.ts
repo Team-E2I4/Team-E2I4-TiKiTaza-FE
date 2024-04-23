@@ -1,8 +1,26 @@
-import countDown from '@/assets/audio/countDown.mp3';
-import soundEffect from '@/assets/audio/soundEffect.mp3';
+export const SOUND_SCORE = 'SCORE';
+export const SOUND_COUNTDOWN = 'COUNTDOWN';
+type SoundEffectType = typeof SOUND_SCORE | typeof SOUND_COUNTDOWN;
 
-const playSoundEffect = (type: 'SCORE' | 'COUNTDOWN') => {
-  const src = type === 'SCORE' ? soundEffect : countDown;
-  return new Audio(src);
+const mappedSoundFiles: Record<SoundEffectType, () => Promise<string>> = {
+  SCORE: () =>
+    import('@/assets/audio/soundEffect.mp3').then((module) => module.default),
+  COUNTDOWN: () =>
+    import('@/assets/audio/countDown.mp3').then((module) => module.default),
+};
+
+const playSoundEffect = async (type: SoundEffectType) => {
+  const src = await mappedSoundFiles[type]();
+  const audio = new Audio(src);
+  return audio;
 };
 export default playSoundEffect;
+
+// import countDown from '@/assets/audio/countDown.mp3';
+// import soundEffect from '@/assets/audio/soundEffect.mp3';
+
+// const playSoundEffect = (type: 'SCORE' | 'COUNTDOWN') => {
+//   const src = type === 'SCORE' ? soundEffect : countDown;
+//   return new Audio(src);
+// };
+// export default playSoundEffect;

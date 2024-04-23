@@ -1,7 +1,9 @@
 import { useCallback, useMemo, useRef } from 'react';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
-import playSoundEffect from '@/pages/GamePage/common/playSoundEffect';
+import playSoundEffect, {
+  SOUND_SCORE,
+} from '@/pages/GamePage/common/playSoundEffect';
 import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
 import TrackLine from '../common/TrackLine';
@@ -92,8 +94,8 @@ const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
   const handleUpdateScore = useCallback(() => {
     const newScore = currentScore + scorePerSubmit;
     publishIngame('/info', { currentScore: newScore });
-    const sound = playSoundEffect('SCORE');
-    sound.play();
+    const sound = playSoundEffect(SOUND_SCORE);
+    sound.then((audio) => audio.play());
   }, [currentScore, scorePerSubmit]);
 
   return (
