@@ -3,6 +3,9 @@ import Dashboard from '@/common/Ingame/Dashboard';
 import IngameHeader from '@/common/Ingame/IngameHeader';
 import IngameRank from '@/common/Ingame/IngameRank';
 import { SentenceNext } from '@/common/Ingame/SentenceBlocks';
+import playSoundEffect, {
+  SOUND_SCORE,
+} from '@/pages/GamePage/common/playSoundEffect';
 import useIngameStore from '@/store/useIngameStore';
 import CanvasTrack from '../common/CanvasTrack';
 import TrackLine from '../common/TrackLine';
@@ -26,6 +29,8 @@ export interface I_RankInfoList {
 }
 
 const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
+  const sound = playSoundEffect(SOUND_SCORE);
+
   const { ingameRoomRes, isRoundWaiting } = useIngameStore();
 
   const currentScore = ingameRoomRes.allMembers.find(
@@ -40,6 +45,7 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
   const handleNextRound = useCallback(() => {
     sentenceList.current = ingameRoomRes.questions!;
     setSentenceIdx(0);
+    sound.then((audio) => audio.play());
   }, [ingameRoomRes.questions]);
 
   const {
@@ -87,12 +93,12 @@ const GameSentence = ({ publishIngame, userId }: GameSentenceProps) => {
   );
 
   const scorePerTrankLength = Math.ceil((1 / TotalSpacedWord) * 100);
-
   const handleUpdateScore: UpdateScoreType = useCallback(() => {
     const newScore = currentScore + scorePerTrankLength;
     publishIngame('/info', {
       currentScore: newScore,
     });
+    sound.then((audio) => audio.play());
   }, [currentScore, scorePerTrankLength]);
 
   return (
