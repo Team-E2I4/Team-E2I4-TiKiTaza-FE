@@ -31,7 +31,14 @@
 
 ### how to play
 
-<!--영상자리 -->
+🎮 문장 게임 🎮
+![IMG_1482](https://github.com/Team-E2I4/Team-E2I4-TiKiTaza-FE/assets/81412212/7b0f5718-9dc2-4cd1-9124-5056e0bad44a)
+
+🎮 코드 게임 🎮
+![vllo 2](https://github.com/Team-E2I4/Team-E2I4-TiKiTaza-FE/assets/81412212/11cf0ebf-5593-456e-9e99-f93eb3e0db17)
+
+🎮 단어 게임 🎮
+![vllo 3](https://github.com/Team-E2I4/Team-E2I4-TiKiTaza-FE/assets/81412212/90b32857-190e-4ff5-ac97-26eb2ad9e84d)
 
 <br/>
 
