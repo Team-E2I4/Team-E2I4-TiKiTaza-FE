@@ -25,7 +25,7 @@ const GameCode = ({ publishIngame, userId }: GameCodeProps) => {
       const splitedTrimedCode = trimedCode.split(' ');
       const SPLIT_INDEX = Math.floor((splitedTrimedCode.length - 1) / 2);
 
-      if (splitedTrimedCode.length > 1 && trimedCode.length > 50) {
+      if (splitedTrimedCode.length > 1 && trimedCode.length > 65) {
         return [
           splitedTrimedCode.slice(0, SPLIT_INDEX).join(' '),
           splitedTrimedCode.slice(SPLIT_INDEX).join(' '),
