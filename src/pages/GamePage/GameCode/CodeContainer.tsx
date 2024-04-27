@@ -10,7 +10,7 @@ const CodeContainer = ({ codeItem }: CodeContainerProps) => {
   return (
     <>
       <div className='w-[60rem] select-none grow'>
-        <Highlight className='javascript'>{codeItem}</Highlight>
+        <Highlight className={'javascript' || 'java'}>{codeItem}</Highlight>
       </div>
     </>
   );
